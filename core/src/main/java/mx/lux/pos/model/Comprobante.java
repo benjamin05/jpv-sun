@@ -136,12 +136,6 @@ public class Comprobante implements Serializable {
     @Column( name = "observaciones" )
     private String observaciones;
 
-    @Column( name = "sello" )
-    private String sello;
-
-    @Column( name = "cadena_original" )
-    private String cadenaOriginal;
-
     @OneToMany
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "id_fiscal", referencedColumnName = "id_fiscal", insertable = false, updatable = false )
@@ -192,8 +186,6 @@ public class Comprobante implements Serializable {
         formaPago = StringUtils.trimToEmpty( formaPago );
         metodoPago = StringUtils.trimToEmpty( metodoPago );
         observaciones = StringUtils.trimToEmpty( observaciones );
-        sello = StringUtils.trimToEmpty( sello );
-        cadenaOriginal = StringUtils.trimToEmpty( cadenaOriginal );
     }
 
     public Integer getId() {
@@ -498,21 +490,5 @@ public class Comprobante implements Serializable {
 
     public void setDetalles( Set<DetalleComprobante> detalles ) {
         this.detalles = detalles;
-    }
-
-    public String getSello() {
-        return sello;
-    }
-
-    public void setSello(String sello) {
-        this.sello = sello;
-    }
-
-    public String getCadenaOriginal() {
-        return cadenaOriginal;
-    }
-
-    public void setCadenaOriginal(String cadenaOriginal) {
-        this.cadenaOriginal = cadenaOriginal;
     }
 }

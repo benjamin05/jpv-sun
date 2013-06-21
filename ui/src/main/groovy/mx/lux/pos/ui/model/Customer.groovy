@@ -6,6 +6,8 @@ import groovy.transform.ToString
 import mx.lux.pos.model.Cliente
 import org.apache.commons.lang3.StringUtils
 import groovy.util.logging.Slf4j
+import com.sun.java.swing.plaf.motif.MotifInternalFrameTitlePane
+import mx.lux.pos.model.Titulo
 
 @Slf4j
 @Bindable
@@ -22,9 +24,9 @@ class Customer {
   String rfc = CustomerType.DOMESTIC.rfc
   Date dob
   GenderType gender = GenderType.MALE
-  Address address
+  Address address = new Address( )
   List<Contact> contacts = [ ]
-  Integer age
+  Integer age = EDAD_DEFAULT
 
   private static final Integer EDAD_DEFAULT = 25
 
@@ -66,16 +68,14 @@ class Customer {
         customer.rfc = CustomerType.FOREIGN.rfc
       }
       if ( StringUtils.isNotBlank( cliente.telefonoCasa ) ) {
-        customer.contacts.add( new Contact(
-            primary: cliente.telefonoCasa,
-            type: ContactType.HOME_PHONE
-        ) )
+        Contact phone = new Contact( type: ContactType.HOME_PHONE )
+        phone.setPhoneNumber( cliente.telefonoCasa )
+        customer.contacts.add( phone )
       }
       if ( StringUtils.isNotBlank( cliente.email ) ) {
-        customer.contacts.add( new Contact(
-            primary: cliente.email,
-            type: ContactType.EMAIL
-        ) )
+        Contact mail = new Contact( type: ContactType.EMAIL )
+        mail.setEmail( cliente.email )
+        customer.contacts.add( mail )
       }
       return customer
     }
@@ -89,4 +89,54 @@ class Customer {
     }
     return result
   }
+
+  static List<Customer> toList(List<Cliente> pClienteList) {
+    List<Customer> custList = new ArrayList<Customer>()
+    for ( Cliente c : pClienteList ) {
+      custList.add( toCustomer( c ) )
+    }
+    return custList
+  }
+
+  Boolean isLocal( ) {
+    return CustomerType.DOMESTIC.equals( this.type )
+  }
+
+  Titulo getTitle() {
+    Titulo t = Titles.instance.find( this.title )
+    if ( t == null ) {
+      t = Titles.instance.getDefault( this.gender )
+    }
+    return t
+  }
+
+  Contact getPhone( Integer pContactIndex ) {
+    Contact telefono = null
+    Integer ix = 0
+    for (Contact c : this.contacts ) {
+      if ( c.type.isPhone() ) {
+        if (ix == pContactIndex) {
+          telefono = c
+        }
+        ix++
+      }
+    }
+    return telefono
+  }
+
+  Contact getEmail( Integer pContactIndex ) {
+    Contact email = null
+    Integer ix = 0
+    for (Contact c : this.contacts ) {
+      if ( c.type.isMail() ) {
+        if (ix == pContactIndex) {
+          email = c
+        }
+        ix++
+      }
+    }
+    return email
+  }
+
+
 }

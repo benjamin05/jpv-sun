@@ -6,6 +6,4 @@ import org.springframework.data.querydsl.QueryDslPredicateExecutor
 
 interface TituloRepository extends JpaRepository<Titulo, String>, QueryDslPredicateExecutor<Titulo> {
 
-  List<Titulo> findByTituloNotNullOrderByOrdenAsc( )
-
 }

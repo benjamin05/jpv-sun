@@ -6,7 +6,7 @@ interface NotaVentaService {
 
   NotaVenta obtenerNotaVenta( String idNotaVenta )
 
-  NotaVenta abrirNotaVenta( )
+  NotaVenta abrirNotaVenta(String clienteID,String empleadoID )
 
   NotaVenta registrarNotaVenta( NotaVenta notaVenta )
 
@@ -34,4 +34,9 @@ interface NotaVentaService {
 
   void saveOrder( NotaVenta pNotaVenta )
 
+  NotaVenta obtenerSiguienteNotaVenta( Integer pIdCustomer )
+
+    void saveRx(NotaVenta rNotaVenta, Integer receta)
+
+    void saveFrame(NotaVenta rNotaVenta, String opciones, String forma)
 }

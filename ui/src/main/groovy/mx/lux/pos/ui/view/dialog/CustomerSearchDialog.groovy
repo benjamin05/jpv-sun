@@ -142,7 +142,8 @@ class CustomerSearchDialog extends JDialog {
     }
   }
 
-  private def doNewCustomer = {
+  public def doNewCustomer = {
+
     dispose()
     customer = new Customer()
     openCustomerDialog( customer, false )
@@ -159,7 +160,7 @@ class CustomerSearchDialog extends JDialog {
       dialog.show()
       this.customer = dialog.customer
     } else {
-      CustomerDialog dialog = new CustomerDialog( this, customer, editar )
+      NewCustomerAndRxDialog dialog = new NewCustomerAndRxDialog( this, customer, editar )
       dialog.show()
       this.customer = dialog.customer
     }

@@ -176,17 +176,6 @@ class ComprobanteServiceImpl implements ComprobanteService {
       String resultado = respuesta?.find( /<XX>\s*(.*)\s*<\/XX>/ ) {m, r -> return r}
       log.debug( "resultado solicitud: ${resultado}" )
       List<String> elementos = resultado?.tokenize( '|' )
-      List<String> datos = resultado?.tokenize( '>' )
-      if ( datos?.any() ) {
-          String codigo = elementos.first()
-          log.debug( "codigo resultado: ${codigo}" )
-          if ( codigo.matches( /.+PROCESADA.+/ ) ) {
-              comprobante.sello = datos.get( 1 )
-              comprobante.cadenaOriginal = datos.get( 2 )
-          } else {
-              log.warn( 'error al procesar la solicitud' )
-          }
-      }
       if ( elementos?.any() ) {
         String codigo = elementos.first()
         log.debug( "codigo resultado: ${codigo}" )
@@ -283,10 +272,10 @@ class ComprobanteServiceImpl implements ComprobanteService {
               BigDecimal importe = precioUnitario.multiply( cantidad )
               DetalleComprobante detalle = new DetalleComprobante(
                   idArticulo: articulo.id,
-                  articulo: articulo.articulo.replace('Ñ','N'),
+                  articulo: articulo.articulo,
                   color: articulo.codigoColor,
                   idGenerico: articulo.idGenerico,
-                  descripcion: articulo.descripcion.replace('Ñ','N'),
+                  descripcion: articulo.descripcion,
                   cantidad: cantidad,
                   precioUnitario: precioUnitario,
                   importe: importe

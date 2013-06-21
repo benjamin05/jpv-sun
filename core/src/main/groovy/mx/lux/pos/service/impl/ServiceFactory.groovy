@@ -18,14 +18,14 @@ class ServiceFactory {
   private static CierreDiarioService dailyClose
   private static MensajeService messages
   private static CotizacionService quotes
-
+  private static ClienteService customers
 
   @Autowired
   ServiceFactory( ArticuloService pArticuloService, InventarioService pInventarioService,
                   NotaVentaService pNotaVentaService, EmpleadoService pEmpMaster,
                   TicketService pTicketEngine, SucursalService pSiteService, EstadoService pEstadoService,
                   IOService pIOServices, CierreDiarioService pCierreDiarioService,
-                  MensajeService pMensajeService, CotizacionService pCotizacionService
+                  MensajeService pMensajeService, CotizacionService pCotizacionService, ClienteService pClienteService
   ) {
     employeeCatalog = pEmpMaster
     inventory = pInventarioService
@@ -38,6 +38,7 @@ class ServiceFactory {
     dailyClose = pCierreDiarioService
     messages = pMensajeService
     quotes = pCotizacionService
+    customers = pClienteService
   }
 
   static EmpleadoService getEmployeeCatalog( ) {
@@ -82,6 +83,10 @@ class ServiceFactory {
 
   static CotizacionService getQuotes( ) {
     return quotes
+  }
+
+  static ClienteService getCustomers() {
+    return customers
   }
 
 }

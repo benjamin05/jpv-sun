@@ -1,8 +1,11 @@
 package mx.lux.pos.ui.model
 
 enum OperationType {
-  DEFAULT( 'P\u00fablico General' ),
-  WALKIN( 'Cliente Estad\u00edstica' ),
+  DEFAULT( 'Público General' ),
+  NEW( 'Cliente Nuevo' ),
+  PENDING( 'Cliente en Proceso' ),
+  PAYING( 'Cliente en Caja' ),
+  WALKIN( 'Cliente Estadística' ),
   DOMESTIC( 'Cliente Nacional' ),
   FOREIGN( 'Cliente Extranjero' ),
   QUOTE( 'Cotización' ) ,

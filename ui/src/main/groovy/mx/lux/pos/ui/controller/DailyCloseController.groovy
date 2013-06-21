@@ -18,8 +18,7 @@ class DailyCloseController {
   private static PagoService pagoService
   private static PromotionService promotionService
 
-  @Autowired
-  DailyCloseController(
+  @Autowired DailyCloseController(
       CierreDiarioService cierreDiarioService,
       TicketService ticketService,
       EmpleadoService empleadoService,
@@ -67,9 +66,9 @@ class DailyCloseController {
   }
 
   static boolean saveDeposit( Deposit deposit, boolean edit ) {
-      if( edit ){
-          cierreDiarioService.eliminarDeposito( deposit.id )
-      }
+    if ( edit ) {
+      cierreDiarioService.eliminarDeposito( deposit.id )
+    }
     if ( deposit != null ) {
       User user = Session.get( SessionItem.USER ) as User
       Deposito deposito = new Deposito(
@@ -118,7 +117,7 @@ class DailyCloseController {
     Empleado employee = empleadoService.obtenerEmpleado( user.username )
     boolean terminal = ticketService.imprimeCierreTerminales( closeDate, results, employee, description )
 
-      return terminal
+    return terminal
   }
 
   static void printDailyDigest( Date closeDate ) {
@@ -129,10 +128,10 @@ class DailyCloseController {
 
   static boolean closeDailyClose( Date closeDate, String observations ) {
     try {
-	  cierreDiarioService.cerrarCierreDiario( closeDate, observations )
-	  User user = Session.get( SessionItem.USER ) as User
-	  Empleado employee = empleadoService.obtenerEmpleado( user.username )
-	  ticketService.imprimeResumenDiario( closeDate, employee )
+      cierreDiarioService.cerrarCierreDiario( closeDate, observations )
+      User user = Session.get( SessionItem.USER ) as User
+      Empleado employee = empleadoService.obtenerEmpleado( user.username )
+      ticketService.imprimeResumenDiario( closeDate, employee )
     } catch ( Exception e ) {
       log.error( "Error al cerrar el Cierre Diario: ${e.getMessage()}" )
       return false
@@ -180,17 +179,17 @@ class DailyCloseController {
     }
   }
 
-    static void RegistrarPromociones( ) {
-        log.info( "Registrando Promociones" )
-        promotionService.RegistrarPromociones()
-    }
+  static void RegistrarPromociones( ) {
+    log.info( "Registrando Promociones" )
+    promotionService.RegistrarPromociones()
+  }
 
-  static void regenerarArchivosZ( Date fecha ){
+  static void regenerarArchivosZ( Date fecha ) {
     log.debug( "Regenerando Archivos Z" )
     cierreDiarioService.regenerarArchivosZ( fecha )
   }
 
-  static void eliminarVentasSinFactura(){
+  static void eliminarVentasSinFactura( ) {
     log.debug( "Eliminando ventas sin factura" )
     cierreDiarioService.eliminarVentasAbiertas()
   }

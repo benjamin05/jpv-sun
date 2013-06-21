@@ -21,7 +21,14 @@ enum ContactType {
     return null
   }
 
-  @Override
+  Boolean isMail( ) {
+    return ( EMAIL.equals( this ) )
+  }
+
+  Boolean isPhone( ) {
+    return ( HOME_PHONE.equals( this ) || OFFICE_PHONE.equals( this ) || MOBILE_PHONE.equals( this ) )
+  }
+
   String toString( ) {
     value
   }

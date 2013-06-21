@@ -253,8 +253,4 @@ class IOServiceImpl implements IOService {
     RepositoryFactory.acknowledgements.saveAndFlush( pAcknowledgement )
   }
 
-  void saveAcknowledgementTrans(TransInv pAcknowledgement) {
-      RepositoryFactory.inventoryMaster.saveAndFlush( pAcknowledgement )
-  }
-
 }

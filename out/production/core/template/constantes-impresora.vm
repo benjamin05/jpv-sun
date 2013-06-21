@@ -7,7 +7,6 @@
 #macro(CODIGO_BARRAS $valor $anchura $interpreta)${GS}h${writer.write(70)}${GS}w${writer.write(${anchura})}${GS}H${writer.write(${interpreta})}${GS}k${writer.write(4)}${valor}${writer.write(0)}${LF}#end
 #define($SALTO_LINEA)${writer.write(10)}#end
 #macro(ALINEAR_IZQUIERDA)${ESC}a${writer.write(0)}#end
-#macro(PRINT_SPECIAL_CHARECTERS $numero)${ESC}R${writer.write(${numero})}#end
 #macro(ALINEAR_CENTRO)${ESC}a${writer.write(1)}#end
 #macro(ALINEAR_DERECHA)${ESC}a${writer.write(2)}#end
 #macro(ALIMENTAR $numero)${ESC}J${writer.write(${numero})}#end

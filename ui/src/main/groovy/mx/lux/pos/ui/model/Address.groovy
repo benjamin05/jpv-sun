@@ -9,12 +9,12 @@ import mx.lux.pos.model.Cliente
 @ToString
 @EqualsAndHashCode
 class Address {
-  String primary
-  String zipcode
-  String location
-  String city
-  String state
-  String country
+  String primary = ''
+  String zipcode = ''
+  String location = ''
+  String city = ''
+  String state = ''
+  String country = ''
 
   static Address toAddress( Cliente cliente ) {
     if ( cliente?.id ) {

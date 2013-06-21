@@ -114,7 +114,7 @@ public class Acuse implements Serializable {
     public String toString( ) {
         String contents = StringUtils.trimToEmpty(this.contenido);
         if (contents.length() > 20) {
-            contents = contents.substring(0, 20);
+            contents = contents.substring(0, 40);
         }
         return String.format( FMT_TO_STRING, this.getId(), this.getIdTipo(), this.getIntentos(),
                 contents);

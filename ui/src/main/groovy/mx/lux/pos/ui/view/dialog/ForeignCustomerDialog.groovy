@@ -15,7 +15,6 @@ import javax.swing.*
 
 class ForeignCustomerDialog extends JDialog {
 
-
   private static final Integer EDAD_DEFAULT = 25
   private static final Integer EDAD_MINIMA = 10
   private static final Integer EDAD_MAXIMA = 100
@@ -126,7 +125,8 @@ class ForeignCustomerDialog extends JDialog {
         emailDomain = comboBox( items: domains, editable: true )
       }
 
-      panel( border: titledBorder( 'Dirección' ), layout: new MigLayout( 'wrap 2', '[][fill,200!]' ) ) {
+      panel( border: titledBorder( 'Dirección' ),
+          layout: new MigLayout( 'wrap 2', '[][fill,200!]' ) ) {
         label( 'Ciudad' )
         city = textField( document: new UpperCaseDocument() )
 

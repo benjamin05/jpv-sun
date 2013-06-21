@@ -33,6 +33,7 @@ class AccessController {
   static boolean checkCredentials( String username, String password ) {
     log.info( "comprobando credenciales para el usuario: ${username}" )
     if ( StringUtils.isNotBlank( username ) && StringUtils.isNotBlank( password ) ) {
+
       User user = getUser( username )
       if ( StringUtils.isNotBlank( user?.username ) ) {
         if ( password.equalsIgnoreCase( user?.password ) ) {
@@ -54,7 +55,8 @@ class AccessController {
     log.info( "solicitando autorizacion de acceso para el usuario: $username" )
     if ( checkCredentials( username, password ) ) {
       User user = getUser( username )
-      Branch branch = Branch.toBranch( sucursalService.obtenSucursalActual() )
+
+      Branch branch = Branch.toBranch( sucursalService.obtenSucursalbyUser(user) )
       Session.put( SessionItem.USER, user )
       Session.put( SessionItem.BRANCH, branch )
       log.info( "acceso autorizado: $username" )

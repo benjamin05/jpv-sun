@@ -41,4 +41,6 @@ interface ArticuloService {
   Boolean useShortItemDescription( )
 
   Boolean generarArchivoInventario( )
+
+  Articulo findbyName(String dioptra)
 }

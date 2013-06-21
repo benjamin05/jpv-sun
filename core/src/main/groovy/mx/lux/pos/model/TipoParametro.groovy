@@ -66,10 +66,11 @@ enum TipoParametro {
   URL_SALIDA_ALMACEN('url_salida_almacen',''),
   URL_ENTRADA_ALMACEN('url_entrada_sucursal',''),
   URL_CONFIRMA_ENTRADA('url_confirma_entrada',''),
-  TRANS_INV_TIPO_SALIDA_ALMACEN( 'trans_inv_salida_almacen', 'SALIDA_TIENDA' ),
-  TRANS_INV_TIPO_ENTRADA_ALMACEN( 'trans_inv_entrada_almacen', 'ENTRADA_TIENDA' ),
+  TRANS_INV_TIPO_SALIDA_ALMACEN( 'trans_inv_salida_almacen', 'SALIDA_ALMACEN' ),
+  TRANS_INV_TIPO_ENTRADA_ALMACEN( 'trans_inv_entrada_almacen', 'ENTRADA_ALMACEN' ),
   INV_EXPORT_SALIDA_ALMACEN_TR( 'inventario_exportar_tr_salida_almacen', 'si' ),
   INV_EXPORT_ENTRADA_ALMACEN_TR( 'inventario_exportar_tr_entrada_almacen', 'no' ),
+
 
   final String value
   final String defaultValue

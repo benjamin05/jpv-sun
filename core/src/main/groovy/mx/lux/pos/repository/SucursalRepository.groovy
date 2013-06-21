@@ -10,4 +10,6 @@ interface SucursalRepository extends JpaRepository<Sucursal, Integer>, QueryDslP
   @Query( value = "SELECT esta_sucursal()", nativeQuery = true )
   Integer getCurrentSucursalId( )
 
+
+
 }

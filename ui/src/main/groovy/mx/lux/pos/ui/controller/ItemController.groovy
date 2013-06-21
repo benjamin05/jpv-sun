@@ -50,13 +50,18 @@ class ItemController {
 
   static List<Item> findItemsByQuery( final String query ) {
     log.debug( "buscando de articulos con query: $query" )
-    if ( StringUtils.isNotBlank( query ) ) {
+
+
+      if ( StringUtils.isNotBlank( query ) ) {
+
       List<Articulo> items = findPartsByQuery( query )
       if (items.size() > 0) {
+
         log.debug( "Items:: ${items.first()?.dump()} " )
         return items?.collect { Item.toItem( it ) }
       }
     }
+
     return [ ]
   }
 
@@ -77,7 +82,9 @@ class ItemController {
         if ( query.contains( anyMatch ) ) {
           def tokens = query.tokenize( anyMatch )
           def code = tokens?.first() ?: null
-          log.debug( "busqueda con codigo similar: ${code}" )
+            log.warn( "bien3" )
+            log.debug( "busqueda con codigo similar: ${code}" )
+
           items = articuloService.listarArticulosPorCodigoSimilar( code, incluyePrecio ) ?: [ ]
         } else {
           def tokens = query.replaceAll( /[+|,]/, '|' ).tokenize( '|' )
@@ -102,6 +109,7 @@ class ItemController {
 
     static List<Item> findItemByArticleAndColor( String query, String color  ) {
         log.debug( "buscando de un articulo con query: $query" )
+
         if ( StringUtils.isNotBlank( query ) ) {
 
             List<Articulo> items = new ArrayList<Articulo>()

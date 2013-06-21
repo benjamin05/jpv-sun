@@ -60,6 +60,8 @@ class LogInPanel extends JPanel {
     logInButton.enabled = false
     User user = AccessController.logIn( username.text, password.text )
     if ( StringUtils.isNotBlank( user?.username ) ) {
+
+
       messages.text = null
       messages.visible = false
       doAction()

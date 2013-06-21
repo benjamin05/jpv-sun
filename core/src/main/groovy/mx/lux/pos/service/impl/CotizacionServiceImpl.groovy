@@ -112,11 +112,14 @@ class CotizacionServiceImpl implements CotizacionService {
   @Transactional
   Integer copyFromOrder( String pOrderNbr, Integer pCustomerId, String pIdEmpleado ) {
     Cotizacion quote = null
-    NotaVenta order = RepositoryFactory.orders.findOne( pOrderNbr, )
+      println('Prueba*1 '+ pOrderNbr)
+    NotaVenta order = RepositoryFactory.orders.findOne( pOrderNbr )
+      println('Prueba*2 '+ order.getId())
     if ( order != null ) {
       log.debug( String.format( 'Quote.copyFrom(Order:%s, Items:%d)', order.id, order.detalles.size() ) )
       Cliente cust = RepositoryFactory.customerCatalog.findOne( order.idCliente )
-      quote = this.createQuote()
+
+        quote = this.createQuote()
       quote.idCliente = pCustomerId
       quote.idEmpleado = pIdEmpleado
       quote.idReceta = order.receta

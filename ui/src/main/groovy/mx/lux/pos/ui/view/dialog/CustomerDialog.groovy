@@ -2,11 +2,16 @@ package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.controller.CustomerController
-import mx.lux.pos.ui.view.verifier.NotEmptyVerifier
+import mx.lux.pos.ui.controller.FeatureController
+
+import mx.lux.pos.ui.view.panel.CustomerPanel
+import mx.lux.pos.ui.view.panel.RXPanel
 import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
 
 import java.awt.Component
+import java.awt.Dimension
+import java.awt.Point
 import java.awt.event.ActionEvent
 import java.awt.event.ItemEvent
 
@@ -39,12 +44,14 @@ class CustomerDialog extends JDialog {
   private JComboBox zipcode
   private JComboBox domain
   private JSpinner dob
-    private boolean edit
+  private boolean edit
+  private boolean cancel
 
   CustomerDialog( Component parent, final Customer customer, boolean editar ) {
     edit = editar
     sb = new SwingBuilder()
-    this.customer = new Customer()
+    this.customer = customer
+    component = parent
     defaultState = CustomerController.findDefaultState()
     states = CustomerController.findAllStates()
     titles = CustomerController.findAllCustomersTitles()
@@ -52,9 +59,7 @@ class CustomerDialog extends JDialog {
     locations = [ ]
     tmpHomeContact = new Contact( type: ContactType.HOME_PHONE )
     tmpEmailContact = new Contact( type: ContactType.EMAIL )
-    initialize( customer )
     buildUI( parent )
-    doBindings()
   }
 
   Customer getCustomer( ) {
@@ -108,70 +113,32 @@ class CustomerDialog extends JDialog {
   private void buildUI( Component parent ) {
     sb.dialog( this,
         title: "${customer?.id ? 'Editar' : 'Agregar'} Cliente Nacional",
-        location: parent.location,
-        resizable: false,
-        modal: true,
+        resizable: true,
         pack: true,
-        layout: new MigLayout( 'fill,wrap', '[fill]' )
+        modal: true,
+        maximumSize: [ 700, 600 ] as Dimension,
+        layout: new MigLayout( 'wrap,center', '[fill]', '[1]' ),
+        location: [ 70, 35 ] as Point,
     ) {
-      panel( border: titledBorder( 'Datos Generales' ), layout: new MigLayout( 'wrap 4', '[][fill,180!][][fill]' ) ) {
-        label( 'Saludo' )
-        salutation = comboBox( items: titles*.title, itemStateChanged: titleChanged )
-
-        label( 'Sexo' )
-        gender = comboBox( items: GenderType.values() )
-
-        label( 'Nombre' )
-        firstName = textField( document: new UpperCaseDocument(), inputVerifier: new NotEmptyVerifier() )
-
-        label( 'F. Nacimiento' )
-        dob = spinner( model: spinnerDateModel() )
-
-        label( 'Apellido Paterno' )
-        fathersName = textField( document: new UpperCaseDocument(), inputVerifier: new NotEmptyVerifier(), constraints: 'wrap' )
-
-        label( 'Apellido Materno' )
-        mothersName = textField( document: new UpperCaseDocument() )
+      panel( layout: new MigLayout( 'fill,wrap', '[]' ) ) {
+        JPanel custPanel = new CustomerPanel( component, customer, edit )
+        this.customer = custPanel.customer
+        this.tabbedPane = new JTabbedPane()
+        this.tabbedPane.addTab( custPanel.title, custPanel )
+        if ( FeatureController.isRxEnabled() ) {
+          JPanel rxPanel = new RXPanel( custPanel.customer.id )
+          this.tabbedPane.addTab( rxPanel.title, rxPanel )
+        }
+        this.add( this.tabbedPane )
+        setSize( 600, 400 )
       }
-
-      panel( border: titledBorder( 'Dirección' ), layout: new MigLayout( 'wrap 2', '[][fill,330!]' ) ) {
-        label( 'Calle y Número' )
-        primary = textField( document: new UpperCaseDocument(), inputVerifier: new NotEmptyVerifier() )
-
-        label( 'Estado' )
-        stateField = comboBox( items: states, itemStateChanged: stateChanged )
-
-        label( 'Delegación/Mnpo' )
-        city = comboBox( itemStateChanged: cityChanged, constraints: 'w 330!' )
-
-        label( 'Colonia' )
-        locationField = comboBox( itemStateChanged: locationChanged, constraints: 'w 330!' )
-
-        label( 'C.P.' )
-        zipcode = comboBox( editable: true )
-
-        button( 'Buscar', actionPerformed: doSearch )
-      }
-
-      panel( border: titledBorder( 'Contacto' ), layout: new MigLayout( '', '[][fill,180!][center,25!][fill,180!]' ) ) {
-        label( text: ContactType.HOME_PHONE )
-        homePhone = textField( constraints: 'wrap' )
-
-        label( text: ContactType.EMAIL )
-        email = textField()
-        label( '@' )
-        domain = comboBox( editable: true, items: domains )
-      }
-
       panel( layout: new MigLayout( 'right', '[fill,100!]' ) ) {
         button( 'Borrar', visible: customer?.id ? true : false, actionPerformed: doDelete )
         button( 'Aplicar', actionPerformed: doSubmit )
         button( 'Limpiar', visible: customer?.id ? false : true, actionPerformed: doClear )
-        button( 'Cancelar', defaultButton: true, actionPerformed: {dispose()} )
+        button( 'Cancelar', defaultButton: true, actionPerformed: { doCancel() } )
       }
     }
-
-    dob.editor = new JSpinner.DateEditor( dob as JSpinner, 'dd-MM-yyyy' )
   }
 
   private void doBindings( ) {
@@ -222,10 +189,14 @@ class CustomerDialog extends JDialog {
     source.enabled = true
   }
 
+  private void doCancel( ) {
+    this.cancel = true
+    dispose()
+  }
+
   private def doDelete = { ActionEvent ev ->
     JButton source = ev.source as JButton
     source.enabled = false
-    dispose()
   }
 
   private boolean isValidInput( ) {
@@ -257,10 +228,13 @@ class CustomerDialog extends JDialog {
       Customer tmpCustomer = CustomerController.addCustomer( getCustomer(), edit )
       if ( tmpCustomer?.id ) {
         customer = tmpCustomer
-        dispose()
       }
     }
     source.enabled = true
+  }
+
+  boolean getCancel( ) {
+    return cancel
   }
 
   private def doClear = {
@@ -340,4 +314,5 @@ class CustomerDialog extends JDialog {
       zipcode.selectedItem = result?.zipcode
     }
   }
+
 }

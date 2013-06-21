@@ -3,8 +3,11 @@ package mx.lux.pos.ui.view.panel
 import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
 import mx.lux.pos.model.IPromotionAvailable
+import mx.lux.pos.model.NotaVenta
+import mx.lux.pos.model.Receta
 import mx.lux.pos.model.PromotionAvailable
 import mx.lux.pos.model.SalesWithNoInventory
+import mx.lux.pos.repository.NotaVentaRepository
 import mx.lux.pos.ui.MainWindow
 import mx.lux.pos.ui.resources.UI_Standards
 import mx.lux.pos.ui.view.component.DiscountContextMenu
@@ -27,23 +30,30 @@ import javax.swing.*
 import org.slf4j.LoggerFactory
 import org.slf4j.Logger
 
-class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener {
+class OrderPanel extends JPanel
+implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
   static final String MSG_INPUT_QUOTE_ID = 'Indique el número de cotización'
   static final String TXT_QUOTE_TITLE = 'Seleccionar cotización'
+  static final String TXT_INVALID_PAYMENT_TITLE = 'Los pagos no cumplen con la política comercial.'
   private static final String TXT_BTN_CLOSE = 'Vendedor'
   private static final String TXT_BTN_QUOTE = 'Cotizar'
   private static final String TXT_BTN_PRINT = 'Imprimir'
+  private static final String TXT_BTN_NEW_ORDER = 'Otra venta'
+  private static final String TXT_BTN_CONTINUE = 'Continuar'
   private static final String TXT_NO_ORDER_PRESENT = 'Se debe agregar al menos un artículo.'
-  private static final String TXT_PAYMENTS_PRESENT = 'Elimine los pagosregistrados y reintente.'
+  private static final String TXT_PAYMENTS_PRESENT = 'Elimine los pagos registrados y reintente.'
   private static final String MSJ_VENTA_NEGATIVA = 'No se pueden agregar artículos sin existencia.'
   private static final String TXT_VENTA_NEGATIVA_TITULO = 'Error al agregar artículo'
+  private static final String TXT_REQUEST_NEW_ORDER = 'Solicita nueva orden a mismo cliente.'
+  private static final String TXT_REQUEST_CONTINUE = 'Solicita nueva orden a otro cliente.'
+  private static final String TXT_REQUEST_QUOTE = 'Cotizar orden actual.'
   private static final String MSJ_QUITAR_PAGOS = 'Elimine los pagos antes de cerrar la sesion.'
   private static final String TXT_QUITAR_PAGOS = 'Error al cerrar sesion.'
   private static final String MSJ_CAMBIAR_VENDEDOR = 'Esta seguro que desea salir de esta sesion.'
   private static final String TXT_CAMBIAR_VENDEDOR = 'Cerrar Sesion'
 
-  private Logger logger = LoggerFactory.getLogger(this.getClass())
+  private Logger logger = LoggerFactory.getLogger( this.getClass() )
   private SwingBuilder sb
   private Order order
   private Customer customer
@@ -52,6 +62,8 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
   private JButton closeButton
   private JButton quoteButton
   private JButton printButton
+  private JButton continueButton
+  private JButton newOrderButton
   private JTextArea comments
   private JTextField itemSearch
   private List<IPromotionAvailable> promotionList
@@ -69,8 +81,17 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
   private DiscountContextMenu discountMenu
   private String autorizacion
   private OperationType currentOperationType
+  private Boolean uiEnabled
+  private Receta rec
+  private Dioptra dioptra = new Dioptra()
+  private static User empleado
+    Receta getRec() {
+        return rec
+    }
 
-  OrderPanel( ) {
+    OrderPanel(User user) {
+
+        empleado = user
     sb = new SwingBuilder()
     order = new Order()
     customer = CustomerController.findDefaultCustomer()
@@ -79,6 +100,7 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
     buildUI()
     doBindings()
     itemsModel.addTableModelListener( this.promotionDriver )
+    uiEnabled = true
   }
 
   private PromotionDriver getPromotionDriver( ) {
@@ -220,9 +242,17 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
         }
         change = label( foreground: UI_Standards.WARNING_FOREGROUND, constraints: BorderLayout.CENTER )
         panel( constraints: BorderLayout.LINE_END, border: BorderFactory.createEmptyBorder( 0, 0, 0, 0 ) ) {
+          newOrderButton = button( TXT_BTN_NEW_ORDER,
+              preferredSize: UI_Standards.BIG_BUTTON_SIZE,
+              actionPerformed: { fireRequestNewOrder() }
+          )
           quoteButton = button( TXT_BTN_QUOTE,
               preferredSize: UI_Standards.BIG_BUTTON_SIZE,
               actionPerformed: { fireRequestQuote() }
+          )
+          continueButton = button( TXT_BTN_CONTINUE,
+              preferredSize: UI_Standards.BIG_BUTTON_SIZE,
+              actionPerformed: { fireRequestContinue(itemsModel) }
           )
           printButton = button( TXT_BTN_PRINT,
               preferredSize: UI_Standards.BIG_BUTTON_SIZE,
@@ -249,8 +279,18 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
     }
     itemsModel.fireTableDataChanged()
     paymentsModel.fireTableDataChanged()
-    change.text = OrderController.requestEmployee( order?.id )
-    currentOperationType = (OperationType) operationType.getSelectedItem()
+
+
+    if ( order?.id != null ) {
+
+
+      change.text = OrderController.requestEmployee( order?.id )
+    } else {
+      change.text = ''
+    }
+    currentOperationType = ( OperationType ) operationType.getSelectedItem()
+    this.printButton.setVisible( !this.isPaymentListEmpty() )
+    this.continueButton.setVisible( this.isPaymentListEmpty() )
   }
 
   private void updateOrder( String pOrderId ) {
@@ -272,20 +312,30 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
   private def doCustomerSearch = { ActionEvent ev ->
     JButton source = ev.source as JButton
     source.enabled = false
-    CustomerSearchDialog dialog = new CustomerSearchDialog( ev.source as Component, order )
-    dialog.show()
-    if ( !dialog.canceled ) {
-      customer = dialog.customer
+    if ( order.customer.id == null ) {
+      CustomerController.browseCustomer( this )
+      sb.doLater {
+        if (this.customer == null) {
+          this.operationType.setSelectedItem( OperationType.DEFAULT )
+        }
+      }
+    } else {
+      order.rx = CustomerController.queryCustomer( order.customer )
+      sb.doLater {
+        this.doBindings( )
+      }
     }
+
     doBindings()
     source.enabled = true
   }
 
   private def operationTypeChanged = { ItemEvent ev ->
-    if ( ev.stateChange == ItemEvent.SELECTED ) {
+    if ( ev.stateChange == ItemEvent.SELECTED && this.uiEnabled ) {
       switch ( ev.item ) {
         case OperationType.DEFAULT:
           customer = CustomerController.findDefaultCustomer()
+
           customerName.enabled = false
           break
         case OperationType.WALKIN:
@@ -315,9 +365,9 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
         case OperationType.QUOTE:
           String orderNbr = OrderController.requestOrderFromQuote( this )
           sb.doLater {
-            if (StringUtils.trimToNull(orderNbr) != null) {
+            if ( StringUtils.trimToNull( orderNbr ) != null ) {
               Customer tmp = OrderController.getCustomerFromOrder( orderNbr )
-              if (tmp != null) {
+              if ( tmp != null ) {
                 customer = tmp
               }
               updateOrder( orderNbr )
@@ -329,6 +379,24 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
         case OperationType.AGREEMENT:
           operationType.setSelectedItem( OperationType.DEFAULT )
           break
+        case OperationType.NEW:
+
+              sb.doLater {
+            CustomerController.requestNewCustomer( this )
+
+          }
+
+          break
+        case OperationType.PENDING:
+          sb.doLater {
+            CustomerController.requestPendingCustomer( this )
+          }
+          break
+        case OperationType.PAYING:
+          sb.doLater {
+            CustomerController.requestPayingCustomer( this )
+          }
+          break
       }
       this.setCustomerInOrder()
       doBindings()
@@ -337,9 +405,40 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
     }
   }
 
+  private Dioptra validaDioptra(Dioptra dioptra, Dioptra nuevoDioptra ){
+      if(dioptra.getMaterial().toString().equals('@')||dioptra?.material == null||(dioptra.getMaterial().toString().equals('C') && !nuevoDioptra.getMaterial().toString().equals('@'))){
+          dioptra.setMaterial(nuevoDioptra.getMaterial())
+      }
+      if(dioptra.getLente().toString().equals('@')||dioptra?.lente == null){
+          dioptra.setLente(nuevoDioptra.getLente())
+      }
+      if(dioptra.getTipo().toString().equals('@')||dioptra?.tipo == null||(dioptra.getTipo().toString().equals('N')&&!nuevoDioptra.getTipo().toString().equals('@'))){
+          dioptra.setTipo(nuevoDioptra.getTipo())
+      }
+      if(dioptra.getEspecial().toString().equals('@')||dioptra?.especial == null||(dioptra.getEspecial().toString().equals('BL')&&!nuevoDioptra.getEspecial().toString().equals('@'))){
+          dioptra.setEspecial(nuevoDioptra.getEspecial())
+      }
+      if(dioptra.getTratamiento().toString().equals('@')||dioptra?.tratamiento == null||(dioptra.getTratamiento().toString().equals('B')&&!nuevoDioptra.getTratamiento().toString().equals('@'))){
+          dioptra.setTratamiento(nuevoDioptra.getTratamiento())
+      }
+      if(dioptra.getColor().toString().trim().equals('@')||dioptra?.color == null||(dioptra.getColor().toString().trim().equals('B')&&!nuevoDioptra.getColor().toString().trim().equals('@'))){
+          dioptra.setColor(nuevoDioptra.getColor())
+      }
+      return dioptra
+  }
+
   private def doItemSearch( ) {
+    Receta rec = new Receta()
     String input = itemSearch.text
-    Boolean newOrder = (StringUtils.trimToNull(StringUtils.trimToEmpty(order?.id)) == null)
+    Boolean newOrder = false
+
+
+      if ( order?.id != null ) {
+      newOrder = StringUtils.isBlank( order.id )
+    }
+
+
+
     if ( StringUtils.isNotBlank( input ) ) {
       sb.doOutside {
         List<Item> results = ItemController.findItemsByQuery( input )
@@ -348,18 +447,45 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
         }
         if ( results?.any() ) {
           if ( results.size() == 1 ) {
+
             Item item = results.first()
-            validarVentaNegativa( item )
+
+              if(item.indexDiotra != '')  {
+                  ArrayList<String> caract = new ArrayList<String>()
+                  String s = item.indexDiotra;
+                  StringTokenizer st = new StringTokenizer(s, ",")
+                  Iterator its = st.iterator()
+                  println('Dioptra: ' + codigoDioptra(dioptra))
+                  while (its.hasNext())
+                  {
+                      caract.add(its.next().toString())
+                  }
+                   Dioptra nuevoDioptra =  new Dioptra(caract.get(0).toString(),caract.get(1).toString(),caract.get(2).toString(),caract.get(3).toString(),caract.get(4).toString(),caract.get(5).toString())
+                      dioptra = validaDioptra(dioptra,nuevoDioptra)
+                      println('Dioptra: ' + codigoDioptra(dioptra))
+
+
+              }
+
+            validarVentaNegativa( item,customer )
+              rec = validarGenericoB(item)
           } else {
             SuggestedItemsDialog dialog = new SuggestedItemsDialog( itemSearch, input, results )
             dialog.show()
             Item item = dialog.item
             if ( item?.id ) {
-              validarVentaNegativa( item )
+             validarVentaNegativa( item,customer )
+            rec = validarGenericoB(item)
             }
           }
-          updateOrder( order?.id )
-          if ( !order.customer.equals(customer) ) {
+            println('RecetaID: ' + rec.id)
+
+
+            OrderController.saveRxOrder(order?.id,rec.id)
+
+
+            updateOrder( order?.id )
+          if ( !order.customer.equals( customer ) ) {
             order.customer = customer
           }
         } else {
@@ -367,7 +493,7 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
               .createDialog( new JTextField(), "B\u00fasqueda: ${input}" )
               .show()
         }
-        if (newOrder && (StringUtils.trimToNull(order?.id) != null) && (StringUtils.trimToNull(customer?.id) != null)) {
+        if ( newOrder && ( StringUtils.trimToNull( order?.id ) != null ) && ( StringUtils.trimToNull( customer?.id ) != null ) ) {
           this.setCustomerInOrder()
         }
       }
@@ -430,18 +556,54 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
       }
     }
   }
+               private Receta validarGenericoB (Item item){
+
+                  rec = null
+                   try{
+                       //Receta Nueva
+                       String artString = item.name
+                          if(artString.equals('SV') || artString.equals('P') || artString.equals('B')){
+
+                           Branch branch = Session.get( SessionItem.BRANCH ) as Branch
+                           EditRxDialog editRx = new EditRxDialog( this, new Rx(), customer?.id, branch?.id, 'Nueva Receta', item.description, order?.id )
+
+                           editRx.show()
 
 
-  private void validarVentaNegativa( Item item ) {
+                           this.disableUI()
+                           this.setCustomer( customer )
+                           this.setOrder( order )
+                           this.enableUI()
+
+
+                       }else{
+                           rec =  null
+                           this.disableUI()
+                           this.setCustomer( customer )
+                           this.setOrder( order )
+                           this.enableUI()
+                       }
+                   }catch(ex){
+                       rec =  null
+                   }
+
+                   return rec
+               }
+
+  private void validarVentaNegativa( Item item, Customer customer) {
+     order.setEmployee(empleado.username)
+
     if ( item.stock > 0 ) {
-      order = OrderController.addItemToOrder( order.id, item )
-      if (customer != null) {
+      order = OrderController.addItemToOrder( order, item )
+      if ( customer != null ) {
         order.customer = customer
       }
     } else {
       SalesWithNoInventory onSalesWithNoInventory = OrderController.requestConfigSalesWithNoInventory()
+        order.customer = customer
       if ( SalesWithNoInventory.ALLOWED.equals( onSalesWithNoInventory ) ) {
-        order = OrderController.addItemToOrder( order.id, item )
+
+        order = OrderController.addItemToOrder( order, item )
       } else if ( SalesWithNoInventory.REQUIRE_AUTHORIZATION.equals( onSalesWithNoInventory ) ) {
         boolean authorized
         if ( AccessController.authorizerInSession ) {
@@ -452,7 +614,7 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
           authorized = authDialog.authorized
         }
         if ( authorized ) {
-          order = OrderController.addItemToOrder( order.id, item )
+          order = OrderController.addItemToOrder( order, item )
         }
       } else {
         sb.optionPane( message: MSJ_VENTA_NEGATIVA, messageType: JOptionPane.ERROR_MESSAGE, )
@@ -480,46 +642,132 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
   }
 
   private def doPrint = { ActionEvent ev ->
-    JButton source = ev.source as JButton
-    source.enabled = false
-    if ( isValidOrder() ) {
-        if( operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.WALKIN.value) ||
-                operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.DOMESTIC.value) ){
-            order.country = 'MEXICO'
-            saveOrder()
-        } else if( operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.FOREIGN.value) ){
-            String paisCliente = CustomerController.countryCustomer( order )
-            if( paisCliente.length() > 0 ){
-                order.country = paisCliente
-                saveOrder()
-            } else {
-                CountryCustomerDialog dialog = new CountryCustomerDialog( MainWindow.instance )
-                dialog.show()
-                if( dialog.button == true ){
-                    order.country = dialog.pais
-                    saveOrder()
-                }
-            }
-        } else if( operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.DEFAULT.value) ){
-            CountryCustomerDialog dialog = new CountryCustomerDialog( MainWindow.instance )
-            dialog.show()
-            if( dialog.button == true ){
-                order.country = dialog.pais
-                saveOrder()
-            }
-        }
-    }
-    source.enabled = true
+
+      String tipoArt = null
+      int artCount = 0
+      for (int row = 0; row<= itemsModel.rowCount;row++)
+      {
+          String artString =  itemsModel.getValueAt(row,0).toString()
+          if(artString.trim().equals('SV')){
+              artCount = artCount + 1
+              tipoArt= 'MONOFOCAL'
+          }else if(artString.trim().equals('B'))
+          {
+              artCount = artCount + 1
+              tipoArt= 'BIFOCAL'
+          }else if(artString.trim().equals('P'))
+          {
+              artCount = artCount + 1
+              tipoArt= 'PROGRESIVO'
+          }
+      }
+
+      if(artCount==0)
+      {
+          JButton source = ev.source as JButton
+          source.enabled = false
+          flujoImprimir()
+          source.enabled = true
+
+      }else{
+
+          rec = OrderController.findRx(order,customer)
+
+          println('Receta ya creada: '+rec.id)
+          println(rec.id == null)
+          if (rec.id == null){   //Receta Nueva
+              Branch branch = Session.get( SessionItem.BRANCH ) as Branch
+
+              EditRxDialog editRx = new EditRxDialog( this, new Rx(), customer?.id, branch?.id, 'Nueva Receta',tipoArt,order?.id )
+              editRx.show()
+
+               try{
+             OrderController.saveRxOrder(order?.id,rec.id)
+
+              JButton source = ev.source as JButton
+              source.enabled = false
+              flujoImprimir()
+              source.enabled = true
+               }catch(ex){
+                   println('No hay receta, no se puede continuar')
+               }
+          }else{
+              JButton source = ev.source as JButton
+              source.enabled = false
+              flujoImprimir()
+              source.enabled = true
+
+          }
+
+
+      }
+
+  }
+
+  private void flujoImprimir(){
+
+
+      if ( isValidOrder() ) {
+          println(operationType.selectedItem.toString().trim())
+
+          if( operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.WALKIN.value) ||
+                  operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.DOMESTIC.value) ){
+              order.country = 'MEXICO'
+              saveOrder()
+          } else if( operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.FOREIGN.value) ){
+              String paisCliente = CustomerController.countryCustomer( order )
+              if( paisCliente.length() > 0 ){
+                  order.country = paisCliente
+                  saveOrder()
+              } else {
+                  CountryCustomerDialog dialog = new CountryCustomerDialog( MainWindow.instance )
+                  dialog.show()
+                  if( dialog.button == true ){
+                      order.country = dialog.pais
+                      saveOrder()
+                  }
+              }
+          } else if( operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.DEFAULT.value) ){
+              CountryCustomerDialog dialog = new CountryCustomerDialog( MainWindow.instance )
+              dialog.show()
+              if( dialog.button == true ){
+                  order.country = dialog.pais
+                  saveOrder()
+              }
+          }     else if(operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.PAYING.value))
+          {
+
+              saveOrder()
+          }
+      }
+
   }
 
     private void saveOrder (){
+
         Order newOrder = OrderController.placeOrder( order )
         CustomerController.saveOrderCountries( order.country )
         this.promotionDriver.requestPromotionSave()
         if ( StringUtils.isNotBlank( newOrder?.id ) ) {
+
             OrderController.printOrder( newOrder.id )
+
             reviewForTransfers( newOrder.id )
-            this.reset( )
+
+           // Flujo despues de imprimir nota de venta
+
+
+
+
+            CustomerController.requestOrderByCustomer(this,customer)
+
+
+
+
+
+
+            // Flujo despues de imprimir nota de venta
+
         } else {
             sb.optionPane(
                     message: 'Ocurrio un error al registrar la venta, intentar nuevamente',
@@ -538,24 +786,18 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
           .show()
       return false
     }
-    if ( order.due > 0 ) {
-      sb.optionPane(
-          message: 'Se debe cubrir el total del saldo.',
-          messageType: JOptionPane.ERROR_MESSAGE
-      ).createDialog( this, 'No se puede registrar la venta' )
-          .show()
-      return false
-    }
-    if ( order.due < 0 ) {
-      sb.optionPane(
-          message: 'Los pagos no deben ser mayores al total de la venta.',
-          messageType: JOptionPane.ERROR_MESSAGE
-      ).createDialog( this, 'No se puede registrar la venta' )
-          .show()
+    if ( !OrderController.isPaymentPolicyFulfilled( order ) ) {
       return false
     }
     return true
   }
+
+
+
+    protected String codigoDioptra(Dioptra codDioptra) {
+        String codigo = codDioptra.material + codDioptra.lente + codDioptra.tipo + codDioptra.especial + codDioptra.tratamiento + codDioptra.color
+        return codigo
+    }
 
   protected void onMouseClickedAtPromotions( MouseEvent pEvent ) {
     // rld Strange no mouse event triggers popup menu
@@ -574,6 +816,7 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
       this.promotionDriver.requestApplyPromotion( pPromotion )
     } else {
       this.promotionDriver.requestCancelPromotion( pPromotion )
+      //promotionList.remove( 0 )
     }
   }
 
@@ -613,14 +856,28 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
         OrderController.requestSaveAsQuote( order, customer )
         this.reset()
       } else {
-        this.change.text = TXT_PAYMENTS_PRESENT
+        sb.doLater {
+          OrderController.notifyAlert( TXT_REQUEST_QUOTE, TXT_PAYMENTS_PRESENT )
+        }
       }
     } else {
-      this.change.text = TXT_NO_ORDER_PRESENT
+      sb.doLater {
+        OrderController.notifyAlert( TXT_REQUEST_QUOTE, TXT_NO_ORDER_PRESENT )
+      }
     }
   }
 
-  private void reset() {
+  private void setCustomerInOrder( ) {
+    if ( ( order?.id != null ) && ( customer != null ) ) {
+      if ( !order.customer.equals( customer ) ) {
+        order.customer = customer
+        OrderController.saveCustomerForOrder( order.id, customer.id )
+      }
+    }
+  }
+
+  void reset( ) {
+
     order = new Order()
     customer = CustomerController.findDefaultCustomer()
     // Benja: Favor de no cambiar la siguiente linea. Esta comentada porque NO debe de estar
@@ -630,12 +887,138 @@ class OrderPanel extends JPanel implements IPromotionDrivenPanel, FocusListener 
     operationType.setSelectedItem( OperationType.DEFAULT )
   }
 
-  private void setCustomerInOrder() {
-    if ((order?.id != null) && (customer != null)) {
-      if ( !order.customer.equals(customer) ) {
-        order.customer = customer
-        OrderController.saveCustomerForOrder(order.id, customer.id)
+  void setCustomer( Customer pCustomer ) {
+    this.logger.debug( String.format( 'Assign Customer: %s', pCustomer.toString() ) )
+
+    customer = pCustomer
+    doBindings()
+  }
+
+  void setOrder( Order pOrder ) {
+    this.logger.debug( String.format( 'Assign Order: %s', pOrder.toString() ) )
+    this.updateOrder( pOrder.id )
+  }
+
+  void setOperationTypeSelected( OperationType pOperation ) {
+    operationType.setSelectedItem( pOperation )
+  }
+
+  void disableUI( ) {
+    uiEnabled = false
+  }
+
+  void enableUI( ) {
+    this.doBindings()
+    uiEnabled = true
+  }
+
+  private void fireRequestContinue(DefaultTableModel itemsModel ) {
+       /*
+      String dio = 'CSNBLBB'
+      Item i = OrderController.findArt(dio)
+      println('Correcto: '+ i.id)
+       */
+      String tipoArt = null
+      int artCount = 0
+      for (int row = 0; row<= itemsModel.rowCount;row++)
+      {
+          String artString =  itemsModel.getValueAt(row,0).toString()
+         if(artString.trim().equals('SV')){
+             artCount = artCount + 1
+             tipoArt= 'MONOFOCAL'
+         }else if(artString.trim().equals('B'))
+         {
+             artCount = artCount + 1
+             tipoArt= 'BIFOCAL'
+         }else if(artString.trim().equals('P'))
+         {
+             artCount = artCount + 1
+             tipoArt= 'PROGRESIVO'
+         }
+      }
+
+    if(artCount==0)
+    {
+        flujoContinuar()
+
+    }else{
+
+
+
+        rec = OrderController.findRx(order,customer)
+
+        println('Receta ya creada: '+rec.id)
+        println(rec.id == null)
+        if (rec.id == null){   //Receta Nueva
+        Branch branch = Session.get( SessionItem.BRANCH ) as Branch
+
+        EditRxDialog editRx = new EditRxDialog( this, new Rx(), customer?.id, branch?.id, 'Nueva Receta',tipoArt,order?.id )
+        editRx.show()
+
+            try{
+            OrderController.saveRxOrder(order?.id,rec.id)
+            flujoContinuar()
+            }catch(ex){
+                flujoContinuar()
+            }
+
+
+        }else{    //Receta ya Capturada
+         /*
+            Rx rx = Rx.toRx(rec)
+            Branch branch = Session.get( SessionItem.BRANCH ) as Branch
+            EditRxDialog editRx = new EditRxDialog( this, rx, customer?.id, branch?.id, 'Nueva Receta',tipoArt )
+            editRx.show()
+           */
+
+            flujoContinuar()
+
+        }
+
+    }
+  }
+
+  private void flujoContinuar(){
+      if ( isPaymentListEmpty() ) {
+
+
+          sb.doLater {
+              OrderController.saveOrder( order )
+              CustomerController.updateCustomerInSite( this.customer.id )
+              this.reset()
+          }
+      } else {
+          sb.doLater {
+              OrderController.notifyAlert( TXT_REQUEST_CONTINUE, TXT_PAYMENTS_PRESENT )
+          }
+      }
+  }
+
+
+  private void fireRequestNewOrder( ) {
+    if ( itemsModel.size() > 0 ) {
+      if ( paymentsModel.size() == 0 ) {
+        Customer c = this.customer
+        OrderController.saveOrder( order )
+        CustomerController.updateCustomerInSite( c.id )
+        this.reset()
+        this.disableUI()
+        this.operationTypeSelected = OperationType.PENDING
+        this.setCustomer( c )
+        this.enableUI()
+      } else {
+        sb.doLater {
+          OrderController.notifyAlert( TXT_REQUEST_NEW_ORDER, TXT_PAYMENTS_PRESENT )
+        }
+      }
+    } else {
+      sb.doLater {
+        OrderController.notifyAlert( TXT_REQUEST_NEW_ORDER, TXT_PAYMENTS_PRESENT )
       }
     }
+  }
+
+  private Boolean isPaymentListEmpty( ) {
+    return ( order.payments.size() == 0 )
   }
 }

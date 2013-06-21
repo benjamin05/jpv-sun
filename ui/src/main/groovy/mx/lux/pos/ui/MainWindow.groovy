@@ -406,6 +406,7 @@ class MainWindow extends JFrame implements KeyListener {
 
         mainPanel = panel( layout: new CardLayout() )
         mainPanel.add( 'logInPanel', logInPanel )
+
       }
     }
   }
@@ -425,15 +426,17 @@ class MainWindow extends JFrame implements KeyListener {
   }
 
   private def doForwardToDefaultPanel = {
-    orderPanel = new OrderPanel()
+      User user = Session.get( SessionItem.USER ) as User
+      Branch branch = Session.get( SessionItem.BRANCH ) as Branch
+    orderPanel = new OrderPanel(user)
     mainPanel.add( 'orderPanel', orderPanel )
     mainPanel.layout.show( mainPanel, 'orderPanel' )
-    User user = Session.get( SessionItem.USER ) as User
-    Branch branch = Session.get( SessionItem.BRANCH ) as Branch
+
     userLabel.text = "[${user?.username ?: ''}] ${user?.fullName ?: ''}"
     branchLabel.text = "[${branch?.id ?: ''}] ${branch?.name ?: ''}"
     versionLabel.text = version
     infoBar.visible = true
+
   }
 
   private void initialize( ) {

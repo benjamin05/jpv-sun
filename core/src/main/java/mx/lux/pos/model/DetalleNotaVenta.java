@@ -55,6 +55,7 @@ public class DetalleNotaVenta implements Serializable {
     @Column( name = "id_sucursal", nullable = false )
     private Integer idSucursal;
 
+
     @Column( name = "surte", length = 1 )
     private String surte;
 
@@ -287,5 +288,6 @@ public class DetalleNotaVenta implements Serializable {
 	public void setNotaVenta(NotaVenta notaVenta) {
 		this.notaVenta = notaVenta;
 	}
-    
+
 }
+

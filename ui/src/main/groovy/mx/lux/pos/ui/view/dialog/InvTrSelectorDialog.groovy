@@ -18,6 +18,8 @@ import javax.swing.JDialog
 import javax.swing.JTable
 import javax.swing.JTextField
 import javax.swing.table.AbstractTableModel
+import java.awt.Point
+import java.awt.Dimension
 
 class InvTrSelectorDialog extends JDialog {
 
@@ -63,8 +65,8 @@ class InvTrSelectorDialog extends JDialog {
         resizable: true,
         pack: true,
         modal: true,
-        preferredSize: [600, 400],
-        location: [180, 80]
+        preferredSize: [600, 400] as Dimension,
+        location: [180, 80] as Point
     ) {
       borderLayout()
       composeFilterPanel( )
@@ -134,7 +136,7 @@ class InvTrSelectorDialog extends JDialog {
           propertyColumn( header: TXT_TR_TYPE_LABEL, propertyName: "idTipoTrans", width: 140, editable: false )
           propertyColumn( header: TXT_TR_NUMBER_LABEL, propertyName: "folio", maxWidth: 60, editable: false )
           closureColumn( header: TXT_TR_PART_LIST_LABEL, minWidth: 300, read: { TransInv tr ->  adapter.getText( tr, InvTrAdapter.FLD_TR_PART_LIST ) } )
-        }
+        } as AbstractTableModel
       }
     }
   }

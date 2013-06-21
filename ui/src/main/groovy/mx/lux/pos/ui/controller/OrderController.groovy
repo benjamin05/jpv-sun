@@ -21,6 +21,8 @@ import mx.lux.pos.ui.model.*
 @Component
 class OrderController {
 
+  private static final Double ZERO_TOLERANCE = 0.0005
+
   private static NotaVentaService notaVentaService
   private static DetalleNotaVentaService detalleNotaVentaService
   private static PagoService pagoService
@@ -31,6 +33,8 @@ class OrderController {
   private static Boolean displayUsd
   private static PromotionService promotionService
   private static CancelacionService cancelacionService
+  private static RecetaService recetaService
+  private static ArticuloService articuloService
 
   private static final String TAG_USD = "USD"
 
@@ -44,7 +48,9 @@ class OrderController {
       InventarioService inventarioService,
       MonedaExtranjeraService monedaExtranjeraService,
       PromotionService promotionService,
-      CancelacionService cancelacionService
+      CancelacionService cancelacionService,
+       RecetaService recetaService,
+       ArticuloService articuloService
   ) {
     this.notaVentaService = notaVentaService
     this.detalleNotaVentaService = detalleNotaVentaService
@@ -55,6 +61,8 @@ class OrderController {
     fxService = monedaExtranjeraService
     this.promotionService = promotionService
       this.cancelacionService = cancelacionService
+        this.recetaService = recetaService
+      this.articuloService = articuloService
   }
 
   static Order getOrder( String orderId ) {
@@ -84,16 +92,73 @@ class OrderController {
     return null
   }
 
-  static Order openOrder( ) {
+  static Order openOrder(String clienteID,String empID ) {
     log.info( 'abriendo nueva orden' )
-    NotaVenta notaVenta = notaVentaService.abrirNotaVenta()
+
+    NotaVenta notaVenta = notaVentaService.abrirNotaVenta(clienteID,empID )
     return Order.toOrder( notaVenta )
   }
 
-  static Order addItemToOrder( String orderId, Item item ) {
+  static Item findArt(String dioptra){
+
+           Articulo art = articuloService.findbyName(dioptra)
+
+      return Item.toItem(art)
+  }
+
+  static Receta findRx(Order order,Customer customer){
+
+      NotaVenta rxNotaVenta = notaVentaService.obtenerNotaVenta(order?.id)
+
+      List<Rx> recetas = CustomerController.findAllPrescriptions(customer?.id)
+
+      Receta receta = new Receta()
+
+      Iterator iterator = recetas.iterator();
+      while (iterator.hasNext()) {
+
+          Rx rx = iterator.next()
+
+
+          if(rxNotaVenta.receta == rx?.id){
+              println('Ok: ' +      rx?.id)
+              rxNotaVenta.receta
+              receta = recetaService.findbyId(rxNotaVenta.receta)
+              println('Ok: ' +     receta.id)
+
+          }
+
+
+      }
+
+      return receta
+  }
+
+  static void saveRxOrder(String idNotaVenta, Integer receta){
+
+       NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(idNotaVenta)
+
+
+       notaVentaService.saveRx(notaVenta ,receta)
+
+  }
+    static void saveFrame (String idNotaVenta, String opciones, String forma){
+        NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(idNotaVenta)
+        notaVentaService.saveFrame(notaVenta,opciones,forma)
+    }
+
+  static Order addItemToOrder( Order order, Item item) {
+      String orderId = order?.id
+
+
+
+      String clienteID = order.customer?.id
+      String empleadoID = order?.employee
+
+
     log.info( "agregando articulo id: ${item?.id} a orden id: ${orderId}" )
     if ( item?.id ) {
-      orderId = ( notaVentaService.obtenerNotaVenta( orderId ) ? orderId : openOrder()?.id )
+      orderId = ( notaVentaService.obtenerNotaVenta( orderId ) ? orderId : openOrder(clienteID,empleadoID)?.id )
       NotaVenta nota = notaVentaService.obtenerNotaVenta( orderId )
       DetalleNotaVenta detalle = null
       if ( item.isManualPriceItem() ) {
@@ -115,8 +180,11 @@ class OrderController {
               precioConv: 0,
               idTipoDetalle: 'N',
               surte: 'S'
+
           )
           nota.observacionesNv = dlg.remarks
+
+
           notaVentaService.registrarNotaVenta( nota )
         }
       } else {
@@ -131,6 +199,7 @@ class OrderController {
             precioConv: 0,
             idTipoDetalle: 'N',
             surte: 'S'
+
         )
       }
       if ( detalle != null ) {
@@ -294,10 +363,13 @@ class OrderController {
 
   static Double requestUsdRate( ) {
     log.info( "Request USD rate" )
+
     Double rate = 1.0
     MonedaDetalle fxrate = fxService.findActiveRate( TAG_USD )
+
     if ( fxrate != null ) {
       rate = fxrate.tipoCambio.doubleValue()
+
     }
     return rate
   }
@@ -305,6 +377,7 @@ class OrderController {
   static Boolean requestUsdDisplayed( ) {
     if ( displayUsd == null ) {
       log.info( "Request USD rate" )
+
       displayUsd = fxService.requestUsdDisplayed()
     }
     return displayUsd
@@ -329,8 +402,10 @@ class OrderController {
   }
 
   static void requestSaveAsQuote( Order pOrder, Customer pCustomer ) {
+
     Integer pQuoteId = ServiceManager.quote.copyFromOrder( pOrder.id, pCustomer.id,
         ( ( User ) Session.get( SessionItem.USER ) ).username )
+
     if ( pQuoteId != null ) {
       ticketService.imprimeCotizacion( pQuoteId )
       notaVentaService.eliminarNotaVenta( pOrder.id )
@@ -360,7 +435,8 @@ class OrderController {
   }
 
   static String requestEmployee( String pOrderId ) {
-    String empName = ''
+      println('OrderID: '+pOrderId)
+      String empName = ''
     if ( StringUtils.trimToNull( StringUtils.trimToEmpty(pOrderId) ) != null ) {
       Empleado employee = notaVentaService.obtenerEmpleadoDeNotaVenta( pOrderId )
       if ( employee != null ) {
@@ -393,6 +469,63 @@ class OrderController {
       }
     }
     return cust
+  }
+
+  static Order saveOrder( Order order ) {
+    log.info( "registrando orden id: ${order?.id}, cliente: ${order?.customer?.id}" )
+    if ( StringUtils.isNotBlank( order?.id ) && order?.customer?.id ) {
+      NotaVenta notaVenta = notaVentaService.obtenerNotaVenta( order.id )
+      if ( StringUtils.isNotBlank( notaVenta?.id ) ) {
+        User user = Session.get( SessionItem.USER ) as User
+        if ( StringUtils.isBlank( notaVenta.idEmpleado ) ) {
+          notaVenta.idEmpleado = user?.username
+        }
+        if ( notaVenta.idCliente != null ) {
+          notaVenta.idCliente = order.customer.id
+        }
+        notaVenta.observacionesNv = order.comments
+        notaVenta = notaVentaService.registrarNotaVenta( notaVenta )
+        return Order.toOrder( notaVenta )
+      } else {
+        log.warn( "no se registra orden, notaVenta no existe" )
+      }
+    } else {
+      log.warn( "no se registra orden, parametros invalidos" )
+    }
+    return null
+  }
+
+  static void notifyAlert( String pTitle, String pMessage ) {
+    JOptionPane.showMessageDialog( MainWindow.instance, pMessage, pTitle, JOptionPane.ERROR_MESSAGE )
+  }
+
+  static Boolean isPaymentPolicyFulfilled( Order pOrder ) {
+    Boolean result = true
+    if ( pOrder.due < 0 ) {
+      this.notifyAlert( OrderPanel.TXT_INVALID_PAYMENT_TITLE, 'Los pagos no deben ser mayores al total de la venta.' )
+      result = false
+    } else if ( pOrder.containsOphtalmic() ) {
+      if ( pOrder.advancePct < ( SettingsController.instance.advancePct - ZERO_TOLERANCE ) ) {
+        this.notifyAlert( OrderPanel.TXT_INVALID_PAYMENT_TITLE, 'Pago menor al %Anticipo establecido.' )
+        result = false
+      }
+    } else if ( pOrder.due > 0 ) {
+      this.notifyAlert( OrderPanel.TXT_INVALID_PAYMENT_TITLE, 'Se debe cubrir el total del saldo.' )
+      result = false
+    }
+    return result
+  }
+
+  static void requestNextOrderFromCustomer( Customer pCustomer, CustomerListener pListener ) {
+    NotaVenta dbOrder = notaVentaService.obtenerSiguienteNotaVentaDeCliente( pCustomer.id )
+    if ( dbOrder != null ) {
+      Order o = Order.toOrder( dbOrder )
+      pListener.disableUI()
+      pListener.operationTypeSelected = OperationType.PAYING
+      pListener.setCustomer( pCustomer )
+      pListener.setOrder( o )
+      pListener.enableUI()
+    }
   }
 
 }

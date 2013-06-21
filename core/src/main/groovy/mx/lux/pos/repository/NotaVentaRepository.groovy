@@ -28,8 +28,11 @@ interface NotaVentaRepository extends JpaRepository<NotaVenta, String>, QueryDsl
   @Query( value = "DELETE FROM nota_venta WHERE id_factura = ?1", nativeQuery = true )
   void deleteByIdFactura( String pIdFactura )
 
-  //@Query( value = "SELECT nv FROM nota_venta nv WHERE factura = ''", nativeQuery = true )
+  //@Query( featureId = "SELECT nv FROM nota_venta nv WHERE factura = ''", nativeQuery = true )
   List<NotaVenta> findByFactura( String pFactura )
 
   List<NotaVenta> findByFacturaIsNull( )
+
+  List<NotaVenta> findByIdCliente( Integer pIdCliente )
+
 }

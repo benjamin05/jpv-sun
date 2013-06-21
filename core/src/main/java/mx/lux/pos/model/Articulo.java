@@ -84,6 +84,9 @@ public class Articulo implements Serializable {
     @Column( name = "proveedor", length = 1 )
     private String proveedor;
 
+    @Column(name = "indice_dioptra", length = 15)
+    private String indice_dioptra;
+
     @ManyToOne
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "id_generico", insertable = false, updatable = false )
@@ -363,5 +366,13 @@ public class Articulo implements Serializable {
 
     public void setPrecios(Precio precios) {
         this.precios = precios;
+    }
+
+    public String getIndice_dioptra() {
+        return indice_dioptra;
+    }
+
+    public void setIndice_dioptra(String indice_dioptra) {
+        this.indice_dioptra = indice_dioptra;
     }
 }

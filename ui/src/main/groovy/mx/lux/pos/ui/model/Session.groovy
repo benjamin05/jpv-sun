@@ -33,6 +33,7 @@ class Session {
   static Object put( SessionItem key, Object value ) {
     log.info( "agregando elemento: ${key}:${value}" )
     return items.put( key, value )
+
   }
 
   static Object remove( SessionItem key ) {

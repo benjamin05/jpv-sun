@@ -1,20 +1,14 @@
 package mx.lux.pos.service.business
 
-import mx.lux.pos.repository.AcuseRepository
 import mx.lux.pos.repository.ParametroRepository
 import mx.lux.pos.service.ArticuloService
 import mx.lux.pos.service.InventarioService
 import mx.lux.pos.service.SucursalService
-import mx.lux.pos.util.CustomDateUtils
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.time.DateUtils
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import mx.lux.pos.model.*
-
-import javax.annotation.Resource
 
 @Component
 class PrepareInvTrBusiness {
@@ -25,20 +19,16 @@ class PrepareInvTrBusiness {
   private static InventarioService inventory
   private static SucursalService sites
   private static ParametroRepository parameters
-  private static AcuseRepository acuseRepository
 
   static PrepareInvTrBusiness instance
 
-  private Logger log = LoggerFactory.getLogger( this.class )
-
   @Autowired
   PrepareInvTrBusiness( ArticuloService pArticuloService, InventarioService pInventarioService, SucursalService pSucursalService,
-                        ParametroRepository pParametroRepository, AcuseRepository pAcuseRepository ) {
+                        ParametroRepository pParametroRepository ) {
     parts = pArticuloService
     inventory = pInventarioService
     sites = pSucursalService
     parameters = pParametroRepository
-    acuseRepository = pAcuseRepository
     instance = this
   }
 
@@ -73,20 +63,12 @@ class PrepareInvTrBusiness {
                 variable += pRequest.skuList[i].sku + ',' + pRequest.skuList[i].qty +'|'
             }
             url += String.format( '?arg=%s', URLEncoder.encode( String.format( '%s', variable ), 'UTF-8' ) )
-            String response = ''
-            try{
-                response = url.toURL().text
-                response = response?.find( /<XX>\s*(.*)\s*<\/XX>/ ) {m, r -> return r}
-            } catch ( Exception e ){
-                println e
-            }
-            log.debug( "respuesta: ${response}" )
+            String response = url.toURL().text
+            response = response?.find( /<XX>\s*(.*)\s*<\/XX>/ ) {m, r -> return r}
             trMstr.referencia = aleatoria
-            insertAcuseTransaction( trMstr, variable, response, trType.idTipoTrans )
-            } else {
-                trMstr.referencia = pRequest.reference
-            }
-
+        } else {
+            trMstr.referencia = pRequest.reference
+        }
 
 
       Integer iDet = 0
@@ -210,20 +192,5 @@ class PrepareInvTrBusiness {
         StringBuffer buf = new StringBuffer( s );
         buf.setCharAt( pos, c );
         return buf.toString( );
-    }
-
-
-    private void insertAcuseTransaction( TransInv transInv, String contenido, String folio, String tipoTransaccion ){
-        log.debug( "Insertando Acuse" )
-        Acuse acuse = new Acuse()
-        acuse.idTipo = tipoTransaccion
-        acuse.folio = StringUtils.trimToEmpty(folio)
-        if( StringUtils.trimToEmpty(folio) != '' ){
-            acuse.fechaAcuso = transInv.fecha
-        }
-        acuse.intentos = 0
-        acuse.contenido = contenido
-        acuse.fechaCarga = new Date()
-        acuseRepository.save( acuse )
     }
 }

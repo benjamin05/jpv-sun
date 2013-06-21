@@ -1,7 +1,7 @@
 package mx.lux.pos.service.impl
 
 import groovy.util.logging.Slf4j
-import mx.lux.pos.model.QSucursal
+import mx.lux.pos.model.Empleado
 import mx.lux.pos.model.Sucursal
 import mx.lux.pos.model.TipoParametro
 import mx.lux.pos.repository.ParametroRepository
@@ -63,9 +63,21 @@ class SucursalServiceImpl implements SucursalService {
 
     List<Sucursal> listarAlmacenes( ) {
         log.debug( "[Service] Listar almacenes" )
-        //List<Sucursal> lstAlmacenes = new ArrayList<>()
-        QSucursal suc = QSucursal.sucursal
-        List<Sucursal> lstAlmacenes = sucursalRepository.findAll( suc.nombre.startsWith('ALM') )
+        List<Sucursal> lstAlmacenes = new ArrayList<>()
+        String paramAlmacenes = Registry.getAlmacenes()
+        String[] almacenes = paramAlmacenes.split(',')
+        if( almacenes.length > 0 ){
+            for(String almacen : almacenes){
+                Integer idSucursal = 0
+                try{
+                    idSucursal = NumberFormat.getInstance().parse(almacen).intValue()
+                } catch ( ParseException e ) { }
+                Sucursal sucursal = sucursalRepository.findOne( idSucursal )
+                if( sucursal != null ){
+                    lstAlmacenes.add(sucursal)
+                }
+            }
+        }
         Collections.sort( lstAlmacenes, sorter )
         return lstAlmacenes
     }
@@ -73,11 +85,21 @@ class SucursalServiceImpl implements SucursalService {
     List<Sucursal> listarSoloSucursales( ) {
         log.debug( "[Service] Listar solo sucursales" )
         List<Sucursal> lstSucursales = new ArrayList<>()
-        List<Sucursal> sucursales = sucursalRepository.findAll()
-        for(Sucursal sucursal : sucursales){
-            if(!sucursal.nombre.startsWith('ALM')){
-                lstSucursales.add(sucursal)
-            }
+        String paramAlmacenes = Registry.getAlmacenes()
+        String[] almacenes = paramAlmacenes.split(',')
+        if( almacenes.length >= CANTIDAD_ALMACENES ){
+            Integer idAlmacen = 0
+            List<Sucursal> sucursales = sucursalRepository.findAll()
+            //for(String almacen : almacenes){
+                /*try{
+                    idAlmacen = NumberFormat.getInstance().parse(almacen).intValue()
+                } catch (ParseException e) {}*/
+                for(Sucursal sucursal : sucursales){
+                    if(!paramAlmacenes.contains(sucursal.id.toString())){
+                        lstSucursales.add(sucursal)
+                    }
+                }
+            //}
         }
         Collections.sort( lstSucursales, sorter )
         return lstSucursales

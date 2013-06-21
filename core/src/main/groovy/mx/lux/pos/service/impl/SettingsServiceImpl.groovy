@@ -13,6 +13,10 @@ class SettingsServiceImpl implements SettingsService {
     return Registry.siteSegment
   }
 
+  Double getAdvancePct() {
+    return Registry.advancePct
+  }
+
   String getIncomingPath() {
     return Registry.inputFilePath
   }

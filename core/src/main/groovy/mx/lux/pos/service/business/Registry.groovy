@@ -152,13 +152,19 @@ class Registry {
   }
 
   static Contribuyente getCompany( ) {
+
     Contribuyente company = null
     String rfc = asString( TipoParametro.COMPANIA_RFC )
+
     List<Contribuyente> companies = new ArrayList<Contribuyente>()
-    companies.clear()
+
+      companies.clear()
+
     if ( rfc.length() > 0 ) {
+
       companies = RepositoryFactory.rfcMaster.findByIdClienteAndRfc( 0, rfc )
-      if ( ( companies == null ) || ( companies.size() == 0 ) ) {
+
+        if ( ( companies == null ) || ( companies.size() == 0 ) ) {
         companies = RepositoryFactory.rfcMaster.findByIdCliente( 0 )
       }
       company = ( companies.size() > 0 ? companies.first() : null )
@@ -368,6 +374,10 @@ class Registry {
     return isTrue( TipoParametro.ACUSE_LOG_DETALLE )
   }
 
+  static Double getAdvancePct() {
+    return asDouble( TipoParametro.PORCENTAJE_ANTICIPO ) / 100.0
+  }
+
   static Boolean isCardPaymentInDollars( String paymentType ){
     Boolean isPaymentDollar = false
     if ( tipoPagoDolares.contains( paymentType.trim() ) ) {
@@ -386,6 +396,7 @@ class Registry {
       valid = this.getInvAdjustPasswd().trim().equals( pPasswd.trim() )
     }
     return valid
+
   }
 
 }

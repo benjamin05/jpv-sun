@@ -1,10 +1,6 @@
 package mx.lux.pos.service
 
-import mx.lux.pos.model.Cliente
-import mx.lux.pos.model.ClientePais
-import mx.lux.pos.model.Dominio
-import mx.lux.pos.model.Titulo
-import mx.lux.pos.model.InstitucionIc
+import mx.lux.pos.model.*
 
 interface ClienteService {
 
@@ -12,9 +8,9 @@ interface ClienteService {
 
   List<Cliente> buscarCliente( String nombre, String apellidoPaterno, String apellidoMaterno )
 
-  Cliente agregarCliente( Cliente cliente, boolean editar )
+  Cliente agregarCliente( Cliente cliente )
 
-  ClientePais agregarClientePais( ClientePais clientePais )
+  Cliente agregarCliente( Cliente cliente, String city, String country )
 
   Cliente obtenerClientePorDefecto( )
 
@@ -22,6 +18,20 @@ interface ClienteService {
 
   List<Dominio> listarDominiosClientes( )
 
-  //List<InstitucionIc> obtenerConvenios( String convenio )
+  void agregarClienteProceso( ClienteProceso clienteProceso)
+
+  List<ClienteProceso> obtenerClientesEnProceso( Boolean pLoaded )
+
+  List<ClienteProceso> obtenerClientesEnCaja( Boolean pLoaded )
+
+  void actualizarClienteEnProceso( Integer pIdCliente )
+
+  void eliminarClienteProceso( Integer pIdCliente )
+
+  List<Receta> obtenerRecetas( Integer idCliente )
+
+  List<Cliente> listBasedOnHint( String pHint )
+
+  List<Cliente> listAll( )
 
 }

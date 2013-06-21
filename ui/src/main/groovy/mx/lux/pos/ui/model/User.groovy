@@ -8,12 +8,14 @@ import mx.lux.pos.model.Empleado
 @Bindable
 @ToString( excludes = 'password' )
 @EqualsAndHashCode
-class User {
+public class User {
+
   String name
   String fathersName
   String mothersName
   String username
   String password
+  String idSucursal
 
   String getFullName( ) {
     "${name ?: ''} ${fathersName ?: ''} ${mothersName ?: ''}"
@@ -27,6 +29,7 @@ class User {
       user.mothersName = empleado.apellidoMaterno
       user.username = empleado.id
       user.password = empleado.passwd
+        user.idSucursal = empleado.idSucursal
       return user
     }
     return null

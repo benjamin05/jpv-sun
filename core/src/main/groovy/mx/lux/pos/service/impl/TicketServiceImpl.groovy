@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.velocity.VelocityEngineUtils
 
-import javax.xml.bind.DatatypeConverter
 import java.awt.image.BufferedImage
 import java.text.DateFormat
 import java.text.NumberFormat
@@ -162,14 +161,32 @@ class TicketServiceImpl implements TicketService {
   }
 
   private void imprimeTicket( String template, Map<String, Object> items ) {
+
     File ticket = generaTicket( template, items )
-    if ( ticket?.exists() ) {
+
+      if ( ticket?.exists() ) {
       try {
         def parametro = parametroRepository.findOne( TipoParametro.IMPRESORA_TICKET.value )
-        def cmd = "${parametro?.valor} ${ticket.path}"
+        def cmd = "${parametro?.valor}" +" /d:\\\\192.168.3.157\\Termica "+ "${ticket.path}"
         log.info( "ejecuta: ${cmd}" )
-        def proc = cmd.execute()
-        proc.waitFor()
+
+
+                 //Evita pasmarse cuando no hay impresora conectada
+          try
+          {
+              def proc = cmd.execute()
+             // int exitVal = proc.exitValue();
+             // println("Process exitValue: " + exitVal);
+              proc.waitFor()
+
+          } catch (Throwable t)
+          {
+              t.printStackTrace();
+          }
+
+                //Evita pasmarse cuando no hay impresora conectada
+
+
       } catch ( ex ) {
         log.error( "error durante la ejecucion del comando de impresion: ${ex.message}", ex )
       }
@@ -248,13 +265,16 @@ class TicketServiceImpl implements TicketService {
           lstComentario.add( String.format( "   # Emp: %s", pmt?.idBancoEmisor ) )
         }
       }
+
       BigDecimal ventaNeta = notaVenta.ventaNeta ?: 0
       String empleado = String.format( "%s [%s]", notaVenta.empleado.nombreCompleto, StringUtils.trimToEmpty( notaVenta.empleado.id ) )
       RuleBasedNumberFormat textFormatter = new RuleBasedNumberFormat( locale, RuleBasedNumberFormat.SPELLOUT )
-      String textoVentaNeta = ( "${textFormatter.format( ventaNeta.intValue() )} PESOS "
-          + "${ventaNeta.remainder( 1 ).unscaledValue()}/100 M.N." )
+
+      String textoVentaNeta = ( "${textFormatter.format( ventaNeta.intValue() )} PESOS "+ "${ventaNeta.remainder( 1 ).unscaledValue()}/100 M.N." )
+
       AddressAdapter companyAddress = Registry.companyAddress
-      def items = [
+
+        def items = [
           nombre_ticket: 'ticket-venta',
           nota_venta: notaVenta,
           compania: companyAddress,
@@ -274,10 +294,12 @@ class TicketServiceImpl implements TicketService {
           fecha_entrega: notaVenta?.fechaPrometida ? DateFormatUtils.format( notaVenta.fechaPrometida, dateTextFormat, locale ) : '',
           comentarios: lstComentario
       ] as Map<String, Object>
+
       imprimeTicket( 'template/ticket-venta-si.vm', items )
       if ( Registry.isReceiptDuplicate() && pNewOrder ) {
         imprimeTicket( 'template/ticket-venta-si.vm', items )
       }
+
     } else {
       log.warn( 'no se imprime ticket venta, parametros invalidos' )
     }
@@ -795,7 +817,6 @@ class TicketServiceImpl implements TicketService {
     TransInvAdapter adapter = TransInvAdapter.instance
     def parts = [ ]
     Integer cantidad = 0
-    String referencia = ''
     for ( TransInvDetalle trDet in pTrans.trDet ) {
       Articulo part = ServiceFactory.partMaster.obtenerArticulo( trDet.sku, true)
       def tkPart = [
@@ -1170,42 +1191,18 @@ class TicketServiceImpl implements TicketService {
             codigo_postal: cfd.Receptor.Domicilio.@codigoPostal
         ]
         def conceptos = [ ]
-        Integer totalArticulos = 0
         cfd.Conceptos.Concepto.each {
           String precioTxt = it.@valorUnitario ?: ''
           Double precio = precioTxt.isNumber() ? precioTxt.toDouble() : 0
           String importeTxt = it.@importe ?: ''
-          String cantidadTxt = it.@cantidad ?: ''
           Double importe = importeTxt.isNumber() ? importeTxt.toDouble() : 0
-          Integer cant = cantidadTxt.isNumber() ? cantidadTxt.toInteger() : 0
           String descripcionTmp = it.@descripcion
-            String descripcion1 = ''
-            String descripcion2 = ''
-            String descripcion3 = ''
-            if ( descripcionTmp.length() > 24 ) {
-                descripcion1 = descripcionTmp.substring( 0, 24 )
-                if ( descripcionTmp.length() > 48 ) {
-                    descripcion2 = descripcionTmp.substring( 24, 48 )
-                    if( descripcionTmp.length() > 72 ) {
-                        descripcion3 = descripcionTmp.substring( 48, 72 )
-                    } else {
-                        descripcion3 = descripcionTmp.substring( 48 )
-                    }
-                } else {
-                    descripcion2 = descripcionTmp.substring( 24 )
-                }
-            } else {
-                descripcion1 = descripcionTmp
-            }
           String descripcion = WordUtils.wrap( descripcionTmp, 24 )
           List<String> descripciones = descripcion.tokenize( '\n' ) ?: [ ]
-          totalArticulos = totalArticulos+cant
           def concepto = [
               cantidad: it.@cantidad,
               unidad: it.@unidad,
-              descripcion1: descripcion1,
-              descripcion2: descripcion2,
-              descripcion3: descripcion3,
+              descripcion: descripciones.any() ? descripciones.first() : '',
               valor_unitario: formatter.format( precio ),
               importe: formatter.format( importe )
           ]
@@ -1219,7 +1216,7 @@ class TicketServiceImpl implements TicketService {
                   valor_unitario: '',
                   importe: ''
               ]
-              //conceptos.add( tmp )
+              conceptos.add( tmp )
             }
           }
         }
@@ -1242,17 +1239,13 @@ class TicketServiceImpl implements TicketService {
         BigDecimal total = totalTxt.isNumber() ? totalTxt.toBigDecimal() : 0
         RuleBasedNumberFormat textFormatter = new RuleBasedNumberFormat( new Locale( 'es' ), RuleBasedNumberFormat.SPELLOUT )
         String textoTotal = "${textFormatter.format( total.intValue() )} ${total.remainder( 1 ).unscaledValue()}/100 M.N."
-        String cadenaOriginal = comprobante.cadenaOriginal
-
-        String pipe = '\u01C0'
 
         Map<String, Object> items = [
             nombre_ticket: 'ticket-comprobante-fiscal',
             folio: "${cfd.@serie}-${cfd.@folio}",
             fecha: cfd.@fecha,
-            sello: StringUtils.trimToEmpty(comprobante.sello) != '' ? comprobante.sello : cfd.@sello,
-            totalArt: totalArticulos,
-            cadena_original: StringUtils.trimToEmpty(cadenaOriginal) ? cadenaOriginal : '',
+            sello: cfd.@sello,
+            cadena_original: null,
             sello_cfdi: null,
             cadena_original_cfdi: null,
             num_aprobacion: cfd.@noAprobacion,
@@ -1275,6 +1268,7 @@ class TicketServiceImpl implements TicketService {
             leyenda: "Este documento es una representacion impresa de un CFD",
             empresa: companyAddress.shortName
         ]
+
         imprimeTicket( 'template/ticket-comprobante-fiscal.vm', items )
       } else {
         log.warn( 'no se imprime ticket comprobante fiscal, no se obtienen archivos' )

@@ -1,5 +1,6 @@
 package mx.lux.pos.service.impl
 
+
 import mx.lux.pos.model.Moneda
 import mx.lux.pos.model.MonedaDetalle
 import mx.lux.pos.repository.MonedaDetalleRepository
@@ -53,10 +54,14 @@ class MonedaExtranjeraServiceImpl implements MonedaExtranjeraService {
   }
 
   MonedaDetalle findActiveRate( String pIdMoneda, Date pDate ) {
+
     MonedaDetalle rate = null
     Date date = DateUtils.addDays( DateUtils.truncate( pDate, Calendar.DATE ), 1 )
+
     String idMoneda = StringUtils.trimToEmpty( pIdMoneda ).toUpperCase()
     List<MonedaDetalle> rates = currRateDetail.findByIdMonedaAndFechaActivaBefore( idMoneda, date )
+
+
     if ( rates.size() > 0 ) {
       Collections.sort( rates )
       rate = rates[ 0 ]

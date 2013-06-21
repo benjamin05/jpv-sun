@@ -28,6 +28,13 @@ class OrderItem {
     return descripcion
   }
 
+    String getTipo(){
+        String tipo
+        tipo = item?.type
+
+        return tipo
+    }
+
 
   static OrderItem toOrderItem( DetalleNotaVenta detalleNotaVenta ) {
     try {

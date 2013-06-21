@@ -61,11 +61,19 @@ class ArticuloServiceImpl implements ArticuloService {
     // log.debug( "Return articulo:: ${articulo.descripcion} " )
     return articulo
   }
+    @Override
+    Articulo findbyName(String dioptra){
+
+        Articulo articulo = articuloRepository.findbyName(dioptra)
+
+        return articulo
+    }
 
   @Override
   Articulo obtenerArticulo( Integer id ) {
     return obtenerArticulo( id, true )
   }
+
 
   @Override
   Articulo obtenerArticulo( Integer id, boolean incluyePrecio ) {
@@ -103,13 +111,19 @@ class ArticuloServiceImpl implements ArticuloService {
   @Override
   List<Articulo> listarArticulosPorCodigoSimilar( String articulo, boolean incluyePrecio ) {
     log.info( "listando articulos con articulo similar: ${articulo}" )
+      log.warn( "bien5" )
     Predicate predicate = QArticulo.articulo1.articulo.startsWithIgnoreCase( articulo )
+
     List<Articulo> resultados = articuloRepository.findAll( predicate, QArticulo.articulo1.articulo.asc() ) as List<Articulo>
     if ( incluyePrecio ) {
       return resultados?.collect { Articulo tmp ->
         establecerPrecio( tmp )
       }
+
+
     }
+
+
     return resultados
   }
 

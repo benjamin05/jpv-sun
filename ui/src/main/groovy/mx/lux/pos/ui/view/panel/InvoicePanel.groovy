@@ -16,8 +16,6 @@ import javax.swing.border.TitledBorder
 import mx.lux.pos.ui.model.*
 
 import javax.swing.*
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 
 class InvoicePanel extends JPanel {
 
@@ -156,11 +154,6 @@ class InvoicePanel extends JPanel {
               mutual: true
           )
       )
-        DateFormat df = new SimpleDateFormat( "dd-MM-yyyy" )
-        String today = df.format( new Date() )
-        String dateInvoice = df.format( invoice.issueDate != null ? invoice.issueDate : new Date() )
-        println dateInvoice.equalsIgnoreCase(today)
-        Boolean validateDate = dateInvoice.equalsIgnoreCase(today)
       bean( cbExtranjero, enabled: bind {editable} )
       bean( txtRazonSocial, text: bind( source: invoice, sourceProperty: 'bizName', mutual: true ) )
       bean( txtRazonSocial, enabled: bind {editable} )
@@ -178,7 +171,7 @@ class InvoicePanel extends JPanel {
       bean( txtCP, enabled: bind {editable} )
       bean( txtCorreo, enabled: bind {editable} )
       bean( cbCorreo, enabled: bind {editable} )
-      bean( editButton, visible: bind {invoiced && validateDate} )
+      bean( editButton, visible: bind {invoiced} )
       bean( printInvoiceButton, visible: bind {invoiced && !editable} )
       bean( printReferenceButton, visible: bind {invoiced && !editable} )
       bean( displayButton, visible: bind {invoiced && !editable} )
@@ -415,9 +408,6 @@ class InvoicePanel extends JPanel {
     JButton source = ev.source as JButton
     source.enabled = false
     if ( isValidInput() ) {
-        if( cbExtranjero.selected ){
-            invoice.state = 'NA'
-        }
       Invoice invoiceTmp = InvoiceController.requestInvoice( invoice )
       if ( invoiceTmp?.id ) {
         fillInvoiceFields( invoiceTmp )

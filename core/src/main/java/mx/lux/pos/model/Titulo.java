@@ -98,4 +98,23 @@ public class Titulo implements Serializable {
     public void setIdSucursal( Integer idSucursal ) {
         this.idSucursal = idSucursal;
     }
+
+    // Entity methods
+    public boolean equals( Object o ) {
+        boolean result = false;
+        if ( o instanceof Titulo ) {
+            result = this.getTitulo().equalsIgnoreCase( ( ( Titulo ) o ).getTitulo() );
+        } else if ( o instanceof String ) {
+            result = this.getTitulo().trim().equalsIgnoreCase( ( ( String ) o ).trim() );
+        }
+        return result;
+    }
+
+    public int hashCode() {
+        return this.getTitulo().hashCode();
+    }
+
+    public String toString() {
+        return this.getTitulo();
+    }
 }

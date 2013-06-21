@@ -62,14 +62,24 @@ class NotaVentaServiceImpl implements NotaVentaService {
 
   @Override
   @Transactional
-  NotaVenta abrirNotaVenta( ) {
+  NotaVenta abrirNotaVenta(String clienteID,String empleadoID ) {
     log.info( 'abriendo nueva notaVenta' )
-    Parametro parametro = parametroRepository.findOne( TipoParametro.ID_CLIENTE_GENERICO.value )
+
+      println('empleado: ' + empleadoID)
+
+    Parametro parametro = new Parametro()
+      parametro.setValor(clienteID)
+
+
+      //Cambiar el parametro por clienteID
+
+
     NotaVenta notaVenta = new NotaVenta(
         id: notaVentaRepository.getNotaVentaSequence(),
         idSucursal: sucursalRepository.getCurrentSucursalId(),
         idCliente: parametro?.valor?.isInteger() ? parametro.valor.toInteger() : null
     )
+      notaVenta.setIdEmpleado(empleadoID)
     try {
       notaVenta = notaVentaRepository.save( notaVenta )
       log.info( "notaVenta registrada id: ${notaVenta?.id}" )
@@ -88,6 +98,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
     if ( StringUtils.isNotBlank( notaVenta?.id ) ) {
       String idNotaVenta = notaVenta.id
       if ( notaVentaRepository.exists( idNotaVenta ) ) {
+
         notaVenta.idSucursal = sucursalRepository.getCurrentSucursalId()
         BigDecimal total = BigDecimal.ZERO
         List<DetalleNotaVenta> detalles = detalleNotaVentaRepository.findByIdFactura( idNotaVenta )
@@ -97,6 +108,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
           BigDecimal subtotal = precio.multiply( cantidad )
           total = total.add( subtotal )
         }
+
         BigDecimal pagado = BigDecimal.ZERO
         List<Pago> pagos = pagoRepository.findByIdFactura( idNotaVenta )
         pagos?.each { Pago pago ->
@@ -286,6 +298,40 @@ class NotaVentaServiceImpl implements NotaVentaService {
     }
     return null
   }
+    @Transactional
+    void saveFrame(NotaVenta rNotaVenta, String opciones, String forma) {
+
+            if ( notaVentaRepository.exists( rNotaVenta.id ) ) {
+
+                rNotaVenta.setUdf2(opciones)
+                rNotaVenta.setUdf3(forma)
+
+
+                registrarNotaVenta( rNotaVenta )
+            } else {
+                log.warn( "id no existe" )
+            }
+
+    }
+
+
+    @Transactional
+    void saveRx(NotaVenta rNotaVenta, Integer receta){
+
+        if ( StringUtils.isNotBlank( rNotaVenta.id) ) {
+            if ( notaVentaRepository.exists( rNotaVenta.id ) ) {
+
+                rNotaVenta.setReceta(receta)
+
+
+             registrarNotaVenta( rNotaVenta )
+            } else {
+                log.warn( "id no existe" )
+            }
+        } else {
+            log.warn( "No hay receta" )
+        }
+    }
 
   @Override
   @Transactional
@@ -432,4 +478,26 @@ class NotaVentaServiceImpl implements NotaVentaService {
       notaVentaRepository.save( pNotaVenta )
     }
   }
+
+    @Override
+    @Transactional
+  NotaVenta obtenerSiguienteNotaVenta( Integer pIdCustomer ) {
+
+
+    List<NotaVenta> orders = notaVentaRepository.findByIdCliente( pIdCustomer )
+    NotaVenta order = null
+    for (NotaVenta o : orders) {
+      if ( o.detalles.size() > 0 && StringUtils.isBlank( o.factura )) {
+        order = o
+        break
+      }
+    }
+    if (order == null) {
+      ServiceFactory.customers.eliminarClienteProceso( pIdCustomer )
+    }
+
+    return order
+  }
+
+
 }

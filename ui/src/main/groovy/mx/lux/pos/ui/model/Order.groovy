@@ -11,6 +11,9 @@ import org.apache.commons.lang3.math.NumberUtils
 @ToString
 @EqualsAndHashCode
 class Order {
+
+  private static final String OPHTALMIC_TYPE = 'B'
+
   String id
   String bill
   String comments
@@ -29,7 +32,7 @@ class Order {
 
   private Double usdRate
 
-  public Order() {
+  public Order( ) {
     this.usdRate = OrderController.requestUsdRate()
   }
 
@@ -77,7 +80,7 @@ class Order {
         order.deals.addAll( notaVenta.ordenPromDet?.collect {OrderLinePromotion.toPromotions( it )} )
       }
       IPromotion descuento = OrderDiscount.toPromotions( notaVenta )
-      if( descuento != null ){
+      if ( descuento != null ) {
         order.deals.add( descuento )
       }
       order.round()
@@ -87,4 +90,30 @@ class Order {
     }
     return null
   }
+
+  Double getAdvancePct( ) {
+    Double pct = 0
+    if ( this.total.toDouble() < 0.001 ) {
+      if ( this.paid.toDouble() > 0.001 ) {
+        pct = 0.0
+      } else {
+        pct = 100.0
+      }
+    } else {
+      pct = this.paid.toDouble() / this.total.toDouble()
+    }
+    return pct
+  }
+
+  Boolean containsOphtalmic( ) {
+    Boolean contained = false
+    for ( OrderItem orderLine : this.items ) {
+      if ( orderLine.item.type.equals( OPHTALMIC_TYPE ) )  {
+        contained = true
+        break
+      }
+    }
+    return contained
+  }
+
 }

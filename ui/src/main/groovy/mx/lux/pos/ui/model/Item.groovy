@@ -32,6 +32,7 @@ class Item {
   String typeArticle
   String subtype
   Integer stock
+  String indexDiotra
 
   static String manualPriceTypeList
 
@@ -61,6 +62,7 @@ class Item {
           typeArticle: articulo.tipo,
           subtype: articulo.subtipo,
           stock: articulo.cantExistencia,
+          indexDiotra: articulo.indice_dioptra
       )
       return item
     }

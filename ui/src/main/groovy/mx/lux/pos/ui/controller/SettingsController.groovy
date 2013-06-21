@@ -20,6 +20,10 @@ class SettingsController {
     return ServiceManager.settingsService.siteSegment
   }
 
+  Double getAdvancePct() {
+    return ServiceManager.settingsService.advancePct
+  }
+
   String getIncomingPath() {
     return ServiceManager.settingsService.incomingPath
   }
