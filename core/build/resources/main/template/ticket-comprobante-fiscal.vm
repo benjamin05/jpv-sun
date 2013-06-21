@@ -39,10 +39,7 @@
 #LINEA_SEPARACION_SIMPLE()
 ${COLUMNAS}
 #ALINEAR_IZQUIERDA()#SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 ${SUBRAYADO})CANT${COL_DET_1}DESCRIPCION${COL_DET_2}PRECIO${COL_DET_3}IMPORTE
-#SET_STYLE(${FUENTE_B} 0 0 0 0)#foreach( $det in $conceptos )${det.cantidad}${COL_DET_1}${det.descripcion1}${COL_DET_2}${det.valor_unitario}${COL_DET_3}${det.importe}
-#SET_STYLE(${FUENTE_B} 0 0 0 0)${COL_DET_1}${det.descripcion2}
-#SET_STYLE(${FUENTE_B} 0 0 0 0)${COL_DET_1}${det.descripcion3}${LF}#end
-#SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 0)Articulos: ${totalArt}
+#SET_STYLE(${FUENTE_B} 0 0 0 0)#foreach( $det in $conceptos )${det.cantidad}${COL_DET_1}${det.descripcion}${COL_DET_2}${det.valor_unitario}${COL_DET_3}${det.importe}${LF}#end
 #SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 0)${COL_DET_2}SUBTOTAL:${COL_DET_3}#altnull(${subtotal})${CR}
 #SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 0)#foreach( $imp in $impuestos )${COL_DET_2}${imp.impuesto} ${imp.tasa}%${COL_DET_3}${imp.importe}${CR}#end${CR}
 #SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 0)${COL_DET_2}TOTAL:${COL_DET_3}#altnull(${total})${LF}
@@ -51,9 +48,9 @@ ${COLUMNAS}
 #SET_STYLE(${FUENTE_B} 0 0 0 0)METODO DE PAGO: #altnull(${metodo_pago})${CR}
 #LINEA_SEPARACION_SIMPLE()${CR}
 #ALINEAR_IZQUIERDA()#SET_STYLE(${FUENTE_B} 0 0 0 0)SELLO DIGITAL:${CR}
-#SET_STYLE(${FUENTE_B} 0 0 0 0)${sello}${LF}
+#SET_STYLE(${FUENTE_B} 0 0 0 0)#altnull(${sello})${LF}
 #SET_STYLE(${FUENTE_B} 0 0 0 0)CADENA ORIGINAL:${CR}
-#PRINT_SPECIAL_CHARECTERS(0)#SET_STYLE(${FUENTE_B} 0 0 0 0)${cadena_original}${LF}
+#SET_STYLE(${FUENTE_B} 0 0 0 0)#altnull(${cadena_original})${LF}
 #if("$!sello_cfdi"!="")
 #SET_STYLE(${FUENTE_B} 0 0 0 0)SELLO DIGITAL CFDI:${CR}
 #SET_STYLE(${FUENTE_B} 0 0 0 0)#altnull(${sello_cfdi})${LF}

@@ -54,6 +54,8 @@ public class QArticulo extends EntityPathBase<Articulo> {
 
     public final StringPath idSync = createString("idSync");
 
+    public final StringPath indice_dioptra = createString("indice_dioptra");
+
     public final StringPath marca = createString("marca");
 
     public final NumberPath<java.math.BigDecimal> precio = createNumber("precio", java.math.BigDecimal.class);

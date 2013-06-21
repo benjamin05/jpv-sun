@@ -18,8 +18,6 @@ public class QComprobante extends EntityPathBase<Comprobante> {
 
     public static final QComprobante comprobante = new QComprobante("comprobante");
 
-    public final StringPath cadenaOriginal = createString("cadenaOriginal");
-
     public final StringPath calle = createString("calle");
 
     public final StringPath codigoPostal = createString("codigoPostal");
@@ -83,8 +81,6 @@ public class QComprobante extends EntityPathBase<Comprobante> {
     public final StringPath rfc = createString("rfc");
 
     public final StringPath rx = createString("rx");
-
-    public final StringPath sello = createString("sello");
 
     public final NumberPath<java.math.BigDecimal> subtotal = createNumber("subtotal", java.math.BigDecimal.class);
 
