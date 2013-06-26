@@ -66,7 +66,8 @@ class ArticuloServiceImpl implements ArticuloService {
 
         Articulo articulo = articuloRepository.findbyName(dioptra)
 
-        return articulo
+
+
     }
 
   @Override

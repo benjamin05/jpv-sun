@@ -27,7 +27,9 @@ class ItemDialog extends JDialog {
   private List<String> deliversList
   private JSpinner quantity
 
-  ItemDialog( Component parent, Order order, final OrderItem orderItem ) {
+
+    ItemDialog( Component parent, Order order, final OrderItem orderItem) {
+
     this.orderItem = orderItem
     this.order = order
     sb = new SwingBuilder()
@@ -93,9 +95,13 @@ class ItemDialog extends JDialog {
   private def doDelete = { ActionEvent ev ->
     JButton source = ev.source as JButton
     source.enabled = false
-    OrderController.removeOrderItemFromOrder( order.id, orderItem )
+
+    Order o = OrderController.removeOrderItemFromOrder( order.id, orderItem )
+
+
     source.enabled = true
-    dispose()
+    this.setVisible(false)
+    //dispose()
   }
 
   private def doSubmit = { ActionEvent ev ->

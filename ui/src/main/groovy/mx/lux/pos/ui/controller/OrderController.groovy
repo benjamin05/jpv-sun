@@ -147,16 +147,62 @@ class OrderController {
         notaVentaService.saveFrame(notaVenta,opciones,forma)
     }
 
+  static Dioptra addDioptra(Order order, String dioptra){
+
+
+      NotaVenta nota = notaVentaService.obtenerNotaVenta( order.id )
+       nota.setCodigo_lente(dioptra)
+      nota = notaVentaService.registrarNotaVenta( nota )
+
+
+        Dioptra diop = generaDioptra(preDioptra(nota.codigo_lente))
+
+
+      return diop
+
+  }
+    static String preDioptra(String dioString){
+        String preDioptra
+        try{
+        preDioptra = dioString.substring(0,1) + ',' +
+                dioString.substring(1,2) + ',' +
+                               dioString.substring(2,3) + ',' +
+                   dioString.substring(3,5) + ',' +
+                   dioString.substring(5,6) + ',' +
+                   dioString.substring(6,7)
+        }catch(e){}
+        return preDioptra
+    }
+
+    static Dioptra generaDioptra(String dioString){
+
+
+        Dioptra nuevoDioptra =  new Dioptra()
+        if(dioString == null){
+
+        }else{
+            ArrayList<String> caract = new ArrayList<String>()
+            String s = dioString
+            StringTokenizer st = new StringTokenizer(s.trim(), ",")
+            Iterator its = st.iterator()
+
+            while (its.hasNext())
+            {
+                caract.add(its.next().toString())
+            }
+            nuevoDioptra =  new Dioptra(caract.get(0).toString(),caract.get(1).toString(),caract.get(2).toString(),caract.get(3).toString(),caract.get(4).toString(),caract.get(5).toString())
+        }
+
+        return nuevoDioptra
+
+    }
+
   static Order addItemToOrder( Order order, Item item) {
       String orderId = order?.id
-
-
-
       String clienteID = order.customer?.id
       String empleadoID = order?.employee
 
-
-    log.info( "agregando articulo id: ${item?.id} a orden id: ${orderId}" )
+      log.info( "agregando articulo id: ${item?.id} a orden id: ${orderId}" )
     if ( item?.id ) {
       orderId = ( notaVentaService.obtenerNotaVenta( orderId ) ? orderId : openOrder(clienteID,empleadoID)?.id )
       NotaVenta nota = notaVentaService.obtenerNotaVenta( orderId )
@@ -183,7 +229,6 @@ class OrderController {
 
           )
           nota.observacionesNv = dlg.remarks
-
 
           notaVentaService.registrarNotaVenta( nota )
         }
@@ -235,12 +280,29 @@ class OrderController {
     return null
   }
 
+
+    static String codigoDioptra(Dioptra codDioptra) {
+        String codigo = codDioptra.material + codDioptra.lente + codDioptra.tipo + codDioptra.especial + codDioptra.tratamiento + codDioptra.color
+        return codigo
+    }
+
   static Order removeOrderItemFromOrder( String orderId, OrderItem orderItem ) {
     log.info( "eliminando orderItem, articulo id: ${orderItem?.item?.id} de orden id: ${orderId}" )
     if ( StringUtils.isNotBlank( orderId ) && orderItem?.item?.id ) {
       NotaVenta notaVenta = notaVentaService.eliminarDetalleNotaVentaEnNotaVenta( orderId, orderItem.item.id )
       if ( notaVenta?.id ) {
-        return Order.toOrder( notaVenta )
+          NotaVenta nota = notaVentaService.obtenerNotaVenta(orderId)
+
+          Articulo i = articuloService.obtenerArticulo(orderItem?.item?.id.toInteger())
+
+          Dioptra actDioptra = validaDioptra(generaDioptra(preDioptra(nota.codigo_lente)),generaDioptra(i.indice_dioptra))
+          Order o = Order.toOrder( notaVenta )
+
+          actDioptra = addDioptra(o,codigoDioptra(actDioptra))
+
+
+
+          return o
       } else {
         log.warn( "no se elimina orderItem, notaVenta no existe" )
       }
@@ -250,7 +312,57 @@ class OrderController {
     return null
   }
 
-  static Order addPaymentToOrder( String orderId, Payment payment ) {
+
+    static Dioptra validaDioptra(Dioptra dioptra, Dioptra nuevoDioptra ){
+
+        if(dioptra.getMaterial().toString().equals('@')||dioptra?.material == null||(dioptra.getMaterial().toString().equals('C') && !nuevoDioptra.getMaterial().toString().equals('@'))||(!dioptra.getMaterial().toString().trim().equals('C')&&!nuevoDioptra.getMaterial().toString().trim().equals('@'))){
+            if(dioptra.getMaterial().toString().trim().equals( nuevoDioptra.getMaterial().toString().trim())){
+             dioptra.setMaterial('C')
+            }else{
+            dioptra.setMaterial(nuevoDioptra.getMaterial())
+            }
+        }
+        if(dioptra.getLente().toString().equals('@')||dioptra?.lente == null||!nuevoDioptra?.getLente().toString().equals('@') ){
+            if(dioptra.getLente().toString().trim().equals( nuevoDioptra.getLente().toString().trim())){
+                dioptra.setLente('@')
+            }else{
+            dioptra.setLente(nuevoDioptra.getLente())
+            }
+        }
+        if(dioptra.getTipo().toString().equals('@')||dioptra?.tipo == null||(dioptra.getTipo().toString().equals('N')&&!nuevoDioptra.getTipo().toString().equals('@'))||(!dioptra.getTipo().toString().trim().equals('N')&&!nuevoDioptra.getTipo().toString().trim().equals('@'))){
+            if(dioptra.getTipo().toString().trim().equals( nuevoDioptra.getTipo().toString().trim())){
+                dioptra.setTipo('N')
+            }else{
+            dioptra.setTipo(nuevoDioptra.getTipo())
+            }
+        }
+        if(dioptra.getEspecial().toString().equals('@@')||dioptra?.especial == null||(dioptra.getEspecial().toString().equals('BL')&&!nuevoDioptra.getEspecial().toString().equals('@@'))||(!dioptra.getEspecial().toString().trim().equals('BL')&&!nuevoDioptra.getEspecial().toString().trim().equals('@@'))){
+            if(dioptra.getEspecial().toString().trim().equals( nuevoDioptra.getEspecial().toString().trim())){
+                dioptra.setEspecial('BL')
+            }else{
+            dioptra.setEspecial(nuevoDioptra.getEspecial())
+            }
+        }
+        if(dioptra.getTratamiento().toString().equals('@')||dioptra?.tratamiento == null||(dioptra.getTratamiento().toString().equals('B')&&!nuevoDioptra.getTratamiento().toString().equals('@'))||(!dioptra.getTratamiento().toString().trim().equals('B')&&!nuevoDioptra.getTratamiento().toString().trim().equals('@'))){
+            if(dioptra.getTratamiento().toString().trim().equals( nuevoDioptra.getTratamiento().toString().trim())){
+                dioptra.setTratamiento('B')
+            }else{
+            dioptra.setTratamiento(nuevoDioptra.getTratamiento())
+            }
+        }
+        if(dioptra.getColor().toString().trim().equals('@')||dioptra?.color == null||(dioptra.getColor().toString().trim().equals('B')&&!nuevoDioptra.getColor().toString().trim().equals('@'))||(!dioptra.getColor().toString().trim().equals('B')&&!nuevoDioptra.getColor().toString().trim().equals('@'))){
+
+            if(dioptra.getColor().toString().trim().equals( nuevoDioptra.getColor().toString().trim())){
+                dioptra.setColor('B')
+            }else{
+            dioptra.setColor(nuevoDioptra.getColor())
+            }
+        }
+        return dioptra
+    }
+
+
+    static Order addPaymentToOrder( String orderId, Payment payment ) {
     log.info( "agregando pago monto: ${payment?.amount}, tipo: ${payment?.paymentTypeId} a orden id: ${orderId}" )
     if ( StringUtils.isNotBlank( orderId ) && StringUtils.isNotBlank( payment?.paymentTypeId ) && payment?.amount ) {
 
@@ -483,6 +595,7 @@ class OrderController {
         if ( notaVenta.idCliente != null ) {
           notaVenta.idCliente = order.customer.id
         }
+        notaVenta.codigo_lente = order?.dioptra
         notaVenta.observacionesNv = order.comments
         notaVenta = notaVentaService.registrarNotaVenta( notaVenta )
         return Order.toOrder( notaVenta )

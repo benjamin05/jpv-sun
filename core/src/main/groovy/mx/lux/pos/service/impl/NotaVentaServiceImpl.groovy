@@ -124,7 +124,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
         try {
           notaVenta = notaVentaRepository.save( notaVenta )
           log.info( "notaVenta registrada id: ${notaVenta?.id}" )
-          return notaVenta
+
         } catch ( ex ) {
           log.error( "problema al registrar notaVenta: ${notaVenta?.dump()}", ex )
         }
@@ -134,7 +134,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
     } else {
       log.warn( "no se registra notaVenta, parametros invalidos" )
     }
-    return null
+    return notaVenta
   }
 
   private DetalleNotaVenta establecerPrecios( DetalleNotaVenta detalle ) {

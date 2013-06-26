@@ -6,7 +6,6 @@ import javax.swing.JFrame
 import javax.swing.JMenuItem
 import javax.swing.JPanel
 import javax.swing.SwingUtilities
-import mx.lux.pos.ui.view.panel.RxPanel
 
 class CustomersPanelSample extends JFrame {
 
@@ -36,7 +35,7 @@ class CustomersPanelSample extends JFrame {
         //add(new Background() )
         //add(new ExamPanel())
         //add( new BudgetPanel() )
-        add( new RxPanel() )
+        //add( new RxPanel() )
         //add( new RecordsPanel() )
       }
     }

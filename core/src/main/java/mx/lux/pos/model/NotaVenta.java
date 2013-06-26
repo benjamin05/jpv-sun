@@ -166,6 +166,8 @@ public class NotaVenta implements Serializable {
     @Column( name = "poliza" )
     private BigDecimal poliza;
 
+    private String codigo_lente;
+
     @OneToMany( fetch = FetchType.EAGER )
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "id_factura", insertable = false, updatable = false )
@@ -657,5 +659,13 @@ public class NotaVenta implements Serializable {
 
     public void setOrdenPromDet( List<OrdenPromDet> ordenPromDet ) {
         OrdenPromDet = ordenPromDet;
+    }
+
+    public String getCodigo_lente() {
+        return codigo_lente;
+    }
+
+    public void setCodigo_lente(String codigo_lente) {
+        this.codigo_lente = codigo_lente;
     }
 }

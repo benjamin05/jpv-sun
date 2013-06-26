@@ -55,6 +55,7 @@ class AccessController {
     if ( checkCredentials( username, password ) ) {
       User user = getUser( username )
       Branch branch = Branch.toBranch( sucursalService.obtenSucursalActual() )
+        println('sucursal..................'+ branch?.id)
       Session.put( SessionItem.USER, user )
       Session.put( SessionItem.BRANCH, branch )
       log.info( "acceso autorizado: $username" )

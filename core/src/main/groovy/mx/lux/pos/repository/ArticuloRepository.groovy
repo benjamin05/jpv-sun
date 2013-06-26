@@ -5,7 +5,7 @@ import mx.lux.pos.repository.custom.ArticuloRepositoryCustom
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.querydsl.QueryDslPredicateExecutor
 
-interface ArticuloRepository extends JpaRepository<Articulo, Integer>, QueryDslPredicateExecutor<Articulo>{
+interface ArticuloRepository extends JpaRepository<Articulo, Integer>, QueryDslPredicateExecutor<Articulo>, ArticuloRepositoryCustom{
 
 
 
