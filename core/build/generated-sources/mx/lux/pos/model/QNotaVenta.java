@@ -24,6 +24,8 @@ public class QNotaVenta extends EntityPathBase<NotaVenta> {
 
     public final QCliente cliente;
 
+    public final StringPath codigo_lente = createString("codigo_lente");
+
     public final BooleanPath descuento = createBoolean("descuento");
 
     public final SetPath<DetalleNotaVenta, QDetalleNotaVenta> detalles = this.<DetalleNotaVenta, QDetalleNotaVenta>createSet("detalles", DetalleNotaVenta.class, QDetalleNotaVenta.class);

@@ -522,24 +522,34 @@ class EditRxDialog extends JDialog {
 
     }
 
-    private void useGlasess(){
+    private String signo(String numero){
 
-        if (cbUso.selectedItem.toString().trim().equalsIgnoreCase(uso[0])) {
+        if(numero.toDouble()>0.0){
+            numero = '+' + numero
+        }
+
+        return numero
+
+    }
+
+    private void useGlasess(){
+         println(cbUso.selectedItem.toString().trim() + '   USO')
+        if (cbUso.selectedItem.toString().trim().equals(uso[0])) {
             receta.setUseGlasses('l')
-        } else if (cbUso.selectedItem.toString().trim().equalsIgnoreCase(uso[1])) {
+        } else if (cbUso.selectedItem.toString().trim().equals(uso[1])) {
             receta.setUseGlasses('c')
-        } else if (cbUso.selectedItem.toString().trim().equalsIgnoreCase(uso[2])) {
+        } else if (cbUso.selectedItem.toString().trim().equals(uso[2])) {
             receta.setUseGlasses('b')
-        } else if (cbUso.selectedItem.toString().trim().equalsIgnoreCase(uso[3])) {
+        } else if (cbUso.selectedItem.toString().trim().equals(uso[3])) {
             receta.setUseGlasses('p')
-        } else if (cbUso.selectedItem.toString().trim().equalsIgnoreCase(uso[4])) {
+        } else if (cbUso.selectedItem.toString().trim().equals(uso[4])) {
             receta.setUseGlasses('i')
-        } else if (cbUso.selectedItem.toString().trim().equalsIgnoreCase(uso[5])) {
+        } else if (cbUso.selectedItem.toString().trim().equals(uso[5])) {
             receta.setUseGlasses('t')
         }
 
-        receta.setOdEsfR(txtOdEsfera.text)
-        receta.setOdCilR(txtOdCil.text)
+        receta.setOdEsfR(signo(txtOdEsfera.text))
+        receta.setOdCilR(signo(txtOdCil.text))
         receta.setOdEjeR(txtOdEje.text)
         receta.setOdAdcR(txtOdAd.text)
         receta.setOdAvR(txtOdAv.text)
@@ -547,8 +557,8 @@ class EditRxDialog extends JDialog {
         receta.setOdPrismH(txtOdPrisma.text)
         receta.setDiLejosR(txtDILejos.text)
 
-        receta.setOiEsfR(txtOiEsfera.text)
-        receta.setOiCilR(txtOiCil.text)
+        receta.setOiEsfR(signo(txtOiEsfera.text))
+        receta.setOiCilR(signo(txtOiCil.text))
         receta.setOiEjeR(txtOiEje.text)
         receta.setOiAvR(txtOiAv.text)
         receta.setDiOi(txtOiDm.text)

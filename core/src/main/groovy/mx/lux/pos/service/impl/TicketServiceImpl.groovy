@@ -138,6 +138,12 @@ class TicketServiceImpl implements TicketService {
   @Resource
   private VelocityEngine velocityEngine
 
+  @Resource
+  private ReimpresionRepository reimpresionRepository
+
+  @Resource
+  private RecetaRepository  recetaRepository
+
   private File generaTicket( String template, Map<String, Object> items ) {
     log.info( "generando archivo de ticket con plantilla: ${template}" )
     if ( StringUtils.isNotBlank( template ) && items?.any() ) {
@@ -175,13 +181,13 @@ class TicketServiceImpl implements TicketService {
           try
           {
               def proc = cmd.execute()
-             // int exitVal = proc.exitValue();
-             // println("Process exitValue: " + exitVal);
+              int exitVal = proc.exitValue();
+              println("Process exitValue: " + exitVal);
               proc.waitFor()
 
           } catch (Throwable t)
           {
-              t.printStackTrace();
+
           }
 
                 //Evita pasmarse cuando no hay impresora conectada
@@ -194,6 +200,172 @@ class TicketServiceImpl implements TicketService {
       log.warn( "archivo de ticket no generado, no se puede imprimir" )
     }
   }
+
+  @Override
+ void imprimeRx(String orderId){
+      NotaVenta notaVenta = notaVentaService.obtenerNotaVenta( orderId )
+      if ( StringUtils.isNotBlank( notaVenta?.id ) ) {
+                Reimpresion reimpresion  =  new Reimpresion('Rx',notaVenta?.id, new Date(),notaVenta?.empleado?.id,notaVenta?.factura )
+                reimpresionRepository.saveAndFlush(reimpresion)
+                BigInteger primerTicket = reimpresionRepository.noReimpresiones(notaVenta?.factura).toInteger()
+
+                String numero = ''
+          if(primerTicket.toInteger() > 1){
+
+                numero = 'COPIA ' + (primerTicket.toInteger() - 1).toString()
+          }
+
+        def idTicket = [
+                sucursal: notaVenta?.sucursal?.id.toString(),
+                factura: notaVenta?.factura,
+                id : notaVenta?.sucursal?.id.toString() + notaVenta?.factura + primerTicket.toString(),
+                noCopia: numero
+        ]
+
+
+
+
+          Date fechaA = new Date()
+          SimpleDateFormat fecha = new SimpleDateFormat("dd/MMMM/yyyy")
+          String fechaImpresion = fecha.format(fechaA)
+
+          Receta rx = recetaRepository.findById(notaVenta?.receta)
+          Date fechaS = rx?.fechaReceta
+          fecha = new SimpleDateFormat("dd-MM-yy")
+          String fechaSolicitada = fecha.format(fechaS)
+
+          Date horaA = new Date()
+          SimpleDateFormat hora = new SimpleDateFormat("H:mm:ss")
+          String horaImpresion = hora.format(horaA)
+
+          Date fechaP = notaVenta?.fechaPrometida
+          String fechaPrometida = fecha.format(fechaP)
+
+          Empleado opto = empleadoRepository.findById(rx?.idOptometrista)
+          String optometrista = opto?.nombreCompleto + ' [' + opto?.id.trim() + ']'
+
+          def infoGeneral = [
+                sucursal: notaVenta?.sucursal?.nombre + ' ['+ notaVenta?.sucursal?.id +']',
+                fechaActual: fechaImpresion,
+                fechaSolicitud: fechaSolicitada,
+                horaActual: horaImpresion,
+                fechaPrometida: fechaPrometida,
+                soi: notaVenta?.id,
+                receto: optometrista,
+                atendio: notaVenta?.empleado?.nombreCompleto
+
+        ]
+          String trat = ''
+          DetalleNotaVenta artArmazon = new DetalleNotaVenta()
+          List<DetalleNotaVenta> articulos = detalleNotaVentaRepository.findByIdFactura(notaVenta?.id)
+          String articulo = ''
+          Iterator iterator = articulos.iterator();
+          while (iterator.hasNext()) {
+
+              DetalleNotaVenta detalle = iterator.next()
+              articulo = articulo + ' ' + detalle?.articulo?.articulo
+
+              if(detalle?.articulo?.idGenerico.trim().equals('A')){
+                  artArmazon = detalle
+              }
+              if(detalle?.articulo?.idGenerico.trim().equals('G')){
+                  trat = detalle?.articulo?.descripcion
+              }
+
+          }
+
+          def infoCliente = [
+                  nombre: notaVenta?.cliente?.nombreCompleto,
+                  telCasa: notaVenta?.cliente?.telefonoCasa,
+                  telTrab: notaVenta?.cliente?.telefonoTrabajo,
+                  extTrab: notaVenta?.cliente?.extTrabajo,
+                  telAd: notaVenta?.cliente?.telefonoAdicional,
+                  extAd: notaVenta?.cliente?.extAdicional,
+                  saldo: notaVenta?.ventaNeta - notaVenta?.sumaPagos,
+                  lente: notaVenta?.codigo_lente,
+                  articulos: articulo
+          ]
+              println(artArmazon?.articulo?.articulo +' '+ artArmazon?.articulo?.codigoColor + ' [' + artArmazon?.surte + ']' + '     Armazon')
+
+          String armazonCli = ''
+                 if(notaVenta?.fArmazonCli == true){
+                     armazonCli = 'ARMAZON DEL CLIENTE'
+                 }else{
+                    armazonCli = artArmazon?.articulo?.articulo +' '+ artArmazon?.articulo?.codigoColor + ' [' + artArmazon?.surte + ']'
+                 }
+
+                  String usoLente = rx?.sUsoAnteojos.trim()
+                  switch (usoLente) {
+                    case 'i': usoLente = 'INTERMEDIO'
+                        break
+                    case 'c': usoLente = 'CERCA'
+                        break
+                     case 'l': usoLente = 'LEJOS'
+                         break
+                    case 'b': usoLente = 'BIFOCAL'
+                        break
+                    case 'p': usoLente = 'PROGRESIVO'
+                        break
+                    case 't': usoLente = 'BIFOCAL INTERMEDIO'
+                        break
+                    }
+
+
+
+          def detalleLente = [
+                  ODEsfer:rx?.odEsfR,
+                  ODCil:rx?.odCilR,
+                  ODEje:rx?.odEjeR,
+                  ODAdd:rx?.odAdcR,
+                  ODPris:rx?.odPrismaH + rx?.odPrismaV,
+
+                  OIEsfer:rx?.oiEsfR,
+                  OICil:rx?.oiCilR,
+                  OIEje:rx?.oiEjeR,
+                  OIAdd:rx?.oiAdcR,
+                  OIPris:rx?.oiPrismaH + rx?.oiPrismaV,
+
+                  distIntLejos:rx?.diLejosR,
+                  distIntCercas:rx?.diCercaR,
+                  distMonoD:rx?.diOd,
+                  distMonoI:rx?.diOi,
+                  alturaSeg:rx?.altOblR,
+
+                  armazon: armazonCli,
+                  uso: usoLente,
+                  tratamiento: trat,
+                  material: notaVenta?.udf2,
+                  formaLente: notaVenta?.udf3
+
+          ]
+
+          def coment = [
+                 cometRx:'',
+                 cometFactura: notaVenta?.observacionesNv,
+                 conSaldo:'',
+                 regresoClases:'',
+                 ventaPino:''
+          ]
+
+
+
+        def items = [
+              nombre_ticket: 'ticket-rx',
+              codigoBarrasAnchas: idTicket,
+              infoTicket: infoGeneral,
+              cliente: infoCliente,
+              lente: detalleLente,
+              comentarios: coment,
+              externo: false
+            ] as Map<String, Object>
+
+        imprimeTicket( 'template/ticket-rx.vm', items )
+      }else{
+          log.warn( 'no se imprime ticket rx, parametros invalidos' )
+      }
+  }
+
+
 
   @Override
   void imprimeVenta( String idNotaVenta ) {

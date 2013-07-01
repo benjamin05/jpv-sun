@@ -6,4 +6,5 @@ interface ArticuloRepositoryCustom {
 
     Articulo findbyName(String articulo)
 
+    Articulo findbyId(Integer idArticulo)
 }

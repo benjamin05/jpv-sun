@@ -6,6 +6,8 @@ interface TicketService {
 
   void imprimeVenta( String idNotaVenta )
 
+  void imprimeRx(String orderId)
+
   void imprimeVenta( String idNotaVenta, Boolean pNewOrder )
 
   boolean imprimeCierreTerminales( Date fechaCierre, List<ResumenDiario> resumenesDiario, Empleado empleado, String terminal )

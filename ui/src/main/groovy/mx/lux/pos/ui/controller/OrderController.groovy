@@ -437,6 +437,16 @@ class OrderController {
     return null
   }
 
+  static void printRx(String orderId){
+      log.info( "imprimiendo receta id: " )
+      if (StringUtils.isNotBlank( orderId ) ) {
+          ticketService.imprimeRx(orderId)
+      } else {
+          log.warn( "no se imprime receta, parametros invalidos" )
+      }
+  }
+
+
   static void printOrder( String orderId ) {
     printOrder( orderId, true )
   }

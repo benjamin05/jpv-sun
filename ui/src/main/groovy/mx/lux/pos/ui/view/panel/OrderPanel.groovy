@@ -84,6 +84,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private Dioptra dioptra
     private Dioptra antDioptra
     private static User empleado
+    private static boolean ticketRx
     Receta getRec() {
         return rec
     }
@@ -97,6 +98,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         customer = CustomerController.findDefaultCustomer()
         promotionList = new ArrayList<PromotionAvailable>()
         this.promotionDriver.init( this )
+        ticketRx = false
         buildUI()
         doBindings()
         itemsModel.addTableModelListener( this.promotionDriver )
@@ -669,6 +671,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         {
             JButton source = ev.source as JButton
             source.enabled = false
+            ticketRx = false
             flujoImprimir()
             source.enabled = true
 
@@ -689,6 +692,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
                     JButton source = ev.source as JButton
                     source.enabled = false
+                    ticketRx = true
                     flujoImprimir()
                     source.enabled = true
                 }catch(ex){
@@ -697,6 +701,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             }else{
                 JButton source = ev.source as JButton
                 source.enabled = false
+                ticketRx = true
                 flujoImprimir()
                 source.enabled = true
 
@@ -710,6 +715,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     .show()
         }
         }else{
+            ticketRx = false
             flujoImprimir()
         }
     }
@@ -761,8 +767,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         if ( StringUtils.isNotBlank( newOrder?.id ) ) {
 
 
-            OrderController.printOrder( newOrder.id )
-
+           OrderController.printOrder( newOrder.id )
+           if(ticketRx == true){
+            OrderController.printRx(newOrder.id)
+           }
             reviewForTransfers( newOrder.id )
 
             // Flujo despues de imprimir nota de venta

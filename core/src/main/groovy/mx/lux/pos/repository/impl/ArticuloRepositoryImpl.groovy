@@ -25,5 +25,19 @@ class ArticuloRepositoryImpl extends QueryDslRepositorySupport implements Articu
 
         return query.singleResult( art )
     }
+
+    @Override
+    Articulo findbyId(Integer idArticulo) {
+        QArticulo art = QArticulo.articulo1
+        def predicates = [ ]
+        if ( idArticulo != null ) {
+            predicates.add( art.id.eq(idArticulo))
+        }
+        JPQLQuery query = from( art )
+        query.where( predicates as Predicate[] )
+
+
+        return query.singleResult( art )
+    }
 }
 
