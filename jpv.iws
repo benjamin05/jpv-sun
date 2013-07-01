@@ -23,9 +23,9 @@
     <file path="/InvTrReturnDriver.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1370554731529" ignored="false" />
     <file path="/VentasPorDia.java" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1368815423755" ignored="false" />
     <file path="/InvTrController.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1370869685690" ignored="false" />
-    <file path="/TipoParametro.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1370869526132" ignored="false" />
-    <file path="/OrderPanel.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1372689732390" ignored="false" />
-    <file path="/TicketServiceImpl.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1372688726531" ignored="false" />
+    <file path="/TipoParametro.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1372700513453" ignored="false" />
+    <file path="/OrderPanel.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1372696240703" ignored="false" />
+    <file path="/TicketServiceImpl.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1372699642781" ignored="false" />
     <file path="/InvTrPanel.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1369068521355" ignored="false" />
     <file path="/InvTr.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1370558187675" ignored="false" />
     <file path="/InvTrIssueDriver.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1369094384672" ignored="false" />
@@ -57,7 +57,7 @@
     <file path="/IngresoPorDia.java" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1369142297759" ignored="false" />
     <file path="/a.dummy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1372094173125" ignored="false" />
     <file path="/Order.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1372087801765" ignored="false" />
-    <file path="/OrderController.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1372268043578" ignored="false" />
+    <file path="/OrderController.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1372696160093" ignored="false" />
     <file path="/CustomerController.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1369681083331" ignored="false" />
     <file path="/Paises.java" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1369244399649" ignored="false" />
     <file path="/CountryCustomerDialog.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1369265763461" ignored="false" />
@@ -127,7 +127,9 @@
     <file path="/TicketServiceImprimeRx.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1372357316250" ignored="false" />
     <file path="/TicketServiceRX.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1372366940000" ignored="false" />
     <file path="/EditRxDialog.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1372450508828" ignored="false" />
-    <file path="/AcuseServiceRX.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1372692925718" ignored="false" />
+    <file path="/AcuseServiceRX.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1372702781484" ignored="false" />
+    <file path="/RecetaService.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1372696188625" ignored="false" />
+    <file path="/RecetaServiceImpl.groovy" changelist="d4923a83-3a28-4c03-bd3f-343bac50e2d8" time="1372710644062" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,7 +194,7 @@
       <file leaf-file-name="OrderPanel.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="776" column="17" selection-start="32235" selection-end="32235" vertical-scroll-proportion="-12.52">
+            <state line="772" column="31" selection-start="32151" selection-end="32151" vertical-scroll-proportion="-3.4">
               <folding>
                 <element signature="e#34#71#0" expanded="true" />
               </folding>
@@ -200,28 +202,64 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="AcuseRepository.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/AcuseRepository.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="24" selection-start="437" selection-end="448" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="OrderController.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="29" selection-start="1197" selection-end="1197" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RecetaService.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/RecetaService.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="18" selection-start="148" selection-end="148" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RecetaServiceImpl.groovy" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/RecetaServiceImpl.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="170" column="45" selection-start="5761" selection-end="5768" vertical-scroll-proportion="0.4530831">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Acuse.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Acuse.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="121" column="0" selection-start="2818" selection-end="2818" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TicketServiceRX.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/test/groovy/mx/lux/pos/service/impl/TicketServiceRX.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="6" selection-start="262" selection-end="262" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="InvoicePanel.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/InvoicePanel.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="410" column="52" selection-start="14863" selection-end="14863" vertical-scroll-proportion="-4.08">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="InvoiceController.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/InvoiceController.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="17" selection-start="2900" selection-end="2900" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ComprobanteServiceImpl.groovy" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/ComprobanteServiceImpl.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="241" column="6" selection-start="10195" selection-end="10195" vertical-scroll-proportion="0.9083558">
+            <state line="417" column="83" selection-start="15210" selection-end="15210" vertical-scroll-proportion="-8.84">
               <folding />
             </state>
           </provider>
@@ -230,7 +268,7 @@
       <file leaf-file-name="TicketServiceImpl.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="195" column="22" selection-start="5611" selection-end="5611" vertical-scroll-proportion="0.0">
+            <state line="208" column="50" selection-start="6157" selection-end="6169" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -239,9 +277,9 @@
       <file leaf-file-name="AcuseServiceRX.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/test/groovy/mx/lux/pos/service/impl/AcuseServiceRX.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="4" selection-start="340" selection-end="340" vertical-scroll-proportion="0.0">
+            <state line="23" column="54" selection-start="457" selection-end="457" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="e#34#94#0" expanded="true" />
+                <element signature="e#33#72#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -279,22 +317,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ItemDialog.groovy" />
-        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" />
-        <option value="$PROJECT_DIR$/core/src/test/groovy/mx/lux/pos/service/impl/TicketServiceImplImprimeRx.java" />
-        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/TicketService.groovy" />
-        <option value="$PROJECT_DIR$/core/src/test/groovy/mx/lux/pos/service/impl/TicketServiceImprimeRx.groovy" />
         <option value="$PROJECT_DIR$/core/src/main/resources/template/constantes-impresora.vm" />
         <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/custom/ArticuloRepositoryCustom.groovy" />
         <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/impl/ArticuloRepositoryImpl.groovy" />
         <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/ReimpresionRepository.groovy" />
         <option value="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Reimpresion.java" />
         <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/EditRxDialog.groovy" />
-        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy" />
         <option value="$PROJECT_DIR$/core/src/test/groovy/mx/lux/pos/service/impl/TicketServiceRX.groovy" />
         <option value="$PROJECT_DIR$/core/src/main/resources/template/ticket-rx.vm" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/RecetaService.groovy" />
         <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy" />
+        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/TipoParametro.groovy" />
         <option value="$PROJECT_DIR$/core/src/test/groovy/mx/lux/pos/service/impl/AcuseServiceRX.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Acuse.java" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/RecetaServiceImpl.groovy" />
       </list>
     </option>
   </component>
@@ -1129,7 +1167,7 @@
       <recent name="mx.lux.pos.model" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ComprobanteServiceImplTest">
+  <component name="RunManager" selected="JUnit.AcuseServiceRX">
     <configuration default="false" name="MainWindow" type="Application" factoryName="Application" temporary="true">
       <extension name="coverage" enabled="false" merge="false" />
       <option name="MAIN_CLASS_NAME" value="mx.lux.pos.ui.MainWindow" />
@@ -1145,41 +1183,6 @@
       <envs />
       <RunnerSettings RunnerId="Debug">
         <option name="DEBUG_PORT" value="" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="true" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="TicketServiceImplImprimeRx" type="TestNG" factoryName="TestNG" temporary="true">
-      <module name="core" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" value="mx.lux.pos.service.impl" />
-      <option name="MAIN_CLASS_NAME" value="mx.lux.pos.service.impl.TicketServiceImplImprimeRx" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
-      <envs />
-      <properties />
-      <listeners />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="2395" />
         <option name="TRANSPORT" value="0" />
         <option name="LOCAL" value="true" />
       </RunnerSettings>
@@ -1259,6 +1262,33 @@
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="mx.lux.pos.service.impl" />
       <option name="MAIN_CLASS_NAME" value="mx.lux.pos.service.impl.ComprobanteServiceImplTest" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
+      <method />
+    </configuration>
+    <configuration default="false" name="AcuseServiceRX" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" />
+      <module name="core" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="mx.lux.pos.service.impl" />
+      <option name="MAIN_CLASS_NAME" value="mx.lux.pos.service.impl.AcuseServiceRX" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
@@ -1374,18 +1404,18 @@
     </configuration>
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Application.MainWindow" />
-      <item index="1" class="java.lang.String" itemvalue="TestNG.TicketServiceImplImprimeRx" />
-      <item index="2" class="java.lang.String" itemvalue="TestNG.TicketServiceImprimeRx" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.TicketServiceRX" />
-      <item index="4" class="java.lang.String" itemvalue="JUnit.ComprobanteServiceImplTest" />
+      <item index="1" class="java.lang.String" itemvalue="TestNG.TicketServiceImprimeRx" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.TicketServiceRX" />
+      <item index="3" class="java.lang.String" itemvalue="JUnit.ComprobanteServiceImplTest" />
+      <item index="4" class="java.lang.String" itemvalue="JUnit.AcuseServiceRX" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.ComprobanteServiceImplTest" />
+        <item index="0" class="java.lang.String" itemvalue="JUnit.AcuseServiceRX" />
         <item index="1" class="java.lang.String" itemvalue="Application.MainWindow" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.TicketServiceRX" />
-        <item index="3" class="java.lang.String" itemvalue="TestNG.TicketServiceImprimeRx" />
-        <item index="4" class="java.lang.String" itemvalue="TestNG.TicketServiceImplImprimeRx" />
+        <item index="2" class="java.lang.String" itemvalue="JUnit.ComprobanteServiceImplTest" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.TicketServiceRX" />
+        <item index="4" class="java.lang.String" itemvalue="TestNG.TicketServiceImprimeRx" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -1420,7 +1450,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1288" height="778" extended-state="7" />
+    <frame x="-4" y="-4" width="1288" height="778" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.328" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1428,7 +1458,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3248" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24878444" sideWeight="0.7258454" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3104" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3072" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3088" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.72705317" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1437,7 +1467,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28119937" sideWeight="0.6896" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.28119937" sideWeight="0.6928" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3088" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1514,102 +1544,30 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Articulo.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Parametro.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="22" selection-start="1171" selection-end="1171" vertical-scroll-proportion="0.90529245" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/ReimpresionRepository.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="11" selection-start="641" selection-end="641" vertical-scroll-proportion="0.0">
+        <state line="21" column="13" selection-start="460" selection-end="460" vertical-scroll-proportion="0.5294118">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/EditRxDialog.groovy">
+    <entry file="file://$PROJECT_DIR$/reports/src/main/java/mx/lux/pos/service/impl/ReportServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="548" column="9" selection-start="22172" selection-end="22172" vertical-scroll-proportion="0.0">
+        <state line="124" column="40" selection-start="5830" selection-end="5898" vertical-scroll-proportion="0.3323442">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/ParametroRepository.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="10" selection-start="204" selection-end="204" vertical-scroll-proportion="0.18133333">
+        <state line="6" column="19" selection-start="213" selection-end="213" vertical-scroll-proportion="0.18133333">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Comprobante.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/TipoParametro.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="162" column="13" selection-start="4105" selection-end="4105" vertical-scroll-proportion="0.90933335">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/test/groovy/mx/lux/pos/service/impl/TicketServiceRX.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="357" selection-end="357" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/ComprobanteService.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="14" selection-start="230" selection-end="230" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/business/Registry.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="311" selection-end="311" vertical-scroll-proportion="0.3207547">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/test/groovy/mx/lux/pos/service/impl/ComprobanteServiceImplTest.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="546" column="45" selection-start="16355" selection-end="16355" vertical-scroll-proportion="0.9348958">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/test/groovy/mx/lux/pos/service/impl/AcuseServiceRX.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="4" selection-start="340" selection-end="340" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#34#94#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/resources/template/ticket-rx.vm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="144" selection-start="2199" selection-end="2199" vertical-scroll-proportion="0.82479787">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="195" column="22" selection-start="5611" selection-end="5611" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="776" column="17" selection-start="32235" selection-end="32235" vertical-scroll-proportion="-12.52">
-          <folding>
-            <element signature="e#34#71#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/InvoicePanel.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="410" column="52" selection-start="14863" selection-end="14863" vertical-scroll-proportion="-4.08">
+        <state line="63" column="35" selection-start="3736" selection-end="3736" vertical-scroll-proportion="0.90933335">
           <folding />
         </state>
       </provider>
@@ -1621,9 +1579,83 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/ComprobanteServiceImpl.groovy">
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/AcuseRepository.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="241" column="6" selection-start="10195" selection-end="10195" vertical-scroll-proportion="0.9083558">
+        <state line="10" column="24" selection-start="437" selection-end="448" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/ReimpresionRepository.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="10" selection-start="259" selection-end="259" vertical-scroll-proportion="0.1878453">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/InvoicePanel.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="417" column="83" selection-start="15210" selection-end="15210" vertical-scroll-proportion="-8.84">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/test/groovy/mx/lux/pos/service/impl/TicketServiceRX.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="6" selection-start="262" selection-end="262" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Acuse.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="121" column="0" selection-start="2818" selection-end="2818" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="208" column="50" selection-start="6157" selection-end="6169" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/test/groovy/mx/lux/pos/service/impl/AcuseServiceRX.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="54" selection-start="457" selection-end="457" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#33#72#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="772" column="31" selection-start="32151" selection-end="32151" vertical-scroll-proportion="-3.4">
+          <folding>
+            <element signature="e#34#71#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="29" selection-start="1197" selection-end="1197" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/RecetaService.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="18" selection-start="148" selection-end="148" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/RecetaServiceImpl.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="170" column="45" selection-start="5761" selection-end="5768" vertical-scroll-proportion="0.4530831">
           <folding />
         </state>
       </provider>

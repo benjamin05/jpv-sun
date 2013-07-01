@@ -255,7 +255,9 @@ class TicketServiceImpl implements TicketService {
                 atendio: notaVenta?.empleado?.nombreCompleto
 
         ]
-          String trat = ''
+          String trat = notaVenta?.udf2
+
+
           DetalleNotaVenta artArmazon = new DetalleNotaVenta()
           List<DetalleNotaVenta> articulos = detalleNotaVentaRepository.findByIdFactura(notaVenta?.id)
           String articulo = ''

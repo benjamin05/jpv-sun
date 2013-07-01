@@ -119,4 +119,5 @@ public class Acuse implements Serializable {
         return String.format( FMT_TO_STRING, this.getId(), this.getIdTipo(), this.getIntentos(),
                 contents);
     }
+
 }

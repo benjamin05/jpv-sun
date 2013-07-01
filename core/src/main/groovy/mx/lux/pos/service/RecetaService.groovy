@@ -9,4 +9,6 @@ interface RecetaService {
     List<Receta> recetaCliente(Integer IdCliente)
 
     Receta findbyId(Integer idRx)
+
+    void generaAcuse(String orderID)
 }

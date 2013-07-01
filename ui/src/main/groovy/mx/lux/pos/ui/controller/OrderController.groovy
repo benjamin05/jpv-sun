@@ -437,6 +437,15 @@ class OrderController {
     return null
   }
 
+  static void fieldRX(String orderId){
+      if (StringUtils.isNotBlank( orderId ) ) {
+          recetaService.generaAcuse(orderId)
+      } else {
+          log.warn( "no se imprime receta, parametros invalidos" )
+      }
+
+  }
+
   static void printRx(String orderId){
       log.info( "imprimiendo receta id: " )
       if (StringUtils.isNotBlank( orderId ) ) {
