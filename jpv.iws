@@ -232,7 +232,7 @@
       <file leaf-file-name="RecetaServiceImpl.groovy" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/RecetaServiceImpl.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="170" column="45" selection-start="5761" selection-end="5768" vertical-scroll-proportion="0.4530831">
+            <state line="172" column="52" selection-start="5915" selection-end="5915" vertical-scroll-proportion="0.54423594">
               <folding />
             </state>
           </provider>
@@ -1655,7 +1655,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/RecetaServiceImpl.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="170" column="45" selection-start="5761" selection-end="5768" vertical-scroll-proportion="0.4530831">
+        <state line="172" column="52" selection-start="5915" selection-end="5915" vertical-scroll-proportion="0.54423594">
           <folding />
         </state>
       </provider>
