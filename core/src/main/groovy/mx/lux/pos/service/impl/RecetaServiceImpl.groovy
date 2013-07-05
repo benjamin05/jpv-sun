@@ -119,7 +119,7 @@ class RecetaServiceImpl implements RecetaService {
         contenido = contenido+'|armazonVal='+artArmazon?.articulo?.articulo
         contenido = contenido+'|parVal=P'
         contenido = contenido+'|adicion_dVal='+rx?.odAdcR
-        contenido = contenido+'|id_acuseVal='+acuseRepository.nextIdAcuse() + 1
+        contenido = contenido+'|id_acuseVal='+(acuseRepository.nextIdAcuse().toInteger() + 1)
         contenido = contenido+'|esfera_iVal='+ rx?.oiEsfR
         contenido = contenido+'|prisma_d_hVal='+ rx?.odPrismaH
         contenido = contenido+'|sucursalVal='+ notaVenta?.sucursal.id
@@ -150,7 +150,7 @@ class RecetaServiceImpl implements RecetaService {
             if (cont.charAt(x) != ' ')
                 contenido += cont.charAt(x)
         }
-
+        contenido= contenido.replace('null','')
 
         Acuse acuseRx = new Acuse()
         acuseRx.contenido = contenido
@@ -159,6 +159,8 @@ class RecetaServiceImpl implements RecetaService {
         acuseRx.intentos = 0
 
         acuseRepository.saveAndFlush(acuseRx)
+
+
 
         generaArchivoEnvio(contenido, notaVenta?.sucursal?.id.toString()+ notaVenta?.factura + primerTicket.toString())
 

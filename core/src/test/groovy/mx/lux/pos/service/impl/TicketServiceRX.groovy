@@ -14,7 +14,7 @@ class TicketServiceRX extends Specification {
 
     def "Test: Imprime Ticket de Receta"() {
     setup:
-    String orderID = 'A07591'
+    String orderID = 'A07611'
 
     when:
 

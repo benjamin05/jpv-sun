@@ -30,6 +30,8 @@ class Order {
   BigDecimal paid = BigDecimal.ZERO
   BigDecimal due = BigDecimal.ZERO
   String dioptra
+  String udf2
+  String udf3
 
   private Double usdRate
 
@@ -75,7 +77,9 @@ class Order {
           paid: notaVenta.sumaPagos ?: 0,
           country:notaVenta.udf2 != null ? notaVenta.udf2: '',
           employee: "${[notaVenta.idEmpleado]}${notaVenta.empleado?.nombreCompleto}",
-          dioptra: notaVenta.codigo_lente
+          dioptra: notaVenta.codigo_lente,
+          udf2: notaVenta.udf2,
+          udf3: notaVenta.udf3
       )
       order.deals = new ArrayList<IPromotion>()
       if ( notaVenta.ordenPromDet != null ) {

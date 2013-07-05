@@ -255,7 +255,7 @@ class TicketServiceImpl implements TicketService {
                 atendio: notaVenta?.empleado?.nombreCompleto
 
         ]
-          String trat = notaVenta?.udf2
+          String trat = ''
 
 
           DetalleNotaVenta artArmazon = new DetalleNotaVenta()
@@ -265,13 +265,13 @@ class TicketServiceImpl implements TicketService {
           while (iterator.hasNext()) {
 
               DetalleNotaVenta detalle = iterator.next()
-              articulo = articulo + ' ' + detalle?.articulo?.articulo
+              articulo = articulo + ' ' + detalle?.articulo?.articulo + ','
 
               if(detalle?.articulo?.idGenerico.trim().equals('A')){
                   artArmazon = detalle
               }
               if(detalle?.articulo?.idGenerico.trim().equals('G')){
-                  trat = detalle?.articulo?.descripcion
+                  trat =  notaVenta?.udf2 ', ' + detalle?.articulo?.descripcion
               }
 
           }

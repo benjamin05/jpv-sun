@@ -561,7 +561,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             if(artString.equals('SV') || artString.equals('P') || artString.equals('B')){
 
                 Branch branch = Session.get( SessionItem.BRANCH ) as Branch
-                EditRxDialog editRx = new EditRxDialog( this, new Rx(), customer?.id, branch?.id, 'Nueva Receta', item.description, order?.id )
+                EditRxDialog editRx = new EditRxDialog( this, new Rx(), customer?.id, branch?.id, 'Nueva Receta', item.description)
 
                 editRx.show()
 
@@ -678,13 +678,16 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         }else{
 
             rec = OrderController.findRx(order,customer)
-
+            Order armOrder =  OrderController.getOrder(order?.id)
+            println('Armazon: '+armOrder?.udf2)
+            println('Boolean: '+ !armOrder?.udf2.equals(''))
+            println('Boolean2: '+ !armOrder?.udf2.equals(null))
             println('Receta ya creada: '+rec.id)
             println(rec.id == null)
             if (rec.id == null){   //Receta Nueva
                 Branch branch = Session.get( SessionItem.BRANCH ) as Branch
 
-                EditRxDialog editRx = new EditRxDialog( this, new Rx(), customer?.id, branch?.id, 'Nueva Receta',tipoArt,order?.id )
+                EditRxDialog editRx = new EditRxDialog( this, new Rx(), customer?.id, branch?.id, 'Nueva Receta',tipoArt)
                 editRx.show()
 
                 try{
@@ -693,6 +696,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     JButton source = ev.source as JButton
                     source.enabled = false
                     ticketRx = true
+                    if(armOrder?.udf2.equals('')){
+                    ArmRxDialog armazon = new ArmRxDialog(this, order?.id)
+                    armazon.show()
+                    }
                     flujoImprimir()
                     source.enabled = true
                 }catch(ex){
@@ -702,6 +709,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                 JButton source = ev.source as JButton
                 source.enabled = false
                 ticketRx = true
+                if(armOrder?.udf2.equals('')){
+                ArmRxDialog armazon = new ArmRxDialog(this, order?.id)
+                armazon.show()
+                }
                 flujoImprimir()
                 source.enabled = true
 
@@ -986,22 +997,31 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
 
 
-            rec = OrderController.findRx(order,customer)
 
+            rec = OrderController.findRx(order,customer)
+            Order armOrder =  OrderController.getOrder(order?.id)
+            println('Armazon: '+armOrder?.udf2)
+            println('Boolean: '+ !armOrder?.udf2.equals(''))
+            println('Boolean2: '+ !armOrder?.udf2.equals(null))
             println('Receta ya creada: '+rec.id)
             println(rec.id == null)
             if (rec.id == null){   //Receta Nueva
                 Branch branch = Session.get( SessionItem.BRANCH ) as Branch
 
-                EditRxDialog editRx = new EditRxDialog( this, new Rx(), customer?.id, branch?.id, 'Nueva Receta',tipoArt,order?.id )
+                EditRxDialog editRx = new EditRxDialog( this, new Rx(), customer?.id, branch?.id, 'Nueva Receta',tipoArt)
                 editRx.show()
 
                 try{
                     OrderController.saveRxOrder(order?.id,rec.id)
+                    if(armOrder?.udf2.equals('')){
+                    ArmRxDialog armazon = new ArmRxDialog(this, order?.id)
+                    armazon.show()
+                    }
                     flujoContinuar()
                 }catch(ex){
                     flujoContinuar()
                 }
+
 
 
             }else{    //Receta ya Capturada
@@ -1011,7 +1031,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                    EditRxDialog editRx = new EditRxDialog( this, rx, customer?.id, branch?.id, 'Nueva Receta',tipoArt )
                    editRx.show()
                   */
-
+                if(armOrder?.udf2.equals('')){
+                ArmRxDialog armazon = new ArmRxDialog(this, order?.id)
+                armazon.show()
+                }
                 flujoContinuar()
 
             }

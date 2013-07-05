@@ -5,14 +5,17 @@ import mx.lux.pos.ui.model.Rx
 import mx.lux.pos.model.Receta
 import net.miginfocom.swing.MigLayout
 
+import javax.swing.JTextArea
 import java.awt.Component
 import javax.swing.JDialog
 import javax.swing.JPanel
 import javax.swing.JTextField
 import javax.swing.JLabel
-
+import javax.swing.JScrollPane
 import org.apache.commons.lang3.StringUtils
 import mx.lux.pos.ui.controller.CustomerController
+
+import java.awt.Dimension
 import java.awt.event.FocusListener
 import java.awt.event.FocusEvent
 import javax.swing.JComboBox
@@ -59,39 +62,55 @@ class EditRxDialog extends JDialog {
     private JTextField txtAltOblea
     private JTextField txtDILejos
 
-    private JTextField txtObservaciones
+    private JTextArea txtObservaciones
+
+
 
 
     private JPanel empleadoPanel
     private final double VALOR_MULTIPLO = 0.25;
     private boolean mostrarParametroSV = true
-    private boolean mostrarParametroPB = true
+    private boolean mostrarParametroP = true
+    private boolean mostrarParametroB = true
 
     private static String itemUso = null
     private static String limpiarAux
-    private static String idNotaV
+
     List<String> ubicacion = ["", "ARRIBA", "ABAJO", "AFUERA", "ADENTRO"]
-    List<String> uso = ["LEJOS", "CERCA", "BIFOCAL", "PROGRESIVO", "INTERMEDIO", "BIFOCAL INTERMEDIO"]
+    List<String> usoM = ["LEJOS", "CERCA"]
+    List<String> usoP = ["PROGRESIVO"]
+    List<String> usoB = ["BIFOCAL"]
+    List<String> comboUso = []
 
     Boolean canceled
     String Title
 
-    EditRxDialog(Component parent, Rx receta, Integer idCliente, Integer idSucursal, String titulo,String uso,String idNotaVenta ) {
+    EditRxDialog(Component parent, Rx receta, Integer idCliente, Integer idSucursal, String titulo,String uso) {
 
         sb = new SwingBuilder()
         component = parent
         itemUso =  uso
         rec = null
-        idNotaV = idNotaVenta
+
         title = titulo
         if(itemUso.trim().equals('MONOFOCAL'))
         {
             mostrarParametroSV = true
-            mostrarParametroPB = false
-        }else{
+            mostrarParametroP = false
+            mostrarParametroB = false
+            comboUso= usoM
+        }else if(itemUso.trim().equals('BIFOCAL')){
             mostrarParametroSV = false
-            mostrarParametroPB = true
+            mostrarParametroP = true
+            mostrarParametroB = false
+            comboUso= usoB
+        }else if(itemUso.trim().equals('PROGRESIVO')){
+            mostrarParametroSV = false
+            mostrarParametroP = true
+            mostrarParametroB = true
+            comboUso= usoP
         }
+
         if (receta?.id == null) {
             this.receta = new Rx()
             this.idCliente = idCliente
@@ -111,10 +130,10 @@ class EditRxDialog extends JDialog {
     void buildUI() {
           sb.dialog(this,
                 title: title,
-                resizable: true,
+                resizable: false,
                 pack: true,
                 modal: true,
-                preferredSize: [680, 360],
+                preferredSize: [450, 360],
                 layout: new MigLayout('wrap,center', '[fill,grow]'),
                 location: [ 200, 250 ],
         ) {
@@ -138,40 +157,29 @@ class EditRxDialog extends JDialog {
             }
             panel( layout: new MigLayout( 'fill,wrap 3','[fill][fill][fill,grow]' )){
                 label(text: 'Uso')
-                cbUso = comboBox(items: uso)
+                cbUso = comboBox(items: comboUso)
                 label()
             }
 
             panel(border: titledBorder("Rx"), layout: new MigLayout('fill,wrap ,center', '[fill,grow]')) {
-                panel(layout: new MigLayout('fill,wrap 11,center',
-                        '''[center][fill,grow,center][fill,grow,center][fill,grow,center][fill,grow,center][fill,grow,center]
-                            [fill,grow,center][fill,grow,center][fill,grow,center]30[center][fill,grow,center]''')) {
+                panel(layout: new MigLayout('fill,wrap 8,center',
+                        '''[center][fill,grow,center][fill,grow,center][fill,grow,center][fill,grow,center]
+                            [fill,grow,center][center][fill,grow,center]''')) {
                     label()
 
-                    label(text: 'Esfera', horizontalAlignment: JTextField.CENTER )
+                    label(text: 'Esfera', horizontalAlignment: JTextField.CENTER)
                     label(text: 'Cil.', toolTipText: 'Cilindro', horizontalAlignment: JTextField.CENTER )
                     label(text: 'Eje', horizontalAlignment: JTextField.CENTER )
-                    label(text: 'Ad.', toolTipText: 'Adición', horizontalAlignment: JTextField.CENTER )
+                    label(text: 'Ad.', toolTipText: 'Adición', horizontalAlignment: JTextField.CENTER,visible:mostrarParametroP,enabled:  mostrarParametroP)
 
 
-                    label(text: 'A.V.', toolTipText: 'Agudeza Visual', horizontalAlignment: JTextField.CENTER,visible:false,enabled:false )
-                    label(text: 'D.M.', toolTipText: 'Distancia Monocular', horizontalAlignment: JTextField.CENTER,visible:mostrarParametroPB,enabled:mostrarParametroPB  )
-                    label(text: 'Prisma', horizontalAlignment: JTextField.CENTER,visible:false,enabled:false )
-                   label(text: 'Ubic.', toolTipText: 'Ubicación', horizontalAlignment: JTextField.CENTER,visible:false,enabled:false )
+                    /*label(text: 'A.V.', toolTipText: 'Agudeza Visual', horizontalAlignment: JTextField.CENTER,visible:false )        */
+                    label(text: 'D.M.', toolTipText: 'Distancia Monocular', horizontalAlignment: JTextField.CENTER,visible:(mostrarParametroP && mostrarParametroB),enabled:(mostrarParametroP && mostrarParametroB)  )
+                    /*label(text: 'Prisma', horizontalAlignment: JTextField.CENTER,visible:false )   */
+                    /*label(text: 'Ubic.', toolTipText: 'Ubicación', horizontalAlignment: JTextField.CENTER,visible:false )    */
 
-                    label(text: 'D.I. Lejos', toolTipText: 'Distancia Interpupilar Lejos',visible:mostrarParametroSV ,enabled:mostrarParametroSV)
-                    txtDILejos = textField(minimumSize: [20, 20], toolTipText: 'Distancia Interpupilar Lejos', horizontalAlignment: JTextField.RIGHT,visible:mostrarParametroSV ,enabled:mostrarParametroSV)
-                    txtDILejos.addFocusListener(new FocusListener() {
-                        @Override
-                        void focusGained(FocusEvent e) {
-                            limpiar(txtDILejos)
-                        }
-
-                        @Override
-                        void focusLost(FocusEvent e) {
-                            validacion(txtDILejos,90,45,1,'0')
-                        }
-                    })
+                    label()
+                    label()
                     label(text: 'O.D.', toolTipText: 'Ojo Derecho')
                     txtOdEsfera = textField( horizontalAlignment: JTextField.RIGHT )
                     txtOdEsfera.addFocusListener(new FocusListener() {
@@ -182,7 +190,7 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOdEsfera,35,-35,0.25,'.00')
+                            validacion(txtOdEsfera,35,-35,0.25,'.00','+')
 
                         }
                     })
@@ -196,7 +204,7 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOdCil,12,-12,0.25,'.00')
+                            validacion(txtOdCil,12,-12,0.25,'.00','-')
                         }
                     })
 
@@ -208,11 +216,11 @@ class EditRxDialog extends JDialog {
                             }
                             @Override
                             void focusLost(FocusEvent e) {
-                                validacion(txtOdEje,180,0,1,'0')
+                                validacion(txtOdEje,180,0,1,'0','')
                             }
                     })
 
-                    txtOdAd = textField( toolTipText: 'Adición', horizontalAlignment: JTextField.RIGHT )
+                    txtOdAd = textField( toolTipText: 'Adición', horizontalAlignment: JTextField.RIGHT,visible:mostrarParametroP,enabled:mostrarParametroP)
                     txtOdAd.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
@@ -221,10 +229,10 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOdAd,4,0.75,0.25,'.00')
+                            validacion(txtOdAd,4,0.75,0.25,'.00','+')
                     }
                     })
-                    txtOdAv = textField( toolTipText: 'Agudeza Visual', horizontalAlignment: JTextField.LEFT,visible:false,enabled:false )
+                    /*txtOdAv = textField( toolTipText: 'Agudeza Visual', horizontalAlignment: JTextField.LEFT,visible:false )
                     txtOdAv.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
@@ -234,8 +242,8 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) { }
-                    })
-                    txtOdDm = textField( toolTipText: 'Distancia Monocular', horizontalAlignment: JTextField.RIGHT,visible:mostrarParametroPB,enabled:mostrarParametroPB)
+                    })*/
+                    txtOdDm = textField( toolTipText: 'Distancia Monocular', horizontalAlignment: JTextField.RIGHT,visible:(mostrarParametroP && mostrarParametroB),enabled:(mostrarParametroP && mostrarParametroB))
                     txtOdDm.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
@@ -244,10 +252,10 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOdDm,45,22,0.1,'.0')
+                            validacion(txtOdDm,45,22,0.1,'.0','')
                         }
                     })
-                    txtOdPrisma = textField( horizontalAlignment: JTextField.RIGHT,visible:false,enabled:false)
+                    /*txtOdPrisma = textField( horizontalAlignment: JTextField.RIGHT,visible:false)
                     txtOdPrisma.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
@@ -256,12 +264,13 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOdPrisma,12,0,0.25,'.00')
+                            validacion(txtOdPrisma,12,0,0.25,'.00','')
                         }
-                    })
-                    cbOdUbic = comboBox(items: ubicacion, toolTipText: 'Ubicación',visible:false,enabled:false)
-                    label(text: 'D.I. Cerca', toolTipText: 'Distancia Interpupilar Cerca',visible:mostrarParametroSV ,enabled:mostrarParametroSV)
-                    txtDICerca = textField( minimumSize: [20, 20], toolTipText: 'Distancia Interpupilar Cerca', horizontalAlignment: JTextField.RIGHT,visible:mostrarParametroSV ,enabled:mostrarParametroSV)
+                    })*/
+                    /*cbOdUbic = comboBox(items: ubicacion, toolTipText: 'Ubicación',visible:false)*/
+
+                    /*label(text: 'D.I. Cerca', toolTipText: 'Distancia Interpupilar Cerca',visible:false )
+                    txtDICerca = textField( minimumSize: [20, 20], toolTipText: 'Distancia Interpupilar Cerca', horizontalAlignment: JTextField.RIGHT,visible:false )
                     txtDICerca.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
@@ -270,9 +279,23 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtDICerca,90,45,1,'0')
+                            validacion(txtDICerca,90,45,1,'0','')
+                        }
+                    })*/
+                    label(text: 'D.I. Binocular', toolTipText: 'Distancia Interpupilar Binocular',visible:(mostrarParametroP && !mostrarParametroB)||mostrarParametroSV ,enabled:(mostrarParametroP && !mostrarParametroB)||mostrarParametroSV)
+                    txtDILejos = textField(minimumSize: [20, 20], toolTipText: 'Distancia Interpupilar Binocular', horizontalAlignment: JTextField.RIGHT,visible:(mostrarParametroP && !mostrarParametroB)||mostrarParametroSV  ,enabled:(mostrarParametroP && !mostrarParametroB)||mostrarParametroSV )
+                    txtDILejos.addFocusListener(new FocusListener() {
+                        @Override
+                        void focusGained(FocusEvent e) {
+                            limpiar(txtDILejos)
+                        }
+
+                        @Override
+                        void focusLost(FocusEvent e) {
+                            validacion(txtDILejos,90,45,1,'0','')
                         }
                     })
+
                     label(text: 'O.I.', toolTipText: 'Ojo Izquierdo')
                     txtOiEsfera = textField( horizontalAlignment: JTextField.RIGHT )
                     txtOiEsfera.addFocusListener(new FocusListener() {
@@ -283,7 +306,7 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOiEsfera,35,-35,0.25,'.00')
+                            validacion(txtOiEsfera,35,-35,0.25,'.00','+')
 
                         }
                     })
@@ -296,7 +319,7 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOiCil,12,-12,0.25,'.00')
+                            validacion(txtOiCil,12,-12,0.25,'.00','-')
                         }
                     })
 
@@ -308,11 +331,11 @@ class EditRxDialog extends JDialog {
                         }
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOiEje,180,0,1,'0')
+                            validacion(txtOiEje,180,0,1,'0','')
                         }
                     })
 
-                    txtOiAd = textField( toolTipText: 'Adición', horizontalAlignment: JTextField.RIGHT )
+                    txtOiAd = textField( toolTipText: 'Adición', horizontalAlignment: JTextField.RIGHT,visible:mostrarParametroP,enabled:mostrarParametroP )
                     txtOiAd.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
@@ -321,10 +344,10 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOiAd,4,0.75,0.25,'.00')
+                            validacion(txtOiAd,4,0.75,0.25,'.00','+')
                         }
                     })
-                    txtOiAv = textField( toolTipText: 'Agudeza Visual', horizontalAlignment: JTextField.LEFT,visible:false,enabled:false)
+                    /*txtOiAv = textField( toolTipText: 'Agudeza Visual', horizontalAlignment: JTextField.LEFT,visible:false)
                     txtOiAv.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
@@ -334,8 +357,8 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) { }
-                    })
-                    txtOiDm = textField( toolTipText: 'Distancia Monocular', horizontalAlignment: JTextField.RIGHT,visible:mostrarParametroPB,enabled:mostrarParametroPB )
+                    }) */
+                    txtOiDm = textField( toolTipText: 'Distancia Monocular', horizontalAlignment: JTextField.RIGHT,visible:(mostrarParametroP && mostrarParametroB),enabled:(mostrarParametroP && mostrarParametroB) )
                         txtOiDm.addFocusListener(new FocusListener() {
                             @Override
                             void focusGained(FocusEvent e) {
@@ -344,10 +367,10 @@ class EditRxDialog extends JDialog {
 
                             @Override
                             void focusLost(FocusEvent e) {
-                                validacion(txtOiDm,45,22,0.1,'.0')
+                                validacion(txtOiDm,45,22,0.1,'.0','')
                             }
                         })
-                    txtOiPrisma = textField( horizontalAlignment: JTextField.RIGHT,visible:false,enabled:false)
+                    /*txtOiPrisma = textField( horizontalAlignment: JTextField.RIGHT,visible:false)
                     txtOiPrisma.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
@@ -356,12 +379,12 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOiPrisma,12,0,0.25,'.00')
+                            validacion(txtOiPrisma,12,0,0.25,'.00','')
                         }
-                    })
-                    cbOiUbic = comboBox(items: ubicacion, toolTipText: 'Ubicación',visible:false,enabled:false)
-                    label(text: 'Alt. Oblea', toolTipText: 'Altura Oblea',visible:mostrarParametroPB,enabled:mostrarParametroPB)
-                    txtAltOblea = textField( minimumSize: [20, 20], toolTipText: 'Altura Oblea', horizontalAlignment: JTextField.RIGHT,visible:mostrarParametroPB,enabled:mostrarParametroPB )
+                    })*/
+                    /*cbOiUbic = comboBox(items: ubicacion, toolTipText: 'Ubicación',visible:false)*/
+                    label(text: 'Alt. Seg.', toolTipText: 'Altura Segmento',visible:mostrarParametroP,enabled:mostrarParametroP)
+                    txtAltOblea = textField( minimumSize: [20, 20], toolTipText: 'Altura Segmento', horizontalAlignment: JTextField.RIGHT,visible:mostrarParametroP,enabled:mostrarParametroP )
                     txtAltOblea.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
@@ -370,14 +393,14 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtAltOblea,40,10,0.5,'.00')
+                            validacion(txtAltOblea,40,10,0.5,'.00','')
                         }
                     })
 
                 }
-                panel(layout: new MigLayout('fill,wrap 2', '[fill][fill,grow]')) {
-                    label(text: 'Observaciones:')
-                    txtObservaciones = textField(document: new UpperCaseDocument())
+                scrollPane( border: titledBorder( title: 'Observaciones' ) ) {
+                    txtObservaciones = textArea(document: new UpperCaseDocument(), lineWrap: true )
+
                 }
             }
             panel(layout: new MigLayout('wrap 2,right', '[right][right]')) {
@@ -388,12 +411,13 @@ class EditRxDialog extends JDialog {
     }
 
     private void limpiar(JTextField txtField){
+
         limpiarAux = txtField.text
         txtField.text = ''
 
     }
 
-    private void validacion(JTextField txtField, double max, double min, double interval, String format){
+    private void validacion(JTextField txtField, double max, double min, double interval, String format, String mask){
         if (txtField.text.trim().length() > 0 || txtField.text.trim() == '0') {
             double number
             String txt = txtField.text.trim()
@@ -419,11 +443,15 @@ class EditRxDialog extends JDialog {
                             txt=txt + '.0'
                         }
 
+                        if(mask.equals('+')){
+
+                            txtField.text = signoMas(txt)
+                        }else if(mask.equals('-')){
+
+                            txtField.text = signoMenos(txt)
+                        }else{
                             txtField.text = txt
-
-
-
-
+                        }
 
 
                     }else{
@@ -450,25 +478,27 @@ class EditRxDialog extends JDialog {
             txtOdCil.setText(receta.odCilR)
             txtOdEje.setText(receta.odEjeR)
             txtOdAd.setText(receta.odAdcR)
-            if (receta.odAvR != null) {
+       /*     if (receta.odAvR != null) {
                 txtOdAv.setText(receta.odAvR)
             } else {
                 txtOdAv.setText("20/")
             }
+            */
             txtOdDm.setText(receta.diOd)
-            txtOdPrisma.setText(receta.odPrismH)
+           // txtOdPrisma.setText(receta.odPrismH)
             txtDILejos.setText(receta.diLejosR)
             txtOiEsfera.setText(receta.oiEsfR)
             txtOiCil.setText(receta.oiCilR)
             txtOiEje.setText(receta.oiEjeR)
-            if (receta.oiAvR != null) {
+           /* if (receta.oiAvR != null) {
                 txtOiAv.setText(receta.oiAvR)
             } else {
                 txtOiAv.setText("20/")
             }
+            */
             txtOiDm.setText(receta.diOi)
-            txtOiPrisma.setText(receta.oiPrismH)
-            if (receta.odPrismaV != null) {
+            //txtOiPrisma.setText(receta.oiPrismH)
+            /*if (receta.odPrismaV != null) {
                 cbOdUbic.setSelectedItem(receta.odPrismaV)
             } else {
                 cbOdUbic.setSelectedItem('')
@@ -478,10 +508,11 @@ class EditRxDialog extends JDialog {
             } else {
                 cbOiUbic.setSelectedItem('')
             }
-            txtDICerca.setText(receta.diCercaR)
+            */
+            //txtDICerca.setText(receta.diCercaR)
             txtAltOblea.setText(receta.altOblR)
             txtObservaciones.setText(receta.observacionesR)
-
+            /*
             if ('l'.equalsIgnoreCase(receta?.useGlasses)) {
                 cbUso.setSelectedItem(uso[0])
             } else if ('c'.equalsIgnoreCase(receta?.useGlasses)) {
@@ -495,6 +526,7 @@ class EditRxDialog extends JDialog {
             } else if ('t'.equalsIgnoreCase(receta?.useGlasses)) {
                 cbUso.setSelectedItem(uso[5])
             }
+            */
         }
     }
 
@@ -522,7 +554,7 @@ class EditRxDialog extends JDialog {
 
     }
 
-    private String signo(String numero){
+    private String signoMas(String numero){
 
         if(numero.toDouble()>0.0){
             numero = '+' + numero
@@ -531,44 +563,53 @@ class EditRxDialog extends JDialog {
         return numero
 
     }
+    private String signoMenos(String numero){
+
+
+            numero = '-' + numero
+
+
+        return numero
+
+    }
 
     private void useGlasess(){
          println(cbUso.selectedItem.toString().trim() + '   USO')
-        if (cbUso.selectedItem.toString().trim().equals(uso[0])) {
+        if (cbUso.selectedItem.toString().trim().equals('LEJOS')) {
             receta.setUseGlasses('l')
-        } else if (cbUso.selectedItem.toString().trim().equals(uso[1])) {
+        } else if (cbUso.selectedItem.toString().trim().equals('CERCA')) {
             receta.setUseGlasses('c')
-        } else if (cbUso.selectedItem.toString().trim().equals(uso[2])) {
+        } else if (cbUso.selectedItem.toString().trim().equals('BIFOCAL')) {
             receta.setUseGlasses('b')
-        } else if (cbUso.selectedItem.toString().trim().equals(uso[3])) {
+        } else if (cbUso.selectedItem.toString().trim().equals('PROGRESIVO')) {
             receta.setUseGlasses('p')
-        } else if (cbUso.selectedItem.toString().trim().equals(uso[4])) {
+        } else if (cbUso.selectedItem.toString().trim().equals('INTERMEDIO')) {
             receta.setUseGlasses('i')
-        } else if (cbUso.selectedItem.toString().trim().equals(uso[5])) {
+        } else if (cbUso.selectedItem.toString().trim().equals('BIFOCAL INTERMEDIO')) {
             receta.setUseGlasses('t')
         }
 
-        receta.setOdEsfR(signo(txtOdEsfera.text))
-        receta.setOdCilR(signo(txtOdCil.text))
+        receta.setOdEsfR(txtOdEsfera.text)
+        receta.setOdCilR(txtOdCil.text)
         receta.setOdEjeR(txtOdEje.text)
         receta.setOdAdcR(txtOdAd.text)
-        receta.setOdAvR(txtOdAv.text)
+       // receta.setOdAvR(txtOdAv.text)
         receta.setDiOd(txtOdDm.text)
-        receta.setOdPrismH(txtOdPrisma.text)
+       // receta.setOdPrismH(txtOdPrisma.text)
         receta.setDiLejosR(txtDILejos.text)
 
-        receta.setOiEsfR(signo(txtOiEsfera.text))
-        receta.setOiCilR(signo(txtOiCil.text))
+        receta.setOiEsfR(txtOiEsfera.text)
+        receta.setOiCilR(txtOiCil.text)
         receta.setOiEjeR(txtOiEje.text)
-        receta.setOiAvR(txtOiAv.text)
+       // receta.setOiAvR(txtOiAv.text)
         receta.setDiOi(txtOiDm.text)
-        receta.setOiPrismH(txtOiPrisma.text)
-        receta.setDiCercaR(txtDICerca.text)
+        //receta.setOiPrismH(txtOiPrisma.text)
+        //receta.setDiCercaR(txtDICerca.text)
         receta.setAltOblR(txtAltOblea.text)
 
         receta.setObservacionesR(txtObservaciones.text)
-        receta.setOdPrismaV(cbOdUbic.selectedItem.toString() ?: '')
-        receta.setOiPrismaV(cbOiUbic.selectedItem.toString() ?: '')
+      //  receta.setOdPrismaV(cbOdUbic.selectedItem.toString() ?: '')
+       // receta.setOiPrismaV(cbOiUbic.selectedItem.toString() ?: '')
         receta.setIdOpt(txtEmpleado.text)
         receta.setFolio(txtFolio.text)
         if (!receta?.idClient) {
@@ -579,8 +620,6 @@ class EditRxDialog extends JDialog {
 
         rec = CustomerController.saveRx(receta)
 
-        ArmRxDialog armazon = new ArmRxDialog(this,idNotaV)
-        armazon.show()
 
         doCancel()
 
@@ -591,9 +630,10 @@ class EditRxDialog extends JDialog {
               && !StringUtils.trimToEmpty(txtFolio.text).isEmpty() ) {
 
                      String useGlass = cbUso.selectedItem.toString().trim()
+                      println('UseGlass = ' + useGlass)
+                      println('ItemUse = ' + itemUso)
 
-
-    /*B*/   if(useGlass.equals(uso[2])/*BIFOCAL*/ || useGlass.equals(uso[5])/*BIFOCAL INTERMEDIO*/ ){
+    /*B*/   if(useGlass.equals(usoB[0])/*BIFOCAL*/ ){
                         useGlass = 'BIFOCAL'
 
                         if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
@@ -602,15 +642,15 @@ class EditRxDialog extends JDialog {
                                     txtOdCil.text != '' &&
                                     txtOdEje.text != '' &&
                                     txtOdAd.text  != '' &&
+                                    txtDILejos.text   != '' &&
 
-                                    txtOdDm.text  != '' &&
 
 
                                     txtOiEsfera.text  != '' &&
                                     txtOiCil.text  != '' &&
                                     txtOiEje.text  != '' &&
                                     txtOiAd.text != '' &&
-                                    txtOiDm.text  != '' &&
+
 
 
                                     txtAltOblea.text  != ''
@@ -626,7 +666,7 @@ class EditRxDialog extends JDialog {
                                     .createDialog(new JTextField(), "Error")
                                     .show()
                         }
-   /*P*/     }else if(useGlass.equals(uso[3])/*PROGRESIVO*/){
+   /*P*/     }else if(useGlass.equals(usoP[0])/*PROGRESIVO*/){
                     useGlass = 'PROGRESIVO'
 
                     if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
@@ -660,7 +700,7 @@ class EditRxDialog extends JDialog {
                                 .show()
                     }
 
-  /*SV*/    }else if(useGlass.equals(uso[0])/*LEJOS*/ || useGlass.equals(uso[1])/*CERCA*/ || useGlass.equals(uso[4])/*INTERMEDIO*/ ){
+  /*SV*/    }else if(useGlass.equals(usoM[0])/*LEJOS*/ || useGlass.equals(usoM[1])/*CERCA*/  ){
                 useGlass = 'MONOFOCAL'
 
                 if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
@@ -668,13 +708,12 @@ class EditRxDialog extends JDialog {
                     if( txtOdEsfera.text != '' &&
                         txtOdCil.text != '' &&
                         txtOdEje.text != '' &&
-                        txtOdAd.text  != '' &&
+
                          txtDILejos.text   != '' &&
                          txtOiEsfera.text  != '' &&
                          txtOiCil.text  != '' &&
-                         txtOiEje.text  != '' &&
-                         txtOiAd.text != '' &&
-                        txtDICerca.text  != ''
+                         txtOiEje.text  != ''
+
 
                     ){
                         useGlasess()

@@ -132,13 +132,13 @@ class CustomerPanel extends JPanel {
                 gender = comboBox( items: GenderType.values() )
 
                 label( 'Nombre' )
-                firstName = textField( document: new UpperCaseDocument(), inputVerifier: new NotEmptyVerifier() )
+                firstName = textField( document: new UpperCaseDocument()/*, inputVerifier: new NotEmptyVerifier()*/ )
 
                 label( 'F. Nacimiento' )
                 dob = spinner( model: spinnerDateModel() )
 
                 label( 'Apellido Paterno' )
-                fathersName = textField( document: new UpperCaseDocument(), inputVerifier: new NotEmptyVerifier() )
+                fathersName = textField( document: new UpperCaseDocument()/*, inputVerifier: new NotEmptyVerifier()*/ )
 
                 label( 'Apellido Materno' )
                 mothersName = textField( document: new UpperCaseDocument() )
@@ -146,7 +146,7 @@ class CustomerPanel extends JPanel {
 
             panel( border: titledBorder( 'Dirección' ), layout: new MigLayout( 'wrap 3', '[][fill,grow][]' ) ) {
                 label( 'Calle y Número' )
-                primary = textField( document: new UpperCaseDocument(), inputVerifier: new NotEmptyVerifier(), constraints: 'span 2' )
+                primary = textField( document: new UpperCaseDocument()/*, inputVerifier: new NotEmptyVerifier()*/, constraints: 'span 2' )
 
                 label( 'Estado' )
                 stateField = comboBox( items: states, itemStateChanged: stateChanged, constraints: 'span 2' )

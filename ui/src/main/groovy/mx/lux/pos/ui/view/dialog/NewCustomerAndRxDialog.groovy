@@ -55,10 +55,10 @@ class NewCustomerAndRxDialog extends JDialog {
     void buildUI( ) {
         sb.dialog( this,
                 title: "${cliente.fullName}",
-                resizable: true,
+                resizable: false,
                 pack: true,
                 modal: true,
-                preferredSize: [ 750, 600 ] as Dimension,
+                preferredSize: [ 490, 500 ] as Dimension,
                 location: [ 70, 35 ] as Point,
         ) {
             borderLayout()
