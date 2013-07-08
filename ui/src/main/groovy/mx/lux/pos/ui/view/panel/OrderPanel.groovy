@@ -85,9 +85,12 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private Dioptra antDioptra
     private static User empleado
     private static boolean ticketRx
+    private String armazonString = null
     Receta getRec() {
         return rec
     }
+
+
 
     OrderPanel(User user) {
 
@@ -443,10 +446,12 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     if ( results.size() == 1 ) {
 
                        item = results.first()
-
-
                         validarVentaNegativa( item,customer )
                         rec = validarGenericoB(item)
+
+                        if(item?.type.trim().equals('A')){
+                            armazonString = item?.name
+                        }
 
                     } else {
                         SuggestedItemsDialog dialog = new SuggestedItemsDialog( itemSearch, input, results )
@@ -458,6 +463,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                             validarVentaNegativa( item,customer )
                             rec = validarGenericoB(item)
 
+                            if(item?.type.trim().equals('A')){
+                                armazonString = item?.name
+                            }
                         }
                     }
                     try{
@@ -505,7 +513,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private def doShowItemClick = { MouseEvent ev ->
         if ( SwingUtilities.isLeftMouseButton( ev ) ) {
             if ( ev.clickCount == 2 ) {
-                new ItemDialog( ev.component, order, ev.source.selectedElement).show()
+                new ItemDialog(ev.component, order, ev.source.selectedElement).show()
                 updateOrder( order?.id )
 
             }
@@ -697,7 +705,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     source.enabled = false
                     ticketRx = true
                     if(armOrder?.udf2.equals('')){
-                    ArmRxDialog armazon = new ArmRxDialog(this, order?.id)
+                    ArmRxDialog armazon = new ArmRxDialog(this, order?.id,armazonString)
                     armazon.show()
                     }
                     flujoImprimir()
@@ -710,7 +718,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                 source.enabled = false
                 ticketRx = true
                 if(armOrder?.udf2.equals('')){
-                ArmRxDialog armazon = new ArmRxDialog(this, order?.id)
+                ArmRxDialog armazon = new ArmRxDialog(this, order?.id,armazonString)
                 armazon.show()
                 }
                 flujoImprimir()
@@ -989,6 +997,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             }
         }
 
+
         if(artCount==0)
         {
             flujoContinuar()
@@ -1014,7 +1023,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                 try{
                     OrderController.saveRxOrder(order?.id,rec.id)
                     if(armOrder?.udf2.equals('')){
-                    ArmRxDialog armazon = new ArmRxDialog(this, order?.id)
+                    ArmRxDialog armazon = new ArmRxDialog(this, order?.id,armazonString )
                     armazon.show()
                     }
                     flujoContinuar()
@@ -1032,7 +1041,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                    editRx.show()
                   */
                 if(armOrder?.udf2.equals('')){
-                ArmRxDialog armazon = new ArmRxDialog(this, order?.id)
+                ArmRxDialog armazon = new ArmRxDialog(this, order?.id,armazonString)
                 armazon.show()
                 }
                 flujoContinuar()

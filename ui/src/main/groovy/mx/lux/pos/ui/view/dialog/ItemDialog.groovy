@@ -97,7 +97,9 @@ class ItemDialog extends JDialog {
     source.enabled = false
 
     Order o = OrderController.removeOrderItemFromOrder( order.id, orderItem )
-
+      if(orderItem?.tipo.trim().equals('A')){
+          parent?.armazonString = null
+      }
 
     source.enabled = true
     this.setVisible(false)

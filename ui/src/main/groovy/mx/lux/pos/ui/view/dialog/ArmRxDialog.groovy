@@ -7,6 +7,8 @@ import net.miginfocom.swing.MigLayout
 
 import javax.swing.*
 import java.awt.*
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
 
 
 class ArmRxDialog extends JDialog {
@@ -16,7 +18,7 @@ class ArmRxDialog extends JDialog {
     private Component component
     private static ButtonGroup material
     private static ButtonGroup acabado
-    private static JTextField forma
+    private static JTextField forma = new JTextField()
     private static JRadioButton pasta
     private static JRadioButton opacado
     private static JRadioButton metal
@@ -24,12 +26,16 @@ class ArmRxDialog extends JDialog {
     private static JRadioButton nylon
     private static JRadioButton aire
     private static String idNotaV
+    private static String armazon
 
-    ArmRxDialog(Component parent, String idNotaVenta) {
+    ArmRxDialog(Component parent, String idNotaVenta, String armazonString) {
+        println( 'Armazoon: '+armazonString)
         sb = new SwingBuilder()
         component = parent
         idNotaV = idNotaVenta
+        armazon = armazonString
         buildUI()
+
 
     }
 
@@ -65,7 +71,13 @@ class ArmRxDialog extends JDialog {
                      label()
 
                     aire = radioButton(text:"Aire", buttonGroup:material)
+
                     aire.setActionCommand('Aire')
+                     aire.addActionListener(new ActionListener() {
+                         public void actionPerformed(ActionEvent e) {
+                             txtForma(e)
+                         }
+                     })
                      label()
 
                      label(text: 'Forma')
@@ -79,6 +91,11 @@ class ArmRxDialog extends JDialog {
 
         }
 
+    }
+
+    private void txtForma(ActionEvent e)
+    {
+        forma.text = armazon
     }
 
     private void doSave(){
