@@ -395,4 +395,6 @@ public class Pago implements Serializable {
     public void setPlan( Plan plan ) {
         this.plan = plan;
     }
+
+
 }

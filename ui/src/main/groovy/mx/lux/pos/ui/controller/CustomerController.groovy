@@ -137,7 +137,7 @@ class CustomerController {
     static ClienteProceso addClienteProceso (Customer tmpCustomer){
 
         Branch branch = Session.get(SessionItem.BRANCH) as Branch
-        println('Brach: '+ branch)
+
         ClienteProceso clientePro = new ClienteProceso()
         String IdSync = '1'
         String IdMod = '0'
@@ -336,7 +336,7 @@ class CustomerController {
             Order o = Order.toOrder( dialog.orderSelected.order )
 
             Customer c = Customer.toCustomer( dialog.orderSelected.customer )
-            println('customerID'+c?.id)
+
             pListener.reset()
             pListener.disableUI()
             pListener.operationTypeSelected = OperationType.PAYING

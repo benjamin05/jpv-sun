@@ -38,5 +38,7 @@ interface NotaVentaService {
 
     void saveRx(NotaVenta rNotaVenta, Integer receta)
 
+    void saveProDate(NotaVenta rNotaVenta, Date fechaPrometida)
+
     void saveFrame(NotaVenta rNotaVenta, String opciones, String forma)
 }

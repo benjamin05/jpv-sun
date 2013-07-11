@@ -5,7 +5,6 @@ import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.model.Branch
 import mx.lux.pos.ui.model.Session
 import mx.lux.pos.ui.model.SessionItem
-import mx.lux.pos.ui.view.panel.RXPanel
 import mx.lux.pos.ui.model.Rx
 import mx.lux.pos.ui.controller.CustomerController
 import mx.lux.pos.ui.view.dialog.EditRxDialog

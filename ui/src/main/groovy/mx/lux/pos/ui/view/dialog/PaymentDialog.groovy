@@ -172,6 +172,8 @@ class PaymentDialog extends JDialog {
         PaymentType paymentType = paymentTypes.find { PaymentType tmp ->
           tmp.description.equalsIgnoreCase( ev.item as String )
         }
+          println('Tipo de pago: '+paymentType?.description)
+          println('Tipo de pago ID: '+paymentType?.id)
         if ( 'TR'.equalsIgnoreCase( paymentType?.id ) ) {
           dispose()
           if ( order.due ) {
@@ -210,6 +212,7 @@ class PaymentDialog extends JDialog {
             planLabel.text = paymentType.f5
             plan.visible = true
           }
+
           if( PaymentController.findTypePaymentsDollar(paymentType?.id) ){
             dollarsReceivedLabel.visible = true
             dollarsReceivedLabel.text = DOLARES

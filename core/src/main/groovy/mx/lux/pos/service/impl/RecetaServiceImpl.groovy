@@ -1,27 +1,15 @@
 package mx.lux.pos.service.impl
-
 import groovy.util.logging.Slf4j
-import mx.lux.pos.model.Acuse
-import mx.lux.pos.model.DetalleNotaVenta
-import mx.lux.pos.model.NotaVenta
-import mx.lux.pos.model.Parametro
-import mx.lux.pos.model.Receta
-import mx.lux.pos.model.TipoParametro
-import mx.lux.pos.repository.AcuseRepository
-import mx.lux.pos.repository.DetalleNotaVentaRepository
-import mx.lux.pos.repository.NotaVentaRepository
-import mx.lux.pos.repository.PagoRepository
-import mx.lux.pos.repository.ParametroRepository
-import mx.lux.pos.repository.ReimpresionRepository
+import mx.lux.pos.model.*
+import mx.lux.pos.repository.*
 import mx.lux.pos.service.NotaVentaService
 import mx.lux.pos.service.RecetaService
-import org.apache.commons.lang3.StringUtils
+import mx.lux.pos.service.business.Registry
 import org.hibernate.service.spi.ServiceException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 import javax.annotation.Resource
-import mx.lux.pos.repository.RecetaRepository
 
 @Slf4j
 @Service( "recetaService" )
@@ -169,14 +157,15 @@ class RecetaServiceImpl implements RecetaService {
 
     @Override
     private void generaArchivoEnvio( String contenido, String nombre) throws ServiceException {
-            try {
-                File archivo = new File( 'C:/jpv-sun/', nombre.toString() )
+           // try {
+                Parametro ruta = Registry.find(TipoParametro.RUTA_POR_ENVIAR)
+                println('ruta: '+ruta?.valor)
+                File archivo = new File( ruta?.valor, nombre.toString() )
                 BufferedWriter out = new BufferedWriter( new FileWriter( archivo ) )
                 out.write( contenido )
                 out.close()
-            } catch ( Exception e ) {
-                throw new ServiceException( "Error al generar archivo de envio externo", e )
-            }
-
+           // } catch ( Exception e ) {
+           //     throw new ServiceException( "Error al generar archivo de envio externo", e )
+           // }
     }
 }

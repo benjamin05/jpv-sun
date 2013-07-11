@@ -65,7 +65,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
   NotaVenta abrirNotaVenta(String clienteID,String empleadoID ) {
     log.info( 'abriendo nueva notaVenta' )
 
-      println('empleado: ' + empleadoID)
+
 
     Parametro parametro = new Parametro()
       parametro.setValor(clienteID)
@@ -314,6 +314,24 @@ class NotaVentaServiceImpl implements NotaVentaService {
 
     }
 
+
+    @Transactional
+    void saveProDate(NotaVenta rNotaVenta, Date fechaPrometida){
+
+        if ( StringUtils.isNotBlank( rNotaVenta.id) ) {
+            if ( notaVentaRepository.exists( rNotaVenta.id ) ) {
+
+                rNotaVenta.setFechaPrometida(fechaPrometida)
+
+
+                registrarNotaVenta( rNotaVenta )
+            } else {
+                log.warn( "id no existe" )
+            }
+        } else {
+            log.warn( "No hay receta" )
+        }
+    }
 
     @Transactional
     void saveRx(NotaVenta rNotaVenta, Integer receta){

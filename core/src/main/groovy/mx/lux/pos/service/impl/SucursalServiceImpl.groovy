@@ -39,8 +39,6 @@ class SucursalServiceImpl implements SucursalService {
     log.debug( "obteniendo sucursal actual" )
     def parametro = parametroRepository.findOne( TipoParametro.ID_SUCURSAL.value )
 
-      println(parametro?.valor?.isInteger())
-      println(parametro?.valor?.toInteger() )
      if ( parametro?.valor?.isInteger() && parametro?.valor?.toInteger() ) {
 
       int id = parametro?.valor?.toInteger()

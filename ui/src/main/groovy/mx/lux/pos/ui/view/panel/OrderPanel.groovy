@@ -2,31 +2,26 @@ package mx.lux.pos.ui.view.panel
 
 import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
-import mx.lux.pos.model.IPromotionAvailable
-import mx.lux.pos.model.Receta
-import mx.lux.pos.model.PromotionAvailable
-import mx.lux.pos.model.SalesWithNoInventory
+import mx.lux.pos.model.*
+import mx.lux.pos.service.business.Registry
 import mx.lux.pos.ui.MainWindow
+import mx.lux.pos.ui.controller.*
+import mx.lux.pos.ui.model.*
 import mx.lux.pos.ui.resources.UI_Standards
 import mx.lux.pos.ui.view.component.DiscountContextMenu
+import mx.lux.pos.ui.view.dialog.*
 import mx.lux.pos.ui.view.driver.PromotionDriver
 import mx.lux.pos.ui.view.renderer.MoneyCellRenderer
 import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
-
-import java.awt.BorderLayout
-import java.awt.Component
-import java.awt.Font
-import java.text.NumberFormat
-
-import mx.lux.pos.ui.controller.*
-import mx.lux.pos.ui.model.*
-import mx.lux.pos.ui.view.dialog.*
-
-import java.awt.event.*
-import javax.swing.*
-import org.slf4j.LoggerFactory
 import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
+import javax.swing.*
+import java.awt.*
+import java.awt.event.*
+import java.text.NumberFormat
+import java.util.List
 
 class OrderPanel extends JPanel
 implements IPromotionDrivenPanel, FocusListener, CustomerListener {
@@ -75,9 +70,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private JLabel paid
     private JLabel due
     private JLabel change
-    private BigDecimal cambio = BigDecimal.ZERO
+
     private DiscountContextMenu discountMenu
-    private String autorizacion
     private OperationType currentOperationType
     private Boolean uiEnabled
     private Receta rec
@@ -86,9 +80,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private static User empleado
     private static boolean ticketRx
     private String armazonString = null
-    Receta getRec() {
-        return rec
-    }
 
 
 
@@ -289,7 +280,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         if ( order?.id != null ) {
 
 
-             println(order?.dioptra != null)
+
             if(order?.dioptra != null){
 
             dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
@@ -471,16 +462,16 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     try{
 
                         String indexDioptra = item?.indexDiotra
-                        println('ArticuloCodigoDioptra: ' + item?.indexDiotra + ' '+ indexDioptra.equals(null) + ' ' + !indexDioptra.equals(null))
+
                         if(!indexDioptra.equals(null)){
                     Dioptra nuevoDioptra = OrderController.generaDioptra(item?.indexDiotra)
                     dioptra = OrderController.validaDioptra(dioptra,nuevoDioptra)
                         antDioptra = OrderController.addDioptra(order,OrderController.codigoDioptra(dioptra))
 
                         order?.dioptra = OrderController.codigoDioptra(antDioptra)
-                        println('OrderDioptraMaterial: ' + order?.dioptra )
+
                         }else{
-                        println('Sin index dioptra')
+
                         }
                     }catch(e){
 
@@ -524,8 +515,12 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         if ( SwingUtilities.isLeftMouseButton( ev ) ) {
             if ( ev.clickCount == 1 ) {
                 if ( order.due ) {
+
+
                     new PaymentDialog( ev.component, order, null ).show()
                     updateOrder( order?.id )
+
+
                 } else {
                     sb.optionPane(
                             message: 'No hay saldo para aplicar pago',
@@ -647,17 +642,14 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
     private def doPrint = { ActionEvent ev ->
 
-
+        int artCount = 0
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
         String dio = OrderController.codigoDioptra(dioptra)
-        println('Dioptra: '+ dio)
         if(dioptra.getLente() != null){
         Item i = OrderController.findArt(dio.trim())
         if(i?.id != null){
-            println('Correcto: '+ i.id)
-
         String tipoArt = null
-        int artCount = 0
+
         for (int row = 0; row<= itemsModel.rowCount;row++)
         {
             String artString =  itemsModel.getValueAt(row,0).toString()
@@ -680,18 +672,14 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             JButton source = ev.source as JButton
             source.enabled = false
             ticketRx = false
-            flujoImprimir()
+            flujoImprimir(artCount)
             source.enabled = true
 
         }else{
 
             rec = OrderController.findRx(order,customer)
             Order armOrder =  OrderController.getOrder(order?.id)
-            println('Armazon: '+armOrder?.udf2)
-            println('Boolean: '+ !armOrder?.udf2.equals(''))
-            println('Boolean2: '+ !armOrder?.udf2.equals(null))
-            println('Receta ya creada: '+rec.id)
-            println(rec.id == null)
+
             if (rec.id == null){   //Receta Nueva
                 Branch branch = Session.get( SessionItem.BRANCH ) as Branch
 
@@ -708,10 +696,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     ArmRxDialog armazon = new ArmRxDialog(this, order?.id,armazonString)
                     armazon.show()
                     }
-                    flujoImprimir()
+                    flujoImprimir(artCount)
                     source.enabled = true
                 }catch(ex){
-                    println('No hay receta, no se puede continuar')
+
                 }
             }else{
                 JButton source = ev.source as JButton
@@ -721,7 +709,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                 ArmRxDialog armazon = new ArmRxDialog(this, order?.id,armazonString)
                 armazon.show()
                 }
-                flujoImprimir()
+                flujoImprimir(artCount)
                 source.enabled = true
 
             }
@@ -735,15 +723,48 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         }
         }else{
             ticketRx = false
-            flujoImprimir()
+            flujoImprimir(artCount)
         }
     }
 
-    private void flujoImprimir(){
+    private void flujoImprimir(int artCount){
+         Boolean validOrder
+        if(artCount != 0){
+
+            Parametro diaIntervalo =  Registry.find(TipoParametro.DIA_PRO)
+
+            Date diaPrometido = new Date() + diaIntervalo?.valor.toInteger()
+            OrderController.savePromisedDate(order?.id, diaPrometido)
 
 
-        if ( isValidOrder() ) {
-            println(operationType.selectedItem.toString().trim())
+            Double pAnticipo = Registry.getAdvancePct()
+            if(order?.paid<(order?.total * pAnticipo)){
+
+                AuthorizationDialog authDialog = new AuthorizationDialog( this, "Esta operacion requiere autorizaci\u00f3n" )
+                authDialog.show()
+
+
+                if(authDialog.authorized){
+                    validOrder = isValidOrder()
+                }else{
+
+                    validOrder = false
+
+                    sb.optionPane(
+                            message: 'El monto del anticipo tiene que ser minimo de: $'+ (order?.total * pAnticipo),
+                            messageType: JOptionPane.ERROR_MESSAGE
+                    ).createDialog( this, 'No se puede registrar la venta' )
+                            .show()
+                }
+
+            }else{
+                validOrder = isValidOrder()
+            }
+
+        }
+
+        if ( validOrder ) {
+
 
             if( operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.WALKIN.value) ||
                     operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.DOMESTIC.value) ){
@@ -786,9 +807,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         if ( StringUtils.isNotBlank( newOrder?.id ) ) {
 
 
-           OrderController.printOrder( newOrder.id )
+           //OrderController.printOrder( newOrder.id )
            if(ticketRx == true){
-            OrderController.printRx(newOrder.id)
+          //  OrderController.printRx(newOrder.id)
             OrderController.fieldRX(newOrder.id)
 
 
@@ -824,8 +845,11 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             return false
         }
         if ( !OrderController.isPaymentPolicyFulfilled( order ) ) {
+
             return false
         }
+
+
         return true
     }
 
@@ -887,12 +911,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
         String dio = OrderController.codigoDioptra(dioptra)
-        println('Dioptra: '+ dio)
         if(dioptra.getLente() != null){
             Item i = OrderController.findArt(dio.trim())
             if(i?.id != null){
-                println('Correcto: '+ i.id)
-
         if ( itemsModel.size() > 0 ) {
             if ( paymentsModel.size() == 0 ) {
                 OrderController.requestSaveAsQuote( order, customer )
@@ -970,15 +991,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private void fireRequestContinue(DefaultTableModel itemsModel ) {
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
        String dio = OrderController.codigoDioptra(dioptra)
-        println('Dioptra: '+ dio)
         if(dioptra.getLente() != null){
        Item i = OrderController.findArt(dio.trim())
         if(i?.id != null){
-            println('Correcto: '+ i.id)
-
-
-
-        String tipoArt = null
+   String tipoArt = null
         int artCount = 0
         for (int row = 0; row<= itemsModel.rowCount;row++)
         {
@@ -1009,11 +1025,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
             rec = OrderController.findRx(order,customer)
             Order armOrder =  OrderController.getOrder(order?.id)
-            println('Armazon: '+armOrder?.udf2)
-            println('Boolean: '+ !armOrder?.udf2.equals(''))
-            println('Boolean2: '+ !armOrder?.udf2.equals(null))
-            println('Receta ya creada: '+rec.id)
-            println(rec.id == null)
+
+
             if (rec.id == null){   //Receta Nueva
                 Branch branch = Session.get( SessionItem.BRANCH ) as Branch
 

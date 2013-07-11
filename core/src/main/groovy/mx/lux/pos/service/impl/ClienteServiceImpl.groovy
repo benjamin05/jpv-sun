@@ -167,11 +167,11 @@ class ClienteServiceImpl implements ClienteService {
     clienteProc.fechaMod = new Date()
     */
     try {
-        println('Prueba*1')
+
       repository.save( clienteProceso )
 
     } catch ( Exception e ) {
-        println('Prueba*2')
+
       this.log.error( e.getMessage() )
 
     }
@@ -184,7 +184,7 @@ class ClienteServiceImpl implements ClienteService {
 
     customers.addAll( onSite.findByEtapa( ClienteProcesoEtapa.PAYMENT.toString() ) )
 
-    println( 'Tamaño de lista: '+ customers.size() )
+
     if ( pLoaded ) {
       for ( ClienteProceso cliente : customers ) {
         this.llenarCliente( cliente )

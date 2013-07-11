@@ -1,6 +1,7 @@
 package mx.lux.pos.ui.controller
 
 import groovy.util.logging.Slf4j
+import mx.lux.pos.service.business.Registry
 import mx.lux.pos.ui.MainWindow
 import mx.lux.pos.ui.resources.ServiceManager
 import mx.lux.pos.ui.view.dialog.ManualPriceDialog
@@ -121,10 +122,9 @@ class OrderController {
 
 
           if(rxNotaVenta.receta == rx?.id){
-              println('Ok: ' +      rx?.id)
               rxNotaVenta.receta
               receta = recetaService.findbyId(rxNotaVenta.receta)
-              println('Ok: ' +     receta.id)
+
 
           }
 
@@ -134,7 +134,28 @@ class OrderController {
       return receta
   }
 
-  static void saveRxOrder(String idNotaVenta, Integer receta){
+    static void savePago(Pago pago){
+        pagoService.actualizarPago(pago)
+    }
+
+    static Integer reciboSeq(){
+      return pagoService.reciboSeq().toInteger()
+    }
+
+    static List<Pago> findPagos(String IdFactura){
+
+       List<Pago> pagos =  pagoService.listarPagosPorIdFactura(IdFactura)
+
+       return pagos
+    }
+
+    static void savePromisedDate(String idNotaVenta, Date fechaPrometida){
+        NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(idNotaVenta)
+        notaVentaService.saveProDate(notaVenta ,fechaPrometida)
+
+    }
+
+    static void saveRxOrder(String idNotaVenta, Integer receta){
 
        NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(idNotaVenta)
 
@@ -142,7 +163,8 @@ class OrderController {
        notaVentaService.saveRx(notaVenta ,receta)
 
   }
-    static void saveFrame (String idNotaVenta, String opciones, String forma){
+
+  static void saveFrame (String idNotaVenta, String opciones, String forma){
         NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(idNotaVenta)
         notaVentaService.saveFrame(notaVenta,opciones,forma)
     }
@@ -367,7 +389,7 @@ class OrderController {
     if ( StringUtils.isNotBlank( orderId ) && StringUtils.isNotBlank( payment?.paymentTypeId ) && payment?.amount ) {
 
       User user = Session.get( SessionItem.USER ) as User
-      println "Banco Emisor:: ${payment.issuerBankId}"
+
       Pago pago = new Pago(
           idFormaPago: payment.paymentTypeId,
           referenciaPago: payment.paymentReference,
@@ -566,7 +588,7 @@ class OrderController {
   }
 
   static String requestEmployee( String pOrderId ) {
-      println('OrderID: '+pOrderId)
+
       String empName = ''
     if ( StringUtils.trimToNull( StringUtils.trimToEmpty(pOrderId) ) != null ) {
       Empleado employee = notaVentaService.obtenerEmpleadoDeNotaVenta( pOrderId )
@@ -632,15 +654,21 @@ class OrderController {
   }
 
   static Boolean isPaymentPolicyFulfilled( Order pOrder ) {
+
+
     Boolean result = true
     if ( pOrder.due < 0 ) {
       this.notifyAlert( OrderPanel.TXT_INVALID_PAYMENT_TITLE, 'Los pagos no deben ser mayores al total de la venta.' )
       result = false
     } else if ( pOrder.containsOphtalmic() ) {
+
+
+                 /*
       if ( pOrder.advancePct < ( SettingsController.instance.advancePct - ZERO_TOLERANCE ) ) {
         this.notifyAlert( OrderPanel.TXT_INVALID_PAYMENT_TITLE, 'Pago menor al %Anticipo establecido.' )
         result = false
       }
+               */
     } else if ( pOrder.due > 0 ) {
       this.notifyAlert( OrderPanel.TXT_INVALID_PAYMENT_TITLE, 'Se debe cubrir el total del saldo.' )
       result = false

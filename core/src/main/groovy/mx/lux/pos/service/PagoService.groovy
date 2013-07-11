@@ -12,4 +12,6 @@ interface PagoService {
 
   Boolean obtenerTipoPagosDolares( String formaPago )
 
+    BigInteger reciboSeq()
+
 }

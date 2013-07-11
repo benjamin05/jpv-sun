@@ -2,6 +2,7 @@ package mx.lux.pos.ui.view.panel
 
 import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
+import mx.lux.pos.model.Pago
 import mx.lux.pos.ui.controller.AccessController
 import mx.lux.pos.ui.controller.CancellationController
 import mx.lux.pos.ui.controller.OrderController
@@ -12,15 +13,16 @@ import mx.lux.pos.ui.model.Payment
 import mx.lux.pos.ui.resources.UI_Standards
 import mx.lux.pos.ui.view.dialog.AuthorizationDialog
 import mx.lux.pos.ui.view.dialog.CancellationDialog
+import mx.lux.pos.ui.view.dialog.PaymentDialog
 import mx.lux.pos.ui.view.dialog.RefundDialog
 import mx.lux.pos.ui.view.renderer.MoneyCellRenderer
 import net.miginfocom.swing.MigLayout
 
-import java.awt.Font
+import javax.swing.*
+import java.awt.*
 import java.awt.event.ActionEvent
 import java.text.NumberFormat
-import javax.swing.*
-import org.apache.commons.lang.StringUtils
+import java.util.List
 
 class ShowOrderPanel extends JPanel {
 
@@ -48,7 +50,7 @@ class ShowOrderPanel extends JPanel {
   private BigDecimal sumaPagos = BigDecimal.ZERO
   private static final BigDecimal montoCentavos = BigDecimal.ZERO
   private List<IPromotion> lstPromociones = new ArrayList<IPromotion>()
-
+  private JScrollPane pago
 
   ShowOrderPanel( ) {
     sb = new SwingBuilder()
@@ -143,7 +145,7 @@ class ShowOrderPanel extends JPanel {
           }
         }
 
-        scrollPane( border: titledBorder( title: 'Pagos' ) ) {
+        pago = scrollPane( border: titledBorder( title: 'Pagos' ) ) {
           table( selectionMode: ListSelectionModel.SINGLE_SELECTION ) {
             paymentsModel = tableModel( list: order.payments ) {
               closureColumn( header: 'Descripci\u00f3n', read: {Payment tmp -> tmp?.description} )
@@ -161,7 +163,8 @@ class ShowOrderPanel extends JPanel {
         cancelButton = button( 'Cancelar', actionPerformed: doCancel, constraints: 'hidemode 3' )
         returnButton = button( 'Devoluci\u00f3n', actionPerformed: doRefund, constraints: 'hidemode 3' )
         printReturnButton = button( 'Imprimir Cancelaci\u00f3n', actionPerformed: doPrintRefund, constraints: 'hidemode 3' )
-        printButton = button( 'Imprimir', actionPerformed: doPrint )
+      //  printButton = button( 'Imprimir', actionPerformed: doPrint )
+          printButton = button( 'Pagar', actionPerformed: doShowPayment )
       }
     }
     navigatorPanel.add( new OrderNavigatorPanel( order, {doBindings()} ) )
@@ -255,4 +258,48 @@ class ShowOrderPanel extends JPanel {
     OrderController.printOrder( order.id, false )
     source.enabled = true
   }
+
+    private def doShowPayment = {ActionEvent ev ->
+        JButton source = ev.source as JButton
+        source.enabled = false
+        if((order?.total - order?.paid) > 0){
+            updatePagos()
+             new PaymentDialog( pago, order, null ).show()
+            updateOrder( order?.id )
+        }
+        if((order?.total - order?.paid) == 0){
+            updatePagos()
+        }
+
+
+        source.enabled = true
+    }
+
+    private void updatePagos(){
+        String parcialidad = '0'
+            List<Pago> pagos =  OrderController.findPagos(order?.id)
+            Iterator iterator = pagos.iterator();
+            while (iterator.hasNext()) {
+                Pago pago = iterator.next()
+                if(pago?.idRecibo.equals('')){
+                    pago?.idRecibo = OrderController.reciboSeq()
+                }
+                if(pago?.parcialidad.equals('')){
+                    pago?.parcialidad = ((pago?.parcialidad + parcialidad).toInteger() + 1).toString()
+                }
+                parcialidad = pago?.parcialidad
+                OrderController.savePago(pago)
+            }
+
+        }
+
+    private void updateOrder( String pOrderId ) {
+        Order tmp = OrderController.getOrder( pOrderId )
+        if ( tmp?.id ) {
+            order = tmp
+
+            doBindings()
+        }
+    }
+
 }

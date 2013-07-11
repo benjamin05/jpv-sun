@@ -164,10 +164,7 @@ class OrderActiveSelectionDialog extends JDialog {
     }
 
 
-    //  protected void onAlter(DefaultTableModel model){
-  //      println('Correcto: '+ model.getColumnCount())
-  //    println(model.columnList)
-  //  }
+
 
 
   protected void onCancel( ) {

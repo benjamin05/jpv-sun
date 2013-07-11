@@ -27,4 +27,7 @@ interface PagoRepository extends JpaRepository<Pago, Integer>, QueryDslPredicate
   @Transactional
   @Query( value = 'DELETE FROM pagos WHERE id_factura = ?1', nativeQuery = true )
   void deleteByIdFactura( String pIdFactura )
+
+    @Query( value = "SELECT NEXTVAL('id_recibo_seq')", nativeQuery = true )
+    BigInteger getReciboSequence( )
 }

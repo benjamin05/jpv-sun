@@ -16,6 +16,7 @@ enum TipoParametro {
   COMPANIA_RFC( 'compania_rfc', 'POP 591001 E92' ),
   DESCRIPCION_CORTA( 'descripcion_corta', 'si' ),
   DESPLIEGA_USD( 'despliega_dolares', 'no' ),
+  DIA_PRO('DIA_PRO','7'),
   EMP_ELECTRONICO( 'emp_electronico', '' ),
   FORMATO_ARCHIVO( 'formato_archivo_salida', 'default' ),
   GRUPO_COMPANIA( 'grupo_compania', 'lux' ),

@@ -54,4 +54,12 @@ class PagoServiceImpl implements PagoService {
     log.info( 'obtenerTipoPagosDolares( )' )
     return Registry.isCardPaymentInDollars( formaPago )
   }
+
+
+    @Override
+    BigInteger reciboSeq(){
+       return pagoRepository.getReciboSequence()
+    }
+
+
 }
