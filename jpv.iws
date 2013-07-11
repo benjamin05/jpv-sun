@@ -142,7 +142,7 @@
       <file leaf-file-name="ShowOrderPanel.groovy" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="273" column="50" selection-start="10995" selection-end="10995" vertical-scroll-proportion="0.028960818">
+            <state line="278" column="51" selection-start="11097" selection-end="11097" vertical-scroll-proportion="0.1737649">
               <folding>
                 <element signature="e#34#71#0" expanded="true" />
                 <marker date="1373563499250" expanded="true" signature="10637:10994" placeholder="{...}" />
@@ -1127,7 +1127,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1288" height="780" extended-state="7" />
+    <frame x="-4" y="-4" width="1288" height="780" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1268,7 +1268,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/RecetaService.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="9" selection-start="225" selection-end="225" vertical-scroll-proportion="0.562701" />
+        <state line="12" column="9" selection-start="225" selection-end="225" vertical-scroll-proportion="0.562701">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/RecetaServiceImpl.groovy">
@@ -1324,7 +1326,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="273" column="50" selection-start="10995" selection-end="10995" vertical-scroll-proportion="0.028960818">
+        <state line="278" column="51" selection-start="11097" selection-end="11097" vertical-scroll-proportion="0.1737649">
           <folding>
             <element signature="e#34#71#0" expanded="true" />
             <marker date="1373563499250" expanded="true" signature="10637:10994" placeholder="{...}" />
