@@ -340,9 +340,10 @@ class TicketServiceImpl implements TicketService {
                   formaLente: notaVenta?.udf3
 
           ]
-
+                println('RecetaObservaciones: '+rx?.observacionesR)
+                println('FacturaObservaciones: ' +notaVenta?.observacionesNv )
           def coment = [
-                 cometRx:'',
+                 cometRx:rx?.observacionesR,
                  cometFactura: notaVenta?.observacionesNv,
                  conSaldo:'',
                  regresoClases:'',

@@ -76,7 +76,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private Boolean uiEnabled
     private Receta rec
     private Dioptra dioptra
-    private Dioptra antDioptra
+    private Dioptra antDioptra = new Dioptra()
     private static User empleado
     private static boolean ticketRx
     private String armazonString = null
@@ -280,7 +280,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         if ( order?.id != null ) {
 
 
-
+            println('DioptraC: '+order?.dioptra)
             if(order?.dioptra != null){
 
             dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
@@ -459,26 +459,17 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                             }
                         }
                     }
-                    try{
-
 
                         String indexDioptra = item?.indexDiotra
-                        println('name: '+item?.name)
-                        println('indexDioptra: '+indexDioptra)
                         if(!indexDioptra.equals(null)){
                     Dioptra nuevoDioptra = OrderController.generaDioptra(item?.indexDiotra)
                     dioptra = OrderController.validaDioptra(dioptra,nuevoDioptra)
-                            println('dioptra: '+OrderController.codigoDioptra(dioptra))
                         antDioptra = OrderController.addDioptra(order,OrderController.codigoDioptra(dioptra))
-                            println('antDioptra: '+ OrderController.codigoDioptra(antDioptra))
                         order?.dioptra = OrderController.codigoDioptra(antDioptra)
-
-                        }else{
-
+                        }  else{
+                            order?.dioptra = OrderController.codigoDioptra(antDioptra)
                         }
-                    }catch(e){
-
-                    }
+                       println('DioptraC: '+order?.dioptra)
                     OrderController.saveRxOrder(order?.id,rec.id)
                     updateOrder( order?.id )
                     if ( !order.customer.equals( customer ) ) {
