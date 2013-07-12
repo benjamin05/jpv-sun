@@ -314,17 +314,19 @@ class OrderController {
       NotaVenta notaVenta = notaVentaService.eliminarDetalleNotaVentaEnNotaVenta( orderId, orderItem.item.id )
       if ( notaVenta?.id ) {
           NotaVenta nota = notaVentaService.obtenerNotaVenta(orderId)
-
+          Order o = new Order()
           Articulo i = articuloService.obtenerArticulo(orderItem?.item?.id.toInteger())
 
+          if(!i?.indice_dioptra.equals(null) ){
           Dioptra actDioptra = validaDioptra(generaDioptra(preDioptra(nota.codigo_lente)),generaDioptra(i.indice_dioptra))
-          Order o = Order.toOrder( notaVenta )
+          o = Order.toOrder( notaVenta )
 
           actDioptra = addDioptra(o,codigoDioptra(actDioptra))
 
+          }
 
+                      return o
 
-          return o
       } else {
         log.warn( "no se elimina orderItem, notaVenta no existe" )
       }

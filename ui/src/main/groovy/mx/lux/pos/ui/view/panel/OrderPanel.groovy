@@ -280,7 +280,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         if ( order?.id != null ) {
 
 
-            println('DioptraC: '+order?.dioptra)
+            println('DioptraU: '+order?.dioptra)
             if(order?.dioptra != null){
 
             dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
