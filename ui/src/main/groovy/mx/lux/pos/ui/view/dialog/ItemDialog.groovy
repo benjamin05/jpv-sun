@@ -6,15 +6,14 @@ import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.model.Item
 import mx.lux.pos.ui.model.Order
 import mx.lux.pos.ui.model.OrderItem
+import mx.lux.pos.ui.view.panel.OrderPanel
 import net.miginfocom.swing.MigLayout
 
-import java.awt.Component
+import javax.swing.*
+import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.event.ItemEvent
-import javax.swing.JButton
-import javax.swing.JComboBox
-import javax.swing.JDialog
-import javax.swing.JSpinner
+import java.util.List
 
 class ItemDialog extends JDialog {
 
@@ -26,10 +25,11 @@ class ItemDialog extends JDialog {
   private List<String> colors
   private List<String> deliversList
   private JSpinner quantity
+  private OrderPanel op
 
 
-    ItemDialog( Component parent, Order order, final OrderItem orderItem) {
-
+    ItemDialog( Component parent, Order order, final OrderItem orderItem, Component orderP) {
+     op = orderP
     this.orderItem = orderItem
     this.order = order
     sb = new SwingBuilder()
@@ -98,7 +98,7 @@ class ItemDialog extends JDialog {
 
     Order o = OrderController.removeOrderItemFromOrder( order.id, orderItem )
       if(orderItem?.tipo.trim().equals('A')){
-          parent?.armazonString = null
+          op.armazonString = null
       }
 
     source.enabled = true

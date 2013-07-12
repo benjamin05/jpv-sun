@@ -154,12 +154,16 @@ class EditRxDialog extends JDialog {
                 lblFolio = label(text: 'FolioPlantilla: ')
                 txtFolio = textField( minimumSize: [50, 20])
                 label()
-            }
-            panel( layout: new MigLayout( 'fill,wrap 3','[fill][fill][fill,grow]' )){
-                label(text: 'Uso')
+                label(text: 'Uso:')
                 cbUso = comboBox(items: comboUso)
                 label()
             }
+
+           /* panel( layout: new MigLayout( 'fill,wrap 3','[fill][fill][fill,grow]' )){
+                label(text: 'Uso')
+                cbUso = comboBox(items: comboUso)
+                label()
+            } */
 
             panel(border: titledBorder("Rx"), layout: new MigLayout('fill,wrap ,center', '[fill,grow]')) {
                 panel(layout: new MigLayout('fill,wrap 8,center',
@@ -423,7 +427,7 @@ class EditRxDialog extends JDialog {
             String txt = txtField.text.trim()
 
             txtField.text = ''
-            Double multiplo = 0.0;
+            Double multiplo = 0.0
             if (txt.length() > 0) {
                 number = Double.parseDouble(txt);
 
@@ -441,6 +445,10 @@ class EditRxDialog extends JDialog {
                         else if(format.equals('.0')&& number.toString().substring(number.toString().indexOf('.'),number.toString().length()).equals('.0'))
                         {
                             txt=txt + '.0'
+                        }
+                        println('val: '+txt)
+                        if(number>-1 && number<1 && number != 0){
+                           txt = '0' + txt
                         }
 
                         if(mask.equals('+')){

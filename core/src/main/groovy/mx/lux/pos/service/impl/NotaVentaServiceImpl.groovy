@@ -302,12 +302,14 @@ class NotaVentaServiceImpl implements NotaVentaService {
     void saveFrame(NotaVenta rNotaVenta, String opciones, String forma) {
 
             if ( notaVentaRepository.exists( rNotaVenta.id ) ) {
+                println('Material: ' + opciones)
+                println('Acabado: '+ forma)
+                rNotaVenta?.udf2 = opciones
+                rNotaVenta?.udf3 = forma
 
-                rNotaVenta.setUdf2(opciones)
-                rNotaVenta.setUdf3(forma)
+                notaVentaRepository.saveAndFlush( rNotaVenta )
 
 
-                registrarNotaVenta( rNotaVenta )
             } else {
                 log.warn( "id no existe" )
             }

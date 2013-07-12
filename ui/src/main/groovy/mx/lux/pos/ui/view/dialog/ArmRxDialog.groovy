@@ -46,7 +46,7 @@ class ArmRxDialog extends JDialog {
                 resizable: false,
                 pack: true,
                 modal: true,
-                preferredSize: [165, 235],
+                preferredSize: [190, 235],
                 location: [ 200, 250 ]
         ) {
                  panel(layout: new MigLayout("wrap 2","[]20[]","[][][][][]20[][]")) {
@@ -82,7 +82,7 @@ class ArmRxDialog extends JDialog {
 
                      label(text: 'Forma')
                     forma = textField(minimumSize: [70, 20])
-                     label()
+                     button(text: 'Cancelar',actionPerformed: {doCancel()})
                      button(text: 'Aceptar',actionPerformed: {doSave()})
 
 

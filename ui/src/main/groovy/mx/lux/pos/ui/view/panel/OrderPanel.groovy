@@ -461,13 +461,16 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     }
                     try{
 
-                        String indexDioptra = item?.indexDiotra
 
+                        String indexDioptra = item?.indexDiotra
+                        println('name: '+item?.name)
+                        println('indexDioptra: '+indexDioptra)
                         if(!indexDioptra.equals(null)){
                     Dioptra nuevoDioptra = OrderController.generaDioptra(item?.indexDiotra)
                     dioptra = OrderController.validaDioptra(dioptra,nuevoDioptra)
+                            println('dioptra: '+OrderController.codigoDioptra(dioptra))
                         antDioptra = OrderController.addDioptra(order,OrderController.codigoDioptra(dioptra))
-
+                            println('antDioptra: '+ OrderController.codigoDioptra(antDioptra))
                         order?.dioptra = OrderController.codigoDioptra(antDioptra)
 
                         }else{
@@ -504,7 +507,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private def doShowItemClick = { MouseEvent ev ->
         if ( SwingUtilities.isLeftMouseButton( ev ) ) {
             if ( ev.clickCount == 2 ) {
-                new ItemDialog(ev.component, order, ev.source.selectedElement).show()
+              new ItemDialog(ev.component, order, ev.source.selectedElement,this).show()
                 updateOrder( order?.id )
 
             }
@@ -586,6 +589,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             rec =  null
         }
 
+
+
         return rec
     }
 
@@ -641,10 +646,11 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private def doPrint = { ActionEvent ev ->
-
+        println("Dioptra: " + order?.dioptra )
         int artCount = 0
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
         String dio = OrderController.codigoDioptra(dioptra)
+
         if(dioptra.getLente() != null){
         Item i = OrderController.findArt(dio.trim())
         if(i?.id != null){
@@ -989,8 +995,11 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void fireRequestContinue(DefaultTableModel itemsModel ) {
+        println("Dioptra: " + order?.dioptra )
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
-       String dio = OrderController.codigoDioptra(dioptra)
+
+        String dio = OrderController.codigoDioptra(dioptra)
+
         if(dioptra.getLente() != null){
        Item i = OrderController.findArt(dio.trim())
         if(i?.id != null){
