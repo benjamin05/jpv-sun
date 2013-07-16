@@ -51,6 +51,7 @@ class ShowOrderPanel extends JPanel {
   private static final BigDecimal montoCentavos = BigDecimal.ZERO
   private List<IPromotion> lstPromociones = new ArrayList<IPromotion>()
   private JScrollPane pago
+  private Pago pagoN
 
   ShowOrderPanel( ) {
     sb = new SwingBuilder()
@@ -263,13 +264,25 @@ class ShowOrderPanel extends JPanel {
         JButton source = ev.source as JButton
         source.enabled = false
         if((order?.total - order?.paid) > 0){
+            pagoN=null
             updatePagos()
-             new PaymentDialog( pago, order, null ).show()
+             new PaymentDialog( pago, order, null,this ).show()
+
+            updatePagos()
             updateOrder( order?.id )
         }
         if((order?.total - order?.paid) == 0){
             updatePagos()
         }
+
+        if(pagoN.confirmado == true){
+           OrderController.printPaid(order?.id, pagoN?.id)
+
+        }
+
+
+
+
 
 
         source.enabled = true

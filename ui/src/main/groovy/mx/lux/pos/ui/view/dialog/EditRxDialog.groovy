@@ -133,7 +133,7 @@ class EditRxDialog extends JDialog {
                 resizable: false,
                 pack: true,
                 modal: true,
-                preferredSize: [450, 360],
+                preferredSize: [520, 380],
                 layout: new MigLayout('wrap,center', '[fill,grow]'),
                 location: [ 200, 250 ],
         ) {

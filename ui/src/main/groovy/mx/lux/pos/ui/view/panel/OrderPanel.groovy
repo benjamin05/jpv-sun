@@ -641,8 +641,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         int artCount = 0
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
         String dio = OrderController.codigoDioptra(dioptra)
-
-        if(dioptra.getLente() != null){
+        println("Dioptra: " + dioptra.getLente())
+        println("Dioptra: " + dioptra.getLente().equals(null))
+        if(!dioptra.getLente().equals(null)){
         Item i = OrderController.findArt(dio.trim())
         if(i?.id != null){
         String tipoArt = null
@@ -719,13 +720,14 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     .show()
         }
         }else{
+            println('Correcto')
             ticketRx = false
             flujoImprimir(artCount)
         }
     }
 
     private void flujoImprimir(int artCount){
-         Boolean validOrder
+         Boolean validOrder = isValidOrder()
         if(artCount != 0){
 
             Parametro diaIntervalo =  Registry.find(TipoParametro.DIA_PRO)
@@ -759,7 +761,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             }
 
         }
-
+          println('Correcto2')
         if ( validOrder ) {
 
 
@@ -990,8 +992,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
 
         String dio = OrderController.codigoDioptra(dioptra)
+        println("Dioptra: " + dioptra.getLente().equals(null))
+        if(!dioptra.getLente().equals(null)){
 
-        if(dioptra.getLente() != null){
        Item i = OrderController.findArt(dio.trim())
         if(i?.id != null){
    String tipoArt = null

@@ -1,8 +1,10 @@
 package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
+import mx.lux.pos.model.Pago
 import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.controller.PaymentController
+import mx.lux.pos.ui.view.panel.ShowOrderPanel
 import mx.lux.pos.ui.view.verifier.IsSelectedVerifier
 import mx.lux.pos.ui.view.verifier.NotEmptyVerifier
 import net.miginfocom.swing.MigLayout
@@ -50,8 +52,28 @@ class PaymentDialog extends JDialog {
   private List<Terminal> terminals
   private List<Plan> plans
   private BigDecimal cambio
+  private Pago pagoN
+  private ShowOrderPanel orderP
+
 
   private static final String DOLARES = 'USD Recibidos'
+
+  PaymentDialog(Component parent, Order order, final Payment payment, Component orderP){
+      this.orderP = orderP
+      this.order = order
+      this.payment = payment
+      sb = new SwingBuilder()
+      defaultPaymentType = PaymentController.findDefaultPaymentType()
+      paymentTypes = PaymentController.findActivePaymentTypes()
+      issuingBanks = PaymentController.findIssuingBanks()
+      terminals = PaymentController.findTerminals()
+      plans = [ ]
+      tmpPayment = payment ?: new Payment()
+      tmpPayment.paymentTypeId = tmpPayment.paymentTypeId ?: defaultPaymentType?.id
+      tmpPayment.paymentType = tmpPayment.paymentType ?: defaultPaymentType?.description
+      buildUI( parent )
+      doBindings()
+  }
 
   PaymentDialog( Component parent, Order order, final Payment payment ) {
     this.order = order
@@ -310,7 +332,10 @@ class PaymentDialog extends JDialog {
     JButton source = ev.source as JButton
     source.enabled = false
     if ( isValid( order ) ) {
-      OrderController.addPaymentToOrder( order.id, tmpPayment )
+        pagoN = OrderController.addPaymentToOrder( order.id, tmpPayment )
+        try{
+        orderP.pagoN = pagoN
+        }catch(e){}
       dispose()
     } else {
       source.enabled = true

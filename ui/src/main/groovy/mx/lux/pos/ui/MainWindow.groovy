@@ -105,7 +105,7 @@ class MainWindow extends JFrame implements KeyListener {
                     title: 'Punto de Venta',
                     focusable: true,
                     layout: new MigLayout( 'fill,insets 1,center,wrap', '[fill]', '[top]' ),
-                    minimumSize: [ 800, 600 ] as Dimension,
+                    minimumSize: [ 850, 620 ] as Dimension,
                     location: [ 70, 35 ] as Point,
                     pack: true,
                     resizable: false,

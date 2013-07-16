@@ -55,11 +55,11 @@ class NewCustomerAndRxDialog extends JDialog {
     void buildUI( ) {
         sb.dialog( this,
                 title: "${cliente.fullName}",
-                resizable: false,
+                resizable: true,
                 pack: true,
                 modal: true,
-                preferredSize: [ 490, 500 ] as Dimension,
-                location: [ 70, 35 ] as Point,
+                preferredSize: [ 650, 600 ] as Dimension,
+                location: [ 90, 50 ] as Point,
         ) {
             borderLayout()
             tabbedPane( constraints: BorderLayout.CENTER ) {

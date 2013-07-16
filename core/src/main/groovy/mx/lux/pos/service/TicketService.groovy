@@ -6,7 +6,9 @@ interface TicketService {
 
   void imprimeVenta( String idNotaVenta )
 
-  void imprimeRx(String orderId)
+    void imprimePago(String orderId, Integer pagoId)
+
+    void imprimeRx(String orderId)
 
   void imprimeVenta( String idNotaVenta, Boolean pNewOrder )
 

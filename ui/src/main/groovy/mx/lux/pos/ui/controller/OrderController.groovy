@@ -185,14 +185,18 @@ class OrderController {
   }
     static String preDioptra(String dioString){
         String preDioptra
-        try{
+        //try{
+        if (!dioString.equals(null)) {
         preDioptra = dioString.substring(0,1) + ',' +
                 dioString.substring(1,2) + ',' +
                                dioString.substring(2,3) + ',' +
                    dioString.substring(3,5) + ',' +
                    dioString.substring(5,6) + ',' +
                    dioString.substring(6,7)
-        }catch(e){}
+        }else{
+            preDioptra = dioString
+        }
+        //}catch(e){}
         return preDioptra
     }
 
@@ -304,8 +308,14 @@ class OrderController {
 
 
     static String codigoDioptra(Dioptra codDioptra) {
-        String codigo = codDioptra.material + codDioptra.lente + codDioptra.tipo + codDioptra.especial + codDioptra.tratamiento + codDioptra.color
-        return codigo
+
+        String codigo
+        if(!codDioptra.equals(null)){
+         codigo = codDioptra.material + codDioptra.lente + codDioptra.tipo + codDioptra.especial + codDioptra.tratamiento + codDioptra.color
+        }else{
+           codigo = null
+        }
+            return codigo
     }
 
   static Order removeOrderItemFromOrder( String orderId, OrderItem orderItem ) {
@@ -386,7 +396,7 @@ class OrderController {
     }
 
 
-    static Order addPaymentToOrder( String orderId, Payment payment ) {
+    static Pago addPaymentToOrder( String orderId, Payment payment ) {
     log.info( "agregando pago monto: ${payment?.amount}, tipo: ${payment?.paymentTypeId} a orden id: ${orderId}" )
     if ( StringUtils.isNotBlank( orderId ) && StringUtils.isNotBlank( payment?.paymentTypeId ) && payment?.amount ) {
 
@@ -404,8 +414,8 @@ class OrderController {
           idTerminal: payment.terminalId,
           idPlan: payment.planId
       )
-      NotaVenta notaVenta = notaVentaService.registrarPagoEnNotaVenta( orderId, pago )
-      return Order.toOrder( notaVenta )
+      Pago newPago = notaVentaService.registrarPagoEnNotaVenta( orderId, pago )
+      return newPago
     } else {
       log.warn( "no se agrega pago, parametros invalidos" )
     }
@@ -468,6 +478,14 @@ class OrderController {
           log.warn( "no se imprime receta, parametros invalidos" )
       }
 
+  }
+
+  static void printPaid(String orderId, Integer pagoId){
+      if (StringUtils.isNotBlank( orderId) ) {
+          ticketService.imprimePago(orderId, pagoId )
+      } else {
+          log.warn( "no se imprime pago, parametros invalidos" )
+      }
   }
 
   static void printRx(String orderId){

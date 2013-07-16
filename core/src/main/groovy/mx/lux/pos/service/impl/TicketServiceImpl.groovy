@@ -102,6 +102,9 @@ class TicketServiceImpl implements TicketService {
   @Resource
   private PagoRepository pagoRepository
 
+
+  @Resource
+  private TipoPagoRepository tipoPagoRepository
   @Resource
   private PagoExternoRepository pagoExternoRepository
 
@@ -173,7 +176,7 @@ class TicketServiceImpl implements TicketService {
       if ( ticket?.exists() ) {
       try {
         def parametro = parametroRepository.findOne( TipoParametro.IMPRESORA_TICKET.value )
-        def cmd = "${parametro?.valor}" +" /d:\\\\192.168.3.157\\Termica "+ "${ticket.path}"
+        def cmd = "${parametro?.valor} " + "${ticket.path}"
         log.info( "ejecuta: ${cmd}" )
 
 
@@ -199,6 +202,60 @@ class TicketServiceImpl implements TicketService {
     } else {
       log.warn( "archivo de ticket no generado, no se puede imprimir" )
     }
+  }
+
+  @Override
+  void imprimePago(String orderId, Integer pagoId){
+      NotaVenta notaVenta = notaVentaService.obtenerNotaVenta( orderId )
+      Pago pagoN = pagoRepository.findOne(pagoId)
+
+      if ( StringUtils.isNotBlank( notaVenta?.id ) ) {
+
+         TipoPago tpago = tipoPagoRepository.findOne(pagoN?.idFPago)
+          String ant = pagoRepository.getPagosAnteriores(orderId,pagoN?.idRecibo)
+          String nSaldo = pagoRepository.getPagos(orderId)
+          println(ant)
+          println(nSaldo)
+      def pago = [
+              recibo: pagoN?.idRecibo,
+              tipoPago: tpago?.descripcion,
+              factura: notaVenta?.factura,
+              monto: '$'+pagoN?.monto,
+              anterior: ant,
+              parcialidad:'$'+pagoN?.monto,
+              noParcialidad: pagoN?.parcialidad,
+              nuevoSaldo:nSaldo
+      ]
+      def sucu = [
+           nombre: notaVenta?.sucursal?.nombre ,
+           direccion: notaVenta?.sucursal?.direccion,
+           colonia:notaVenta?.sucursal?.colonia ,
+           telefono: notaVenta?.sucursal?.telefonos,
+           ciudad:notaVenta?.sucursal?.ciudad
+      ]
+          Date fechaE = new Date()
+         SimpleDateFormat fecha = new SimpleDateFormat("dd-MM-yy")
+          String fechaExp = fecha.format(fechaE)
+      def exp =[
+           fecha:fechaExp,
+           atendio: notaVenta?.empleado?.nombreCompleto
+      ]
+          def cli = [
+                  nombre: notaVenta?.cliente?.nombreCompleto,
+                  domicilio: notaVenta?.cliente?.direccion,
+                  telefono: notaVenta?.cliente.telefonoCasa
+          ]
+
+      def items = [
+         pagoN: pago,
+         sucursal:sucu,
+         expedicion: exp,
+         cliente: cli,
+         montoTotal:'$'+notaVenta?.ventaTotal
+
+      ]
+      imprimeTicket( 'template/ticket-pago.vm', items )
+      }
   }
 
   @Override

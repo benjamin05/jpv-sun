@@ -236,7 +236,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
 
   @Override
   @Transactional
-  NotaVenta registrarPagoEnNotaVenta( String idNotaVenta, Pago pago ) {
+  Pago registrarPagoEnNotaVenta( String idNotaVenta, Pago pago ) {
     log.info( "registrando pago id: ${pago?.id} idFormaPago: ${pago?.idFormaPago} monto: ${pago?.monto}" )
     log.info( "en notaVenta id: ${idNotaVenta}" )
     NotaVenta notaVenta = obtenerNotaVenta( idNotaVenta )
@@ -262,7 +262,8 @@ class NotaVentaServiceImpl implements NotaVentaService {
         try {
           pago = pagoRepository.save( pago )
           log.debug( "pago registrado id: ${pago.id}" )
-          return registrarNotaVenta( notaVenta )
+            registrarNotaVenta( notaVenta )
+            return  pago
         } catch ( ex ) {
           log.error( "problema al registrar pago: ${pago?.dump()}", ex )
         }
@@ -411,6 +412,12 @@ class NotaVentaServiceImpl implements NotaVentaService {
   List<NotaVenta> listarNotasVentaPorParametros( Map<String, Object> parametros ) {
     log.info( "listando notasVenta por parametros: ${parametros}" )
     if ( parametros?.any() ) {
+
+        println(parametros.dateFrom as Date)
+        println(parametros.dateTo as Date)
+        println(parametros.folio)
+        println(parametros.ticket)
+        println(parametros.employee)
       Date dateFrom = parametros.dateFrom as Date
       Date dateTo = parametros.dateTo as Date
       String folio = parametros.folio

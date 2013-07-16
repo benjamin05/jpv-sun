@@ -14,7 +14,7 @@ interface NotaVentaService {
 
   NotaVenta eliminarDetalleNotaVentaEnNotaVenta( String idNotaVenta, Integer idArticulo )
 
-  NotaVenta registrarPagoEnNotaVenta( String idNotaVenta, Pago pago )
+    Pago registrarPagoEnNotaVenta( String idNotaVenta, Pago pago )
 
   NotaVenta eliminarPagoEnNotaVenta( String idNotaVenta, Integer idPago )
 
