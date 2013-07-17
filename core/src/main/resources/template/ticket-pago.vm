@@ -17,6 +17,11 @@ ${COLUMNAS}
 #SEPARACION()
 #TITULO_RECIBO(${pagoN.recibo})
 #SEPARACION()
+#ALINEAR_IZQUIERDA()#SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 0)${compania.name}
+#SET_STYLE(${FUENTE_B} 0 0 0 0)${compania.address_1}
+#SET_STYLE(${FUENTE_B} 0 0 0 0)${compania.address_2}
+#SET_STYLE(${FUENTE_B} 0 0 0 0)${compania.address_3}
+#SET_STYLE(${FUENTE_B} 0 0 0 0)${compania.taxId}${LF}
 #ETIQUETA_VALOR("#altnull(${sucursal.nombre})")
 #ALINEAR_IZQUIERDA()#INICIO_ESTILO(${FUENTE_B} 0 0 0 0)${sucursal.direccion}#FIN_ESTILO()${CR}
 #ALINEAR_IZQUIERDA()#INICIO_ESTILO(${FUENTE_B} 0 0 0 0)${sucursal.colonia}#FIN_ESTILO()${CR}

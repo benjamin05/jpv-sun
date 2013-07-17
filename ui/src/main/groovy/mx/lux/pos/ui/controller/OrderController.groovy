@@ -1,6 +1,7 @@
 package mx.lux.pos.ui.controller
 
 import groovy.util.logging.Slf4j
+import mx.lux.pos.repository.JbRepository
 import mx.lux.pos.service.business.Registry
 import mx.lux.pos.ui.MainWindow
 import mx.lux.pos.ui.resources.ServiceManager
@@ -36,6 +37,7 @@ class OrderController {
   private static CancelacionService cancelacionService
   private static RecetaService recetaService
   private static ArticuloService articuloService
+  private static JbRepository jbRepository
 
   private static final String TAG_USD = "USD"
 
@@ -51,7 +53,8 @@ class OrderController {
       PromotionService promotionService,
       CancelacionService cancelacionService,
        RecetaService recetaService,
-       ArticuloService articuloService
+       ArticuloService articuloService,
+       JbRepository jbRepository
   ) {
     this.notaVentaService = notaVentaService
     this.detalleNotaVentaService = detalleNotaVentaService
@@ -64,6 +67,7 @@ class OrderController {
       this.cancelacionService = cancelacionService
         this.recetaService = recetaService
       this.articuloService = articuloService
+      this.jbRepository = jbRepository
   }
 
   static Order getOrder( String orderId ) {
@@ -497,6 +501,24 @@ class OrderController {
       }
   }
 
+    static Jb entraJb(String rx){
+        return  jbRepository.findOne(rx)
+    }
+
+    static void insertaEntrega(Order order){
+        NotaVenta notaVenta =  notaVentaService.obtenerNotaVenta(order?.id)
+        User user = Session.get( SessionItem.USER ) as User
+        notaVenta.setEmpEntrego(user?.username)
+
+
+        notaVenta.setHoraEntrega(new Date())
+        notaVenta.setFechaEntrega(new Date())
+
+        notaVentaService.saveOrder(notaVenta)
+
+
+
+    }
 
   static void printOrder( String orderId ) {
     printOrder( orderId, true )

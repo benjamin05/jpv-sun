@@ -2,11 +2,13 @@ package mx.lux.pos.ui.view.panel
 
 import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
+import mx.lux.pos.model.Jb
 import mx.lux.pos.model.Pago
 import mx.lux.pos.ui.controller.AccessController
 import mx.lux.pos.ui.controller.CancellationController
 import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.model.IPromotion
+import mx.lux.pos.ui.model.OperationType
 import mx.lux.pos.ui.model.Order
 import mx.lux.pos.ui.model.OrderItem
 import mx.lux.pos.ui.model.Payment
@@ -271,20 +273,32 @@ class ShowOrderPanel extends JPanel {
             updatePagos()
             updateOrder( order?.id )
         }
+        if(pagoN != null){
+            if(pagoN.confirmado == true){
+                OrderController.printPaid(order?.id, pagoN?.id)
+            }
+        }
+
+
         if((order?.total - order?.paid) == 0){
             updatePagos()
+
+            Jb trabajo = OrderController.entraJb(order?.bill)
+            if(trabajo != null){
+
+
+                if(trabajo?.estado.trim().equals('RS')){
+                    Integer entregar = JOptionPane.showConfirmDialog(null,"¿Entregar trabajo en este momeno?", "entrega", JOptionPane.YES_NO_OPTION);
+                    println(entregar)
+                    if(entregar == 0){
+                        OrderController.insertaEntrega(order)
+                        //insercion despues de entregar
+
+                    }
+                }
+
+            }
         }
-
-        if(pagoN.confirmado == true){
-           OrderController.printPaid(order?.id, pagoN?.id)
-
-        }
-
-
-
-
-
-
         source.enabled = true
     }
 

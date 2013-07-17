@@ -246,12 +246,15 @@ class TicketServiceImpl implements TicketService {
                   telefono: notaVenta?.cliente.telefonoCasa
           ]
 
+          AddressAdapter companyAddress = Registry.companyAddress
+
       def items = [
          pagoN: pago,
          sucursal:sucu,
          expedicion: exp,
          cliente: cli,
-         montoTotal:'$'+notaVenta?.ventaTotal
+         montoTotal:'$'+notaVenta?.ventaTotal,
+         compania: companyAddress
 
       ]
       imprimeTicket( 'template/ticket-pago.vm', items )

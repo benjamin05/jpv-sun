@@ -39,6 +39,7 @@ class RepositoryFactory {
   private static CotizacionRepository quotes
   private static CotizaDetRepository quoteDetail
   private static ClienteProcesoRepository customersOnSite
+  private static JbRepository jb
 
   @Autowired
   RepositoryFactory( ArticuloRepository pArticuloRepository,
@@ -71,7 +72,8 @@ class RepositoryFactory {
                      AcuseRepository pAcuseRepository,
                      ModificacionRepository pModificacionRepository,
         CotizacionRepository pCotizacionRepository, CotizaDetRepository pCotizaDetRepository,
-      ClienteProcesoRepository pClienteProcesoRepository
+      ClienteProcesoRepository pClienteProcesoRepository,
+          JbRepository pJbRepository
   ) {
     customerCatalog = pClienteRepository
     discounts = pDescuentoRepository
@@ -105,6 +107,7 @@ class RepositoryFactory {
     quotes = pCotizacionRepository
     quoteDetail = pCotizaDetRepository
     customersOnSite = pClienteProcesoRepository
+    jb = pJbRepository
   }
 
   static ClienteRepository getCustomerCatalog( ) {
@@ -235,5 +238,10 @@ class RepositoryFactory {
   static ClienteProcesoRepository getCustomersOnSite() {
     return customersOnSite
   }
+
+    static JbRepository getJbRepository(){
+        return jb
+    }
+
 
 }

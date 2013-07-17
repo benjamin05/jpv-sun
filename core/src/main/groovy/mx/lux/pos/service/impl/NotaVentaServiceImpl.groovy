@@ -502,7 +502,10 @@ class NotaVentaServiceImpl implements NotaVentaService {
   @Transactional
   void saveOrder( NotaVenta pNotaVenta ) {
     if ( pNotaVenta != null ) {
-      notaVentaRepository.save( pNotaVenta )
+        println(pNotaVenta?.empEntrego)
+        println(pNotaVenta?.fechaEntrega)
+        println(pNotaVenta?.horaEntrega)
+      notaVentaRepository.saveAndFlush( pNotaVenta )
     }
   }
 
