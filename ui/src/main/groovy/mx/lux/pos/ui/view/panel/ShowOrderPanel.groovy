@@ -291,7 +291,7 @@ class ShowOrderPanel extends JPanel {
                     Integer entregar = JOptionPane.showConfirmDialog(null,"¿Entregar trabajo en este momeno?", "entrega", JOptionPane.YES_NO_OPTION);
                     println(entregar)
                     if(entregar == 0){
-                        OrderController.insertaEntrega(order)
+                        OrderController.insertaEntrega(order,trabajo)
                         //insercion despues de entregar
 
                     }

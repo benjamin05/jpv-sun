@@ -1,7 +1,9 @@
 package mx.lux.pos.ui.controller
 
 import groovy.util.logging.Slf4j
+import mx.lux.pos.repository.JbLlamadaRepository
 import mx.lux.pos.repository.JbRepository
+import mx.lux.pos.repository.JbTrackRepository
 import mx.lux.pos.service.business.Registry
 import mx.lux.pos.ui.MainWindow
 import mx.lux.pos.ui.resources.ServiceManager
@@ -38,6 +40,8 @@ class OrderController {
   private static RecetaService recetaService
   private static ArticuloService articuloService
   private static JbRepository jbRepository
+  private static JbTrackRepository jbTrackRepository
+  private static JbLlamadaRepository jbLlamadaRepository
 
   private static final String TAG_USD = "USD"
 
@@ -54,7 +58,10 @@ class OrderController {
       CancelacionService cancelacionService,
        RecetaService recetaService,
        ArticuloService articuloService,
-       JbRepository jbRepository
+       JbRepository jbRepository,
+       JbTrackRepository jbTrackRepository,
+       JbLlamadaRepository jbLlamadaRepository
+
   ) {
     this.notaVentaService = notaVentaService
     this.detalleNotaVentaService = detalleNotaVentaService
@@ -68,6 +75,8 @@ class OrderController {
         this.recetaService = recetaService
       this.articuloService = articuloService
       this.jbRepository = jbRepository
+      this.jbTrackRepository = jbTrackRepository
+      this.jbLlamadaRepository = jbLlamadaRepository
   }
 
   static Order getOrder( String orderId ) {
@@ -505,7 +514,7 @@ class OrderController {
         return  jbRepository.findOne(rx)
     }
 
-    static void insertaEntrega(Order order){
+    static void insertaEntrega(Order order, Jb trabajo){
         NotaVenta notaVenta =  notaVentaService.obtenerNotaVenta(order?.id)
         User user = Session.get( SessionItem.USER ) as User
         notaVenta.setEmpEntrego(user?.username)
@@ -516,7 +525,26 @@ class OrderController {
 
         notaVentaService.saveOrder(notaVenta)
 
+        trabajo.setEstado('TE')
 
+        jbRepository.saveAndFlush(trabajo)
+
+        JbTrack jbTrack =  new JbTrack()
+        jbTrack?.rx = order?.bill
+        jbTrack?.estado = 'TE'
+        jbTrack?.emp =  user?.username
+        jbTrack?.fecha = new Date()
+         jbTrack?.id_mod = '0'
+         jbTrack?.id_viaje = null
+         jbTrack?.obs = user?.username
+
+        jbTrackRepository.saveAndFlush(jbTrack)
+
+        jbLlamadaRepository.deleteByJbLlamada(order?.bill)
+
+        if(!trabajo?.id_grupo.trim().equals(null) || !trabajo?.id_grupo.trim().equals('')){
+             //Hoja de Proceso y Casos de Uso Pagar Saldo y Entregar - p_pagar_saldos, al entregar la venta. iv)
+        }
 
     }
 
