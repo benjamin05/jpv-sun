@@ -8,6 +8,7 @@ import mx.lux.pos.ui.model.SessionItem
 import mx.lux.pos.ui.model.User
 import mx.lux.pos.ui.resources.ServiceManager
 import mx.lux.pos.ui.view.action.ExitAction
+import mx.lux.pos.ui.view.dialog.EntregaTrabajoDialog
 import mx.lux.pos.ui.view.dialog.PartClassDialog
 import net.miginfocom.swing.MigLayout
 import org.slf4j.Logger
@@ -87,6 +88,7 @@ class MainWindow extends JFrame implements KeyListener {
     private JMenuItem kardexMenuItem
     private JMenuItem salesTodayMenuItem
     private JMenuItem salesByPeriodMenuItem
+    private JMenuItem entregaMenuItem
     private PromotionService promotionService
 
 
@@ -114,7 +116,7 @@ class MainWindow extends JFrame implements KeyListener {
                 menuBar {
                     ordersMenu = menu( text: 'Ventas', mnemonic: 'V',
                             menuSelected: {
-                                boolean userLoggedIn = Session.contains( SessionItem.USER )
+                                boolean userLoggedIn = cSession.contains( SessionItem.USER )
                                 orderMenuItem.visible = userLoggedIn
                                 orderSearchMenuItem.visible = userLoggedIn
                                 dailyCloseMenuItem.visible = userLoggedIn
@@ -375,8 +377,16 @@ class MainWindow extends JFrame implements KeyListener {
                                 boolean userLoggedIn = Session.contains( SessionItem.USER )
                                 sessionMenuItem.visible = userLoggedIn
                                 newSalesDayMenuItem.visible = userLoggedIn
+                                entregaMenuItem.visible = userLoggedIn
                             }
                     ) {
+                        entregaMenuItem = menuItem(text: 'Entrega',
+                                visible: true,
+                                actionPerformed: {
+                                    entrega()
+                                }
+                        )
+
                         newSalesDayMenuItem = menuItem( text: 'Registrar Efectivo Caja',
                                 visible: true,
                                 actionPerformed: {
@@ -464,6 +474,11 @@ class MainWindow extends JFrame implements KeyListener {
 
     JPanel getMainPanel( ) {
         return mainPanel
+    }
+
+    void entrega(){
+        EntregaTrabajoDialog trabajo = new EntregaTrabajoDialog(this)
+        trabajo.show()
     }
 
     void requestNewSalesDay( ) {

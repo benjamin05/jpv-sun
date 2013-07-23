@@ -7,6 +7,7 @@ import mx.lux.pos.repository.JbTrackRepository
 import mx.lux.pos.service.business.Registry
 import mx.lux.pos.ui.MainWindow
 import mx.lux.pos.ui.resources.ServiceManager
+import mx.lux.pos.ui.view.dialog.EntregaTrabajoDialog
 import mx.lux.pos.ui.view.dialog.ManualPriceDialog
 import mx.lux.pos.ui.view.panel.OrderPanel
 import org.apache.commons.lang.NumberUtils
@@ -757,5 +758,12 @@ class OrderController {
       pListener.enableUI()
     }
   }
+
+
+  static void validaEntrega(String idFactura){
+
+     NotaVenta notaVenta =  notaVentaService.obtenerNotaVentaPorTicket(idFactura)
+
+}
 
 }
