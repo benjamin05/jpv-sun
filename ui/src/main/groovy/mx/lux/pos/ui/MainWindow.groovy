@@ -116,7 +116,7 @@ class MainWindow extends JFrame implements KeyListener {
                 menuBar {
                     ordersMenu = menu( text: 'Ventas', mnemonic: 'V',
                             menuSelected: {
-                                boolean userLoggedIn = cSession.contains( SessionItem.USER )
+                                boolean userLoggedIn = Session.contains( SessionItem.USER )
                                 orderMenuItem.visible = userLoggedIn
                                 orderSearchMenuItem.visible = userLoggedIn
                                 dailyCloseMenuItem.visible = userLoggedIn
