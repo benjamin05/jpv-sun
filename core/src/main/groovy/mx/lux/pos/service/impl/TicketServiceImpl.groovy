@@ -213,9 +213,10 @@ class TicketServiceImpl implements TicketService {
 
          TipoPago tpago = tipoPagoRepository.findOne(pagoN?.idFPago)
           String ant = '$' + pagoRepository.getPagosAnteriores(orderId,pagoN?.idRecibo).toString()
-          String nSaldo = '$' + (pagoRepository.getPagosAnteriores(orderId,pagoN?.idRecibo) + pagoN?.parcialidad.toBigDecimal() - pagoN?.monto).toString()
-          println(ant)
-          println(nSaldo)
+          String nSaldo = '$' + (notaVenta?.ventaTotal-(pagoRepository.getPagosAnteriores(orderId,pagoN?.idRecibo)  + pagoN?.monto)).toString()
+          println(pagoRepository.getPagosAnteriores(orderId,pagoN?.idRecibo))
+          println(   pagoN?.monto.toDouble())
+          println( notaVenta?.ventaTotal)
       def pago = [
               recibo: pagoN?.idRecibo,
               tipoPago: tpago?.descripcion,

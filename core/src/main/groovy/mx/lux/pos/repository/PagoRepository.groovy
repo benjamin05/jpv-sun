@@ -2,6 +2,7 @@ package mx.lux.pos.repository
 
 import mx.lux.pos.model.Pago
 import mx.lux.pos.repository.custom.PagoRepositoryCustom
+
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.querydsl.QueryDslPredicateExecutor
 import org.springframework.data.jpa.repository.Modifying
@@ -31,9 +32,9 @@ interface PagoRepository extends JpaRepository<Pago, Integer>, QueryDslPredicate
     @Query( value = "SELECT NEXTVAL('id_recibo_seq')", nativeQuery = true )
     BigInteger getReciboSequence( )
 
-    @Query(value = "select cast(sum(monto_pago) as numeric)  from pagos where id_factura = ?1 and id_recibo <> ?2 ", nativeQuery = true)
+
+    @Query(value = "select cast(replace(replace(cast(sum(monto_pago) as varchar),'\$',''),',','') as numeric) from pagos where id_factura = ?1 and id_recibo <> ?2 ", nativeQuery = true)
     BigDecimal getPagosAnteriores(String idFactura, String idRecibo)
 
-    @Query(value = "select cast(sum(monto_pago) as numeric)  from pagos where id_factura = ?1 and confirm = true ", nativeQuery = true)
-    BigDecimal getPagos(String idFactura)
+
 }

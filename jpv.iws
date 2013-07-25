@@ -1,161 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AnalysisUIOptions">
-    <option name="SCOPE_TYPE" value="3"/>
+    <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85a3f2a7-5fe4-477a-b715-aab86b5598d8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/libs/core-1.0.jar" afterPath="$PROJECT_DIR$/core/build/libs/core-1.0.jar"/>
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/EntregaTrabajoDialog.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/EntregaTrabajoDialog.groovy"/>
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Jb.java" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Jb.java"/>
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy"/>
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/PagoRepository.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/PagoRepository.groovy"/>
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy"/>
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy"/>
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jpv.iws" afterPath="$PROJECT_DIR$/jpv.iws"/>
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/libs/core-1.0.jar" afterPath="$PROJECT_DIR$/core/build/libs/core-1.0.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/PagoRepository.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/PagoRepository.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/core.iml" afterPath="$PROJECT_DIR$/core/core.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jpv.iml" afterPath="$PROJECT_DIR$/jpv.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jpv.ipr" afterPath="$PROJECT_DIR$/jpv.ipr" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jpv.iws" afterPath="$PROJECT_DIR$/jpv.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/reports.iml" afterPath="$PROJECT_DIR$/reports/reports.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui.iml" afterPath="$PROJECT_DIR$/ui/ui.iml" />
     </list>
-    <ignored path="jpv.iws"/>
-    <ignored path=".idea/workspace.xml"/>
-    <file path="$PROJECT_DIR$/ui/src/test/groovy/mx/lux/pos/ui/view/InvTicketSample.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1369776598593" ignored="false"/>
-    <file path="/AccessController.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371852118078" ignored="false"/>
-    <file path="/Session.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1369781950984" ignored="false"/>
-    <file path="/OrderController.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374763409433" ignored="false"/>
-    <file path="/ArticuloServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371850068062" ignored="false"/>
-    <file path="/ItemController.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1369848607218" ignored="false"/>
-    <file path="/ArticuloRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371850997078" ignored="false"/>
-    <file path="/OrderPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373911863168" ignored="false"/>
-    <file path="/ClienteServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370378482093" ignored="false"/>
-    <file path="/ClienteProcesoEtapa.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1369862297078" ignored="false"/>
-    <file path="/ClienteProceso.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1369862684031" ignored="false"/>
-    <file path="/RepositoryFactory.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374163348748" ignored="false"/>
-    <file path="/fragment.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374256091814" ignored="false"/>
-    <file path="/database.properties" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370008111203" ignored="false"/>
-    <file path="/CustomerController.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371165276765" ignored="false"/>
-    <file path="/CustomerSearchDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370017189765" ignored="false"/>
-    <file path="/CustomerPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370966592312" ignored="false"/>
-    <file path="/NewCustomerAndRxDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373897731900" ignored="false"/>
-    <file path="/IPromotionDrivenPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370032184640" ignored="false"/>
-    <file path="/Order.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373488096312" ignored="false"/>
-    <file path="/RxPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370270634218" ignored="false"/>
-    <file path="/RXPanel2.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370268916484" ignored="false"/>
-    <file path="/RXPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370968662500" ignored="false"/>
-    <file path="/EditRxDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373636145828" ignored="false"/>
-    <file path="/CustomerDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370271456140" ignored="false"/>
-    <file path="/SingleCustomerDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370271499765" ignored="false"/>
-    <file path="/MainWindow.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374256489468" ignored="false"/>
-    <file path="/LogInPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370285154062" ignored="false"/>
-    <file path="/SucursalServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371853459718" ignored="false"/>
-    <file path="/SucursalService.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370296578562" ignored="false"/>
-    <file path="/User.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371853273281" ignored="false"/>
-    <file path="/TipoParametro.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370295882609" ignored="false"/>
-    <file path="/SucursalRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370296319421" ignored="false"/>
-    <file path="/ClienteService.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370360002687" ignored="false"/>
-    <file path="/CotizacionServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370366514046" ignored="false"/>
-    <file path="/CustomerActiveSelectionDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371483250000" ignored="false"/>
-    <file path="/NotaVentaServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374095852348" ignored="false"/>
-    <file path="/NotaVentaService.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370383842734" ignored="false"/>
-    <file path="/TicketServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374706424092" ignored="false"/>
-    <file path="/Dummy.txt" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374705216529" ignored="false"/>
-    <file path="/OrderActiveSelectionDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371228674203" ignored="false"/>
-    <file path="/RecetaServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373491280375" ignored="false"/>
-    <file path="/DetalleNotaVenta.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371136095125" ignored="false"/>
-    <file path="/OrderItem.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371241206140" ignored="false"/>
-    <file path="/a.dummy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374078364521" ignored="false"/>
-    <file path="/ArmRxDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373302817187" ignored="false"/>
-    <file path="/Item.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371746120828" ignored="false"/>
-    <file path="/Dioptra.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371748791953" ignored="false"/>
-    <file path="/ArticuloService.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371767204078" ignored="false"/>
-    <file path="/ArticuloRepositoryImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371851537328" ignored="false"/>
-    <file path="/ItemDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373641357250" ignored="false"/>
-    <file path="/PaymentDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373988313586" ignored="false"/>
-    <file path="/ShowOrderPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374763502656" ignored="false"/>
-    <file path="/Pago.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373494794578" ignored="false"/>
-    <file path="/PagoServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373986224280" ignored="false"/>
-    <file path="/PagoService.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373986133388" ignored="false"/>
-    <file path="/PagoRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374687822179" ignored="false"/>
-    <file path="/ticket-pago.vm" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374009983971" ignored="false"/>
-    <file path="/Jb.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374705358531" ignored="false"/>
-    <file path="/JbRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374084486535" ignored="false"/>
-    <file path="/JbTrack.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374160503728" ignored="false"/>
-    <file path="/JbTrackRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374160595034" ignored="false"/>
-    <file path="/JbLlamada.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374163119342" ignored="false"/>
-    <file path="/JbLlamadaRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374164542662" ignored="false"/>
-    <file path="/EntregaTrabajoDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374763893804" ignored="false"/>
-    <option name="TRACKING_ENABLED" value="true"/>
-    <option name="SHOW_DIALOG" value="false"/>
-    <option name="HIGHLIGHT_CONFLICTS" value="true"/>
-    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false"/>
-    <option name="LAST_RESOLUTION" value="IGNORE"/>
+    <ignored path="jpv.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <file path="$PROJECT_DIR$/ui/src/test/groovy/mx/lux/pos/ui/view/InvTicketSample.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1369776598593" ignored="false" />
+    <file path="/AccessController.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371852118078" ignored="false" />
+    <file path="/Session.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1369781950984" ignored="false" />
+    <file path="/OrderController.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374770519255" ignored="false" />
+    <file path="/ArticuloServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371850068062" ignored="false" />
+    <file path="/ItemController.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1369848607218" ignored="false" />
+    <file path="/ArticuloRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371850997078" ignored="false" />
+    <file path="/OrderPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373911863168" ignored="false" />
+    <file path="/ClienteServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370378482093" ignored="false" />
+    <file path="/ClienteProcesoEtapa.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1369862297078" ignored="false" />
+    <file path="/ClienteProceso.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1369862684031" ignored="false" />
+    <file path="/RepositoryFactory.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374163348748" ignored="false" />
+    <file path="/fragment.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374256091814" ignored="false" />
+    <file path="/database.properties" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370008111203" ignored="false" />
+    <file path="/CustomerController.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371165276765" ignored="false" />
+    <file path="/CustomerSearchDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370017189765" ignored="false" />
+    <file path="/CustomerPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370966592312" ignored="false" />
+    <file path="/NewCustomerAndRxDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373897731900" ignored="false" />
+    <file path="/IPromotionDrivenPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370032184640" ignored="false" />
+    <file path="/Order.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373488096312" ignored="false" />
+    <file path="/RxPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370270634218" ignored="false" />
+    <file path="/RXPanel2.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370268916484" ignored="false" />
+    <file path="/RXPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370968662500" ignored="false" />
+    <file path="/EditRxDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373636145828" ignored="false" />
+    <file path="/CustomerDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370271456140" ignored="false" />
+    <file path="/SingleCustomerDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370271499765" ignored="false" />
+    <file path="/MainWindow.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374256489468" ignored="false" />
+    <file path="/LogInPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370285154062" ignored="false" />
+    <file path="/SucursalServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371853459718" ignored="false" />
+    <file path="/SucursalService.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370296578562" ignored="false" />
+    <file path="/User.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371853273281" ignored="false" />
+    <file path="/TipoParametro.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370295882609" ignored="false" />
+    <file path="/SucursalRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370296319421" ignored="false" />
+    <file path="/ClienteService.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370360002687" ignored="false" />
+    <file path="/CotizacionServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370366514046" ignored="false" />
+    <file path="/CustomerActiveSelectionDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371483250000" ignored="false" />
+    <file path="/NotaVentaServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374095852348" ignored="false" />
+    <file path="/NotaVentaService.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370383842734" ignored="false" />
+    <file path="/TicketServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374782251207" ignored="false" />
+    <file path="/Dummy.txt" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374788846356" ignored="false" />
+    <file path="/OrderActiveSelectionDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371228674203" ignored="false" />
+    <file path="/RecetaServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373491280375" ignored="false" />
+    <file path="/DetalleNotaVenta.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371136095125" ignored="false" />
+    <file path="/OrderItem.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371241206140" ignored="false" />
+    <file path="/a.dummy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374078364521" ignored="false" />
+    <file path="/ArmRxDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373302817187" ignored="false" />
+    <file path="/Item.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371746120828" ignored="false" />
+    <file path="/Dioptra.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371748791953" ignored="false" />
+    <file path="/ArticuloService.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371767204078" ignored="false" />
+    <file path="/ArticuloRepositoryImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371851537328" ignored="false" />
+    <file path="/ItemDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373641357250" ignored="false" />
+    <file path="/PaymentDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373988313586" ignored="false" />
+    <file path="/ShowOrderPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374763502656" ignored="false" />
+    <file path="/Pago.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373494794578" ignored="false" />
+    <file path="/PagoServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373986224280" ignored="false" />
+    <file path="/PagoService.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1373986133388" ignored="false" />
+    <file path="/PagoRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374784373304" ignored="false" />
+    <file path="/ticket-pago.vm" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374009983971" ignored="false" />
+    <file path="/Jb.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374705358531" ignored="false" />
+    <file path="/JbRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374084486535" ignored="false" />
+    <file path="/JbTrack.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374160503728" ignored="false" />
+    <file path="/JbTrackRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374160595034" ignored="false" />
+    <file path="/JbLlamada.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374163119342" ignored="false" />
+    <file path="/JbLlamadaRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374164542662" ignored="false" />
+    <file path="/EntregaTrabajoDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1374763893804" ignored="false" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ChangesViewManager" flattened_view="true" show_ignored="false"/>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="Commander">
-    <leftPanel/>
-    <rightPanel/>
-    <splitter proportion="0.5"/>
+    <leftPanel />
+    <rightPanel />
+    <splitter proportion="0.5" />
   </component>
   <component name="CreatePatchCommitExecutor">
-    <option name="PATCH_PATH" value=""/>
+    <option name="PATCH_PATH" value="" />
   </component>
   <component name="DaemonCodeAnalyzer">
     <disable_hints>
-      <file url="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy"/>
+      <file url="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy" />
     </disable_hints>
   </component>
   <component name="DebuggerManager">
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true"/>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
-        <option name="NOTIFY_CAUGHT" value="true"/>
-        <option name="NOTIFY_UNCAUGHT" value="true"/>
-        <option name="ENABLED" value="false"/>
-        <option name="LOG_ENABLED" value="false"/>
-        <option name="LOG_EXPRESSION_ENABLED" value="false"/>
-        <option name="REMOVE_AFTER_HIT" value="false"/>
-        <option name="SUSPEND_POLICY" value="SuspendAll"/>
-        <option name="SUSPEND" value="true"/>
-        <option name="COUNT_FILTER_ENABLED" value="false"/>
-        <option name="COUNT_FILTER" value="0"/>
-        <option name="CONDITION_ENABLED" value="false"/>
-        <option name="CLASS_FILTERS_ENABLED" value="false"/>
-        <option name="INSTANCE_FILTERS_ENABLED" value="false"/>
-        <option name="CONDITION" value="&#13;&#13;JAVA"/>
-        <option name="LOG_MESSAGE" value="&#13;&#13;JAVA"/>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="&#13;&#13;JAVA" />
+        <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
       </breakpoint>
       <breakpoint>
-        <option name="NOTIFY_CAUGHT" value="true"/>
-        <option name="NOTIFY_UNCAUGHT" value="true"/>
-        <option name="ENABLED" value="false"/>
-        <option name="LOG_ENABLED" value="false"/>
-        <option name="LOG_EXPRESSION_ENABLED" value="false"/>
-        <option name="REMOVE_AFTER_HIT" value="false"/>
-        <option name="SUSPEND_POLICY" value="SuspendAll"/>
-        <option name="SUSPEND" value="true"/>
-        <option name="COUNT_FILTER_ENABLED" value="false"/>
-        <option name="COUNT_FILTER" value="0"/>
-        <option name="CONDITION_ENABLED" value="false"/>
-        <option name="CLASS_FILTERS_ENABLED" value="false"/>
-        <option name="INSTANCE_FILTERS_ENABLED" value="false"/>
-        <option name="CONDITION" value="&#13;&#13;JAVA"/>
-        <option name="LOG_MESSAGE" value="&#13;&#13;JAVA"/>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="false" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="&#13;&#13;JAVA" />
+        <option name="LOG_MESSAGE" value="&#13;&#13;JAVA" />
       </breakpoint>
     </breakpoint_any>
-    <line_breakpoints default_suspend_policy="SuspendThread" default_condition_enabled="true"/>
-    <breakpoint_rules/>
-    <ui_properties/>
+    <line_breakpoints default_suspend_policy="SuspendThread" default_condition_enabled="true" />
+    <breakpoint_rules />
+    <ui_properties />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target"/>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
-    <favorites_list name="jpv"/>
+    <favorites_list name="jpv" />
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ShowOrderPanel.groovy" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ShowOrderPanel.groovy" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="293" column="67" selection-start="11735" selection-end="11735" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#34#71#0" expanded="true"/>
-              </folding>
+            <state line="291" column="99" selection-start="11538" selection-end="11538" vertical-scroll-proportion="0.8717949">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -163,8 +165,8 @@
       <file leaf-file-name="MainWindow.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/MainWindow.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="479" column="61" selection-start="23751" selection-end="23751" vertical-scroll-proportion="-2.88">
-              <folding/>
+            <state line="479" column="61" selection-start="23751" selection-end="23751" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -172,8 +174,17 @@
       <file leaf-file-name="OrderPanel.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="810" column="31" selection-start="33561" selection-end="33561" vertical-scroll-proportion="-1.8">
-              <folding/>
+            <state line="738" column="118" selection-start="30770" selection-end="30770" vertical-scroll-proportion="-5.76">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PaymentDialog.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/PaymentDialog.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="336" column="26" selection-start="12005" selection-end="12005" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -181,17 +192,8 @@
       <file leaf-file-name="OrderController.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="787" column="28" selection-start="28298" selection-end="28298" vertical-scroll-proportion="0.0">
-              <folding/>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Jb.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Jb.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="43" column="35" selection-start="832" selection-end="832" vertical-scroll-proportion="0.0">
-              <folding/>
+            <state line="421" column="86" selection-start="15594" selection-end="15594" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -199,28 +201,17 @@
       <file leaf-file-name="NotaVenta.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/NotaVenta.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="54" column="4" selection-start="1430" selection-end="1477" vertical-scroll-proportion="0.0">
-              <folding/>
+            <state line="60" column="92" selection-start="1668" selection-end="1668" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="JbTrack.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/JbTrack.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="13" selection-start="1030" selection-end="1030" vertical-scroll-proportion="0.0">
-              <folding/>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EntregaTrabajoDialog.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="EntregaTrabajoDialog.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/EntregaTrabajoDialog.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="25" selection-start="1443" selection-end="1443" vertical-scroll-proportion="1.2109375">
-              <folding>
-                <element signature="e#35#67#0" expanded="true"/>
-              </folding>
+            <state line="57" column="30" selection-start="1327" selection-end="1327" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -228,8 +219,8 @@
       <file leaf-file-name="TicketServiceImpl.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="289" column="55" selection-start="8880" selection-end="8996" vertical-scroll-proportion="0.0">
-              <folding/>
+            <state line="222" column="46" selection-start="6704" selection-end="6704" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -237,8 +228,17 @@
       <file leaf-file-name="PagoRepository.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/PagoRepository.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="15" selection-start="1434" selection-end="1434" vertical-scroll-proportion="0.0">
-              <folding/>
+            <state line="35" column="80" selection-start="1364" selection-end="1364" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Pago.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Pago.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="39" column="52" selection-start="1104" selection-end="1151" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -247,196 +247,196 @@
   </component>
   <component name="FindManager">
     <FindUsagesManager>
-      <setting name="OPEN_NEW_TAB" value="false"/>
+      <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$"/>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitLogSettings">
     <option name="myDateState">
-      <MyDateState/>
+      <MyDateState />
     </option>
   </component>
   <component name="GradleLocalSettings">
     <option name="availableTasks">
       <list>
         <GradleTaskDescriptor>
-          <option name="description" value="Compiles the test Java source."/>
-          <option name="name" value="compileTestJava"/>
+          <option name="description" value="Compiles the test Java source." />
+          <option name="name" value="compileTestJava" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Bundles the project as a JVM application with libs and OS specific scripts."/>
-          <option name="name" value="distTar"/>
+          <option name="description" value="Bundles the project as a JVM application with libs and OS specific scripts." />
+          <option name="name" value="distTar" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Assembles the main classes."/>
-          <option name="name" value="classes"/>
+          <option name="description" value="Assembles the main classes." />
+          <option name="name" value="classes" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Bundles the project as a JVM application with libs and OS specific scripts."/>
-          <option name="name" value="distZip"/>
+          <option name="description" value="Bundles the project as a JVM application with libs and OS specific scripts." />
+          <option name="name" value="distZip" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Runs this project as a JVM application"/>
-          <option name="name" value="run"/>
+          <option name="description" value="Runs this project as a JVM application" />
+          <option name="name" value="run" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Deletes the build directory."/>
-          <option name="name" value="clean"/>
+          <option name="description" value="Deletes the build directory." />
+          <option name="name" value="clean" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Compiles the metamodel Java source."/>
-          <option name="name" value="compileMetamodelJava"/>
+          <option name="description" value="Compiles the metamodel Java source." />
+          <option name="name" value="compileMetamodelJava" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Compiles the test Groovy source."/>
-          <option name="name" value="compileTestGroovy"/>
+          <option name="description" value="Compiles the test Groovy source." />
+          <option name="name" value="compileTestGroovy" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Compiles the main Groovy source."/>
-          <option name="name" value="compileGroovy"/>
+          <option name="description" value="Compiles the main Groovy source." />
+          <option name="name" value="compileGroovy" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Generates Groovydoc API documentation for the main source code."/>
-          <option name="name" value="groovydoc"/>
+          <option name="description" value="Generates Groovydoc API documentation for the main source code." />
+          <option name="name" value="groovydoc" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Processes the metamodel resources."/>
-          <option name="name" value="processMetamodelResources"/>
+          <option name="description" value="Processes the metamodel resources." />
+          <option name="name" value="processMetamodelResources" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Assembles and tests this project and all projects it depends on."/>
-          <option name="name" value="buildNeeded"/>
+          <option name="description" value="Assembles and tests this project and all projects it depends on." />
+          <option name="name" value="buildNeeded" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="name" value="integrationTest"/>
+          <option name="name" value="integrationTest" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Assembles the outputs of this project."/>
-          <option name="name" value="assemble"/>
+          <option name="description" value="Assembles the outputs of this project." />
+          <option name="name" value="assemble" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Assembles and tests this project."/>
-          <option name="name" value="build"/>
+          <option name="description" value="Assembles and tests this project." />
+          <option name="name" value="build" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Compiles the main Java source."/>
-          <option name="name" value="compileJava"/>
+          <option name="description" value="Compiles the main Java source." />
+          <option name="name" value="compileJava" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Runs the unit tests."/>
-          <option name="name" value="test"/>
+          <option name="description" value="Runs the unit tests." />
+          <option name="name" value="test" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Assembles and tests this project and all projects that depend on it."/>
-          <option name="name" value="buildDependents"/>
+          <option name="description" value="Assembles and tests this project and all projects that depend on it." />
+          <option name="name" value="buildDependents" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Assembles the metamodel classes."/>
-          <option name="name" value="metamodelClasses"/>
+          <option name="description" value="Assembles the metamodel classes." />
+          <option name="name" value="metamodelClasses" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Assembles the test classes."/>
-          <option name="name" value="testClasses"/>
+          <option name="description" value="Assembles the test classes." />
+          <option name="name" value="testClasses" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Installs the project as a JVM application along with libs and OS specific scripts."/>
-          <option name="name" value="installApp"/>
+          <option name="description" value="Installs the project as a JVM application along with libs and OS specific scripts." />
+          <option name="name" value="installApp" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Processes the main resources."/>
-          <option name="name" value="processResources"/>
+          <option name="description" value="Processes the main resources." />
+          <option name="name" value="processResources" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Generates Javadoc API documentation for the main source code."/>
-          <option name="name" value="javadoc"/>
+          <option name="description" value="Generates Javadoc API documentation for the main source code." />
+          <option name="name" value="javadoc" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Compiles the metamodel Groovy source."/>
-          <option name="name" value="compileMetamodelGroovy"/>
+          <option name="description" value="Compiles the metamodel Groovy source." />
+          <option name="name" value="compileMetamodelGroovy" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Processes the test resources."/>
-          <option name="name" value="processTestResources"/>
+          <option name="description" value="Processes the test resources." />
+          <option name="name" value="processTestResources" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Runs all checks."/>
-          <option name="name" value="check"/>
+          <option name="description" value="Runs all checks." />
+          <option name="name" value="check" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Assembles a jar archive containing the main classes."/>
-          <option name="name" value="jar"/>
+          <option name="description" value="Assembles a jar archive containing the main classes." />
+          <option name="name" value="jar" />
         </GradleTaskDescriptor>
         <GradleTaskDescriptor>
-          <option name="description" value="Creates OS specific scripts to run the project as a JVM application."/>
-          <option name="name" value="startScripts"/>
+          <option name="description" value="Creates OS specific scripts to run the project as a JVM application." />
+          <option name="name" value="startScripts" />
         </GradleTaskDescriptor>
       </list>
     </option>
     <option name="expandStates">
       <map>
-        <entry key="core/jpv" value="true"/>
-        <entry key="dependencies/core/jpv" value="false"/>
-        <entry key="dependencies/reports/jpv" value="false"/>
-        <entry key="jpv" value="true"/>
-        <entry key="jpv/jpv" value="false"/>
-        <entry key="reports/jpv" value="false"/>
+        <entry key="core/jpv" value="true" />
+        <entry key="dependencies/core/jpv" value="false" />
+        <entry key="dependencies/reports/jpv" value="false" />
+        <entry key="jpv" value="true" />
+        <entry key="jpv/jpv" value="false" />
+        <entry key="reports/jpv" value="false" />
       </map>
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy" root0="SKIP_INSPECTION"/>
-    <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy" root0="SKIP_HIGHLIGHTING"/>
-    <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ItemDialog.groovy" root0="FORCE_HIGHLIGHTING"/>
-    <setting file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/SucursalServiceImpl.groovy" root0="FORCE_HIGHLIGHTING"/>
-    <setting file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/ArticuloRepository.groovy" root0="FORCE_HIGHLIGHTING"/>
-    <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy" root0="FORCE_HIGHLIGHTING"/>
-    <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/CustomerController.groovy" root0="FORCE_HIGHLIGHTING"/>
-    <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" root0="FORCE_HIGHLIGHTING"/>
-    <setting file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy" root0="FORCE_HIGHLIGHTING"/>
-    <setting file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/NotaVenta.java" root0="FORCE_HIGHLIGHTING"/>
+    <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ItemDialog.groovy" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/SucursalServiceImpl.groovy" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/ArticuloRepository.groovy" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/CustomerController.groovy" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/NotaVenta.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/core/build/resources/main/template/ticket-pago.vm"/>
-        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/impl/JbRepository.groovy"/>
-        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/JbRepository.groovy"/>
-        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy"/>
-        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/JbTrackRepository.groovy"/>
-        <option value="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/JbTrack.java"/>
-        <option value="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/JbLlamada.java"/>
-        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/impl/RepositoryFactory.groovy"/>
-        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/JbLlamadaRepository.groovy"/>
-        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/PagoRepository.groovy"/>
-        <option value="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Jb.java"/>
-        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy"/>
-        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/MainWindow.groovy"/>
-        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy"/>
-        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy"/>
-        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/EntregaTrabajoDialog.groovy"/>
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/impl/JbRepository.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/JbRepository.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/JbTrackRepository.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/JbTrack.java" />
+        <option value="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/JbLlamada.java" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/impl/RepositoryFactory.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/JbLlamadaRepository.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Jb.java" />
+        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/MainWindow.groovy" />
+        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/EntregaTrabajoDialog.groovy" />
+        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/PagoRepository.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy" />
+        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy" />
+        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy" />
       </list>
     </option>
   </component>
   <component name="MavenProjectNavigator">
-    <treeState/>
+    <treeState />
   </component>
   <component name="ModuleEditorState">
-    <option name="LAST_EDITED_MODULE_NAME"/>
-    <option name="LAST_EDITED_TAB_NAME"/>
+    <option name="LAST_EDITED_MODULE_NAME" />
+    <option name="LAST_EDITED_TAB_NAME" />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="24"/>
-    <option name="width" value="1274"/>
-    <option name="height" value="699"/>
+    <option name="y" value="24" />
+    <option name="width" value="1274" />
+    <option name="height" value="699" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
       <profile-state>
         <expanded-state>
           <State>
-            <id/>
+            <id />
           </State>
         </expanded-state>
         <selected-state>
@@ -448,527 +448,497 @@
     </entry>
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
-    <OptionsSetting value="true" id="Add"/>
-    <OptionsSetting value="true" id="Remove"/>
-    <OptionsSetting value="true" id="Checkout"/>
-    <OptionsSetting value="true" id="Update"/>
-    <OptionsSetting value="true" id="Status"/>
-    <OptionsSetting value="true" id="Edit"/>
-    <ConfirmationsSetting value="0" id="Add"/>
-    <ConfirmationsSetting value="0" id="Remove"/>
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
-    <option name="STATE" value="0"/>
+    <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
-      <flattenPackages/>
-      <showMembers/>
-      <showModules/>
-      <showLibraryContents/>
-      <hideEmptyPackages/>
-      <abbreviatePackageNames/>
-      <autoscrollToSource/>
-      <autoscrollFromSource/>
-      <sortByType/>
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope"/>
-      <pane id="PackagesPane"/>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode"/>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode"/>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv-sun"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jpv"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode"/>
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jpv-sun"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode"/>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv-sun"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ui"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode"/>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv-sun"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ui"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode"/>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv-sun"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="ui"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="main"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="groovy"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ui"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode"/>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv-sun"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="core"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jpv"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode"/>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv-sun"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="core"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="groovy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode"/>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv-sun"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="core"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode"/>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv-sun"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="core"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pos"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode"/>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv-sun"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="core"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="main"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="java"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pos"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="model"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode"/>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jpv-sun"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="core"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="main"/>
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode"/>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="template" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="project.structure.last.edited" value="Modules"/>
-    <property name="GoToFile.includeJavaFiles" value="false"/>
-    <property name="project.structure.proportion" value="0.15"/>
-    <property name="options.splitter.main.proportions" value="0.3"/>
-    <property name="options.lastSelected" value="vcs.Git"/>
-    <property name="recentsLimit" value="5"/>
-    <property name="MemberChooser.sorted" value="false"/>
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.gitignore"/>
-    <property name="project.structure.side.proportion" value="0.2"/>
-    <property name="MemberChooser.copyJavadoc" value="false"/>
-    <property name="GoToClass.toSaveIncludeLibraries" value="false"/>
-    <property name="FullScreen" value="false"/>
-    <property name="MemberChooser.showClasses" value="true"/>
-    <property name="gradle.tool.window.active" value="Project"/>
-    <property name="GoToClass.includeLibraries" value="false"/>
-    <property name="options.searchVisible" value="true"/>
-    <property name="options.splitter.details.proportions" value="0.2"/>
-    <property name="dynamic.classpath" value="false"/>
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.lastSelected" value="vcs.Git" />
+    <property name="recentsLimit" value="5" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.gitignore" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="FullScreen" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="gradle.tool.window.active" value="Project" />
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="dynamic.classpath" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="mx.lux.pos.ui.view.dialog"/>
-      <recent name="mx.lux.pos.repository"/>
-      <recent name="mx.lux.pos.model"/>
-      <recent name="mx.lux.pos.repository.impl"/>
-      <recent name="mx.lux.pos.repository.custom"/>
+      <recent name="mx.lux.pos.ui.view.dialog" />
+      <recent name="mx.lux.pos.repository" />
+      <recent name="mx.lux.pos.model" />
+      <recent name="mx.lux.pos.repository.impl" />
+      <recent name="mx.lux.pos.repository.custom" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/core/build/resources/main/template"/>
+      <recent name="$PROJECT_DIR$/core/build/resources/main/template" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="mx.lux.pos.repository"/>
+      <recent name="mx.lux.pos.repository" />
     </key>
   </component>
   <component name="RunManager" selected="Application.MainWindow">
     <configuration default="false" name="MainWindow" type="Application" factoryName="Application" temporary="true">
-      <extension name="coverage" enabled="false" merge="false"/>
-      <option name="MAIN_CLASS_NAME" value="mx.lux.pos.ui.MainWindow"/>
-      <option name="VM_PARAMETERS"/>
-      <option name="PROGRAM_PARAMETERS"/>
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$"/>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false"/>
-      <option name="ALTERNATIVE_JRE_PATH"/>
-      <option name="ENABLE_SWING_INSPECTOR" value="false"/>
-      <option name="ENV_VARIABLES"/>
-      <option name="PASS_PARENT_ENVS" value="true"/>
-      <module name="ui"/>
-      <envs/>
+      <extension name="coverage" enabled="false" merge="false" />
+      <option name="MAIN_CLASS_NAME" value="mx.lux.pos.ui.MainWindow" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="ui" />
+      <envs />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value=""/>
-        <option name="TRANSPORT" value="0"/>
-        <option name="LOCAL" value="true"/>
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
       </RunnerSettings>
-      <RunnerSettings RunnerId="Run"/>
-      <ConfigurationWrapper RunnerId="Debug"/>
-      <ConfigurationWrapper RunnerId="Run"/>
-      <method/>
-    </configuration>
-    <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy">
-      <module name=""/>
-      <setting name="path" value=""/>
-      <setting name="vmparams" value=""/>
-      <setting name="params" value=""/>
-      <setting name="workDir" value="file://$PROJECT_DIR$"/>
-      <setting name="debug" value="false"/>
-      <method/>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
     </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name=""/>
-      <option name="VM_PARAMETERS" value="-Xms128m&#13;&#10;-Xmx512m&#13;&#10;-XX:MaxPermSize=250m&#13;&#10;-XX:ReservedCodeCacheSize=64m&#13;&#10;-XX:+UseCodeCacheFlushing&#13;&#10;-ea&#13;&#10;-Dsun.io.useCanonCaches=false&#13;&#10;-Djava.net.preferIPv4Stack=true"/>
-      <option name="PROGRAM_PARAMETERS"/>
-      <method/>
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xms128m&#13;&#10;-Xmx512m&#13;&#10;-XX:MaxPermSize=250m&#13;&#10;-XX:ReservedCodeCacheSize=64m&#13;&#10;-XX:+UseCodeCacheFlushing&#13;&#10;-ea&#13;&#10;-Dsun.io.useCanonCaches=false&#13;&#10;-Djava.net.preferIPv4Stack=true" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
     </configuration>
-    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
-      <module name=""/>
-      <option name="TESTING_TYPE" value="0"/>
-      <option name="INSTRUMENTATION_RUNNER_CLASS" value=""/>
-      <option name="METHOD_NAME" value=""/>
-      <option name="CLASS_NAME" value=""/>
-      <option name="PACKAGE_NAME" value=""/>
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR"/>
-      <option name="PREFERRED_AVD" value=""/>
-      <option name="USE_COMMAND_LINE" value="true"/>
-      <option name="COMMAND_LINE" value=""/>
-      <option name="WIPE_USER_DATA" value="false"/>
-      <option name="DISABLE_BOOT_ANIMATION" value="false"/>
-      <option name="NETWORK_SPEED" value="full"/>
-      <option name="NETWORK_LATENCY" value="none"/>
-      <option name="CLEAR_LOGCAT" value="false"/>
-      <method/>
+    <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy">
+      <module name="" />
+      <setting name="path" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workDir" value="file://$PROJECT_DIR$" />
+      <setting name="debug" value="false" />
+      <method />
     </configuration>
     <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>
-        <option name="myGeneralSettings"/>
-        <option name="myRunnerSettings"/>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
         <option name="myRunnerParameters">
           <MavenRunnerParameters>
             <option name="profiles">
-              <set/>
+              <set />
             </option>
             <option name="goals">
-              <list/>
+              <list />
             </option>
             <option name="profilesMap">
-              <map/>
+              <map />
             </option>
-            <option name="resolveToWorkspace" value="false"/>
-            <option name="workingDirPath" value=""/>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="" />
           </MavenRunnerParameters>
         </option>
       </MavenSettings>
-      <method/>
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <method />
     </configuration>
     <configuration default="true" type="GriffonRunConfigurationType" factoryName="Griffon">
-      <module name=""/>
-      <setting name="vmparams" value=""/>
-      <setting name="cmdLine" value="run-app"/>
-      <setting name="depsClasspath" value="true"/>
-      <setting name="passParentEnv" value="true"/>
-      <method/>
+      <module name="" />
+      <setting name="vmparams" value="" />
+      <setting name="cmdLine" value="run-app" />
+      <setting name="depsClasspath" value="true" />
+      <setting name="passParentEnv" value="true" />
+      <method />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true"/>
-      <option name="SERVER_MODE" value="false"/>
-      <option name="SHMEM_ADDRESS" value="javadebug"/>
-      <option name="HOST" value="localhost"/>
-      <option name="PORT" value="5005"/>
-      <method/>
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name=""/>
-      <option name="MAIN_CLASS_NAME"/>
-      <option name="HTML_FILE_NAME"/>
-      <option name="HTML_USED" value="false"/>
-      <option name="WIDTH" value="400"/>
-      <option name="HEIGHT" value="300"/>
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy"/>
-      <option name="VM_PARAMETERS"/>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false"/>
-      <option name="ALTERNATIVE_JRE_PATH"/>
-      <method/>
-    </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
-      <module name=""/>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false"/>
-      <option name="ALTERNATIVE_JRE_PATH"/>
-      <option name="SUITE_NAME"/>
-      <option name="PACKAGE_NAME"/>
-      <option name="MAIN_CLASS_NAME"/>
-      <option name="METHOD_NAME"/>
-      <option name="GROUP_NAME"/>
-      <option name="TEST_OBJECT" value="CLASS"/>
-      <option name="VM_PARAMETERS"/>
-      <option name="PARAMETERS"/>
-      <option name="WORKING_DIRECTORY"/>
-      <option name="OUTPUT_DIRECTORY"/>
-      <option name="ANNOTATION_TYPE"/>
-      <option name="ENV_VARIABLES"/>
-      <option name="PASS_PARENT_ENVS" value="true"/>
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies"/>
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false"/>
-      <option name="PROPERTIES_FILE"/>
-      <envs/>
-      <properties/>
-      <listeners/>
-      <method/>
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
     </configuration>
     <configuration default="true" type="XSLT" factoryName="XSLT">
-      <option name="myOutputFile"/>
-      <option name="myOpenOutputFile" value="false"/>
-      <option name="myOpenInBrowser" value="false"/>
-      <option name="mySmartErrorHandling" value="true"/>
-      <option name="myRunnerPort" value="34873"/>
-      <option name="myVmArguments"/>
-      <option name="myWorkingDirectory"/>
-      <option name="myModule"/>
-      <option name="myJdk"/>
-      <parameters/>
-      <OutputType value="CONSOLE" save-to-file="false"/>
-      <FileType name="XML"/>
-      <JdkChoice value="FROM_MODULE"/>
-      <method/>
+      <option name="myOutputFile" />
+      <option name="myOpenOutputFile" value="false" />
+      <option name="myOpenInBrowser" value="false" />
+      <option name="mySmartErrorHandling" value="true" />
+      <option name="myRunnerPort" value="34873" />
+      <option name="myVmArguments" />
+      <option name="myWorkingDirectory" />
+      <option name="myModule" />
+      <option name="myJdk" />
+      <parameters />
+      <OutputType value="CONSOLE" save-to-file="false" />
+      <FileType name="XML" />
+      <JdkChoice value="FROM_MODULE" />
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false"/>
-      <option name="MAIN_CLASS_NAME"/>
-      <option name="VM_PARAMETERS"/>
-      <option name="PROGRAM_PARAMETERS"/>
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$"/>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false"/>
-      <option name="ALTERNATIVE_JRE_PATH"/>
-      <option name="ENABLE_SWING_INSPECTOR" value="false"/>
-      <option name="ENV_VARIABLES"/>
-      <option name="PASS_PARENT_ENVS" value="true"/>
-      <module name=""/>
-      <envs/>
-      <method/>
+      <extension name="coverage" enabled="false" merge="false" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
-      <extension name="coverage" enabled="false" merge="false"/>
-      <module name=""/>
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false"/>
-      <option name="ALTERNATIVE_JRE_PATH"/>
-      <option name="PACKAGE_NAME"/>
-      <option name="MAIN_CLASS_NAME"/>
-      <option name="METHOD_NAME"/>
-      <option name="TEST_OBJECT" value="class"/>
-      <option name="VM_PARAMETERS"/>
-      <option name="PARAMETERS"/>
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$"/>
-      <option name="ENV_VARIABLES"/>
-      <option name="PASS_PARENT_ENVS" value="true"/>
+      <extension name="coverage" enabled="false" merge="false" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
       <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies"/>
+        <value defaultName="moduleWithDependencies" />
       </option>
-      <envs/>
-      <patterns/>
-      <method/>
+      <envs />
+      <patterns />
+      <method />
     </configuration>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
-      <module name=""/>
-      <option name="ACTIVITY_CLASS" value=""/>
-      <option name="MODE" value="default_activity"/>
-      <option name="DEPLOY" value="true"/>
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR"/>
-      <option name="PREFERRED_AVD" value=""/>
-      <option name="USE_COMMAND_LINE" value="true"/>
-      <option name="COMMAND_LINE" value=""/>
-      <option name="WIPE_USER_DATA" value="false"/>
-      <option name="DISABLE_BOOT_ANIMATION" value="false"/>
-      <option name="NETWORK_SPEED" value="full"/>
-      <option name="NETWORK_LATENCY" value="none"/>
-      <option name="CLEAR_LOGCAT" value="false"/>
-      <method/>
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <method />
     </configuration>
     <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="Application.MainWindow"/>
+      <item index="0" class="java.lang.String" itemvalue="Application.MainWindow" />
     </list>
     <recent_temporary>
       <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="Application.MainWindow"/>
+        <item index="0" class="java.lang.String" itemvalue="Application.MainWindow" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -976,258 +946,254 @@
       <Port>5050</Port>
     </configuration>
   </component>
-  <component name="ShelveChangesManager" show_recycled="false"/>
+  <component name="ShelveChangesManager" show_recycled="false" />
   <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="all">
-    <option name="USER" value=""/>
-    <option name="PASSWORD" value=""/>
-    <option name="mySSHConnectionTimeout" value="30000"/>
-    <option name="mySSHReadTimeout" value="30000"/>
-    <option name="LAST_MERGED_REVISION"/>
-    <option name="MERGE_DRY_RUN" value="false"/>
-    <option name="MERGE_DIFF_USE_ANCESTRY" value="true"/>
-    <option name="UPDATE_LOCK_ON_DEMAND" value="false"/>
-    <option name="IGNORE_SPACES_IN_MERGE" value="false"/>
-    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false"/>
-    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true"/>
-    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true"/>
-    <option name="FORCE_UPDATE" value="false"/>
-    <option name="IGNORE_EXTERNALS" value="false"/>
+    <option name="USER" value="" />
+    <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
+    <option name="LAST_MERGED_REVISION" />
+    <option name="MERGE_DRY_RUN" value="false" />
+    <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
+    <option name="UPDATE_LOCK_ON_DEMAND" value="false" />
+    <option name="IGNORE_SPACES_IN_MERGE" value="false" />
+    <option name="CHECK_NESTED_FOR_QUICK_MERGE" value="false" />
+    <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
+    <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
+    <option name="FORCE_UPDATE" value="false" />
+    <option name="IGNORE_EXTERNALS" value="false" />
     <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="85a3f2a7-5fe4-477a-b715-aab86b5598d8" name="Default" comment=""/>
+      <changelist id="85a3f2a7-5fe4-477a-b715-aab86b5598d8" name="Default" comment="" />
       <created>1369776415890</created>
       <updated>1369776415890</updated>
     </task>
-    <servers/>
+    <servers />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
-      <are-packages-shown value="false"/>
-      <are-modules-shown value="false"/>
-      <flatten-packages value="false"/>
-      <is-autoscroll-to-source value="true"/>
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
     </todo-panel>
     <todo-panel id="all">
-      <are-packages-shown value="true"/>
-      <are-modules-shown value="false"/>
-      <flatten-packages value="false"/>
-      <is-autoscroll-to-source value="true"/>
+      <are-packages-shown value="true" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="true" />
     </todo-panel>
     <todo-panel id="default-changelist">
-      <are-packages-shown value="false"/>
-      <are-modules-shown value="false"/>
-      <flatten-packages value="false"/>
-      <is-autoscroll-to-source value="false"/>
+      <are-packages-shown value="false" />
+      <are-modules-shown value="false" />
+      <flatten-packages value="false" />
+      <is-autoscroll-to-source value="false" />
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="24" width="1274" height="699" extended-state="6"/>
-    <editor active="true"/>
+    <frame x="0" y="24" width="1274" height="699" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3280757" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs"/>
-      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.6288" order="1" side_tool="false" content_ui="tabs"/>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs"/>
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959481" sideWeight="0.6288" order="3" side_tool="false" content_ui="tabs"/>
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.41197821" sideWeight="0.4796417" order="7" side_tool="false" content_ui="tabs"/>
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41197821" sideWeight="0.5203583" order="0" side_tool="true" content_ui="tabs"/>
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31604537" sideWeight="0.2721417" order="0" side_tool="true" content_ui="tabs"/>
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs"/>
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36479127" sideWeight="0.48452768" order="2" side_tool="false" content_ui="tabs"/>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32604736" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs"/>
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959481" sideWeight="0.6827697" order="2" side_tool="false" content_ui="tabs"/>
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5888" order="4" side_tool="false" content_ui="tabs"/>
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs"/>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3281759" sideWeight="0.58802176" order="1" side_tool="false" content_ui="combo"/>
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29872495" sideWeight="0.45867097" order="6" side_tool="false" content_ui="tabs" x="357" y="284" width="566" height="197"/>
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs"/>
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs"/>
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs"/>
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3212341" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs"/>
-      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs"/>
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo"/>
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3984" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs"/>
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3280757" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.6288" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959481" sideWeight="0.6288" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3829401" sideWeight="0.4796417" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41197821" sideWeight="0.5203583" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31604537" sideWeight="0.2721417" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3629764" sideWeight="0.48452768" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32604736" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959481" sideWeight="0.6827697" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5888" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3281759" sideWeight="0.6170599" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29872495" sideWeight="0.45867097" order="6" side_tool="false" content_ui="tabs" x="357" y="284" width="566" height="197" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3212341" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3984" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000"/>
+    <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true"/>
-    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true"/>
-    <option name="CHECK_NEW_TODO" value="true"/>
+    <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="true" />
+    <option name="CHECK_NEW_TODO" value="true" />
     <option name="myTodoPanelSettings">
       <value>
-        <are-packages-shown value="false"/>
-        <are-modules-shown value="false"/>
-        <flatten-packages value="false"/>
-        <is-autoscroll-to-source value="false"/>
+        <are-packages-shown value="false" />
+        <are-modules-shown value="false" />
+        <flatten-packages value="false" />
+        <is-autoscroll-to-source value="false" />
       </value>
     </option>
-    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true"/>
-    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true"/>
-    <option name="PERFORM_EDIT_IN_BACKGROUND" value="true"/>
-    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true"/>
-    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true"/>
-    <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false"/>
-    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false"/>
-    <option name="CHANGED_ON_SERVER_INTERVAL" value="60"/>
-    <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true"/>
-    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true"/>
-    <option name="DEFAULT_PATCH_EXTENSION" value="patch"/>
-    <option name="SHORT_DIFF_HORIZONTALLY" value="true"/>
-    <option name="SHORT_DIFF_EXTRA_LINES" value="2"/>
-    <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true"/>
-    <option name="INCLUDE_TEXT_INTO_PATCH" value="false"/>
-    <option name="INCLUDE_TEXT_INTO_SHELF" value="false"/>
-    <option name="SHOW_FILE_HISTORY_DETAILS" value="true"/>
-    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="false"/>
-    <option name="SHOW_DIRTY_RECURSIVELY" value="false"/>
-    <option name="LIMIT_HISTORY" value="true"/>
-    <option name="MAXIMUM_HISTORY_ROWS" value="1000"/>
-    <option name="UPDATE_FILTER_SCOPE_NAME"/>
-    <option name="USE_COMMIT_MESSAGE_MARGIN" value="false"/>
-    <option name="COMMIT_MESSAGE_MARGIN_SIZE" value="72"/>
-    <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false"/>
-    <option name="FORCE_NON_EMPTY_COMMENT" value="false"/>
-    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false"/>
-    <option name="LAST_COMMIT_MESSAGE"/>
-    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true"/>
-    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false"/>
-    <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false"/>
-    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false"/>
-    <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false"/>
-    <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8"/>
-    <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5"/>
-    <option name="ACTIVE_VCS_NAME"/>
-    <option name="UPDATE_GROUP_BY_PACKAGES" value="false"/>
-    <option name="UPDATE_GROUP_BY_CHANGELIST" value="false"/>
-    <option name="UPDATE_FILTER_BY_SCOPE" value="false"/>
-    <option name="SHOW_FILE_HISTORY_AS_TREE" value="false"/>
-    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6"/>
+    <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
+    <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
+    <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="false" />
+    <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
+    <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
+    <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
+    <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
+    <option name="SHORT_DIFF_HORIZONTALLY" value="true" />
+    <option name="SHORT_DIFF_EXTRA_LINES" value="2" />
+    <option name="SOFT_WRAPS_IN_SHORT_DIFF" value="true" />
+    <option name="INCLUDE_TEXT_INTO_PATCH" value="false" />
+    <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
+    <option name="SHOW_FILE_HISTORY_DETAILS" value="true" />
+    <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="false" />
+    <option name="SHOW_DIRTY_RECURSIVELY" value="false" />
+    <option name="LIMIT_HISTORY" value="true" />
+    <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
+    <option name="UPDATE_FILTER_SCOPE_NAME" />
+    <option name="USE_COMMIT_MESSAGE_MARGIN" value="false" />
+    <option name="COMMIT_MESSAGE_MARGIN_SIZE" value="72" />
+    <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
+    <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
+    <option name="LAST_COMMIT_MESSAGE" />
+    <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
+    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
+    <option name="FILE_HISTORY_DIALOG_COMMENTS_SPLITTER_PROPORTION" value="0.8" />
+    <option name="FILE_HISTORY_DIALOG_SPLITTER_PROPORTION" value="0.5" />
+    <option name="ACTIVE_VCS_NAME" />
+    <option name="UPDATE_GROUP_BY_PACKAGES" value="false" />
+    <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
+    <option name="UPDATE_FILTER_BY_SCOPE" value="false" />
+    <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
+    <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints-dialog>
-        <breakpoints-dialog/>
+        <breakpoints-dialog />
       </breakpoints-dialog>
     </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
-    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false"/>
-    <option name="FILTER_TARGETS" value="false"/>
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/Session.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="6" selection-start="140" selection-end="140" vertical-scroll-proportion="0.3272727">
-          <folding/>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/resources/database.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0"/>
-      </provider>
-    </entry>
-    <entry file="jar:///usr/local/java/jdk1.6.0_39/src.zip!/java/io/File.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="455" column="18" selection-start="18737" selection-end="18737" vertical-scroll-proportion="0.3305785"/>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/TipoParametro.groovy">
       <provider selected="true" editor-type-id="text-editor">
         <state line="36" column="78" selection-start="1869" selection-end="1869" vertical-scroll-proportion="0.0">
-          <folding/>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/PagoRepository.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="15" selection-start="1434" selection-end="1434" vertical-scroll-proportion="0.0">
-          <folding/>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/NotaVenta.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="4" selection-start="1430" selection-end="1477" vertical-scroll-proportion="0.0">
-          <folding/>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Jb.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="43" column="35" selection-start="832" selection-end="832" vertical-scroll-proportion="0.0">
-          <folding/>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/CierreDiarioServiceImpl.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="741" column="14" selection-start="31234" selection-end="31234" vertical-scroll-proportion="0.33458647">
-          <folding/>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/JbTrack.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="58" column="13" selection-start="1030" selection-end="1030" vertical-scroll-proportion="0.0">
-          <folding/>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="457" column="12" selection-start="17501" selection-end="17501" vertical-scroll-proportion="0.067567565">
-          <folding/>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="289" column="55" selection-start="8880" selection-end="8996" vertical-scroll-proportion="0.0">
-          <folding/>
-        </state>
+        <state line="457" column="12" selection-start="17501" selection-end="17501" vertical-scroll-proportion="0.067567565" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/MainWindow.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="479" column="61" selection-start="23751" selection-end="23751" vertical-scroll-proportion="-2.88">
-          <folding/>
+        <state line="479" column="61" selection-start="23751" selection-end="23751" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy">
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/CierreDiarioServiceImpl.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="293" column="67" selection-start="11735" selection-end="11735" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#34#71#0" expanded="true"/>
-          </folding>
+        <state line="741" column="14" selection-start="31234" selection-end="31234" vertical-scroll-proportion="0.330855">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy">
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/NotaVenta.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="787" column="28" selection-start="28298" selection-end="28298" vertical-scroll-proportion="0.0">
-          <folding/>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="810" column="31" selection-start="33561" selection-end="33561" vertical-scroll-proportion="-1.8">
-          <folding/>
+        <state line="60" column="92" selection-start="1668" selection-end="1668" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/EntregaTrabajoDialog.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="25" selection-start="1443" selection-end="1443" vertical-scroll-proportion="1.2109375">
-          <folding>
-            <element signature="e#35#67#0" expanded="true"/>
-          </folding>
+        <state line="57" column="30" selection-start="1327" selection-end="1327" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/resources/template/ticket-pago.vm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="59" selection-start="2986" selection-end="2990" vertical-scroll-proportion="0.3304721" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Pago.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="52" selection-start="1104" selection-end="1151" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/PagoRepository.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="80" selection-start="1364" selection-end="1364" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="222" column="46" selection-start="6704" selection-end="6704" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="421" column="86" selection-start="15594" selection-end="15594" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/PaymentDialog.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="336" column="26" selection-start="12005" selection-end="12005" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="738" column="118" selection-start="30770" selection-end="30770" vertical-scroll-proportion="-5.76">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="291" column="99" selection-start="11538" selection-end="11538" vertical-scroll-proportion="0.8717949">
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1236,24 +1202,24 @@
     <states>
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
-          <artifact-editor/>
+          <artifact-editor />
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2"/>
+                <option value="0.2" />
               </list>
             </option>
           </splitter-proportions>
         </settings>
       </state>
-      <state key="Copyright.UI"/>
+      <state key="Copyright.UI" />
       <state key="FacetStructureConfigurable.UI">
         <settings>
           <last-edited>No facets are configured</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2"/>
+                <option value="0.2" />
               </list>
             </option>
           </splitter-proportions>
@@ -1265,7 +1231,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2"/>
+                <option value="0.2" />
               </list>
             </option>
           </splitter-proportions>
@@ -1277,7 +1243,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2"/>
+                <option value="0.2" />
               </list>
             </option>
           </splitter-proportions>
@@ -1289,27 +1255,28 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2"/>
-                <option value="0.5"/>
+                <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
         </settings>
       </state>
-      <state key="ProjectJDKs.UI"/>
+      <state key="ProjectJDKs.UI" />
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
           <last-edited>ant-1.8.4</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.2"/>
+                <option value="0.2" />
               </list>
             </option>
           </splitter-proportions>
         </settings>
       </state>
-      <state key="ScopeChooserConfigurable.UI"/>
+      <state key="ScopeChooserConfigurable.UI" />
     </states>
   </component>
 </project>
+

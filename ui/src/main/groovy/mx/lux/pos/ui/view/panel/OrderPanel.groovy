@@ -739,7 +739,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             Double pAnticipo = Registry.getAdvancePct()
             if(order?.paid<(order?.total * pAnticipo)){
 
-                AuthorizationDialog authDialog = new AuthorizationDialog( this, "Esta operacion requiere autorizaci\u00f3n" )
+                AuthorizationDialog authDialog = new AuthorizationDialog( this, "Anticipo menor al permitido, esta operacion requiere autorizaci\u00f3n" )
                 authDialog.show()
 
 

@@ -265,8 +265,9 @@ class ShowOrderPanel extends JPanel {
     private def doShowPayment = {ActionEvent ev ->
         JButton source = ev.source as JButton
         source.enabled = false
+        pagoN=null
         if((order?.total - order?.paid) > 0){
-            pagoN=null
+
             updatePagos()
              new PaymentDialog( pago, order, null,this ).show()
 
@@ -288,7 +289,7 @@ class ShowOrderPanel extends JPanel {
 
 
                 if(trabajo?.estado.trim().equals('RS')){
-                    Integer entregar = JOptionPane.showConfirmDialog(null,"¿Entregar trabajo en este momeno?", "entrega", JOptionPane.YES_NO_OPTION)
+                    Integer entregar = JOptionPane.showConfirmDialog(null,"¿Desea entregar trabajo?", "entrega", JOptionPane.YES_NO_OPTION)
                     println(entregar)
                     if(entregar == 0){
                         OrderController.insertaEntrega(order,trabajo)

@@ -769,11 +769,21 @@ class OrderController {
 
      NotaVenta notaVenta =  notaVentaService.obtenerNotaVentaPorTicket(idFactura)
      Order order = Order.toOrder(notaVenta)
-    if(notaVenta?.codigo_lente != null){
-        String genericoPB = notaVenta?.codigo_lente.trim().substring(1,2)
+     List<DetalleNotaVenta> detalleVenta = detalleNotaVentaService.listarDetallesNotaVentaPorIdFactura(notaVenta?.id)
+     String surte
+      Iterator iterator = detalleVenta.iterator();
+      while (iterator.hasNext()) {
 
-        if(!genericoPB.equals('P')||!genericoPB.equals('B')){
-            println('Es diferente de P o B')
+          DetalleNotaVenta detalle = iterator.next()
+
+          if(detalle?.surte != null){
+              surte = detalle?.surte
+          }
+      }
+         println('generico: ' + notaVenta?.codigo_lente )
+      println('surte: ' + surte)
+      if(notaVenta?.codigo_lente == null && !surte.equals('P')){
+        String genericoPB = notaVenta?.codigo_lente.trim().substring(1,2)
 
             SimpleDateFormat fecha = new SimpleDateFormat("dd/MMMM/yyyy")
             String fechaVenta = fecha.format(notaVenta?.fechaHoraFactura)
@@ -811,12 +821,16 @@ class OrderController {
 
 
 
+            } else{
+                JOptionPane.showMessageDialog(null,"fecha igual a ahora")
             }
 
 
-        }
 
-        println('Tipo de Generico: ' + genericoPB)
+
+
+    }else{
+        JOptionPane.showMessageDialog(null,"Generico B o surte P")
     }
 }
 
