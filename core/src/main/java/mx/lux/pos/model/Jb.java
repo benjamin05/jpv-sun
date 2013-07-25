@@ -1,8 +1,11 @@
 package mx.lux.pos.model;
 
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 
@@ -42,9 +45,9 @@ public class Jb implements Serializable {
     @Column( name = "surte" )
     private String surte;
 
-
+    @Type( type = "mx.lux.pos.model.MoneyAdapter" )
     @Column( name = "saldo" )
-    private String saldo;
+    private BigDecimal saldo;
 
     @Column( name = "jb_tipo" )
     private String jb_tipo;
@@ -130,7 +133,7 @@ public class Jb implements Serializable {
         this.surte = surte;
     }
 
-    public void setSaldo(String saldo) {
+    public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
     }
 
@@ -230,7 +233,7 @@ public class Jb implements Serializable {
         return surte;
     }
 
-    public String getSaldo() {
+    public BigDecimal getSaldo() {
         return saldo;
     }
 

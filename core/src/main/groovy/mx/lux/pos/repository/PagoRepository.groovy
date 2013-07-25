@@ -31,9 +31,9 @@ interface PagoRepository extends JpaRepository<Pago, Integer>, QueryDslPredicate
     @Query( value = "SELECT NEXTVAL('id_recibo_seq')", nativeQuery = true )
     BigInteger getReciboSequence( )
 
-    @Query(value = "select cast(sum(monto_pago) as varchar)  from pagos where id_factura = ?1 and id_recibo <> ?2 ", nativeQuery = true)
-    String getPagosAnteriores(String idFactura, String idRecibo)
+    @Query(value = "select cast(sum(monto_pago) as numeric)  from pagos where id_factura = ?1 and id_recibo <> ?2 ", nativeQuery = true)
+    BigDecimal getPagosAnteriores(String idFactura, String idRecibo)
 
-    @Query(value = "select cast(sum(monto_pago) as varchar)  from pagos where id_factura = ?1 and confirm = true ", nativeQuery = true)
-    String getPagos(String idFactura)
+    @Query(value = "select cast(sum(monto_pago) as numeric)  from pagos where id_factura = ?1 and confirm = true ", nativeQuery = true)
+    BigDecimal getPagos(String idFactura)
 }

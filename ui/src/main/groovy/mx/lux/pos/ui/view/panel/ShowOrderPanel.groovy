@@ -288,12 +288,12 @@ class ShowOrderPanel extends JPanel {
 
 
                 if(trabajo?.estado.trim().equals('RS')){
-                    Integer entregar = JOptionPane.showConfirmDialog(null,"¿Entregar trabajo en este momeno?", "entrega", JOptionPane.YES_NO_OPTION);
+                    Integer entregar = JOptionPane.showConfirmDialog(null,"¿Entregar trabajo en este momeno?", "entrega", JOptionPane.YES_NO_OPTION)
                     println(entregar)
                     if(entregar == 0){
                         OrderController.insertaEntrega(order,trabajo)
                         //insercion despues de entregar
-
+                        JOptionPane.showMessageDialog(null,"datos guardados correctamente")
                     }
                 }
 
@@ -330,3 +330,5 @@ class ShowOrderPanel extends JPanel {
     }
 
 }
+
+

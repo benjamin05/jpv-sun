@@ -22,6 +22,8 @@ import mx.lux.pos.model.*
 import mx.lux.pos.service.*
 import mx.lux.pos.ui.model.*
 
+import java.text.SimpleDateFormat
+
 @Slf4j
 @Component
 class OrderController {
@@ -528,7 +530,9 @@ class OrderController {
 
         trabajo.setEstado('TE')
 
-        jbRepository.saveAndFlush(trabajo)
+
+
+       trabajo = jbRepository.saveAndFlush(trabajo)
 
         JbTrack jbTrack =  new JbTrack()
         jbTrack?.rx = order?.bill
@@ -539,11 +543,12 @@ class OrderController {
          jbTrack?.id_viaje = null
          jbTrack?.obs = user?.username
 
+
         jbTrackRepository.saveAndFlush(jbTrack)
 
         jbLlamadaRepository.deleteByJbLlamada(order?.bill)
 
-        if(!trabajo?.id_grupo.trim().equals(null) || !trabajo?.id_grupo.trim().equals('')){
+        if(trabajo?.id_grupo != null){
              //Hoja de Proceso y Casos de Uso Pagar Saldo y Entregar - p_pagar_saldos, al entregar la venta. iv)
         }
 
@@ -760,10 +765,59 @@ class OrderController {
   }
 
 
-  static void validaEntrega(String idFactura){
+  static void validaEntrega( String idFactura){
 
      NotaVenta notaVenta =  notaVentaService.obtenerNotaVentaPorTicket(idFactura)
+     Order order = Order.toOrder(notaVenta)
+    if(notaVenta?.codigo_lente != null){
+        String genericoPB = notaVenta?.codigo_lente.trim().substring(1,2)
 
+        if(!genericoPB.equals('P')||!genericoPB.equals('B')){
+            println('Es diferente de P o B')
+
+            SimpleDateFormat fecha = new SimpleDateFormat("dd/MMMM/yyyy")
+            String fechaVenta = fecha.format(notaVenta?.fechaHoraFactura)
+            String ahora = fecha.format(new Date())
+            println('Fecha venta: ' + fechaVenta)
+
+            if(!fechaVenta.equals(ahora)){
+                println('Fecha venta es diferente de ahora')
+
+
+
+                if((order?.total - order?.paid) == 0){
+
+
+                    Jb trabajo = OrderController.entraJb(order?.bill)
+                    if(trabajo != null){
+
+
+                        if(trabajo?.estado.trim().equals('RS')){
+
+                                OrderController.insertaEntrega(order,trabajo)
+                                //insercion despues de entregar
+                                JOptionPane.showMessageDialog(null,"datos guardados correctamente")
+
+                        }else{
+                            JOptionPane.showMessageDialog(null,"Estado no es igual a RS")
+                        }
+
+                    }else{
+                        JOptionPane.showMessageDialog(null,"No hay registro en Jb")
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null,"Existe adeudo")
+                }
+
+
+
+            }
+
+
+        }
+
+        println('Tipo de Generico: ' + genericoPB)
+    }
 }
 
 }
