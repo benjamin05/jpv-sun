@@ -17,7 +17,7 @@ class EntregaTrabajoDialog extends JDialog {
     private Component component
 
     private static JTextField factura = new JTextField()
-    private static Order order
+
 
     EntregaTrabajoDialog(Component parent) {
 
@@ -55,7 +55,7 @@ class EntregaTrabajoDialog extends JDialog {
 
 
     private void doSave(){
-        OrderController.validaEntrega(factura.text)
+        OrderController.validaEntrega(factura.text,false)
         doCancel()
     }
 

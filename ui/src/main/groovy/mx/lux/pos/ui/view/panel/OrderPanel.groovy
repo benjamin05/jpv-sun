@@ -21,10 +21,12 @@ import javax.swing.*
 import java.awt.*
 import java.awt.event.*
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.List
 
 class OrderPanel extends JPanel
 implements IPromotionDrivenPanel, FocusListener, CustomerListener {
+
 
     static final String MSG_INPUT_QUOTE_ID = 'Indique el número de cotización'
     static final String TXT_QUOTE_TITLE = 'Seleccionar cotización'
@@ -645,7 +647,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         println("Dioptra: " + dioptra.getLente().equals(null))
         if(!dioptra.getLente().equals(null)){
         Item i = OrderController.findArt(dio.trim())
-        if(i?.id != null){
+        if(i?.id != null|| dio.trim().equals('nullnullnullnullnullnull') ){
         String tipoArt = null
 
         for (int row = 0; row<= itemsModel.rowCount;row++)
@@ -801,8 +803,23 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private void saveOrder (){
 
         Order newOrder = OrderController.placeOrder( order )
-        CustomerController.saveOrderCountries( order.country )
+         CustomerController.saveOrderCountries( order.country )
         this.promotionDriver.requestPromotionSave()
+
+
+
+        println('Ticket: '+ newOrder?.ticket.trim()   )
+
+        OrderController.validaEntrega(newOrder?.ticket.trim(),true)
+
+        println('Saldo: ' + newOrder?.due)
+        Boolean cSaldo = false
+       // if(newOrder?.due > 0){
+       //   cSaldo = true
+       // }
+        OrderController.creaJb(newOrder?.ticket.trim(),cSaldo)
+
+
         if ( StringUtils.isNotBlank( newOrder?.id ) ) {
 
 
@@ -992,11 +1009,14 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
 
         String dio = OrderController.codigoDioptra(dioptra)
+        println("dio: " + dio)
         println("Dioptra: " + dioptra.getLente().equals(null))
         if(!dioptra.getLente().equals(null)){
 
        Item i = OrderController.findArt(dio.trim())
-        if(i?.id != null){
+        println("I: " +i?.id )
+        if(i?.id != null || dio.trim().equals('nullnullnullnullnullnull') ){
+
    String tipoArt = null
         int artCount = 0
         for (int row = 0; row<= itemsModel.rowCount;row++)

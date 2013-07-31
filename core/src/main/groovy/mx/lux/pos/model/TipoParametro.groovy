@@ -20,6 +20,7 @@ enum TipoParametro {
   EMP_ELECTRONICO( 'emp_electronico', '' ),
   FORMATO_ARCHIVO( 'formato_archivo_salida', 'default' ),
   GRUPO_COMPANIA( 'grupo_compania', 'lux' ),
+  GENERICOS_NO_ETREGABLES( 'genericos_no_entregables', 'B' ),
   GENERICO_PRECIO_VARIABLE( 'generico_precio_variable', 'S' ),
   ID_CLIENTE_GENERICO( 'cli_gen', '1' ),
   ID_ESTADO( 'id_estado', '' ),

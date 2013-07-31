@@ -4,6 +4,8 @@ import groovy.util.logging.Slf4j
 import mx.lux.pos.repository.JbLlamadaRepository
 import mx.lux.pos.repository.JbRepository
 import mx.lux.pos.repository.JbTrackRepository
+import mx.lux.pos.repository.ParametroRepository
+import mx.lux.pos.repository.TmpServiciosRepository
 import mx.lux.pos.service.business.Registry
 import mx.lux.pos.ui.MainWindow
 import mx.lux.pos.ui.resources.ServiceManager
@@ -43,8 +45,10 @@ class OrderController {
   private static RecetaService recetaService
   private static ArticuloService articuloService
   private static JbRepository jbRepository
-  private static JbTrackRepository jbTrackRepository
+  private static JbTrackService jbTrackService
   private static JbLlamadaRepository jbLlamadaRepository
+  private static ParametroRepository  parametroRepository
+  private static TmpServiciosRepository tmpServiciosRepository
 
   private static final String TAG_USD = "USD"
 
@@ -62,8 +66,10 @@ class OrderController {
        RecetaService recetaService,
        ArticuloService articuloService,
        JbRepository jbRepository,
-       JbTrackRepository jbTrackRepository,
-       JbLlamadaRepository jbLlamadaRepository
+       JbTrackService jbTrackService,
+       JbLlamadaRepository jbLlamadaRepository,
+        ParametroRepository parametroRepository,
+       TmpServiciosRepository tmpServiciosRepository
 
   ) {
     this.notaVentaService = notaVentaService
@@ -78,8 +84,10 @@ class OrderController {
         this.recetaService = recetaService
       this.articuloService = articuloService
       this.jbRepository = jbRepository
-      this.jbTrackRepository = jbTrackRepository
+      this.jbTrackService = jbTrackService
       this.jbLlamadaRepository = jbLlamadaRepository
+      this.parametroRepository = parametroRepository
+      this.tmpServiciosRepository = tmpServiciosRepository
   }
 
   static Order getOrder( String orderId ) {
@@ -455,6 +463,23 @@ class OrderController {
     return null
   }
 
+
+
+   static void entregaInstante(Order order){
+       log.info( "registrando orden id: ${order?.id}, cliente: ${order?.customer?.id}" )
+       if ( StringUtils.isNotBlank( order?.id ) && order?.customer?.id ) {
+           NotaVenta notaVenta = notaVentaService.obtenerNotaVenta( order.id )
+           if ( StringUtils.isNotBlank( notaVenta?.id ) ) {
+               User user = Session.get( SessionItem.USER ) as User
+               notaVenta?.empEntrego = user?.username
+               notaVenta?.fechaEntrega = new Date()
+               notaVenta?.horaEntrega = new Date()
+
+               notaVentaService.saveOrder(notaVenta)
+           }
+       }
+   }
+
   static Order placeOrder( Order order ) {
     log.info( "registrando orden id: ${order?.id}, cliente: ${order?.customer?.id}" )
     if ( StringUtils.isNotBlank( order?.id ) && order?.customer?.id ) {
@@ -468,7 +493,7 @@ class OrderController {
           notaVenta.idCliente = order.customer.id
         }
         notaVenta.observacionesNv = order.comments
-        notaVenta.empEntrego = user?.username
+        //notaVenta.empEntrego = user?.username
         notaVenta.udf2 = order.country.toUpperCase()
         notaVenta = notaVentaService.cerrarNotaVenta( notaVenta )
         if ( inventarioService.solicitarTransaccionVenta( notaVenta ) ) {
@@ -517,41 +542,44 @@ class OrderController {
         return  jbRepository.findOne(rx)
     }
 
-    static void insertaEntrega(Order order, Jb trabajo){
+    static void insertaEntrega(Order order, Boolean entregaInstante){
+        println('Order ID: ' + order?.id )
         NotaVenta notaVenta =  notaVentaService.obtenerNotaVenta(order?.id)
         User user = Session.get( SessionItem.USER ) as User
         notaVenta.setEmpEntrego(user?.username)
-
-
         notaVenta.setHoraEntrega(new Date())
+        if(notaVenta?.fechaEntrega == null){
         notaVenta.setFechaEntrega(new Date())
-
-        notaVentaService.saveOrder(notaVenta)
-
-        trabajo.setEstado('TE')
-
-
-
-       trabajo = jbRepository.saveAndFlush(trabajo)
-
-        JbTrack jbTrack =  new JbTrack()
-        jbTrack?.rx = order?.bill
-        jbTrack?.estado = 'TE'
-        jbTrack?.emp =  user?.username
-        jbTrack?.fecha = new Date()
-         jbTrack?.id_mod = '0'
-         jbTrack?.id_viaje = null
-         jbTrack?.obs = user?.username
-
-
-        jbTrackRepository.saveAndFlush(jbTrack)
-
-        jbLlamadaRepository.deleteByJbLlamada(order?.bill)
-
-        if(trabajo?.id_grupo != null){
-             //Hoja de Proceso y Casos de Uso Pagar Saldo y Entregar - p_pagar_saldos, al entregar la venta. iv)
         }
 
+        println('Factura: ' + notaVenta?.getFactura())
+        String idFactura = notaVenta.getFactura()
+         notaVentaService.saveOrder(notaVenta)
+
+        if(entregaInstante == false){
+
+         Jb trabajo = jbRepository.findOne(idFactura)
+            trabajo.setEstado('TE')
+            trabajo = jbRepository.saveAndFlush(trabajo)
+
+         JbTrack jbTrack =  new JbTrack()
+         jbTrack?.rx = order?.bill
+         jbTrack?.estado = 'TE'
+         jbTrack?.emp =  user?.username
+         jbTrack?.fecha = new Date()
+          jbTrack?.id_mod = '0'
+          jbTrack?.id_viaje = null
+          jbTrack?.obs = user?.username
+
+
+         jbTrackService.saveJbTrack(jbTrack)
+
+         jbLlamadaRepository.deleteByJbLlamada(order?.bill)
+
+         if(trabajo?.id_grupo != null){
+              //Hoja de Proceso y Casos de Uso Pagar Saldo y Entregar - p_pagar_saldos, al entregar la venta. iv)
+         }
+        }
     }
 
   static void printOrder( String orderId ) {
@@ -765,73 +793,271 @@ class OrderController {
   }
 
 
-  static void validaEntrega( String idFactura){
+  static void validaEntrega( String idFactura, Boolean entregaInstante){
+      NotaVenta notaVenta =  notaVentaService.obtenerNotaVentaPorTicket(idFactura)
+      Order order = Order.toOrder(notaVenta)
+      List<DetalleNotaVenta> detalleVenta = detalleNotaVentaService.listarDetallesNotaVentaPorIdFactura(notaVenta?.id)
+      Boolean  entregaBo = true
+      if(entregaInstante == true){
+            Parametro genericoNoEntrega = parametroRepository.findOne( TipoParametro.GENERICOS_NO_ETREGABLES.value )
+            ArrayList<String> genericosNoEntregables = new ArrayList<String>()
+            String s = genericoNoEntrega?.valor
+            StringTokenizer st = new StringTokenizer(s.trim(), ",")
+            Iterator its = st.iterator()
+            while (its.hasNext())
+            {
+                genericosNoEntregables.add(its.next().toString())
+            }
+            Iterator iterator = detalleVenta.iterator();
+            while (iterator.hasNext()) {
+            DetalleNotaVenta detalle = iterator.next()
 
-     NotaVenta notaVenta =  notaVentaService.obtenerNotaVentaPorTicket(idFactura)
-     Order order = Order.toOrder(notaVenta)
-     List<DetalleNotaVenta> detalleVenta = detalleNotaVentaService.listarDetallesNotaVentaPorIdFactura(notaVenta?.id)
-     String surte
-      Iterator iterator = detalleVenta.iterator();
-      while (iterator.hasNext()) {
-
-          DetalleNotaVenta detalle = iterator.next()
-
-          if(detalle?.surte != null){
-              surte = detalle?.surte
+            Articulo articulo = articuloService.obtenerArticulo(detalle?.idArticulo)
+                for(int a=0;a<genericosNoEntregables.size();a++){
+                    if(articulo?.idGenerico.trim().equals(genericosNoEntregables.get(a).trim())){
+                    entregaBo = false
+                    }
+                }
+            }
+      }
+      if((order?.total - order?.paid) == 0 && entregaBo == true){
+          Boolean fechaC = true
+          if(entregaInstante == false){
+            SimpleDateFormat fecha = new SimpleDateFormat("dd/MMMM/yyyy")
+            String fechaVenta = fecha.format(notaVenta?.fechaHoraFactura).toString()
+            String ahora = fecha.format(new Date())
+                if(fechaVenta.equals(ahora)){
+                    fechaC=false
+                }
+          }
+          if(fechaC == true){
+          OrderController.insertaEntrega(order,entregaInstante)
+          }else{
+              JOptionPane.showMessageDialog(null,"No se puede entregar trabajo hoy mismo")
+          }
+      }else{
+          if(entregaInstante == false){
+          JOptionPane.showMessageDialog(null,"No se puede entregar trabajo, aun tiene adeudo")
           }
       }
-         println('generico: ' + notaVenta?.codigo_lente )
-      println('surte: ' + surte)
-      if(notaVenta?.codigo_lente == null && !surte.equals('P')){
-        String genericoPB = notaVenta?.codigo_lente.trim().substring(1,2)
 
-            SimpleDateFormat fecha = new SimpleDateFormat("dd/MMMM/yyyy")
-            String fechaVenta = fecha.format(notaVenta?.fechaHoraFactura)
-            String ahora = fecha.format(new Date())
-            println('Fecha venta: ' + fechaVenta)
-
-            if(!fechaVenta.equals(ahora)){
-                println('Fecha venta es diferente de ahora')
+      /*
 
 
 
-                if((order?.total - order?.paid) == 0){
 
 
-                    Jb trabajo = OrderController.entraJb(order?.bill)
-                    if(trabajo != null){
+
+        Boolean  entregaBo = false
+
+        String surte
+        Articulo articulo
+        Iterator iterator = detalleVenta.iterator();
+        while (iterator.hasNext()) {
+
+            DetalleNotaVenta detalle = iterator.next()
+
+            if(detalle?.surte != null){
+                surte = detalle?.surte
+            }
+
+        }
+        println(articulo?.idGenerico)
+           println('generico: ' + notaVenta?.codigo_lente )
+        println('surte: ' + surte)
+        if(notaVenta?.codigo_lente == null && !surte.equals('P') && entregaBo == true){
 
 
-                        if(trabajo?.estado.trim().equals('RS')){
+            //String genericoPB = notaVenta?.codigo_lente.trim().substring(1,2)
 
-                                OrderController.insertaEntrega(order,trabajo)
-                                //insercion despues de entregar
-                                JOptionPane.showMessageDialog(null,"datos guardados correctamente")
 
-                        }else{
-                            JOptionPane.showMessageDialog(null,"Estado no es igual a RS")
-                        }
+              SimpleDateFormat fecha = new SimpleDateFormat("dd/MMMM/yyyy")
+              String fechaVenta = fecha.format(notaVenta?.fechaHoraFactura).toString()
+              String ahora = fecha.format(new Date())
+              println('Fecha venta: ' + fechaVenta)
 
-                    }else{
-                        JOptionPane.showMessageDialog(null,"No hay registro en Jb")
+
+            if(!fechaVenta.equals(ahora) && jb==true){
+                  println('Fecha venta es diferente de ahora')
+                  if((order?.total - order?.paid) == 0){
+
+
+                      Jb trabajo = OrderController.entraJb(order?.bill)
+                      if(trabajo != null){
+
+
+                          if(trabajo?.estado.trim().equals('RS')){
+
+                                  OrderController.insertaEntrega(order,trabajo)
+                                  //insercion despues de entregar
+                                  JOptionPane.showMessageDialog(null,"datos guardados correctamente")
+
+                          }else{
+                              JOptionPane.showMessageDialog(null,"Estado no es igual a RS")
+                          }
+
+                      }else{
+                          JOptionPane.showMessageDialog(null,"No hay registro en Jb")
+                      }
+                  }else{
+                      JOptionPane.showMessageDialog(null,"Existe adeudo")
+                  }
+
+
+
+              } else{
+                if(jb==true){
+                  JOptionPane.showMessageDialog(null,"fecha igual a ahora")
+                  }
+                entregaInstante(order)
+              }
+
+      }else{
+          JOptionPane.showMessageDialog(null,"Generico B o surte P")
+
+       }
+       */
+}
+
+    static void creaJb(String idFactura,Boolean cSaldo){
+
+        NotaVenta notaVenta =  notaVentaService.obtenerNotaVentaPorTicket(idFactura)
+        List<DetalleNotaVenta> detalleVenta = detalleNotaVentaService.listarDetallesNotaVentaPorIdFactura(notaVenta?.id)
+        Boolean creaJB = false
+        String articulos = ''
+        String surte = ''
+        String tipoJb = ''
+        Boolean genericoD = false
+        Iterator iterator = detalleVenta.iterator();
+        while (iterator.hasNext()) {
+
+            DetalleNotaVenta detalle = iterator.next()
+            Articulo articulo = articuloService.obtenerArticulo(detalle?.idArticulo)
+
+            articulos = articulos + articulo?.articulo + ', '
+
+            if(articulo?.idGenerico.trim().equals('A')||articulo?.idGenerico.trim().equals('E')){
+                surte = detalle?.surte
+            }
+
+            if(articulo?.idGenerico.trim().equals('D')){
+               genericoD = true
+            }
+
+            if(articulo?.idGenerico.trim().equals('B')||articulo?.idGenerico.trim().equals('C')||articulo?.idGenerico.trim().equals('H')){
+               creaJB = true
+             if(articulo?.idGenerico.trim().equals('C')||articulo?.idGenerico.trim().equals('H')){
+                tipoJb = 'LC'
+             }else if(articulo?.idGenerico.trim().equals('B')){
+                 tipoJb = 'LAB'
+             }
+
+            }
+
+            if(detalle?.surte.trim().equals('P')){
+                creaJB = true
+            }
+
+        }
+
+         TmpServicios tmpServicios =tmpServiciosRepository.findbyIdFactura(notaVenta?.id)
+         if(tmpServicios?.id_serv != null){
+             creaJB = true
+         }
+
+        if(creaJB == true){
+            Jb jb = jbRepository.findOne(notaVenta?.factura)
+            println('JB: ' + jb?.rx)
+
+            Jb nuevoJb = new Jb()
+            JbTrack nuevojbTrack = new JbTrack()
+
+            if(jb?.rx == null){
+
+                nuevoJb?.rx = notaVenta?.factura
+                nuevoJb?.estado = 'PE'
+                nuevoJb?.id_cliente = notaVenta?.idCliente
+                nuevoJb?.emp_atendio = notaVenta?.empleado?.id
+                nuevoJb?.fecha_promesa = notaVenta?.fechaPrometida
+                nuevoJb?.num_llamada = 0
+                nuevoJb?.material = articulos
+                nuevoJb?.surte = surte
+                nuevoJb?.saldo =  notaVenta.ventaNeta - notaVenta?.sumaPagos
+                nuevoJb?.jb_tipo = tipoJb
+                nuevoJb?.cliente = notaVenta?.cliente?.nombreCompleto
+                nuevoJb?.fecha_venta = notaVenta?.fechaHoraFactura
+
+
+
+
+                nuevojbTrack?.rx = notaVenta?.factura
+                nuevojbTrack?.estado = 'PE'
+                nuevojbTrack?.emp = notaVenta?.empleado?.id
+                nuevojbTrack?.obs = articulos
+
+                println('LC: ' + nuevoJb?.jb_tipo)
+                 println('LC: ' + nuevoJb?.jb_tipo.trim().equals('LC'))
+                if(nuevoJb?.jb_tipo.trim().equals('LC')){
+
+                   nuevoJb?.estado ='EP'
+                   nuevoJb?.id_viaje = '8'
+
+                   JbTrack nuevoJbTrack2 = new JbTrack()
+                    nuevoJbTrack2?.rx = notaVenta?.factura
+                    nuevoJbTrack2?.estado = 'EP'
+                    nuevoJbTrack2?.obs = '8'
+                    nuevoJbTrack2?.id_viaje = '8'
+                    nuevoJbTrack2?.emp = notaVenta?.empleado?.id
+                    nuevoJbTrack2?.fecha = new Date()
+                    nuevoJbTrack2?.id_mod = '0'
+                    println('LC: ' + nuevoJbTrack2?.id_viaje)
+                    nuevoJbTrack2 = jbTrackService.saveJbTrack(nuevoJbTrack2)
+
+                }
+
+                Parametro convenioNomina = parametroRepository.findOne(TipoParametro.CONV_NOMINA.value)
+
+
+                String s = convenioNomina?.valor
+                StringTokenizer st = new StringTokenizer(s.trim(), ",")
+                Iterator its = st.iterator()
+                Boolean convenio = false
+                while (its.hasNext())
+                {
+                    if(its.next().toString().equals(notaVenta?.idConvenio)){
+                      convenio = true
                     }
-                }else{
-                    JOptionPane.showMessageDialog(null,"Existe adeudo")
+                }
+
+                if(convenio == true){
+                  nuevoJb?.estado = 'RTN'
+                    if(genericoD == true){
+                        nuevoJb?.jb_tipo =  'EMA'
+                    }else{
+                        nuevoJb?.jb_tipo =  'EMP'
+                    }
+
                 }
 
 
 
-            } else{
-                JOptionPane.showMessageDialog(null,"fecha igual a ahora")
             }
 
+            if(cSaldo == true){
+               nuevoJb?.estado = 'RTN'
+                nuevojbTrack?.estado = 'RTN'
+                nuevojbTrack?.obs = 'Factura con Saldo'
+            }
 
+            nuevoJb?.fecha_mod = new Date()
+            nuevoJb?.id_mod = '0'
+            nuevojbTrack?.fecha = new Date()
+            nuevojbTrack?.id_mod = '0'
+            nuevoJb = jbRepository.saveAndFlush(nuevoJb)
+           nuevojbTrack = jbTrackService.saveJbTrack(nuevojbTrack)
 
+        }
 
-
-    }else{
-        JOptionPane.showMessageDialog(null,"Generico B o surte P")
     }
-}
 
 }

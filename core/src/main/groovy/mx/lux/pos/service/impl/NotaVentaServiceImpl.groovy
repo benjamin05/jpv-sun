@@ -367,8 +367,8 @@ class NotaVentaServiceImpl implements NotaVentaService {
         notaVenta.tipoDescuento = 'N'
         notaVenta.tipoEntrega = 'S'
         notaVenta.setfExpideFactura( true )
-        notaVenta.fechaEntrega = notaVenta.fechaEntrega ?: fecha
-        notaVenta.horaEntrega = notaVenta.horaEntrega ?: fecha
+        //notaVenta.fechaEntrega = notaVenta.fechaEntrega ?: fecha
+        //notaVenta.horaEntrega = notaVenta.horaEntrega ?: fecha
         notaVenta.fechaPrometida = notaVenta.fechaPrometida ?: fecha
         return registrarNotaVenta( notaVenta )
       } else {
@@ -502,9 +502,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
   @Transactional
   void saveOrder( NotaVenta pNotaVenta ) {
     if ( pNotaVenta != null ) {
-        println(pNotaVenta?.empEntrego)
-        println(pNotaVenta?.fechaEntrega)
-        println(pNotaVenta?.horaEntrega)
+
       notaVentaRepository.saveAndFlush( pNotaVenta )
     }
   }

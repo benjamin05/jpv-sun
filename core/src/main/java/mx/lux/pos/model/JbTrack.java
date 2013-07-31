@@ -1,10 +1,7 @@
 package mx.lux.pos.model;
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,6 +12,11 @@ public class JbTrack implements Serializable {
 
 
     @Id
+    @GeneratedValue( strategy = GenerationType.AUTO, generator = "jbTrack_id_seq" )
+    @SequenceGenerator( name = "jbTrack_id_seq", sequenceName = "jbTrack_id_seq" )
+    @Column(name="id_jbtrack")
+    private Integer id_jbtrack;
+
     @Column( name = "rx" )
     private String rx;
 
@@ -91,5 +93,13 @@ public class JbTrack implements Serializable {
 
     public void setId_mod(String id_mod) {
         this.id_mod = id_mod;
+    }
+
+    public Integer getId_jbtrack() {
+        return id_jbtrack;
+    }
+
+    public void setId_jbtrack(Integer id_jbtrack) {
+        this.id_jbtrack = id_jbtrack;
     }
 }
