@@ -85,9 +85,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
 
 
-    OrderPanel(User user) {
+    OrderPanel() {
 
-        empleado = user
+
         sb = new SwingBuilder()
         order = new Order()
         dioptra = new Dioptra()
@@ -431,11 +431,14 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         if ( StringUtils.isNotBlank( input ) ) {
             sb.doOutside {
                 List<Item> results = ItemController.findItemsByQuery( input )
+
                 if ( ( results.size() == 0 ) && ( input.length() > 6 ) ) {
                     results = ItemController.findItemsByQuery( input.substring( 0, 6 ) )
                 }
+
                 if ( results?.any() ) {
                     Item item =   new Item()
+                    println('Items: '+ results?.size())
                     if ( results.size() == 1 ) {
 
                        item = results.first()
@@ -446,7 +449,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                             armazonString = item?.name
                         }
 
-                    } else {
+                    } else /*else if ( results.size() == 1 ) {*/ {
                         SuggestedItemsDialog dialog = new SuggestedItemsDialog( itemSearch, input, results )
                         dialog.show()
                          item = dialog.item
@@ -461,7 +464,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                             }
                         }
                     }
-
+                    println('Items: '+ results?.size())
                         String indexDioptra = item?.indexDiotra
                         if(!indexDioptra.equals(null)){
                     Dioptra nuevoDioptra = OrderController.generaDioptra(item?.indexDiotra)
@@ -588,7 +591,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void validarVentaNegativa( Item item, Customer customer) {
-        order.setEmployee(empleado.username)
+
+        User u = Session.get( SessionItem.USER ) as User
+        order.setEmployee(u.username)
 
         if ( item.stock > 0 ) {
             order = OrderController.addItemToOrder( order, item )

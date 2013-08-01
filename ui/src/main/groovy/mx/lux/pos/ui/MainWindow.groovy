@@ -438,7 +438,7 @@ class MainWindow extends JFrame implements KeyListener {
     private def doForwardToDefaultPanel = {
         User user = Session.get( SessionItem.USER ) as User
         Branch branch = Session.get( SessionItem.BRANCH ) as Branch
-        orderPanel = new OrderPanel(user)
+        orderPanel = new OrderPanel()
         mainPanel.add( 'orderPanel', orderPanel )
         mainPanel.layout.show( mainPanel, 'orderPanel' )
 

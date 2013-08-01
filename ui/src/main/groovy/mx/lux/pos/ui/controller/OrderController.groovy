@@ -837,86 +837,10 @@ class OrderController {
           }
       }else{
           if(entregaInstante == false){
-          JOptionPane.showMessageDialog(null,"No se puede entregar trabajo, aun tiene adeudo")
+          JOptionPane.showMessageDialog(null,"La nota tiene saldo pendiente por cubrir. No se puede entregar trabajo")
           }
       }
 
-      /*
-
-
-
-
-
-
-        Boolean  entregaBo = false
-
-        String surte
-        Articulo articulo
-        Iterator iterator = detalleVenta.iterator();
-        while (iterator.hasNext()) {
-
-            DetalleNotaVenta detalle = iterator.next()
-
-            if(detalle?.surte != null){
-                surte = detalle?.surte
-            }
-
-        }
-        println(articulo?.idGenerico)
-           println('generico: ' + notaVenta?.codigo_lente )
-        println('surte: ' + surte)
-        if(notaVenta?.codigo_lente == null && !surte.equals('P') && entregaBo == true){
-
-
-            //String genericoPB = notaVenta?.codigo_lente.trim().substring(1,2)
-
-
-              SimpleDateFormat fecha = new SimpleDateFormat("dd/MMMM/yyyy")
-              String fechaVenta = fecha.format(notaVenta?.fechaHoraFactura).toString()
-              String ahora = fecha.format(new Date())
-              println('Fecha venta: ' + fechaVenta)
-
-
-            if(!fechaVenta.equals(ahora) && jb==true){
-                  println('Fecha venta es diferente de ahora')
-                  if((order?.total - order?.paid) == 0){
-
-
-                      Jb trabajo = OrderController.entraJb(order?.bill)
-                      if(trabajo != null){
-
-
-                          if(trabajo?.estado.trim().equals('RS')){
-
-                                  OrderController.insertaEntrega(order,trabajo)
-                                  //insercion despues de entregar
-                                  JOptionPane.showMessageDialog(null,"datos guardados correctamente")
-
-                          }else{
-                              JOptionPane.showMessageDialog(null,"Estado no es igual a RS")
-                          }
-
-                      }else{
-                          JOptionPane.showMessageDialog(null,"No hay registro en Jb")
-                      }
-                  }else{
-                      JOptionPane.showMessageDialog(null,"Existe adeudo")
-                  }
-
-
-
-              } else{
-                if(jb==true){
-                  JOptionPane.showMessageDialog(null,"fecha igual a ahora")
-                  }
-                entregaInstante(order)
-              }
-
-      }else{
-          JOptionPane.showMessageDialog(null,"Generico B o surte P")
-
-       }
-       */
 }
 
     static void creaJb(String idFactura,Boolean cSaldo){

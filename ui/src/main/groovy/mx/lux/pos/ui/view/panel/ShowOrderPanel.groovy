@@ -291,14 +291,14 @@ class ShowOrderPanel extends JPanel {
                 if(trabajo?.estado.trim().equals('RS')){
 
                         OrderController.insertaEntrega(order,false)
-                        JOptionPane.showMessageDialog(null,"datos guardados correctamente")
+                        //JOptionPane.showMessageDialog(null,"datos guardados correctamente")
 
                 } else{
                      Integer entregar = JOptionPane.showConfirmDialog(null,"¿Desea entregar trabajo?", "entrega", JOptionPane.YES_NO_OPTION)
 
                      if(entregar == 0){
                     OrderController.insertaEntrega(order,false)
-                    JOptionPane.showMessageDialog(null,"datos guardados correctamente")
+                    //JOptionPane.showMessageDialog(null,"datos guardados correctamente")
                      }
                 }
 
@@ -335,5 +335,4 @@ class ShowOrderPanel extends JPanel {
     }
 
 }
-
 

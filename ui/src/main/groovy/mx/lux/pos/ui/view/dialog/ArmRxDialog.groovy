@@ -19,6 +19,7 @@ class ArmRxDialog extends JDialog {
     private static ButtonGroup material
     private static ButtonGroup acabado
     private static JTextField forma = new JTextField()
+    private static JLabel lforma = new JLabel()
     private static JRadioButton pasta
     private static JRadioButton opacado
     private static JRadioButton metal
@@ -58,16 +59,42 @@ class ArmRxDialog extends JDialog {
 
                    pasta = radioButton(text:"Pasta", buttonGroup:material)
                      pasta.setSelected(true)
+                     pasta.addActionListener(new ActionListener() {
+                         public void actionPerformed(ActionEvent e) {
+
+                             forma?.visible = false
+                             lforma?.visible = false
+
+                         }
+                     })
                      pasta.setActionCommand('Pasta')
                      opacado =  radioButton(text:"Opacado", buttonGroup:acabado)
                       opacado.setSelected(true)
                       opacado.setActionCommand("Opacado")
                     metal = radioButton(text:"Metal", buttonGroup:material)
                      metal.setActionCommand('Metal')
-                    pulido = radioButton(text:"Pulido", buttonGroup:acabado)
+                     metal.addActionListener(new ActionListener() {
+                         public void actionPerformed(ActionEvent e) {
+
+                             forma?.visible = false
+                             lforma?.visible = false
+
+                         }
+                     })
+
+                     pulido = radioButton(text:"Pulido", buttonGroup:acabado)
                     pulido.setActionCommand('Pulido')
                     nylon = radioButton(text:"Nylon", buttonGroup:material)
                     nylon.setActionCommand('Nylon')
+                     nylon.addActionListener(new ActionListener() {
+                         public void actionPerformed(ActionEvent e) {
+
+                             forma?.visible = false
+                             lforma?.visible = false
+
+                         }
+                     })
+
                      label()
 
                     aire = radioButton(text:"Aire", buttonGroup:material)
@@ -76,12 +103,15 @@ class ArmRxDialog extends JDialog {
                      aire.addActionListener(new ActionListener() {
                          public void actionPerformed(ActionEvent e) {
                              txtForma(e)
+                             forma?.visible = true
+                             lforma?.visible = true
+
                          }
                      })
                      label()
 
-                     label(text: 'Forma')
-                    forma = textField(minimumSize: [70, 20])
+                     lforma = label(text: 'Forma',visible:false)
+                    forma = textField(minimumSize: [70, 20],visible:false)
                      button(text: 'Cancelar',actionPerformed: {doCancel()})
                      button(text: 'Aceptar',actionPerformed: {doSave()})
 

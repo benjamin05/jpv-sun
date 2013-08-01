@@ -522,7 +522,7 @@ class TicketServiceImpl implements TicketService {
           nombre_ticket: 'ticket-venta',
           nota_venta: notaVenta,
           compania: companyAddress,
-          despliega_atencion_a_clientes: companyAddress.hasCustomerService(),
+          despliega_atencion_a_clientes: true,//companyAddress.hasCustomerService(),
           venta_neta: formatter.format( ventaNeta ),
           subtotal: formatter.format( subtotal ),
           descuento: formatter.format( subtotal.subtract( ventaNeta ) ),
