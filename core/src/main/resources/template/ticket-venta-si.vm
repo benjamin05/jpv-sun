@@ -39,6 +39,11 @@ ${COLUMNAS}
 #ALINEAR_IZQUIERDA()#SET_STYLE(${FUENTE_B} 0 0 0 0)#foreach( $comentario in $comentarios )${comentario}${LF}#end${CR}
 #ALINEAR_CENTRO()#SET_STYLE(${FUENTE_B} 0 0 0 0)Pago hecho en una sola exhibicion
 #LINEA_SEPARACION_SIMPLE()
+#ALINEAR_CENTRO()#SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 0)Fecha de Entrega: ${fecha_entrega}${CR}
+#ALINEAR_CENTRO()#SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 0)a partir de las  14:00 hrs. ${CR}${LF}
+#ALINEAR_CENTRO()#SET_STYLE(${FUENTE_B} 0 0 0 0)"Despues de 30 dias no respondemos por${CR}
+#ALINEAR_CENTRO()#SET_STYLE(${FUENTE_B} 0 0 0 0)trabajos no recibidos"${CR}
+#LINEA_SEPARACION_SIMPLE()
 #ALINEAR_CENTRO()#SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 0)IMPORTANTE
 #SET_STYLE(${FUENTE_B} 0 0 0 0)Ley Federal de Proteccion de Datos Personales
 #SET_STYLE(${FUENTE_B} 0 0 0 0)en Posesion de los Particulares

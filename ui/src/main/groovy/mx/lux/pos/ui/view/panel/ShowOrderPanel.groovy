@@ -304,6 +304,7 @@ class ShowOrderPanel extends JPanel {
 
             }
         }
+
         source.enabled = true
     }
 
@@ -326,12 +327,13 @@ class ShowOrderPanel extends JPanel {
         }
 
     private void updateOrder( String pOrderId ) {
-        Order tmp = OrderController.getOrder( pOrderId )
-        if ( tmp?.id ) {
-            order = tmp
-
+        //Order tmp = OrderController.getOrder( pOrderId )
+        //if ( tmp?.id ) {
+          //  order = tmp
+            navigatorPanel = new JPanel()
+            navigatorPanel.add( new OrderNavigatorPanel( order, {doBindings()} ) )
             doBindings()
-        }
+        //}
     }
 
 }
