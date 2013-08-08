@@ -9,6 +9,8 @@ import mx.lux.pos.repository.TmpServiciosRepository
 import mx.lux.pos.service.business.Registry
 import mx.lux.pos.ui.MainWindow
 import mx.lux.pos.ui.resources.ServiceManager
+import mx.lux.pos.ui.view.dialog.ContactClientDialog
+import mx.lux.pos.ui.view.dialog.ContactDialog
 import mx.lux.pos.ui.view.dialog.EntregaTrabajoDialog
 import mx.lux.pos.ui.view.dialog.ManualPriceDialog
 import mx.lux.pos.ui.view.panel.OrderPanel
@@ -529,10 +531,10 @@ class OrderController {
       }
   }
 
-  static void printRx(String orderId){
+  static void printRx(String orderId,Boolean reimpresion){
       log.info( "imprimiendo receta id: " )
       if (StringUtils.isNotBlank( orderId ) ) {
-          ticketService.imprimeRx(orderId)
+          ticketService.imprimeRx(orderId,reimpresion)
       } else {
           log.warn( "no se imprime receta, parametros invalidos" )
       }
@@ -798,6 +800,7 @@ class OrderController {
       Order order = Order.toOrder(notaVenta)
       List<DetalleNotaVenta> detalleVenta = detalleNotaVentaService.listarDetallesNotaVentaPorIdFactura(notaVenta?.id)
       Boolean  entregaBo = true
+      Boolean surte = false
       if(entregaInstante == true){
             Parametro genericoNoEntrega = parametroRepository.findOne( TipoParametro.GENERICOS_NO_ETREGABLES.value )
             ArrayList<String> genericosNoEntregables = new ArrayList<String>()
@@ -818,8 +821,37 @@ class OrderController {
                     entregaBo = false
                     }
                 }
+             if( detalle?.surte.equals('P') ){
+                 surte = true
+             }
+
+
             }
       }
+
+
+      //*Contacto
+      //if(surte == true){
+        //  TmpServicios tmpServicios = tmpServiciosRepository.findbyIdFactura(notaVenta?.id)
+
+         // if(tmpServicios?.id_serv != null){
+
+              List<FormaContacto> result = ContactController.findByIdCliente(notaVenta?.idCliente)
+             if (  result.size() == 0 )     {
+
+                ContactDialog contacto = new ContactDialog(notaVenta)
+              contacto.show()
+
+             } else{
+                ContactClientDialog contactoCliente = new ContactClientDialog()
+                 contactoCliente.show()
+             }
+
+        //  }
+     // }
+      //*Contacto
+
+
       if((order?.total - order?.paid) == 0 && entregaBo == true){
           Boolean fechaC = true
           if(entregaInstante == false){
@@ -830,6 +862,7 @@ class OrderController {
                     fechaC=false
                 }
           }
+
           if(fechaC == true){
           OrderController.insertaEntrega(order,entregaInstante)
           }else{

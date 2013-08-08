@@ -19,7 +19,7 @@ ${COLUMNAS}
 #SEPARACION()
 #TITULO_RECETA(${codigoBarrasAnchas.factura})
 #SEPARACION()${LF}
-#ALINEAR_IZQUIERDA()#INICIO_ESTILO(${FUENTE_B} 0 0 0 0)SUCURSAL: ${infoTicket.sucursal}${COL_7}${infoTicket.fechaActual}#FIN_ESTILO()${CR}
+#ALINEAR_IZQUIERDA()#INICIO_ESTILO(${FUENTE_B} 0 0 0 0)SUCURSAL: ${infoTicket.sucursal}      ${infoTicket.fechaActual}#FIN_ESTILO()${CR}
 #ALINEAR_IZQUIERDA()#INICIO_ESTILO(${FUENTE_B} 0 0 0 0)FECHA SOLICITUD: ${infoTicket.fechaSolicitud} ${COL_7}${infoTicket.horaActual}#FIN_ESTILO()${CR}
 #ALINEAR_IZQUIERDA()#INICIO_ESTILO(${FUENTE_B} 0 0 0 0)FECHA DE ENTREGA PROMETIDA: ${infoTicket.fechaPrometida}${COL_7}SOI ${infoTicket.soi}#FIN_ESTILO()${CR}
 #ALINEAR_IZQUIERDA()#INICIO_ESTILO(${FUENTE_B} 0 0 0 0)RECETO: ${infoTicket.receto}${COL_7}#FIN_ESTILO()${CR}

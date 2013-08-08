@@ -8,7 +8,7 @@ interface TicketService {
 
     void imprimePago(String orderId, Integer pagoId)
 
-    void imprimeRx(String orderId)
+    void imprimeRx(String orderId, Boolean reimp)
 
   void imprimeVenta( String idNotaVenta, Boolean pNewOrder )
 

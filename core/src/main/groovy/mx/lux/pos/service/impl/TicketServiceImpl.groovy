@@ -271,23 +271,35 @@ class TicketServiceImpl implements TicketService {
   }
 
   @Override
- void imprimeRx(String orderId){
+ void imprimeRx(String orderId, Boolean reimp){
       NotaVenta notaVenta = notaVentaService.obtenerNotaVenta( orderId )
       if ( StringUtils.isNotBlank( notaVenta?.id ) ) {
+          String numero = ''
+          BigInteger primerTicket = 0
+          if(reimp == true){
                 Reimpresion reimpresion  =  new Reimpresion('Rx',notaVenta?.id, new Date(),notaVenta?.empleado?.id,notaVenta?.factura )
                 reimpresionRepository.saveAndFlush(reimpresion)
-                BigInteger primerTicket = reimpresionRepository.noReimpresiones(notaVenta?.factura).toInteger()
+                 primerTicket = reimpresionRepository.noReimpresiones(notaVenta?.factura).toInteger()
 
-                String numero = ''
+
           if(primerTicket.toInteger() > 1){
 
                 numero = 'COPIA ' + (primerTicket.toInteger() - 1).toString()
+
           }
+
+          }else{
+              numero = ''
+          }
+            String pTicket = ''
+             if( primerTicket != 0){
+                 pTicket = primerTicket.toString()
+              }
 
         def idTicket = [
                 sucursal: notaVenta?.sucursal?.id.toString(),
                 factura: notaVenta?.factura,
-                id : notaVenta?.sucursal?.id.toString() + notaVenta?.factura + primerTicket.toString(),
+                id : notaVenta?.sucursal?.id.toString() + notaVenta?.factura + pTicket,
                 noCopia: numero
         ]
 
@@ -362,7 +374,9 @@ class TicketServiceImpl implements TicketService {
                  if(notaVenta?.fArmazonCli == true){
                      armazonCli = 'ARMAZON DEL CLIENTE'
                  }else{
+                     if(artArmazon?.articulo != null){
                     armazonCli = artArmazon?.articulo?.articulo +' '+ artArmazon?.articulo?.codigoColor + ' [' + artArmazon?.surte + ']'
+                     }
                  }
 
                   String usoLente = rx?.sUsoAnteojos.trim()
@@ -419,7 +433,7 @@ class TicketServiceImpl implements TicketService {
                  ventaPino:''
           ]
 
-
+          println('IdTicket'+idTicket?.id)
 
         def items = [
               nombre_ticket: 'ticket-rx',

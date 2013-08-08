@@ -1,5 +1,6 @@
 package mx.lux.pos.repository.impl
 
+import mx.lux.pos.model.QTmpServicios
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import mx.lux.pos.repository.*
@@ -43,6 +44,8 @@ class RepositoryFactory {
   private static JbTrackRepository jbTrack
   private static JbLlamadaRepository jbLlamada
   private static TmpServiciosRepository tmpServiciosRepository
+  private static TipoContactoRepository  tipoContactoRepository
+  private static FormaContactoRepository formaContactoRepository
 
   @Autowired
   RepositoryFactory( ArticuloRepository pArticuloRepository,
@@ -79,7 +82,9 @@ class RepositoryFactory {
           JbRepository pJbRepository,
           JbTrackRepository pJbTrackRepository,
           JbLlamadaRepository pJbLlamadaRepository,
-          TmpServiciosRepository tmpServiciosRepository
+          TmpServiciosRepository pTmpServiciosRepository,
+          TipoContactoRepository pTipoContactoRepository,
+          FormaContactoRepository pFormaContactoRepository
   ) {
     customerCatalog = pClienteRepository
     discounts = pDescuentoRepository
@@ -116,8 +121,11 @@ class RepositoryFactory {
     jb = pJbRepository
     jbTrack = pJbTrackRepository
     jbLlamada = pJbLlamadaRepository
-    tmpServiciosRepository =tmpServiciosRepository
+    tmpServiciosRepository = pTmpServiciosRepository
+    tipoContactoRepository = pTipoContactoRepository
+      formaContactoRepository  = pFormaContactoRepository
   }
+
 
   static ClienteRepository getCustomerCatalog( ) {
     return customerCatalog
@@ -264,4 +272,23 @@ class RepositoryFactory {
         return tmpServiciosRepository
     }
 
+    static JbRepository getJb() {
+        return jb
+    }
+
+    static JbTrackRepository getJbTrack() {
+        return jbTrack
+    }
+
+    static JbLlamadaRepository getJbLlamada() {
+        return jbLlamada
+    }
+
+    static TipoContactoRepository getTipoContactoRepository() {
+        return tipoContactoRepository
+    }
+
+    static FormaContactoRepository getFormaContactoRepository() {
+        return formaContactoRepository
+    }
 }

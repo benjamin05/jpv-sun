@@ -33,6 +33,7 @@ class ShowOrderPanel extends JPanel {
   private Order order
   private JButton customerName
   private JButton printButton
+    private JButton paymentButton
   private JButton cancelButton
   private JButton returnButton
   private JButton printReturnButton
@@ -54,6 +55,7 @@ class ShowOrderPanel extends JPanel {
   private List<IPromotion> lstPromociones = new ArrayList<IPromotion>()
   private JScrollPane pago
   private Pago pagoN
+
 
   ShowOrderPanel( ) {
     sb = new SwingBuilder()
@@ -166,8 +168,9 @@ class ShowOrderPanel extends JPanel {
         cancelButton = button( 'Cancelar', actionPerformed: doCancel, constraints: 'hidemode 3' )
         returnButton = button( 'Devoluci\u00f3n', actionPerformed: doRefund, constraints: 'hidemode 3' )
         printReturnButton = button( 'Imprimir Cancelaci\u00f3n', actionPerformed: doPrintRefund, constraints: 'hidemode 3' )
-      //  printButton = button( 'Imprimir', actionPerformed: doPrint )
-          printButton = button( 'Pagar', actionPerformed: doShowPayment )
+        printButton = button( 'Imprimir', actionPerformed: doPrint,visible: false )
+          paymentButton = button( 'Pagar', actionPerformed: doShowPayment, visible: true  )
+
       }
     }
     navigatorPanel.add( new OrderNavigatorPanel( order, {doBindings()} ) )
@@ -202,6 +205,14 @@ class ShowOrderPanel extends JPanel {
     dealsModel.fireTableDataChanged()
     itemsModel.fireTableDataChanged()
     paymentsModel.fireTableDataChanged()
+      if((order?.total - order?.paid) == 0){
+          printButton?.setVisible(true)
+          paymentButton?.setVisible(false)
+      } else{
+          printButton?.setVisible(false)
+          paymentButton?.setVisible(true)
+      }
+
   }
 
   private def dateConverter = { Date val ->
@@ -303,6 +314,8 @@ class ShowOrderPanel extends JPanel {
                 }
 
             }
+            printButton?.setVisible(true)
+            paymentButton?.setVisible(false)
         }
 
         source.enabled = true

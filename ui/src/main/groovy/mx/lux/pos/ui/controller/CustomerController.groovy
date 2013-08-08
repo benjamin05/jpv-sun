@@ -37,6 +37,7 @@ class CustomerController {
     private static SucursalService sucursalService
     private static PaisesService paisesService
     private static NotaVentaService notaService
+    private static ContactoService contactoService
 
     @Autowired
     public CustomerController(
@@ -50,7 +51,8 @@ class CustomerController {
             ExamenService examenService,
             SucursalService sucursalService,
             PaisesService paisesService,
-            NotaVentaService notaService
+            NotaVentaService notaService,
+            ContactoService contactoService
     ) {
         this.clienteService = clienteService
         this.estadoService = estadoService
@@ -63,6 +65,7 @@ class CustomerController {
         this.sucursalService = sucursalService
         this.paisesService = paisesService
         this.notaService = notaService
+        this.contactoService = contactoService
     }
 
 
@@ -586,5 +589,14 @@ class CustomerController {
 
     static void saveCountries( String pais ){
         paisesService.guardarPais( pais )
+    }
+
+
+    static List<String> findAllContactTypes( ) {
+        log.debug( "obteniendo lista de nombres de los estados" )
+        def results = contactoService.obtenerTiposContacto()
+        results.collect {
+            it.descripcion
+        }
     }
 }

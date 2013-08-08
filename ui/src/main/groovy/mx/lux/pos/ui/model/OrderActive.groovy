@@ -9,8 +9,7 @@ class OrderActive implements Comparable<OrderActive> {
 
   private NotaVenta order
   private Cliente customer
-
-  OrderActive(NotaVenta pOrder, Cliente pCustomer) {
+                                           OrderActive(NotaVenta pOrder, Cliente pCustomer) {
     this.order = pOrder
     this.customer = pCustomer
   }

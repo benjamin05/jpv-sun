@@ -737,6 +737,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
          Boolean validOrder = isValidOrder()
         if(artCount != 0){
 
+
+
+
+
             Parametro diaIntervalo =  Registry.find(TipoParametro.DIA_PRO)
 
             Date diaPrometido = new Date() + diaIntervalo?.valor.toInteger()
@@ -815,7 +819,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
         println('Ticket: '+ newOrder?.ticket.trim()   )
 
-        OrderController.validaEntrega(newOrder?.ticket.trim(),true)
+
 
         println('Saldo: ' + newOrder?.due)
         Boolean cSaldo = false
@@ -823,14 +827,14 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
        //   cSaldo = true
        // }
         OrderController.creaJb(newOrder?.ticket.trim(),cSaldo)
-
+        OrderController.validaEntrega(newOrder?.ticket.trim(),true)
 
         if ( StringUtils.isNotBlank( newOrder?.id ) ) {
 
 
-           OrderController.printOrder( newOrder.id )
+           //OrderController.printOrder( newOrder.id )
            if(ticketRx == true){
-            OrderController.printRx(newOrder.id)
+           // OrderController.printRx(newOrder.id, false)
             OrderController.fieldRX(newOrder.id)
 
 

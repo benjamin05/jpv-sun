@@ -147,10 +147,50 @@ class RecetaServiceImpl implements RecetaService {
         acuseRx.intentos = 0
 
         acuseRepository.saveAndFlush(acuseRx)
+        String pTicket = ''
+        if(primerTicket != 0){
+             pTicket = primerTicket.toString()
+        }
+
+        String contenido2 = ''+ notaVenta?.sucursal.id
+        contenido2 = contenido2+'|'+notaVenta?.factura
+        contenido2 = contenido2+'|'+ notaVenta.codigo_lente
+        contenido2 = contenido2+'|'+rx?.odEsfR
+        contenido2 = contenido2+'|'+rx?.odCilR
+        contenido2 = contenido2+'|'+rx?.odEjeR
+        contenido2 = contenido2+'|'+rx?.odAdcR
+        contenido2 = contenido2+'|'+ rx?.odPrismaH
+        contenido2 = contenido2+'|'+ rx?.odPrismaV
+        contenido2 = contenido2+'|'+ rx?.oiEsfR
+        contenido2 = contenido2+'|'+rx?.oiCilR
+        contenido2 = contenido2+'|'+ rx?.oiEjeR
+        contenido2 = contenido2+'|'+  rx?.oiAdcR
+        contenido2 = contenido2+'|'+ rx?.oiPrismaH
+        contenido2 = contenido2+'|'+rx?.oiPrismaV
+        contenido2 = contenido2+'|'+ rx?.diLejosR
+        contenido2 = contenido2+'|'+rx?.diCercaR
+        contenido2 = contenido2+'|'+  rx?.diOd
+        contenido2 = contenido2+'|'+  rx?.diOi
+        contenido2 = contenido2+'|'+ rx?.altOblR
+        contenido2 = contenido2+'|'+ trat
+        contenido2 = contenido2+'|'+ rx?.observacionesR+ ','+ notaVenta?.observacionesNv+',' + rx?.sUsoAnteojos
+        contenido2 = contenido2+'|P'
+        contenido2 = contenido2+'|'+notaVenta?.udf3
+        contenido2 = contenido2+'|'+artArmazon?.articulo?.articulo
+        contenido2 = contenido2+'|'+ rx?.odPrismaV
+        contenido2 = contenido2+'|'+ rx?.oiPrismaV
+        contenido2 = contenido2+'|'
+
+        String cont2 = contenido2
+        contenido2= ''
+        for (int x=0; x < cont2.length(); x++) {
+            if (cont2.charAt(x) != ' ')
+                contenido2 += cont2.charAt(x)
+        }
+        contenido2= contenido2.replace('null','')
 
 
-
-        generaArchivoEnvio(contenido, notaVenta?.sucursal?.id.toString()+ notaVenta?.factura + primerTicket.toString())
+        generaArchivoEnvio(contenido2, notaVenta?.sucursal?.id.toString()+ notaVenta?.factura + pTicket + 'RX')
 
 
     }
@@ -159,6 +199,7 @@ class RecetaServiceImpl implements RecetaService {
     private void generaArchivoEnvio( String contenido, String nombre) throws ServiceException {
            // try {
                 Parametro ruta = Registry.find(TipoParametro.RUTA_POR_ENVIAR)
+
                 println('ruta: '+ruta?.valor)
                 File archivo = new File( ruta?.valor, nombre.toString() )
                 BufferedWriter out = new BufferedWriter( new FileWriter( archivo ) )
