@@ -47,6 +47,7 @@ class FormaContactoServiceImpl extends QueryDslRepositorySupport  implements For
         }
         JPQLQuery query = from( formaContacto )
         query.where( predicates as Predicate[] )
+
         return query.list( formaContacto )
     }
 

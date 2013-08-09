@@ -140,6 +140,11 @@ class ContactDialog extends JDialog {
         }
     }
 
+    void activate( ) {
+
+
+        this.setVisible( true )
+    }
 
 
 }

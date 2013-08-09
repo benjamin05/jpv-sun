@@ -12,16 +12,20 @@ public class TipoContacto implements Serializable {
 
     @Id
     @Column( name = "id_tipo_contacto" )
-    private String id_tipo_contacto;
+    private Integer id_tipo_contacto;
 
     @Column( name = "descripcion" )
     private String descripcion;
 
-    public String getId_tipo_contacto() {
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Integer getId_tipo_contacto() {
         return id_tipo_contacto;
     }
 
-    public void setId_tipo_contacto(String id_tipo_contacto) {
+    public void setId_tipo_contacto(Integer id_tipo_contacto) {
         this.id_tipo_contacto = id_tipo_contacto;
     }
 

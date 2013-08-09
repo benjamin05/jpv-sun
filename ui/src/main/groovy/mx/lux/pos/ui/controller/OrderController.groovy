@@ -831,24 +831,35 @@ class OrderController {
 
 
       //*Contacto
-      //if(surte == true){
-        //  TmpServicios tmpServicios = tmpServiciosRepository.findbyIdFactura(notaVenta?.id)
+      if(surte == true){
+          TmpServicios tmpServicios = tmpServiciosRepository.findbyIdFactura(notaVenta?.id)
 
-         // if(tmpServicios?.id_serv != null){
+          if(tmpServicios?.id_serv != null){
 
-              List<FormaContacto> result = ContactController.findByIdCliente(notaVenta?.idCliente)
+              List<FormaContacto> result = ContactController.findByIdCliente(notaVenta?.idCliente.toInteger())
              if (  result.size() == 0 )     {
 
                 ContactDialog contacto = new ContactDialog(notaVenta)
-              contacto.show()
+              contacto.activate()
 
              } else{
-                ContactClientDialog contactoCliente = new ContactClientDialog()
-                 contactoCliente.show()
+                ContactClientDialog contactoCliente = new ContactClientDialog(notaVenta)
+                 contactoCliente.activate()
+
+                 if ( contactoCliente.formaContactoSeleted != null ) {
+
+                     FormaContacto formaContacto = contactoCliente.formaContactoSeleted
+                     formaContacto?.rx = notaVenta?.factura
+                     formaContacto?.fecha_mod = new Date()
+
+                     ContactController.saveFormaContacto(formaContacto)
+
+
+                 }
              }
 
-        //  }
-     // }
+          }
+      }
       //*Contacto
 
 

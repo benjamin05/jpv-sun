@@ -832,9 +832,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         if ( StringUtils.isNotBlank( newOrder?.id ) ) {
 
 
-           //OrderController.printOrder( newOrder.id )
+           OrderController.printOrder( newOrder.id )
            if(ticketRx == true){
-           // OrderController.printRx(newOrder.id, false)
+           OrderController.printRx(newOrder.id, false)
             OrderController.fieldRX(newOrder.id)
 
 
