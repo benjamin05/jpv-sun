@@ -198,7 +198,23 @@ class PromotionModel {
     return ( this.orderDiscount != null )
   }
 
-  void setupOrderDiscount( String pCorporateKey, Double pDiscountPercent ) {
+  Boolean setupOrderCouponDiscount(DescuentoClave descuentoClave, Double pDiscountPercent){
+        Boolean Apl = false
+
+       String id = 'P'
+      this.orderDiscount =  PromotionDiscount.getCouponDiscountInstance(descuentoClave)  //aqui
+
+        if ( this.hasOrderDiscountApplied() ) {
+            this.orderDiscount.order = this.order
+            this.orderDiscount.discountPercent = pDiscountPercent
+            this.orderDiscount.apply( true )
+            Apl = true
+        }
+        return   Apl
+    }
+
+
+    void setupOrderDiscount( String pCorporateKey, Double pDiscountPercent ) {
     String key = StringUtils.trimToEmpty( pCorporateKey )
     if ( key.length() == 0 ) {
       this.orderDiscount = PromotionDiscount.discountInstance

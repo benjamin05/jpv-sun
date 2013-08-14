@@ -22,7 +22,7 @@ class TmpServiciosRepositoryImpl extends QueryDslRepositorySupport implements Tm
         predicates.add( tmpServicios.id_factura.eq( idFactura ) )
         JPQLQuery query = from( tmpServicios )
         query.where( predicates as Predicate[] )
-        query.singleResult( tmpServicios )
+       return query.singleResult( tmpServicios )
 
     }
 }

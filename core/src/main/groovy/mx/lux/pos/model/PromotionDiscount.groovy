@@ -10,7 +10,7 @@ class PromotionDiscount implements IPromotionAvailable {
   Double discountPercent
   PromotionOrder order
   
-  protected PromotionDiscount( PromotionDiscountType pDiscountType ) {
+  PromotionDiscount( PromotionDiscountType pDiscountType ) {
     this.setDiscountType( pDiscountType )
     this.corporateKey = ""
     this.discountPercent = 0.0
@@ -23,6 +23,13 @@ class PromotionDiscount implements IPromotionAvailable {
   static PromotionDiscount getCorporateDiscountInstance( ) {
     return new PromotionDiscount( PromotionDiscountType.CorporateDiscount )
   }
+
+    static PromotionDiscount getCouponDiscountInstance(DescuentoClave descuentoClave ) {
+        return new PromotionDiscount( PromotionDiscountType.CouponDiscount)
+    }
+
+
+
   
   // Public methods
   void apply( Boolean pApply ) {

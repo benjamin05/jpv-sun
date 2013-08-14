@@ -4,9 +4,11 @@ import mx.lux.pos.model.IPromotionAvailable
 import mx.lux.pos.model.PromotionAvailable
 import mx.lux.pos.model.PromotionModel
 import mx.lux.pos.service.PromotionService
+import mx.lux.pos.service.business.PromotionCommit
 import mx.lux.pos.ui.model.ICorporateKeyVerifier
 import mx.lux.pos.ui.model.IPromotionDrivenPanel
 import mx.lux.pos.ui.resources.ServiceManager
+import mx.lux.pos.ui.view.dialog.DiscountCouponDialog
 import mx.lux.pos.ui.view.dialog.DiscountDialog
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
@@ -144,6 +146,7 @@ class PromotionDriver implements TableModelListener, ICorporateKeyVerifier {
     }
   }
 
+
   void requestCorporateDiscount( ) {
     log.debug( "Corporate Discount Selected" )
     DiscountDialog dlgDiscount = new DiscountDialog( true )
@@ -164,6 +167,32 @@ class PromotionDriver implements TableModelListener, ICorporateKeyVerifier {
         )
       }
     }
+  }
+
+  void requestCouponDiscount(){
+      DiscountCouponDialog couponDiscount = new DiscountCouponDialog(true)
+      couponDiscount.setOrderTotal( view.order.total )
+      couponDiscount.setVerifier( this )
+      couponDiscount.activate()
+      if ( couponDiscount.getDiscountSelected() ) {
+
+          Double discount = couponDiscount.getDiscountAmt() / view.order.total
+
+          Boolean apl = false
+          apl = model.setupOrderCouponDiscount(couponDiscount?.descuentoClave,discount )
+           println('Aplicar Promocion: '+apl)
+          PromotionCommit.writeOrder( model )
+          if ( apl  ) {
+
+              this.updatePromotionList()
+              view.refreshData()
+          } else {
+              JOptionPane.showMessageDialog( view as JComponent, MSG_POST_DISCOUNT_FAILED, TXT_POST_DISCOUNT_TITLE,
+                      JOptionPane.ERROR_MESSAGE
+              )
+          }
+      }
+
   }
 
   void requestPromotionSave( ) {

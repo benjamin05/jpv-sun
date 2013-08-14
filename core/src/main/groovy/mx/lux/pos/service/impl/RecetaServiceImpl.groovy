@@ -197,16 +197,14 @@ class RecetaServiceImpl implements RecetaService {
 
     @Override
     private void generaArchivoEnvio( String contenido, String nombre) throws ServiceException {
-           // try {
+            try {
                 Parametro ruta = Registry.find(TipoParametro.RUTA_POR_ENVIAR)
-
-                println('ruta: '+ruta?.valor)
                 File archivo = new File( ruta?.valor, nombre.toString() )
                 BufferedWriter out = new BufferedWriter( new FileWriter( archivo ) )
                 out.write( contenido )
                 out.close()
-           // } catch ( Exception e ) {
-           //     throw new ServiceException( "Error al generar archivo de envio externo", e )
-           // }
+           } catch ( Exception e ) {
+                e.printStackTrace()
+            }
     }
 }
