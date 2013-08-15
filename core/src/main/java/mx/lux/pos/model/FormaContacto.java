@@ -1,6 +1,8 @@
 package mx.lux.pos.model;
 
 import org.apache.commons.lang3.StringUtils;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,6 +36,14 @@ public class FormaContacto implements Serializable {
 
     @Column( name = "id_sucursal" )
     private Integer id_sucursal;
+
+
+    @ManyToOne
+    @NotFound( action = NotFoundAction.IGNORE )
+    @JoinColumn( name = "id_tipo_contacto", insertable = false, updatable = false )
+    private TipoContacto tipoContacto;
+
+
 
     public static long getSerialVersionUID() {
         return serialVersionUID;
@@ -94,4 +104,14 @@ public class FormaContacto implements Serializable {
     public void setId_sucursal(Integer id_sucursal) {
         this.id_sucursal = id_sucursal;
     }
+
+
+    public TipoContacto getTipoContacto() {
+        return tipoContacto;
+    }
+
+    public void setTipoContacto(TipoContacto tipoContacto) {
+        this.tipoContacto = tipoContacto;
+    }
+
 }

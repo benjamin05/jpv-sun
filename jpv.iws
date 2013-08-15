@@ -4,7 +4,346 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="85a3f2a7-5fe4-477a-b715-aab86b5598d8" name="Default" comment="" />
+    <list default="true" id="85a3f2a7-5fe4-477a-b715-aab86b5598d8" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/AcusesTipo.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/AcusesTipoRepository.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/DescuentoClave.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/DescuentoClaveRepository.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/DiscountCouponDialog.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/custom/PrecioRepositoryCustom.groovy" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/impl/PrecioRepositoryImpl.groovy" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/libs/reports-1.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Completo.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Completo.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Completo.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Completo_Articulos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Completo_Articulos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Completo_Articulos.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Completo_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Completo_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Completo_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Completo_Lista.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Completo_Lista.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Completo_Lista.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Del_Dia.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Del_Dia.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Ventas.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Ventas.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cancelaciones_Ventas.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/CierreDiario_Pagos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/CierreDiario_Pagos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cierre_Diario.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cierre_Diario.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cierre_Diario.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cierre_Diario_Anticipos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cierre_Diario_Anticipos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cierre_Diario_Anticipos.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cierre_Diario_Devoluciones.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cierre_Diario_Devoluciones.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cierre_Diario_Devoluciones.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cierre_Diario_Saldos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cierre_Diario_Saldos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cierre_Diario_Saldos.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Control_de_Trabajos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Control_de_Trabajos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Control_de_Trabajos.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Control_de_Trabajos_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Control_de_Trabajos_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Control_de_Trabajos_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Control_de_Trabajos_Lista.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Control_de_Trabajos_Lista.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Control_de_Trabajos_Lista.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cotizaciones.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cotizaciones.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cotizaciones_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cotizaciones_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cotizaciones_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cotizaciones_Lista.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cotizaciones_Lista.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Cotizaciones_Lista.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Descuentos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Descuentos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Descuentos_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Descuentos_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Descuentos_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Descuentos_Lista.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Descuentos_Lista.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Descuentos_Lista.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Examenes.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Examenes.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Examenes_Completo.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Examenes_Completo.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Examenes_Completo_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Examenes_Completo_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Examenes_Completo_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Examenes_Completo_Lista.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Examenes_Completo_Lista.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Examenes_Completo_Lista.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Examenes_Detalles.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Examenes_Detalles.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Examenes_Detalles.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Examenes_Lista.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Examenes_Lista.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Examenes_Lista.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Articulo.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Articulo.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Articulo.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Articulo_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Articulo_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Articulo_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca_Articulos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca_Articulos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca_Articulos.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca_Resumido.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca_Resumido.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca_Resumido.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca_Resumido_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca_Resumido_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca_Resumido_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca_Resumido_Marcas.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Existencias_Por_Marca_Resumido_Marcas.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Facturas_Fiscales.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Facturas_Fiscales.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Facturas_Fiscales_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Facturas_Fiscales_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Facturas_Fiscales_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Completo_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Completo_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Completo_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Completo_Dev.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Completo_Dev.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Devoluciones.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Devoluciones.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Devoluciones.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Pagos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Pagos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Pagos.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Resumido_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Resumido_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Resumido_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Resumido_Pagos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Resumido_Pagos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingreso_Vendedor_Resumido_Pagos.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Por_Periodo.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Por_Periodo.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Por_Periodo.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Por_Periodo_Detalles.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Por_Periodo_Detalles.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Por_Periodo_Detalles.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Por_Periodo_Fechas.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Por_Periodo_Fechas.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Por_Periodo_Fechas.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Por_Periodo_Montos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Por_Periodo_Montos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Por_Periodo_Montos.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Sucursal.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Sucursal.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Sucursal.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Sucursal_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Sucursal_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Sucursal_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Vendedor_Completo.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Vendedor_Completo.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Vendedor_Completo.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Vendedor_Resumido.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Vendedor_Resumido.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ingresos_Vendedor_Resumido.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Kardex.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Kardex.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Kardex.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Kardex_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Kardex_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Kardex_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Kardex_Detalle_Articulos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Kardex_Detalle_Articulos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Lista_de_Promociones.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Lista_de_Promociones.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Lista_de_Promociones.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Lista_de_Promociones_Det.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Lista_de_Promociones_Det.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Lista_de_Promociones_Det.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Notas_Credito.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Notas_Credito.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Pagos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Pagos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Pagos.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Pagos_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Pagos_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Pagos_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Pagos_Lista.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Pagos_Lista.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Pagos_Lista.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Promociones.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Promociones.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Promociones_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Promociones_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Promociones_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajo_Sin_Entregar_Ext.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajo_Sin_Entregar_Ext.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajo_Sin_Entregar_Ext.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajo_Sin_Entregar_GarOs.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajo_Sin_Entregar_GarOs.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajo_Sin_Entregar_GarOs.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Entregados.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Entregados.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Entregados.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Entregados_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Entregados_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Entregados_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Entregados_Por_Empleado.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Entregados_Por_Empleado.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Entregados_Por_Empleado_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Entregados_Por_Empleado_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Entregados_Por_Empleado_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Entregados_Por_Empleado_Lista.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Entregados_Por_Empleado_Lista.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Entregados_Por_Empleado_Lista.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Sin_Entregar.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Sin_Entregar.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Sin_Entregar.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Sin_Entregar_Fact.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Sin_Entregar_Fact.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Trabajos_Sin_Entregar_Fact.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Linea_Articulos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Linea_Articulos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Linea_Articulos.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Linea_Articulos_Canc.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Linea_Articulos_Canc.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Linea.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Linea.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Linea.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Linea_Articulo.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Linea_Articulo.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Linea_Articulo.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Linea_Articulo_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Linea_Articulo_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Linea_Articulo_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Linea_Cancelaciones.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Linea_Cancelaciones.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Linea_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Linea_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Linea_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Vendedor_Completo.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Vendedor_Completo.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Vendedor_Completo.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Vendedor_Resumido.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Vendedor_Resumido.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Por_Vendedor_Resumido.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Vendedor_Compl_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Vendedor_Compl_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Vendedor_Compl_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Vendedor_Res_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Vendedor_Res_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_Vendedor_Res_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_vendedor_Compl_Facturas.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_vendedor_Compl_Facturas.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Venta_vendedor_Compl_Facturas.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Completo.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Completo.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Completo.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Completo_Cancelaciones.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Completo_Cancelaciones.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Completo_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Completo_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Completo_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Del_Dia.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Del_Dia.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Del_Dia.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Del_Dia_Articulos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Del_Dia_Articulos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Del_Dia_Articulos.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Del_Dia_Det.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Del_Dia_Det.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Del_Dia_Det.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Del_Dia_Genericos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Del_Dia_Genericos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Del_Dia_Genericos.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Del_Dia_Promo.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Del_Dia_Promo.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Del_Dia_Promo.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Marca.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Marca.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Marca.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Marca_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Marca_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Marca_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Marca_Detalle_SnArticulos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Marca_Detalle_SnArticulos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Marca_Detalle_SnArticulos.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Optometrista_Completo.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Optometrista_Completo.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Optometrista_Completo.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Optometrista_Completo_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Optometrista_Completo_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Optometrista_Completo_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Optometrista_Completo_Lista.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Optometrista_Completo_Lista.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Optometrista_Completo_Lista.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Optometrista_Resumido.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Optometrista_Resumido.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Optometrista_Resumido_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Optometrista_Resumido_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Optometrista_Resumido_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Optometrista_Resumido_Lista.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Optometrista_Resumido_Lista.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Vendedor_Por_Marca.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Vendedor_Por_Marca.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Vendedor_Por_Marca.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Vendedor_Por_Marca_ArtDesc.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Vendedor_Por_Marca_ArtDesc.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Vendedor_Por_Marca_Articulos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Vendedor_Por_Marca_Articulos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Vendedor_Por_Marca_Articulos.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Vendedor_Por_Marca_Detalle.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Vendedor_Por_Marca_Detalle.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Vendedor_Por_Marca_Detalle.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Vendedor_Por_Marca_Pagos.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Vendedor_Por_Marca_Pagos.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/Ventas_Por_Vendedor_Por_Marca_Pagos.jrxml.bak" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/report.jasper" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/resources/main/reports/report.jrxml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/reports/build/tmp/jar/MANIFEST.MF" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/libs/core-1.0.jar" afterPath="$PROJECT_DIR$/core/build/libs/core-1.0.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/ClienteServiceImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/ClienteServiceImpl.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ContactClientDialog.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ContactClientDialog.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/ContactController.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/ContactController.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ContactDialog.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ContactDialog.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/component/DiscountContextMenu.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/component/DiscountContextMenu.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/FormaContacto.java" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/FormaContacto.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/FormaContactoServiceImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/FormaContactoServiceImpl.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ItemDialog.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ItemDialog.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/PrecioRepository.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/PrecioRepository.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/PromotionDiscount.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/PromotionDiscount.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/PromotionDiscountType.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/PromotionDiscountType.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/driver/PromotionDriver.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/driver/PromotionDriver.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/PromotionModel.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/PromotionModel.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/RecetaServiceImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/RecetaServiceImpl.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/impl/RepositoryFactory.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/impl/RepositoryFactory.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/TipoContacto.java" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/TipoContacto.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/TipoContactoRepository.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/TipoContactoRepository.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/TipoParametro.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/TipoParametro.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/impl/TmpServiciosRepositoryImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/impl/TmpServiciosRepositoryImpl.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/resources/main/database.properties" afterPath="$PROJECT_DIR$/core/build/resources/main/database.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jpv.iws" afterPath="$PROJECT_DIR$/jpv.iws" />
+    </list>
     <ignored path="jpv.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="$PROJECT_DIR$/ui/src/test/groovy/mx/lux/pos/ui/view/InvTicketSample.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1369776598593" ignored="false" />
@@ -103,9 +442,7 @@
     <file path="$PROJECT_DIR$/core/build/generated-sources/mx/lux/pos/model/QExamen.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376061819808" ignored="false" />
     <file path="$PROJECT_DIR$/core/build/generated-sources/mx/lux/pos/model/QArticulo.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376061819808" ignored="false" />
     <file path="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/SalesWithNoInventory.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376061819809" ignored="false" />
-    <file path="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/TipoParametro.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376061819809" ignored="false" />
     <file path="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/ArticuloSunglassDescriptor.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376061819809" ignored="false" />
-    <file path="$PROJECT_DIR$/core/build/resources/main/database.properties" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376061819809" ignored="false" />
     <file path="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/TwoDatesSelectionFilterDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376061819810" ignored="false" />
     <file path="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ContactLensesRegisterDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376061819810" ignored="false" />
     <file path="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/BillDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376061819810" ignored="false" />
@@ -200,7 +537,6 @@
     <file path="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/ParametroRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376061819838" ignored="false" />
     <file path="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/FileList.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376061819838" ignored="false" />
     <file path="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/Deposit.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376061819838" ignored="false" />
-    <file path="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/Item.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376061819838" ignored="false" />
     <file path="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/DetalleNotaVentaRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376061819838" ignored="false" />
     <file path="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/TransInvRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376061819838" ignored="false" />
     <file path="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/ContactType.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376061819838" ignored="false" />
@@ -305,20 +641,35 @@
       <file leaf-file-name="OrderPanel.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="535" column="21" selection-start="23426" selection-end="23426" vertical-scroll-proportion="0.0">
+            <state line="451" column="66" selection-start="20228" selection-end="20228" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PaymentDialog.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="OrderController.groovy" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="256" column="51" selection-start="8638" selection-end="8638" vertical-scroll-proportion="0.33203885">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Item.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/Item.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="34" column="9" selection-start="695" selection-end="695" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PaymentDialog.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/PaymentDialog.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="352" column="123" selection-start="12569" selection-end="12569" vertical-scroll-proportion="0.7662835">
-              <folding>
-                <marker date="1376573817886" expanded="true" signature="8915:9053" placeholder="{...}" />
-                <marker date="1376573817886" expanded="true" signature="12850:13129" placeholder="{...}" />
-              </folding>
+            <state line="358" column="87" selection-start="12703" selection-end="12703" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -599,8 +950,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -861,6 +1210,8 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1166,27 +1517,27 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="24" width="1282" height="977" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32729468" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.6288" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959481" sideWeight="0.6288" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30555555" sideWeight="0.4788961" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30555555" sideWeight="0.4788961" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31197098" sideWeight="0.5202922" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31604537" sideWeight="0.2721417" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35748792" sideWeight="0.48452768" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32604736" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959481" sideWeight="0.6827697" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5888" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3241491" sideWeight="0.6944444" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3241491" sideWeight="0.6944444" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29764065" sideWeight="0.45867097" order="6" side_tool="false" content_ui="tabs" x="357" y="284" width="566" height="197" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3200483" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35748792" sideWeight="0.48452768" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3984" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
@@ -1261,16 +1612,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Plan.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="13" selection-start="206" selection-end="206" vertical-scroll-proportion="0.20348836" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Pago.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="14" selection-start="3803" selection-end="3803" vertical-scroll-proportion="0.6346516" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/RelacionPlan.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="13" selection-start="295" selection-end="295" vertical-scroll-proportion="0.23255815" />
@@ -1312,13 +1653,6 @@
         <state line="344" column="30" selection-start="12875" selection-end="12875" vertical-scroll-proportion="0.5317164" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="535" column="21" selection-start="23426" selection-end="23426" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/DailyClosePanel.groovy">
       <provider selected="true" editor-type-id="text-editor">
         <state line="130" column="27" selection-start="5219" selection-end="5219" vertical-scroll-proportion="0.0">
@@ -1356,11 +1690,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/PaymentDialog.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="352" column="123" selection-start="12569" selection-end="12569" vertical-scroll-proportion="0.7662835">
-          <folding>
-            <marker date="1376573817886" expanded="true" signature="8915:9053" placeholder="{...}" />
-            <marker date="1376573817886" expanded="true" signature="12850:13129" placeholder="{...}" />
-          </folding>
+        <state line="358" column="87" selection-start="12703" selection-end="12703" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/Item.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="9" selection-start="695" selection-end="695" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="451" column="66" selection-start="20228" selection-end="20228" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="256" column="51" selection-start="8638" selection-end="8638" vertical-scroll-proportion="0.33203885">
+          <folding />
         </state>
       </provider>
     </entry>

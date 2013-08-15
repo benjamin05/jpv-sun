@@ -1,24 +1,37 @@
 package mx.lux.pos.ui.controller
 
+import com.sun.org.apache.xerces.internal.xni.parser.XMLDocumentFilter
+import com.sun.org.apache.xerces.internal.xni.parser.XMLInputSource
+import com.sun.org.apache.xerces.internal.xni.parser.XMLParserConfiguration
+import com.sun.org.apache.xml.internal.serialize.XMLSerializer
 import groovy.util.logging.Slf4j
+import mx.lux.pos.repository.AcusesTipoRepository
+import mx.lux.pos.repository.DescuentoClaveRepository
+import mx.lux.pos.repository.GenericoRepository
 import mx.lux.pos.repository.JbLlamadaRepository
 import mx.lux.pos.repository.JbRepository
-import mx.lux.pos.repository.JbTrackRepository
+
 import mx.lux.pos.repository.ParametroRepository
+import mx.lux.pos.repository.PrecioRepository
 import mx.lux.pos.repository.TmpServiciosRepository
 import mx.lux.pos.service.business.Registry
 import mx.lux.pos.ui.MainWindow
 import mx.lux.pos.ui.resources.ServiceManager
 import mx.lux.pos.ui.view.dialog.ContactClientDialog
 import mx.lux.pos.ui.view.dialog.ContactDialog
-import mx.lux.pos.ui.view.dialog.EntregaTrabajoDialog
+
 import mx.lux.pos.ui.view.dialog.ManualPriceDialog
 import mx.lux.pos.ui.view.panel.OrderPanel
 import org.apache.commons.lang.NumberUtils
 import org.apache.commons.lang3.StringUtils
+import org.hibernate.service.spi.ServiceException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
+import org.w3c.dom.Document
+import org.w3c.dom.Element
+import org.xml.sax.InputSource
 
+import javax.swing.JDialog
 import javax.swing.JOptionPane
 import javax.swing.JPanel
 
@@ -26,7 +39,10 @@ import mx.lux.pos.model.*
 import mx.lux.pos.service.*
 import mx.lux.pos.ui.model.*
 
+import javax.xml.parsers.DocumentBuilderFactory
 import java.text.SimpleDateFormat
+
+
 
 @Slf4j
 @Component
@@ -51,6 +67,10 @@ class OrderController {
   private static JbLlamadaRepository jbLlamadaRepository
   private static ParametroRepository  parametroRepository
   private static TmpServiciosRepository tmpServiciosRepository
+  private static DescuentoClaveRepository descuentoClaveRepository
+  private static GenericoRepository genericoRepository
+  private static PrecioRepository precioRepository
+  private static AcusesTipoRepository acusesTipoRepository
 
   private static final String TAG_USD = "USD"
 
@@ -71,7 +91,11 @@ class OrderController {
        JbTrackService jbTrackService,
        JbLlamadaRepository jbLlamadaRepository,
         ParametroRepository parametroRepository,
-       TmpServiciosRepository tmpServiciosRepository
+       TmpServiciosRepository tmpServiciosRepository,
+        DescuentoClaveRepository descuentoClaveRepository,
+        GenericoRepository genericoRepository,
+        PrecioRepository  precioRepository,
+        AcusesTipoRepository acusesTipoRepository
 
   ) {
     this.notaVentaService = notaVentaService
@@ -90,6 +114,10 @@ class OrderController {
       this.jbLlamadaRepository = jbLlamadaRepository
       this.parametroRepository = parametroRepository
       this.tmpServiciosRepository = tmpServiciosRepository
+      this.descuentoClaveRepository = descuentoClaveRepository
+      this.genericoRepository = genericoRepository
+      this.precioRepository = precioRepository
+      this.acusesTipoRepository = acusesTipoRepository
   }
 
   static Order getOrder( String orderId ) {
@@ -829,26 +857,42 @@ class OrderController {
             }
       }
 
-
+      TmpServicios tmpServicios = tmpServiciosRepository.findbyIdFactura(notaVenta?.id)
+       Boolean temp = false
+      if(tmpServicios?.id_serv != null){
+                   temp = true
+      }
+      println(surte == true )
+      println( temp == true  )
+      println( entregaBo == true)
       //*Contacto
-      //if(surte == true){
-        //  TmpServicios tmpServicios = tmpServiciosRepository.findbyIdFactura(notaVenta?.id)
+      if(surte == true || temp == true || entregaBo == false){
 
-         // if(tmpServicios?.id_serv != null){
 
-              List<FormaContacto> result = ContactController.findByIdCliente(notaVenta?.idCliente)
+              List<FormaContacto> result = ContactController.findByIdCliente(notaVenta?.idCliente.toInteger())
              if (  result.size() == 0 )     {
 
                 ContactDialog contacto = new ContactDialog(notaVenta)
-              contacto.show()
+              contacto.activate()
 
              } else{
-                ContactClientDialog contactoCliente = new ContactClientDialog()
-                 contactoCliente.show()
+                ContactClientDialog contactoCliente = new ContactClientDialog(notaVenta)
+                 contactoCliente.activate()
+
+                 if ( contactoCliente.formaContactoSeleted != null ) {
+
+                     FormaContacto formaContacto = contactoCliente.formaContactoSeleted
+                     formaContacto?.rx = notaVenta?.factura
+                     formaContacto?.fecha_mod = new Date()
+
+                     ContactController.saveFormaContacto(formaContacto)
+
+
+                 }
              }
 
-        //  }
-     // }
+
+      }
       //*Contacto
 
 
@@ -1016,5 +1060,106 @@ class OrderController {
         }
 
     }
+
+    static DescuentoClave descuentoClavexId(Integer idDescuentoClave){
+        DescuentoClave descuentoClave =  descuentoClaveRepository.findOne(idDescuentoClave)
+      return descuentoClave
+    }
+
+    static Boolean surteEnabled(String idGenerico){
+         Generico generico = genericoRepository.findOne(idGenerico)
+        return generico?.inventariable
+    }
+
+
+    static List<String> surteOption(String idGenerico){
+        Generico generico = genericoRepository.findOne(idGenerico)
+
+        List<String> surteOption = new ArrayList<String>()
+        String s = generico?.surte
+        StringTokenizer st = new StringTokenizer(s.trim(), ",")
+        Iterator its = st.iterator()
+        while (its.hasNext())
+        {
+            surteOption.add(its.next().toString())
+        }
+
+        return surteOption
+    }
+
+
+    static surteCallWS(Order order,Item item){
+        Precio precio = precioRepository.findbyArt(item?.name.trim())
+
+        if(item?.type?.trim().equals('A') && precio?.surte?.trim().equals('P')){
+            AcusesTipo acusesTipo = acusesTipoRepository.findOne('AUT')
+            String url = acusesTipo?.pagina + '?id_suc=' + order?.branch?.id.toString().trim() + '&id_col=' + item?.color?.trim() + '&id_art='+ item?.id.toString().trim()
+            println(url)
+            String resultado = callWS(url)
+              int index = resultado.indexOf('|')
+            String condicion = resultado.substring(0,index)
+           if(condicion.trim().equals('Si')){
+                String contenido =  resultado + '|' + item?.id + '|' +item?.color + '|' + 'facturacion'
+                Date date = new Date()
+                SimpleDateFormat formateador = new SimpleDateFormat("hhmmss")
+                String nombre = formateador.format(date)
+                generaAcuse(contenido,nombre)
+            } else{
+               Integer question = JOptionPane.showConfirmDialog( new JDialog(), 'Almacen Central sin Existencias', '¿Desea Continuar con la venta?',
+                       JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE )
+               if( question == 0){
+
+               }
+            }
+
+
+        }
+    }
+    static void generaAcuse(String contenido,String nombre){
+        try {
+            Parametro ruta =  parametroRepository.findOne(TipoParametro.ARCHIVO_CONSULTA_WEB.value)
+            File archivo = new File( ruta?.valor, nombre.toString() )
+            BufferedWriter out = new BufferedWriter( new FileWriter( archivo ) )
+            out.write( contenido )
+            out.close()
+        } catch ( Exception e ) {
+            e.printStackTrace()
+        }
+    }
+
+    static String callWS( String url ) {
+        def urlTexto = url
+        def resp = urlTexto?.toURL()
+
+        List<String> htmlList = new ArrayList<String>()
+
+        String s = resp?.text.replaceAll("[\n\r\t]","")
+
+        println(s)
+        StringTokenizer st = new StringTokenizer(s.trim(), ">")
+        Iterator its = st.iterator()
+        int ini = 0
+        Boolean xx = false
+        String resultado = new String()
+        while (its.hasNext())
+        {
+            htmlList.add(its.next().toString() + ">")
+            if(xx==true){
+
+               int index = htmlList.get(ini).indexOf('<')
+
+                   resultado = htmlList.get(ini).substring(0,index)
+
+              xx = false
+            }
+            if(htmlList.get(ini).trim().equals('<XX>')){
+                  xx= true
+            }
+            ini = ini + 1
+        }
+
+        return resultado
+    }
+
 
 }

@@ -1,6 +1,8 @@
 package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
+import mx.lux.pos.model.Parametro
+import mx.lux.pos.model.TipoParametro
 import mx.lux.pos.ui.controller.ItemController
 import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.model.Item
@@ -23,13 +25,15 @@ class ItemDialog extends JDialog {
   private Order order
   private List<Item> items
   private List<String> colors
-  private List<String> deliversList
   private JSpinner quantity
   private OrderPanel op
-
+  private JComboBox surte
+    private List<String> surteOption
+    private Boolean surteVisible
 
     ItemDialog( Component parent, Order order, final OrderItem orderItem, Component orderP) {
-     op = orderP
+
+        op = orderP
     this.orderItem = orderItem
     this.order = order
     sb = new SwingBuilder()
@@ -40,8 +44,14 @@ class ItemDialog extends JDialog {
     )
     items = [ ]
     colors = [ ]
-    deliversList = [ 'Sucursal', 'Pino' ] as ObservableList
-    items.addAll( ItemController.findItems( tmpOrderItem.item?.name ) )
+
+
+        surteVisible = OrderController.surteEnabled(orderItem?.tipo.trim())
+        if(surteVisible == true){
+            surteOption = OrderController.surteOption(orderItem?.tipo.trim())
+        }
+
+        items.addAll( ItemController.findItems( tmpOrderItem.item?.name ) )
     colors.addAll( items*.color )
     buildUI( parent )
     doBindings()
@@ -54,17 +64,23 @@ class ItemDialog extends JDialog {
         resizable: false,
         modal: true,
         pack: true,
-        layout: new MigLayout( 'wrap 4', '[fill,grow]20[fill]20[fill]20[fill,grow]' )
+        layout: new MigLayout( 'wrap 6', '[fill,grow]20[fill]20[fill]20[fill,grow]' )
     ) {
-      label(  )
+      label()
+        label( )
       label( 'Artículo' )
       label( 'Cantidad' )
-      label(  )
+      label('Surte', visible: surteVisible )
+      label()
 
-      label( )
+
+        label()
+        label()
       label( tmpOrderItem.item?.name )
       quantity = spinner( model: spinnerNumberModel( minimum: 1, stepSize: 1, value: tmpOrderItem.quantity ) )
-      label( )
+        surte = comboBox( items: surteOption, visible: surteVisible )
+        label()
+
 
       panel( layout: new MigLayout( 'right', '[fill,100!]' ), constraints: 'span' ) {
         button( 'Borrar', actionPerformed: doDelete )
@@ -109,6 +125,7 @@ class ItemDialog extends JDialog {
   private def doSubmit = { ActionEvent ev ->
     JButton source = ev.source as JButton
     source.enabled = false
+    OrderController.surteCallWS(order,tmpOrderItem?.item)
     OrderController.removeOrderItemFromOrder( order.id, orderItem )
     OrderController.addOrderItemToOrder( order.id, tmpOrderItem )
     source.enabled = true

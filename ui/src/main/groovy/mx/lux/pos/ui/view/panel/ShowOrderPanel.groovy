@@ -32,8 +32,8 @@ class ShowOrderPanel extends JPanel {
   private SwingBuilder sb
   private Order order
   private JButton customerName
-  private JButton printButton
-    private JButton paymentButton
+
+    private JButton ppButton
   private JButton cancelButton
   private JButton returnButton
   private JButton printReturnButton
@@ -168,8 +168,8 @@ class ShowOrderPanel extends JPanel {
         cancelButton = button( 'Cancelar', actionPerformed: doCancel, constraints: 'hidemode 3' )
         returnButton = button( 'Devoluci\u00f3n', actionPerformed: doRefund, constraints: 'hidemode 3' )
         printReturnButton = button( 'Imprimir Cancelaci\u00f3n', actionPerformed: doPrintRefund, constraints: 'hidemode 3' )
-        printButton = button( 'Imprimir', actionPerformed: doPrint,visible: false )
-          paymentButton = button( 'Pagar', actionPerformed: doShowPayment, visible: true  )
+
+          ppButton = button( 'Pagar', actionPerformed: doSwitchPP  )
 
       }
     }
@@ -206,11 +206,10 @@ class ShowOrderPanel extends JPanel {
     itemsModel.fireTableDataChanged()
     paymentsModel.fireTableDataChanged()
       if((order?.total - order?.paid) == 0){
-          printButton?.setVisible(true)
-          paymentButton?.setVisible(false)
+          ppButton?.setText('Imprimir')
+
       } else{
-          printButton?.setVisible(false)
-          paymentButton?.setVisible(true)
+          ppButton?.setText('Pagar')
       }
 
   }
@@ -266,16 +265,24 @@ class ShowOrderPanel extends JPanel {
     source.enabled = true
   }
 
-  private def doPrint = { ActionEvent ev ->
-    JButton source = ev.source as JButton
-    source.enabled = false
-    OrderController.printOrder( order.id, false )
-    source.enabled = true
+  private  def doSwitchPP = { ActionEvent ev ->
+      JButton source = ev.source as JButton
+      source.enabled = false
+
+      if(ppButton?.text.equals('Pagar')){
+          doShowPayment()
+      } else{
+          doPrint()
+      }
+
+      source.enabled = true
   }
 
-    private def doShowPayment = {ActionEvent ev ->
-        JButton source = ev.source as JButton
-        source.enabled = false
+  private doPrint(){
+    OrderController.printOrder( order.id, false )
+  }
+
+    private  doShowPayment(){
         pagoN=null
         if((order?.total - order?.paid) > 0){
 
@@ -314,11 +321,8 @@ class ShowOrderPanel extends JPanel {
                 }
 
             }
-            printButton?.setVisible(true)
-            paymentButton?.setVisible(false)
+            ppButton?.setText('Imprimir')
         }
-
-        source.enabled = true
     }
 
     private void updatePagos(){

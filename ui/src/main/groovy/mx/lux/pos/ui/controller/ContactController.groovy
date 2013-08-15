@@ -4,6 +4,8 @@ import groovy.util.logging.Slf4j
 import mx.lux.pos.model.Empleado
 import mx.lux.pos.model.FormaContacto
 import mx.lux.pos.model.Jb
+import mx.lux.pos.model.TipoContacto
+import mx.lux.pos.repository.TipoContactoRepository
 import mx.lux.pos.service.EmpleadoService
 import mx.lux.pos.service.JbService
 import mx.lux.pos.service.SucursalService
@@ -22,12 +24,13 @@ class ContactController {
 
   private static JbService jbService
   private static  FormaContactoService formaContactoService
-
+  private static TipoContactoRepository tipoContactoRepository
 
   @Autowired
-  ContactController( JbService jbService, FormaContactoService formaContactoService ) {
+  ContactController( JbService jbService, FormaContactoService formaContactoService, TipoContactoRepository tipoContactoRepository) {
     this.jbService = jbService
     this.formaContactoService = formaContactoService
+    this.tipoContactoRepository = tipoContactoRepository
 
   }
 
@@ -41,12 +44,22 @@ class ContactController {
   }
 
    static List<FormaContacto> findByIdCliente(Integer idCliente){
-    return formaContactoService.findByidCliente(idCliente)
+       List<FormaContacto> formaContactos = formaContactoService.findByidCliente(idCliente)
+       List<FormaContacto> contactos = new ArrayList<FormaContacto>()
+       Iterator iterator = formaContactos.iterator();
+       while (iterator.hasNext()) {
+           FormaContacto formaContacto = iterator.next()
+             formaContacto?.tipoContacto =  tipoContactoRepository.findOne(formaContacto?.id_tipo_contacto)
+            contactos.add(formaContacto)
+       }
+           return contactos
    }
 
    static FormaContacto saveFormaContacto(FormaContacto formaContacto){
       formaContacto = formaContactoService.saveFC(formaContacto)
        return formaContacto
    }
+
+
 
 }

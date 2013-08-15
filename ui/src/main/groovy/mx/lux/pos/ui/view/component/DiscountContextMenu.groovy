@@ -13,6 +13,8 @@ class DiscountContextMenu extends JPopupMenu {
   private PromotionDriver driver
   private JMenuItem menuDiscount
   private JMenuItem menuCorporateDiscount
+  private JMenuItem menuCouponDiscount
+
   
   DiscountContextMenu( PromotionDriver pDriver ) {
     driver = pDriver
@@ -29,6 +31,10 @@ class DiscountContextMenu extends JPopupMenu {
         visible: true,
         actionPerformed: { onCorporateDiscountSelected( ) },
       )
+        menuCouponDiscount = menuItem( text: "Descuento por Cupon",
+                visible: true,
+                actionPerformed: { onCouponDiscountSelected( ) },
+        )
     }
   }
   
@@ -36,7 +42,8 @@ class DiscountContextMenu extends JPopupMenu {
   void activate( MouseEvent pEvent ) {
     menuDiscount.setEnabled( driver.isDiscountEnabled( ) )
     menuCorporateDiscount.setEnabled( driver.isCorporateDiscountEnabled( ) )
-    show( pEvent.getComponent(), pEvent.getX(), pEvent.getY() )
+    menuCouponDiscount.setEnabled(driver.isCorporateDiscountEnabled())
+      show( pEvent.getComponent(), pEvent.getX(), pEvent.getY() )
   } 
   
   // UI Response
@@ -47,6 +54,11 @@ class DiscountContextMenu extends JPopupMenu {
   protected void onCorporateDiscountSelected( ) {
     driver.requestCorporateDiscount( )
   }
+
+  protected void onCouponDiscountSelected(){
+      driver.requestCouponDiscount()
+  }
+
 
   
 }

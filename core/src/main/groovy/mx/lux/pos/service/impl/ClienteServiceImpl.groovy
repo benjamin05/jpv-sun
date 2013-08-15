@@ -127,11 +127,10 @@ class ClienteServiceImpl implements ClienteService {
   Cliente obtenerClientePorDefecto( ) {
     log.debug( "obteniendo cliente generico" )
 
-   // def idCliente = parametroRepository.findOne( TipoParametro.ID_CLIENTE_GENERICO.value )?.valor
+    Parametro idClienteParametro = parametroRepository.findOne( TipoParametro.ID_CLIENTE_GENERICO.value )
 
-   def idCliente = '1'
+   String idCliente = idClienteParametro?.valor
 
-    log.debug( "id cliente generico: ${idCliente}" )
     if ( idCliente?.isInteger() ) {
       return clienteRepository.findOne( idCliente?.toInteger() )
     }

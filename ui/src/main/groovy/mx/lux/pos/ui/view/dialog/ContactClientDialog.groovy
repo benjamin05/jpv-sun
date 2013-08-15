@@ -3,7 +3,9 @@ package mx.lux.pos.ui.view.dialog
 import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
 import mx.lux.pos.model.ClienteProceso
+import mx.lux.pos.model.FormaContacto
 import mx.lux.pos.model.NotaVenta
+import mx.lux.pos.ui.controller.ContactController
 import mx.lux.pos.ui.model.OrderActive
 import mx.lux.pos.ui.resources.UI_Standards
 import net.miginfocom.swing.MigLayout
@@ -19,25 +21,22 @@ import java.util.List
 
 class ContactClientDialog extends JDialog {
 
-  private static String TXT_DIALOG_TITLE = 'Seleccionar Cliente Caja'
-  private static String TXT_INSTRUCTIONS = '%d ordenes pendientes de pago.'
-  private static String TXT_CUST_NAME_LABEL = 'Cliente'
-  private static String TXT_PARTS_LABEL = 'Articulos'
-  private static String TXT_AMOUNT_LABEL = 'Monto'
+
 
   private SwingBuilder sb = new SwingBuilder()
   private Logger logger = LoggerFactory.getLogger( this.getClass() )
 
-  private List<OrderActive> orderList
-  private OrderActive selection
-  private JLabel lblInstructions
-  private JTable tOrders
+  private List<FormaContacto> formasContacto
+  private FormaContacto selection
+  private NotaVenta notaVenta
+  private JTable tFormas
   private DefaultTableModel model
-  private JTextField search
 
-    ContactClientDialog( ) {
-    this.orderList = new ArrayList<OrderActive>()
-    this.buildUI()
+
+    ContactClientDialog( NotaVenta notaVenta) {
+    this.notaVenta = notaVenta
+    this.formasContacto = ContactController.findByIdCliente(notaVenta?.idCliente)
+        this.buildUI()
   }
 
   // Dialog Layout
@@ -57,22 +56,16 @@ class ContactClientDialog extends JDialog {
             button( '+', preferredSize: UI_Standards.BUTTON_SIZE, actionPerformed: { addContact() } )
         }
 
-        panel(layout: new MigLayout('wrap,center', '[fill,grow]')) {
-        scrollPane( constraints: BorderLayout.CENTER ) {
-          tOrders = table( selectionMode: ListSelectionModel.SINGLE_SELECTION ) {
-            model = tableModel( list: orderList ) {
-              closureColumn( header: 'Tipo de Contacto',
-                  minWidth: 240,
-                  read: { OrderActive o -> o.customerName }
-              )
-              closureColumn( header: 'Dato',
-                  minWidth: 180,
-                  read: { OrderActive o -> o.partList }
-              )
+
+        scrollPane( constraints: BorderLayout.CENTER) {
+          tFormas = table( selectionMode: ListSelectionModel.SINGLE_SELECTION ) {
+            model = tableModel( list: formasContacto ) {
+                closureColumn(header:'Tipo de Contacto',minWidth: 180, read:{row -> return row.tipoContacto.descripcion})
+                closureColumn(header:'Dato',minWidth: 180, read:{row -> return row.contacto})
             } as DefaultTableModel
           }
         }
-        }
+
 
         panel(layout: new MigLayout('wrap 3', '[fill,grow][fill,grow][fill,grow]')) {
             label()
@@ -84,14 +77,44 @@ class ContactClientDialog extends JDialog {
 
 
   protected void onCancel( ) {
+      this.selection = null
     this.setVisible( false )
   }
 
   protected void onSelection( ) {
 
+      int index = tFormas.convertRowIndexToModel(tFormas.getSelectedRow())
+      if (tFormas.selectedRowCount > 0) {
+          this.logger.debug( String.format('Selected Row:%d', index) )
+          selection = this.formasContacto.getAt( index)
+          this.setVisible( false )
+      } else {
+          this.logger.debug( 'No Row Selected' )
+          sb.doLater {
+              this.onCancel()
+          }
+      }
+
   }
 
-    protected void addContact(){}
+
+    void activate( ) {
+
+        this.selection = null
+
+        this.setVisible( true )
+    }
+
+    FormaContacto getFormaContactoSeleted( ) {
+        return selection
+    }
+
+
+    protected void addContact(){
+        ContactDialog contacto = new ContactDialog(notaVenta)
+        contacto.activate()
+        onCancel()
+    }
 
 
 }
