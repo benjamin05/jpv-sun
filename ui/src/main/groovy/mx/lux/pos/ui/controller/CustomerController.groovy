@@ -2,7 +2,7 @@ package mx.lux.pos.ui.controller
 
 import groovy.util.logging.Slf4j
 
-import mx.lux.pos.model.Cliente
+import mx.lux.pos.model.Receta
 import mx.lux.pos.model.ClienteProceso
 import mx.lux.pos.model.Estado
 import mx.lux.pos.ui.view.dialog.CustomerActiveSelectionDialog
@@ -598,5 +598,12 @@ class CustomerController {
         results.collect {
             it.descripcion
         }
+    }
+
+    static List<Rx> findRxByCustomer( Integer idCliente ){
+        log.debug( String.format('obteniendo recetas del cliente %s', idCliente) )
+        Cliente
+        List<Receta> results = recetaService.recetaCliente( idCliente )
+        results.collect { Rx.toRx(it) }
     }
 }
