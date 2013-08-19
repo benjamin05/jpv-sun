@@ -63,6 +63,7 @@ class NoSaleDialog extends JDialog {
   private JTextField txtComentario
   private JComboBox cbRazon
   private List<String> lstRazones
+  private Integer idEmpleado
   private boolean mostrarParametroSV = true
   private boolean mostrarParametroP = true
   private boolean mostrarParametroB = true
@@ -74,11 +75,11 @@ class NoSaleDialog extends JDialog {
   List<String> usoB = ["BIFOCAL"]
   List<String> comboUso = []
 
-  NoSaleDialog( String empleado, Component parent, Rx receta, Integer idCliente, Integer idSucursal, String uso ) {
+  NoSaleDialog( Integer idEmpleado, String empleado, Component parent, Rx receta, Integer idCliente, Integer idSucursal, String uso ) {
     this.sb = new SwingBuilder()
     this.component = parent
     itemUso =  uso
-    //this.customer = CustomerController.
+    this.idEmpleado = idEmpleado
     this.employee = empleado
     lstRazones = Arrays.asList('No quiso', 'Se le olvido el dinero', 'le pego su mujer') as List<String>
 
@@ -401,28 +402,28 @@ class NoSaleDialog extends JDialog {
           bean( txtOdCil, text: bind( source: receta, sourceProperty: 'odCilR' ) )
           bean( txtOdEje, text: bind( source: receta, sourceProperty: 'odEjeR' ) )
           bean( txtOdAd, text: bind( source: receta, sourceProperty: 'odAdcR' ) )
-          if ( receta?.odAvR != null ) {
+          /*if ( receta?.odAvR != null ) {
               bean( txtOdAv, text: bind( source: receta, sourceProperty: 'odAvR' ) )
           } else {
-              txtOdAv.setText( '20/' )
-          }
+              txtOdAv. text = '20/'
+          }*/
           bean( txtOdDm, text: bind( source: receta, sourceProperty: 'diOd' ) )
-          bean( txtOdPrisma, text: bind( source: receta, sourceProperty: 'odPrismH' ) )
-          bean( txtOdUbic, text: bind( source: receta, sourceProperty: 'odPrismaV' ) )
+          //bean( txtOdPrisma, text: bind( source: receta, sourceProperty: 'odPrismH' ) )
+          //bean( txtOdUbic, text: bind( source: receta, sourceProperty: 'odPrismaV' ) )
           bean( txtDILejos, text: bind( source: receta, sourceProperty: 'diLejosR' ) )
           bean( txtOiEsfera, text: bind( source: receta, sourceProperty: 'oiEsfR' ) )
           bean( txtOiCil, text: bind( source: receta, sourceProperty: 'oiCilR' ) )
           bean( txtOiEje, text: bind( source: receta, sourceProperty: 'oiEjeR' ) )
           bean( txtOiAd, text: bind( source: receta, sourceProperty: 'oiAdcR' ) )
-          if ( receta?.oiAvR != null ) {
+          /*if ( receta?.oiAvR != null ) {
               bean( txtOiAv, text: bind( source: receta, sourceProperty: 'oiAvR' ) )
           } else {
               txtOiAv.setText( '20/' )
-          }
+          }*/
           bean( txtOiDm, text: bind( source: receta, sourceProperty: 'diOi' ) )
-          bean( txtOiPrisma, text: bind( source: receta, sourceProperty: 'oiPrismH' ) )
-          bean( txtOiUbic, text: bind( source: receta, sourceProperty: 'oiPrismaV' ) )
-          bean( txtDICerca, text: bind( source: receta, sourceProperty: 'diCercaR' ) )
+          //bean( txtOiPrisma, text: bind( source: receta, sourceProperty: 'oiPrismH' ) )
+          //bean( txtOiUbic, text: bind( source: receta, sourceProperty: 'oiPrismaV' ) )
+          //bean( txtDICerca, text: bind( source: receta, sourceProperty: 'diCercaR' ) )
           bean( txtAltOblea, text: bind( source: receta, sourceProperty: 'altOblR' ) )
           bean( txtObservaciones, text: bind( source: receta, sourceProperty: 'observacionesR' ) )
         }
@@ -465,7 +466,7 @@ class NoSaleDialog extends JDialog {
         receta.setObservacionesR(txtObservaciones.text)
         //  receta.setOdPrismaV(cbOdUbic.selectedItem.toString() ?: '')
         // receta.setOiPrismaV(cbOiUbic.selectedItem.toString() ?: '')
-        receta.setIdOpt(txtEmpleado.text)
+        receta.setIdOpt(idEmpleado.toString())
         receta.setFolio(txtFolio.text)
         if (!receta?.idClient) {
             receta.setIdStore(idSucursal)
@@ -491,31 +492,22 @@ class NoSaleDialog extends JDialog {
   protected void onButtonOk( ) {
       if (!StringUtils.trimToEmpty(txtExamino.text).isEmpty()
               && !StringUtils.trimToEmpty(txtFolio.text).isEmpty() ) {
-
           String useGlass = cbUso.selectedItem.toString().trim()
           println('UseGlass = ' + useGlass)
           println('ItemUse = ' + itemUso)
 
           /*B*/   if(useGlass.equals(usoB[0])/*BIFOCAL*/ ){
               useGlass = 'BIFOCAL'
-
               if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
-
                   if( txtOdEsfera.text != '' &&
                           txtOdCil.text != '' &&
                           txtOdEje.text != '' &&
                           txtOdAd.text  != '' &&
                           txtDILejos.text   != '' &&
-
-
-
                           txtOiEsfera.text  != '' &&
                           txtOiCil.text  != '' &&
                           txtOiEje.text  != '' &&
                           txtOiAd.text != '' &&
-
-
-
                           txtAltOblea.text  != ''
                   ){
                       useGlasess()
@@ -529,26 +521,20 @@ class NoSaleDialog extends JDialog {
                           .createDialog(new JTextField(), "Error")
                           .show()
               }
+
               /*P*/     }else if(useGlass.equals(usoP[0])/*PROGRESIVO*/){
               useGlass = 'PROGRESIVO'
-
               if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
-
                   if( txtOdEsfera.text != '' &&
                           txtOdCil.text != '' &&
                           txtOdEje.text != '' &&
                           txtOdAd.text  != '' &&
-
                           txtOdDm.text  != '' &&
-
-
                           txtOiEsfera.text  != '' &&
                           txtOiCil.text  != '' &&
                           txtOiEje.text  != '' &&
                           txtOiAd.text != '' &&
                           txtOiDm.text  != '' &&
-
-
                           txtAltOblea.text  != ''
                   ){
                       useGlasess()
@@ -565,19 +551,14 @@ class NoSaleDialog extends JDialog {
 
               /*SV*/    }else if(useGlass.equals(usoM[0])/*LEJOS*/ || useGlass.equals(usoM[1])/*CERCA*/  ){
               useGlass = 'MONOFOCAL'
-
               if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
-
                   if( txtOdEsfera.text != '' &&
                           txtOdCil.text != '' &&
                           txtOdEje.text != '' &&
-
                           txtDILejos.text   != '' &&
                           txtOiEsfera.text  != '' &&
                           txtOiCil.text  != '' &&
                           txtOiEje.text  != ''
-
-
                   ){
                       useGlasess()
                   }else{
@@ -591,7 +572,6 @@ class NoSaleDialog extends JDialog {
                           .show()
               }
           }
-
       } else {
           sb.optionPane(message: "Debe ingresar empleado y folio:", optionType: JOptionPane.DEFAULT_OPTION)
                   .createDialog(new JTextField(), "Error")
@@ -603,6 +583,18 @@ class NoSaleDialog extends JDialog {
   private void limpiar(JTextField txtField){
       limpiarAux = txtField.text
       txtField.text = ''
+  }
+
+    private String signoMas(String numero){
+      if(numero.toDouble()>0.0){
+          numero = '+' + numero
+      }
+      return numero
+    }
+
+    private String signoMenos(String numero){
+      numero = '-' + numero
+      return numero
   }
 
     private void validacion(JTextField txtField, double max, double min, double interval, String format, String mask){

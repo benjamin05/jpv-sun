@@ -76,7 +76,7 @@ class OpenDayDialogSample extends JFrame {
         customer.id = 1810
         customer.name = 'Pruebas de Sistemas'
         Rx receta = new Rx()
-        salesDialog = new NoSaleDialog( 'Pepe Nador', this, receta, customer.id, 03, 'PROGRESIVO'  )
+        salesDialog = new NoSaleDialog( 9999, 'SISTEMAS', this, receta, customer.id, 03, 'PROGRESIVO'  )
         salesDialog.activate()
     }
 
