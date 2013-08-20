@@ -58,7 +58,8 @@ class NoSaleDialog extends JDialog {
 
   private JTextArea txtObservaciones
 
-  private JTextField txtExamino
+  private JTextField txtEmpleado
+  private JLabel lblEmpleado
   private JTextField txtFolio
   private JTextField txtComentario
   private JComboBox cbRazon
@@ -70,50 +71,17 @@ class NoSaleDialog extends JDialog {
 
   private static String itemUso = null
   private static String limpiarAux
-  List<String> usoM = ["LEJOS", "CERCA"]
-  List<String> usoP = ["PROGRESIVO"]
-  List<String> usoB = ["BIFOCAL"]
-  List<String> comboUso = []
+  List<String> uso = ["LEJOS", "CERCA", "PROGRESIVO", "BIFOCAL"]
 
-  NoSaleDialog( Integer idEmpleado, String empleado, Component parent, Rx receta, Integer idCliente, Integer idSucursal, String uso ) {
+  NoSaleDialog( Component parent, Integer idCliente, Integer idSucursal ) {
     this.sb = new SwingBuilder()
     this.component = parent
-    itemUso =  uso
-    this.idEmpleado = idEmpleado
-    this.employee = empleado
     lstRazones = Arrays.asList('No quiso', 'Se le olvido el dinero', 'le pego su mujer') as List<String>
-
-    if(itemUso.trim().equals('MONOFOCAL'))
-    {
-        mostrarParametroSV = true
-        mostrarParametroP = false
-        mostrarParametroB = false
-        comboUso= usoM
-    }else if(itemUso.trim().equals('BIFOCAL')){
-        mostrarParametroSV = false
-        mostrarParametroP = true
-        mostrarParametroB = false
-        comboUso= usoB
-    }else if(itemUso.trim().equals('PROGRESIVO')){
-        mostrarParametroSV = false
-        mostrarParametroP = true
-        mostrarParametroB = true
-        comboUso= usoP
-    }
-
-    if (receta?.id == null) {
-        this.receta = new Rx()
-        this.idCliente = idCliente
-        this.idSucursal = idSucursal
-    } else {
-
-        this.receta = receta
-
-        this.idCliente = idCliente
-        this.idSucursal = idSucursal
-    }
-
+    this.receta = new Rx()
+    this.idCliente = idCliente
+    this.idSucursal = idSucursal
     buildUI()
+    refreshRx()
     doBindings()
   }
 
@@ -128,15 +96,26 @@ class NoSaleDialog extends JDialog {
         location: [ 200, 250 ],
         layout: new MigLayout( 'fill,wrap', '[fill]' )
     ) {
-        panel( layout: new MigLayout( "wrap 4", "[][grow,fill][][grow,fill]", "[][]" ) ) {
+        panel( layout: new MigLayout( "wrap 5", "[][fill][grow,fill][][grow,fill]", "[][]" ) ) {
           label( text: "Examino:" )
-          txtExamino = textField( text: employee )
-          label( text: "Folio:" )
+          txtEmpleado = textField( minimumSize: [50, 20], actionPerformed: {doOptSearch()})
+          txtEmpleado.addFocusListener(new FocusListener() {
+              @Override
+              void focusGained(FocusEvent e) { }
+              @Override
+              void focusLost(FocusEvent e) {
+                  if (txtEmpleado.text.length() > 0) {
+                      doOptSearch()
+                  }
+              }
+          })
+          lblEmpleado = label(border: titledBorder(title: ''), minimumSize: [150, 20])
+          label( text: "Folio:", horizontalAlignment: SwingConstants.RIGHT )
           txtFolio = textField()
           label( text: "Razon:" )
           cbRazon = comboBox( items: lstRazones )
-          label(text: 'Uso:')
-          cbUso = comboBox(items: comboUso)
+          label(text: 'Uso:', horizontalAlignment: SwingConstants.RIGHT )
+          cbUso = comboBox(items: uso, itemStateChanged: {refreshRx()} )
           label( text: '' )
         }
         panel(border: titledBorder("Rx"), layout: new MigLayout('fill,wrap ,center', '[fill,grow]')) {
@@ -233,33 +212,6 @@ class NoSaleDialog extends JDialog {
                         validacion(txtOdDm,45,22,0.1,'.0','')
                     }
                 })
-                /*txtOdPrisma = textField( horizontalAlignment: JTextField.RIGHT,visible:false)
-                txtOdPrisma.addFocusListener(new FocusListener() {
-                    @Override
-                    void focusGained(FocusEvent e) {
-                        limpiar(txtOdPrisma)
-                    }
-
-                    @Override
-                    void focusLost(FocusEvent e) {
-                        validacion(txtOdPrisma,12,0,0.25,'.00','')
-                    }
-                })*/
-                /*cbOdUbic = comboBox(items: ubicacion, toolTipText: 'Ubicación',visible:false)*/
-
-                /*label(text: 'D.I. Cerca', toolTipText: 'Distancia Interpupilar Cerca',visible:false )
-                txtDICerca = textField( minimumSize: [20, 20], toolTipText: 'Distancia Interpupilar Cerca', horizontalAlignment: JTextField.RIGHT,visible:false )
-                txtDICerca.addFocusListener(new FocusListener() {
-                    @Override
-                    void focusGained(FocusEvent e) {
-                        limpiar(txtDICerca)
-                    }
-
-                    @Override
-                    void focusLost(FocusEvent e) {
-                        validacion(txtDICerca,90,45,1,'0','')
-                    }
-                })*/
                 label(text: 'D.I. Binocular', toolTipText: 'Distancia Interpupilar Binocular',visible:(mostrarParametroP && !mostrarParametroB)||mostrarParametroSV ,enabled:(mostrarParametroP && !mostrarParametroB)||mostrarParametroSV)
                 txtDILejos = textField(minimumSize: [20, 20], toolTipText: 'Distancia Interpupilar Binocular', horizontalAlignment: JTextField.RIGHT,visible:(mostrarParametroP && !mostrarParametroB)||mostrarParametroSV  ,enabled:(mostrarParametroP && !mostrarParametroB)||mostrarParametroSV )
                 txtDILejos.addFocusListener(new FocusListener() {
@@ -401,30 +353,15 @@ class NoSaleDialog extends JDialog {
           bean( txtOdEsfera, text: bind( source: receta, sourceProperty: 'odEsfR' ) )
           bean( txtOdCil, text: bind( source: receta, sourceProperty: 'odCilR' ) )
           bean( txtOdEje, text: bind( source: receta, sourceProperty: 'odEjeR' ) )
-          bean( txtOdAd, text: bind( source: receta, sourceProperty: 'odAdcR' ) )
-          /*if ( receta?.odAvR != null ) {
-              bean( txtOdAv, text: bind( source: receta, sourceProperty: 'odAvR' ) )
-          } else {
-              txtOdAv. text = '20/'
-          }*/
-          bean( txtOdDm, text: bind( source: receta, sourceProperty: 'diOd' ) )
-          //bean( txtOdPrisma, text: bind( source: receta, sourceProperty: 'odPrismH' ) )
-          //bean( txtOdUbic, text: bind( source: receta, sourceProperty: 'odPrismaV' ) )
-          bean( txtDILejos, text: bind( source: receta, sourceProperty: 'diLejosR' ) )
+          bean( txtOdAd, text: bind( source: receta, sourceProperty: 'odAdcR' ), enabled: mostrarParametroP )
+          bean( txtOdDm, text: bind( source: receta, sourceProperty: 'diOd' ), enabled: (mostrarParametroP && mostrarParametroB) )
+          bean( txtDILejos, text: bind( source: receta, sourceProperty: 'diLejosR' ), enabled: (mostrarParametroP && !mostrarParametroB) )
           bean( txtOiEsfera, text: bind( source: receta, sourceProperty: 'oiEsfR' ) )
           bean( txtOiCil, text: bind( source: receta, sourceProperty: 'oiCilR' ) )
           bean( txtOiEje, text: bind( source: receta, sourceProperty: 'oiEjeR' ) )
-          bean( txtOiAd, text: bind( source: receta, sourceProperty: 'oiAdcR' ) )
-          /*if ( receta?.oiAvR != null ) {
-              bean( txtOiAv, text: bind( source: receta, sourceProperty: 'oiAvR' ) )
-          } else {
-              txtOiAv.setText( '20/' )
-          }*/
-          bean( txtOiDm, text: bind( source: receta, sourceProperty: 'diOi' ) )
-          //bean( txtOiPrisma, text: bind( source: receta, sourceProperty: 'oiPrismH' ) )
-          //bean( txtOiUbic, text: bind( source: receta, sourceProperty: 'oiPrismaV' ) )
-          //bean( txtDICerca, text: bind( source: receta, sourceProperty: 'diCercaR' ) )
-          bean( txtAltOblea, text: bind( source: receta, sourceProperty: 'altOblR' ) )
+          bean( txtOiAd, text: bind( source: receta, sourceProperty: 'oiAdcR' ), enabled: mostrarParametroP )
+          bean( txtOiDm, text: bind( source: receta, sourceProperty: 'diOi' ), enabled: (mostrarParametroP && mostrarParametroB) )
+          bean( txtAltOblea, text: bind( source: receta, sourceProperty: 'altOblR' ), enabled: mostrarParametroP )
           bean( txtObservaciones, text: bind( source: receta, sourceProperty: 'observacionesR' ) )
         }
     }
@@ -490,7 +427,7 @@ class NoSaleDialog extends JDialog {
   }
 
   protected void onButtonOk( ) {
-      if (!StringUtils.trimToEmpty(txtExamino.text).isEmpty()
+      if (!StringUtils.trimToEmpty(txtEmpleado.text).isEmpty()
               && !StringUtils.trimToEmpty(txtFolio.text).isEmpty() ) {
           String useGlass = cbUso.selectedItem.toString().trim()
           println('UseGlass = ' + useGlass)
@@ -639,6 +576,40 @@ class NoSaleDialog extends JDialog {
             }
         } else {
             txtField.text = limpiarAux
+        }
+    }
+
+    private void refreshRx( ){
+        String uso = cbUso.selectedItem.toString().trim()
+        if(uso.trim().equals('LEJOS') || uso.trim().equals('CERCA'))
+        {
+            mostrarParametroSV = true
+            mostrarParametroP = false
+            mostrarParametroB = false
+        }else if(uso.trim().equals('BIFOCAL')){
+            mostrarParametroSV = false
+            mostrarParametroP = true
+            mostrarParametroB = false
+        }else if(uso.trim().equals('PROGRESIVO')){
+            mostrarParametroSV = false
+            mostrarParametroP = true
+            mostrarParametroB = true
+        }
+        doBindings()
+    }
+
+
+    private void doOptSearch() {
+        String input = txtEmpleado.text
+        if (StringUtils.isNotBlank(input)) {
+            String optometrista = CustomerController.findOptometrista(input)
+            if (optometrista != null) {
+                lblEmpleado.setText(optometrista)
+            } else {
+                sb.optionPane(message: "No existe el empleado", optionType: JOptionPane.DEFAULT_OPTION)
+                        .createDialog(new JTextField(), "Error")
+                        .show()
+            }
         }
     }
 }
