@@ -113,7 +113,7 @@ class NoSaleDialog extends JDialog {
           label( text: "Folio:", horizontalAlignment: SwingConstants.RIGHT )
           txtFolio = textField()
           label( text: "Razon:" )
-          cbRazon = comboBox( items: lstRazones )
+          cbRazon = comboBox( items: lstRazones, constraints: 'span 2' )
           label(text: 'Uso:', horizontalAlignment: SwingConstants.RIGHT )
           cbUso = comboBox(items: uso, itemStateChanged: {refreshRx()} )
           label( text: '' )
