@@ -352,7 +352,7 @@ class TicketServiceImpl implements TicketService {
                   artArmazon = detalle
               }
               if(detalle?.articulo?.idGenerico.trim().equals('G')){
-                  trat =  notaVenta?.udf2 ', ' + detalle?.articulo?.descripcion
+                  trat =  notaVenta?.getUdf2()+ ', ' + detalle?.articulo?.descripcion
               }
 
           }

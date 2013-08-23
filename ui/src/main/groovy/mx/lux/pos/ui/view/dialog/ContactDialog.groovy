@@ -7,6 +7,7 @@ import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.ui.controller.ContactController
 import mx.lux.pos.ui.controller.CustomerController
 import mx.lux.pos.ui.model.UpperCaseDocument
+import mx.lux.pos.ui.resources.UI_Standards
 import net.miginfocom.swing.MigLayout
 
 import javax.swing.*
@@ -55,7 +56,7 @@ class ContactDialog extends JDialog {
 
                  panel(layout: new MigLayout("wrap 3","[][][]","[][]")) {
                      tipo = comboBox( items: tipos,itemStateChanged: typeChanged )
-                     label()
+                   label()
                      infoTipo =  textField(minimumSize: [140, 20], visible: false)
                      correo =  textField(minimumSize: [140, 20])
                      arroba = label(text: '@')
@@ -79,6 +80,7 @@ class ContactDialog extends JDialog {
         }
 
     }
+
 
 
 

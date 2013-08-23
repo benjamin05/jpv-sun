@@ -8,6 +8,7 @@ import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.model.Item
 import mx.lux.pos.ui.model.Order
 import mx.lux.pos.ui.model.OrderItem
+import mx.lux.pos.ui.model.SurteSwitch
 import mx.lux.pos.ui.view.panel.OrderPanel
 import net.miginfocom.swing.MigLayout
 
@@ -44,7 +45,7 @@ class ItemDialog extends JDialog {
     )
     items = [ ]
     colors = [ ]
-
+        surteOption = []
 
         surteVisible = OrderController.surteEnabled(orderItem?.tipo.trim())
         if(surteVisible == true){
@@ -122,12 +123,39 @@ class ItemDialog extends JDialog {
     //dispose()
   }
 
-  private def doSubmit = { ActionEvent ev ->
+    private SurteSwitch surteSu(Item item, SurteSwitch surteSwitch){
+        if(surteSwitch?.surteSucursal==false){
+            if(item?.type?.trim().equals('A') && item?.stock > 0 ){
+                surteSwitch?.surteSucursal=true
+            }else{
+                AuthorizationDialog authDialog = new AuthorizationDialog(this, "Esta operacion requiere autorizaci\u00f3n")
+                authDialog.show()
+                println('Autorizado: ' + authDialog.authorized)
+                if (authDialog.authorized) {
+                    surteSwitch?.surteSucursal=true
+                } else {
+                    OrderController.notifyAlert('Se requiere autorizacion para esta operacion', 'Se requiere autorizacion para esta operacion')
+                }
+            }
+        }
+        return surteSwitch
+    }
+
+
+    private def doSubmit = { ActionEvent ev ->
     JButton source = ev.source as JButton
     source.enabled = false
-    OrderController.surteCallWS(order,tmpOrderItem?.item)
-    OrderController.removeOrderItemFromOrder( order.id, orderItem )
-    OrderController.addOrderItemToOrder( order.id, tmpOrderItem )
+    println('Seleccionado: '+surte.selectedItem?.toString())
+
+
+      SurteSwitch surteSwitch = OrderController.surteCallWS(order?.branch, orderItem?.item, 'S')
+      surteSwitch = surteSu(orderItem?.item,surteSwitch)
+      if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
+
+          OrderController.removeOrderItemFromOrder( order.id, orderItem )
+          OrderController.addOrderItemToOrder( order.id, tmpOrderItem, surte.selectedItem?.toString() )
+      }
+
     source.enabled = true
     dispose()
   }

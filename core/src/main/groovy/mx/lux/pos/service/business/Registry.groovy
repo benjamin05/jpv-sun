@@ -98,6 +98,7 @@ class Registry {
 
   static Boolean isExportEnabledForInventory( String pTipoTransInv ) {
     Boolean enabled = false
+
     if ( InvTrType.SALES.equals( pTipoTransInv ) ) {
       enabled = isTrue( TipoParametro.INV_EXPORT_SALE_TR )
     } else if ( InvTrType.RECEIPT.equals( pTipoTransInv ) ) {

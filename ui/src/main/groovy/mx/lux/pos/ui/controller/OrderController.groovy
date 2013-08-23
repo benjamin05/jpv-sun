@@ -1,9 +1,5 @@
 package mx.lux.pos.ui.controller
 
-import com.sun.org.apache.xerces.internal.xni.parser.XMLDocumentFilter
-import com.sun.org.apache.xerces.internal.xni.parser.XMLInputSource
-import com.sun.org.apache.xerces.internal.xni.parser.XMLParserConfiguration
-import com.sun.org.apache.xml.internal.serialize.XMLSerializer
 import groovy.util.logging.Slf4j
 import mx.lux.pos.repository.AcusesTipoRepository
 import mx.lux.pos.repository.DescuentoClaveRepository
@@ -14,7 +10,6 @@ import mx.lux.pos.repository.JbRepository
 import mx.lux.pos.repository.ParametroRepository
 import mx.lux.pos.repository.PrecioRepository
 import mx.lux.pos.repository.TmpServiciosRepository
-import mx.lux.pos.service.business.Registry
 import mx.lux.pos.ui.MainWindow
 import mx.lux.pos.ui.resources.ServiceManager
 import mx.lux.pos.ui.view.dialog.ContactClientDialog
@@ -24,12 +19,8 @@ import mx.lux.pos.ui.view.dialog.ManualPriceDialog
 import mx.lux.pos.ui.view.panel.OrderPanel
 import org.apache.commons.lang.NumberUtils
 import org.apache.commons.lang3.StringUtils
-import org.hibernate.service.spi.ServiceException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import org.w3c.dom.Document
-import org.w3c.dom.Element
-import org.xml.sax.InputSource
 
 import javax.swing.JDialog
 import javax.swing.JOptionPane
@@ -39,8 +30,13 @@ import mx.lux.pos.model.*
 import mx.lux.pos.service.*
 import mx.lux.pos.ui.model.*
 
-import javax.xml.parsers.DocumentBuilderFactory
 import java.text.SimpleDateFormat
+import java.util.concurrent.Callable
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import java.util.concurrent.Future
+import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 
 
 
@@ -233,7 +229,7 @@ class OrderController {
 
         Dioptra diop = generaDioptra(preDioptra(nota.codigo_lente))
 
-
+       println('Codigo Lente: ' + nota.codigo_lente)
       return diop
 
   }
@@ -277,7 +273,7 @@ class OrderController {
 
     }
 
-  static Order addItemToOrder( Order order, Item item) {
+  static Order addItemToOrder( Order order, Item item, String surte) {
       String orderId = order?.id
       String clienteID = order.customer?.id
       String empleadoID = order?.employee
@@ -305,7 +301,7 @@ class OrderController {
               precioCalcOferta: 0,
               precioConv: 0,
               idTipoDetalle: 'N',
-              surte: 'S'
+              surte: surte
 
           )
           nota.observacionesNv = dlg.remarks
@@ -323,7 +319,7 @@ class OrderController {
             precioCalcOferta: 0,
             precioConv: 0,
             idTipoDetalle: 'N',
-            surte: 'S'
+            surte: surte
 
         )
       }
@@ -337,7 +333,7 @@ class OrderController {
     return null
   }
 
-  static Order addOrderItemToOrder( String orderId, OrderItem orderItem ) {
+  static Order addOrderItemToOrder( String orderId, OrderItem orderItem, String surte ) {
     log.info( "actualizando orderItem id: ${orderItem?.item?.id} en orden id: ${orderId}" )
     if ( StringUtils.isNotBlank( orderId ) && orderItem?.item?.id ) {
       DetalleNotaVenta detalle = new DetalleNotaVenta(
@@ -350,7 +346,7 @@ class OrderController {
           precioCalcOferta: 0,
           precioConv: 0,
           idTipoDetalle: 'N',
-          surte: 'S'
+          surte: surte
       )
       NotaVenta notaVenta = notaVentaService.registrarDetalleNotaVentaEnNotaVenta( orderId, detalle )
       return Order.toOrder( notaVenta )
@@ -1088,15 +1084,25 @@ class OrderController {
     }
 
 
-    static surteCallWS(Order order,Item item){
+    static SurteSwitch surteCallWS(Branch branch,Item item, String surte){
+        Boolean agregaArticulo = true
+        Boolean surteSucursal = true
+        SurteSwitch surteSwitch = new SurteSwitch()
+        surteSwitch?.surte = surte
         Precio precio = precioRepository.findbyArt(item?.name.trim())
 
         if(item?.type?.trim().equals('A') && precio?.surte?.trim().equals('P')){
             AcusesTipo acusesTipo = acusesTipoRepository.findOne('AUT')
-            String url = acusesTipo?.pagina + '?id_suc=' + order?.branch?.id.toString().trim() + '&id_col=' + item?.color?.trim() + '&id_art='+ item?.id.toString().trim()
+            String url = acusesTipo?.pagina + '?id_suc=' + branch?.id.toString().trim() + '&id_col=' + item?.color?.trim() + '&id_art='+ item?.name.toString().trim()
             println(url)
             String resultado = callWS(url)
-              int index = resultado.indexOf('|')
+            println(resultado)
+            int index
+            try{
+                index = resultado.indexOf('|')
+              }catch(ex){
+                 index = 1
+              }
             String condicion = resultado.substring(0,index)
            if(condicion.trim().equals('Si')){
                 String contenido =  resultado + '|' + item?.id + '|' +item?.color + '|' + 'facturacion'
@@ -1104,17 +1110,31 @@ class OrderController {
                 SimpleDateFormat formateador = new SimpleDateFormat("hhmmss")
                 String nombre = formateador.format(date)
                 generaAcuse(contenido,nombre)
-            } else{
-               Integer question = JOptionPane.showConfirmDialog( new JDialog(), 'Almacen Central sin Existencias', '¿Desea Continuar con la venta?',
+                surteSwitch.surte = 'P'
+            } else if(condicion.trim().equals('No')){
+               Integer question = JOptionPane.showConfirmDialog( new JDialog(), '¿Desea Continuar con la venta?', 'Almacen Central sin Existencias',
                        JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE )
                if( question == 0){
-
+                  surteSucursal = false
+               }else{
+                   agregaArticulo = false
                }
-            }
+            }else{
+               notifyAlert('Almacen Central no Responde', 'Contacte a Soporte Tecnico')
+                   agregaArticulo = false
+           }
 
 
         }
+
+        surteSwitch.setAgregaArticulo(agregaArticulo)
+        surteSwitch.setSurteSucursal(surteSucursal)
+
+        return  surteSwitch
     }
+
+
+
     static void generaAcuse(String contenido,String nombre){
         try {
             Parametro ruta =  parametroRepository.findOne(TipoParametro.ARCHIVO_CONSULTA_WEB.value)
@@ -1128,35 +1148,55 @@ class OrderController {
     }
 
     static String callWS( String url ) {
-        def urlTexto = url
-        def resp = urlTexto?.toURL()
-
-        List<String> htmlList = new ArrayList<String>()
-
-        String s = resp?.text.replaceAll("[\n\r\t]","")
-
-        println(s)
-        StringTokenizer st = new StringTokenizer(s.trim(), ">")
-        Iterator its = st.iterator()
-        int ini = 0
-        Boolean xx = false
         String resultado = new String()
-        while (its.hasNext())
-        {
-            htmlList.add(its.next().toString() + ">")
-            if(xx==true){
-
-               int index = htmlList.get(ini).indexOf('<')
-
-                   resultado = htmlList.get(ini).substring(0,index)
-
-              xx = false
+        int NTHREDS = 10
+        ExecutorService executor = Executors.newFixedThreadPool(NTHREDS);
+        Future<String> future = executor.submit(new Callable<String>() {
+            public String call() {
+                def urlTexto = url
+                def resp = urlTexto?.toURL()
+                return resp.text
             }
-            if(htmlList.get(ini).trim().equals('<XX>')){
-                  xx= true
+        })
+
+        try {
+            String resp = future.get(10, TimeUnit.SECONDS)
+
+            List<String> htmlList = new ArrayList<String>()
+
+            String s = resp?.replaceAll("[\n\r\t]","")
+
+            println(s)
+            StringTokenizer st = new StringTokenizer(s.trim(), ">")
+            Iterator its = st.iterator()
+            int ini = 0
+            Boolean xx = false
+
+            while (its.hasNext())
+            {
+                htmlList.add(its.next().toString() + ">")
+                if(xx==true){
+
+                    int index = htmlList.get(ini).indexOf('<')
+
+                    resultado = htmlList.get(ini).substring(0,index)
+
+                    xx = false
+
+                }
+                if(htmlList.get(ini).trim().equals('<XX>')){
+                    xx= true
+                }
+                ini = ini + 1
             }
-            ini = ini + 1
+
+
+        } catch (TimeoutException ex) {
+            resultado = ''
+
         }
+
+
 
         return resultado
     }

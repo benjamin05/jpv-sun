@@ -113,6 +113,7 @@ class InventarioServiceImpl implements InventarioService {
     Boolean registrado = false
     PrepareInvTrBusiness task = PrepareInvTrBusiness.instance
     InvTrRequest request = task.requestSalesIssue( pNotaVenta )
+      println('Resquest: ' + request?.trType)
     if ( request != null ) {
       registrado = ( solicitarTransaccion( request ) != null )
     }

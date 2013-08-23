@@ -119,6 +119,7 @@ class PrepareInvTrBusiness {
 
     request.trType = TR_TYPE_ISSUE_SALES
     String trType = parameters.findOne( TipoParametro.TRANS_INV_TIPO_VENTA.value )?.valor
+      println('Trans: ' + trType)
     if ( StringUtils.trimToNull( trType ) != null ) {
       request.trType = trType
     }

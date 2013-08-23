@@ -605,7 +605,7 @@ class EditRxDialog extends JDialog {
         receta.setDiOd(txtOdDm.text)
        // receta.setOdPrismH(txtOdPrisma.text)
         receta.setDiLejosR(txtDILejos.text)
-
+        receta.setOiAdcR(txtOiAd.text)
         receta.setOiEsfR(txtOiEsfera.text)
         receta.setOiCilR(txtOiCil.text)
         receta.setOiEjeR(txtOiEje.text)

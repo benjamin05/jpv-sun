@@ -55,8 +55,13 @@ class PromotionCommit {
       String empId = PromotionQuery.findEmpId( pModel.order.orderNbr )
       Descuento descuento = new Descuento()
       descuento.idFactura = pModel.order.orderNbr
-      descuento.clave = pModel.orderDiscount.corporateKey
-      if ( pModel.orderDiscount.discountPercent < 1 ) {
+        descuento.clave = pModel.orderDiscount.corporateKey
+        if(pModel?.orderDiscount?.discountType?.idType != null){
+             if(pModel?.orderDiscount?.discountType?.idType.trim().equals('P')){
+             descuento.clave = pModel.orderDiscount.discountType?.description
+            }
+        }
+        if ( pModel.orderDiscount.discountPercent < 1 ) {
         descuento.porcentaje = String.format( "%.0f", pModel.orderDiscount.discountPercent * 100.0 )
       } else {
         descuento.porcentaje = "99"

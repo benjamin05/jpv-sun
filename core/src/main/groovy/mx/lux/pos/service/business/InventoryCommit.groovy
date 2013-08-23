@@ -21,6 +21,8 @@ class InventoryCommit {
   private static Logger log = LoggerFactory.getLogger( InventoryCommit.class )
 
   static void exportarTransaccion( TransInv pTransInv ) {
+
+      println('Tipo transaccion: '+pTransInv.idTipoTrans )
     if ( Registry.isExportEnabledForInventory( pTransInv.idTipoTrans ) ) {
       InvTrFile file = ResourceManager.getInvTrFile()
       file.write( pTransInv )
@@ -48,7 +50,7 @@ class InventoryCommit {
           part.cantExistencia += mov.factor * trDet.cantidad
         }
         ServiceFactory.partMaster.registrarListaArticulos( list )
-
+         println('Transaccion Folio: '+ pTrMstr?.folio)
         // Register Transactions
         RepositoryFactory.inventoryMaster.save( pTrMstr )
         for ( TransInvDetalle det in pTrMstr.trDet ) {
