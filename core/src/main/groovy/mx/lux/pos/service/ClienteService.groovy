@@ -10,6 +10,8 @@ interface ClienteService {
 
   Cliente agregarCliente( Cliente cliente )
 
+  Cliente actualizaCliente(Cliente cliente)
+
   Cliente agregarCliente( Cliente cliente, String city, String country )
 
   Cliente obtenerClientePorDefecto( )

@@ -91,4 +91,6 @@ class AuthorizationDialog extends JDialog {
     password.text = null
     source.enabled = true
   }
+
+
 }

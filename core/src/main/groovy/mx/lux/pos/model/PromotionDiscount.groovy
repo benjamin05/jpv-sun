@@ -2,6 +2,7 @@ package mx.lux.pos.model
 
 
 class PromotionDiscount implements IPromotionAvailable {
+
   
   private static final String TXT_ALL_ITEMS = "*"
   
@@ -25,7 +26,10 @@ class PromotionDiscount implements IPromotionAvailable {
   }
 
     static PromotionDiscount getCouponDiscountInstance(DescuentoClave descuentoClave ) {
-        return new PromotionDiscount( PromotionDiscountType.CouponDiscount)
+         String idType   =  'P'
+         String description  = descuentoClave?.clave_descuento.toString()
+         String text   =   descuentoClave?.descripcion_descuento
+        return new PromotionDiscount(  PromotionDiscountType.PromotionDiscount(  idType,  description, text ))
     }
 
 

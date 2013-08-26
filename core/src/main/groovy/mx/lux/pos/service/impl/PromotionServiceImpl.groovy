@@ -1,9 +1,13 @@
 package mx.lux.pos.service.impl
 
+import mx.lux.pos.model.Descuento
+import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.model.Parametro
 import mx.lux.pos.model.PromotionAvailable
 import mx.lux.pos.model.PromotionModel
 import mx.lux.pos.model.TipoParametro
+import mx.lux.pos.repository.DescuentoRepository
+import mx.lux.pos.repository.NotaVentaRepository
 import mx.lux.pos.repository.ParametroRepository
 import mx.lux.pos.repository.PromocionRepository
 import mx.lux.pos.repository.SucursalRepository
@@ -36,6 +40,12 @@ class PromotionServiceImpl implements PromotionService {
 
   @Resource
   private SucursalRepository sucursalRepository
+
+   @Resource
+   private NotaVentaRepository notaVentaRepository
+
+    @Resource
+    private DescuentoRepository descuentoRepository
 
 
   public void updateOrder( PromotionModel pModel, String pOrderNbr ) {
@@ -72,6 +82,21 @@ class PromotionServiceImpl implements PromotionService {
     PromotionCommit.writePromotions( pModel )
     PromotionCommit.writeDiscounts( pModel )
   }
+
+    void saveTipoDescuento(String idNotaVenta, String idTipoDescuento ){
+       if(idTipoDescuento != null){
+        if(idTipoDescuento.trim().equals('P')){
+            NotaVenta notaVenta =  notaVentaRepository.findOne(idNotaVenta)
+              if(notaVenta != null){
+                notaVenta?.tipoDescuento = idTipoDescuento.trim()
+                 notaVentaRepository?.saveAndFlush(notaVenta)
+             }
+
+
+        }
+       }
+
+    }
 
   Double requestTopStoreDiscount( ) {
     Double discount = PromotionQuery.getTopStoreDiscount()

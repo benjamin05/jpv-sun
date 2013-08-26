@@ -26,14 +26,16 @@ class NewCustomerAndRxDialog extends JDialog {
     private CustomerPanel custPanel
     private RXPanel rxPanel
 
+
     private Boolean canceled
 
-    NewCustomerAndRxDialog( Component parent, final Customer customer, boolean editar ) {
+    NewCustomerAndRxDialog( Component parent, Customer customer, boolean editar ) {
         component = parent
         cliente = customer
         edit = editar
+
         println('id cliente '+this.customer?.id)
-        this.custPanel = new CustomerPanel( this, this.customer, this.edit )
+        this.custPanel = new CustomerPanel( this, this.cliente, this.edit )
         /*
          if ( FeatureController.isRxEnabled() ) {
 
@@ -58,7 +60,7 @@ class NewCustomerAndRxDialog extends JDialog {
                 resizable: true,
                 pack: true,
                 modal: true,
-                preferredSize: [ 650, 600 ] as Dimension,
+                preferredSize: [ 650, 700 ] as Dimension,
                 location: [ 90, 50 ] as Point,
         ) {
             borderLayout()

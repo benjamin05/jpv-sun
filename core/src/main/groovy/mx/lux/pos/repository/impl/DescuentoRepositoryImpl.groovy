@@ -23,4 +23,6 @@ class DescuentoRepositoryImpl extends QueryDslRepositorySupport implements Descu
     null
   }
 
+
+
 }

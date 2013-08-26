@@ -67,7 +67,11 @@ class ClienteServiceImpl implements ClienteService {
   @Override
   Cliente obtenerCliente( Integer id ) {
     log.debug( "obteniendo cliente id: ${id}" )
-    clienteRepository.findOne( id ?: 0 )
+      Cliente cliente =  clienteRepository.findOne( id )
+      if(cliente ==null){
+          cliente = new Cliente()
+      }
+   return  cliente
   }
 
   @Override
@@ -89,7 +93,13 @@ class ClienteServiceImpl implements ClienteService {
     return agregarCliente( cliente, null, null )
   }
 
-  @Override
+    @Override
+    Cliente actualizaCliente(Cliente cliente) {
+        return clienteRepository.saveAndFlush( cliente )
+
+    }
+
+    @Override
   @Transactional
   Cliente agregarCliente( Cliente cliente, String city, String country ) {
     log.debug( "agregando cliente: ${cliente?.dump()}" )

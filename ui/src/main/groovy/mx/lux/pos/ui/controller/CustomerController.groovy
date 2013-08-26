@@ -237,7 +237,26 @@ class CustomerController {
     }
 
 
+     static void saveContact(Customer customer, Integer tipo, String valor){
 
+         Cliente cliente = clienteService?.obtenerCliente(customer?.id)
+         println('Tipo de Contacto E: '+cliente?.email)
+         println('Tipo de Contacto TT: '+cliente?.telefonoTrabajo)
+         println('Tipo de Contacto TC: '+cliente?.telefonoCasa)
+         println('Tipo de Contacto TA: '+cliente?.telefonoAdicional)
+
+         if( tipo == 0){
+             cliente?.email = valor
+         } else if( tipo == 1) {
+             cliente?.telefonoTrabajo = valor
+         } else if( tipo == 2) {
+              cliente?.telefonoCasa  = valor
+         } else if( tipo == 3) {
+              cliente?.telefonoAdicional = valor
+         }
+
+           clienteService.actualizaCliente(cliente)
+     }
 
 
 

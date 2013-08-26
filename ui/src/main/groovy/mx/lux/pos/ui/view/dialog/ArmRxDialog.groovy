@@ -26,6 +26,7 @@ class ArmRxDialog extends JDialog {
     private static JRadioButton pulido
     private static JRadioButton nylon
     private static JRadioButton aire
+    private static JRadioButton ninguno
     private static String idNotaV
     private static String armazon
 
@@ -95,8 +96,8 @@ class ArmRxDialog extends JDialog {
                          }
                      })
 
-                     label()
-
+                     ninguno = radioButton(text:"Ninguno", buttonGroup: acabado )
+                     ninguno.setActionCommand('Ninguno')
                     aire = radioButton(text:"Aire", buttonGroup:material)
 
                     aire.setActionCommand('Aire')
@@ -129,8 +130,10 @@ class ArmRxDialog extends JDialog {
     }
 
     private void doSave(){
-
-      String opciones =  material.selection.actionCommand +', '+acabado.selection.actionCommand
+        String opciones =  material.selection.actionCommand
+        if(!acabado.selection.actionCommand.equals('Ninguno')){
+          opciones = opciones   +', '+acabado.selection.actionCommand
+        }
         String form = forma.text
       OrderController.saveFrame(idNotaV,opciones,form)
 

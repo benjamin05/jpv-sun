@@ -284,7 +284,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                 dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
 
             }
-
+           //  println('antDioptra: ' +  OrderController.codigoDioptra(antDioptra))
+          //  println('Dioptra: ' +  OrderController.codigoDioptra(dioptra))
             change.text = OrderController.requestEmployee(order?.id)
         } else {
 
@@ -424,46 +425,19 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                 }
                 if (results?.any()) {
                     Item item = new Item()
+
                     if (results.size() == 1) {
                         item = results.first()
                         validarVentaNegativa(item, customer)
-                        rec = validarGenericoB(item)
-                        if (item?.type.trim().equals('A')) {
-                            armazonString = item?.name
-                        }
                     } else {
                         SuggestedItemsDialog dialog = new SuggestedItemsDialog(itemSearch, input, results)
                         dialog.show()
                         item = dialog.item
                         if (item?.id) {
+
                             validarVentaNegativa(item, customer)
-                            rec = validarGenericoB(item)
-                            if (item?.type.trim().equals('A')) {
-                                armazonString = item?.name
-                            }
                         }
                     }
-
-                    OrderController.surteCallWS(order, item)
-
-
-                    String indexDioptra = item?.indexDiotra
-                    if (!indexDioptra.equals(null)) {
-                        Dioptra nuevoDioptra = OrderController.generaDioptra(item?.indexDiotra)
-                        dioptra = OrderController.validaDioptra(dioptra, nuevoDioptra)
-                        antDioptra = OrderController.addDioptra(order, OrderController.codigoDioptra(dioptra))
-                        order?.dioptra = OrderController.codigoDioptra(antDioptra)
-                    } else {
-                        order?.dioptra = OrderController.codigoDioptra(antDioptra)
-                    }
-                    OrderController.saveRxOrder(order?.id, rec.id)
-
-
-                    updateOrder(order?.id)
-                    if (!order.customer.equals(customer)) {
-                        order.customer = customer
-                    }
-
                 } else {
                     optionPane(message: "No se encontraron resultados para: ${input}", optionType: JOptionPane.DEFAULT_OPTION)
                             .createDialog(new JTextField(), "B\u00fasqueda: ${input}")
@@ -577,38 +551,69 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         return rec
     }
 
+    private SurteSwitch surteSu(Item item, SurteSwitch surteSwitch){
+       if(surteSwitch?.surteSucursal==false){
+        if(item?.type?.trim().equals('A') && item?.stock > 0 ){
+            surteSwitch?.surteSucursal=true
+        }else{
+            AuthorizationDialog authDialog = new AuthorizationDialog(this, "Esta operacion requiere autorizaci\u00f3n")
+            authDialog.show()
+            println('Autorizado: ' + authDialog.authorized)
+            if (authDialog.authorized) {
+                surteSwitch?.surteSucursal=true
+            } else {
+                OrderController.notifyAlert('Se requiere autorizacion para esta operacion', 'Se requiere autorizacion para esta operacion')
+            }
+        }
+       }
+        return surteSwitch
+    }
+
     private void validarVentaNegativa(Item item, Customer customer) {
 
         User u = Session.get(SessionItem.USER) as User
         order.setEmployee(u.username)
+        Branch branch = Session.get(SessionItem.BRANCH) as Branch
 
-        if (item.stock > 0) {
-            order = OrderController.addItemToOrder(order, item)
-            if (customer != null) {
-                order.customer = customer
-            }
-        } else {
-            SalesWithNoInventory onSalesWithNoInventory = OrderController.requestConfigSalesWithNoInventory()
-            order.customer = customer
-            if (SalesWithNoInventory.ALLOWED.equals(onSalesWithNoInventory)) {
+        SurteSwitch surteSwitch = OrderController.surteCallWS(branch, item, 'S')
+        surteSwitch = surteSu(item,surteSwitch)
 
-                order = OrderController.addItemToOrder(order, item)
-            } else if (SalesWithNoInventory.REQUIRE_AUTHORIZATION.equals(onSalesWithNoInventory)) {
-                boolean authorized
-                if (AccessController.authorizerInSession) {
-                    authorized = true
-                } else {
-                    AuthorizationDialog authDialog = new AuthorizationDialog(this, "Cancelaci\u00f3n requiere autorizaci\u00f3n")
-                    authDialog.show()
-                    authorized = authDialog.authorized
-                }
-                if (authorized) {
-                    order = OrderController.addItemToOrder(order, item)
+        if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
+             String surte = surteSwitch?.surte
+
+            if (item.stock > 0) {
+                order = OrderController.addItemToOrder(order, item, surte)
+
+                controlItem(item)
+                if (customer != null) {
+                    order.customer = customer
                 }
             } else {
-                sb.optionPane(message: MSJ_VENTA_NEGATIVA, messageType: JOptionPane.ERROR_MESSAGE,)
-                        .createDialog(this, TXT_VENTA_NEGATIVA_TITULO)
-                        .show()
+                SalesWithNoInventory onSalesWithNoInventory = OrderController.requestConfigSalesWithNoInventory()
+                order.customer = customer
+                if (SalesWithNoInventory.ALLOWED.equals(onSalesWithNoInventory)) {
+                    order = OrderController.addItemToOrder(order, item, surte)
+
+                    controlItem(item)
+                } else if (SalesWithNoInventory.REQUIRE_AUTHORIZATION.equals(onSalesWithNoInventory)) {
+                    boolean authorized
+                    if (AccessController.authorizerInSession) {
+                        authorized = true
+                    } else {
+                        AuthorizationDialog authDialog = new AuthorizationDialog(this, "Cancelaci\u00f3n requiere autorizaci\u00f3n")
+                        authDialog.show()
+                        authorized = authDialog.authorized
+                    }
+                    if (authorized) {
+                        order = OrderController.addItemToOrder(order, item, surte)
+
+                        controlItem(item)
+                    }
+                } else {
+                    sb.optionPane(message: MSJ_VENTA_NEGATIVA, messageType: JOptionPane.ERROR_MESSAGE,)
+                            .createDialog(this, TXT_VENTA_NEGATIVA_TITULO)
+                            .show()
+                }
             }
         }
     }
@@ -712,6 +717,38 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         }
     }
 
+    private void controlItem(Item item){
+
+        String indexDioptra = item?.indexDiotra
+        println('Index Dioptra del Articulo : ' +item?.indexDiotra)
+        if (!indexDioptra.equals(null)) {
+            Dioptra nuevoDioptra = OrderController.generaDioptra(item?.indexDiotra)
+            println('Nuevo Objeto Dioptra :' + nuevoDioptra)
+            dioptra = OrderController.validaDioptra(dioptra, nuevoDioptra)
+            println('Dioptra Generado :' + dioptra)
+            antDioptra = OrderController.addDioptra(order, OrderController.codigoDioptra(dioptra))
+            order?.dioptra = OrderController.codigoDioptra(antDioptra)
+        } else {
+            order?.dioptra = OrderController.codigoDioptra(antDioptra)
+        }
+        println('Codigo Dioptra :' + antDioptra)
+
+        if (item?.type.trim().equals('A')) {
+            armazonString = item?.name
+        }
+
+
+        rec = validarGenericoB(item)
+        OrderController.saveRxOrder(order?.id, rec.id)
+
+
+
+        updateOrder(order?.id)
+        if (!order.customer.equals(customer)) {
+            order.customer = customer
+        }
+    }
+
     private void flujoImprimir(int artCount) {
         Boolean validOrder = isValidOrder()
         if (artCount != 0) {
@@ -787,7 +824,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
         Order newOrder = OrderController.placeOrder(order)
         CustomerController.saveOrderCountries(order.country)
-        this.promotionDriver.requestPromotionSave()
+        this.promotionDriver.requestPromotionSave(newOrder?.id)
         Boolean cSaldo = false
         // if(newOrder?.due > 0){
         //   cSaldo = true

@@ -1,11 +1,15 @@
 package mx.lux.pos.ui.view.panel
 
+import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
 import mx.lux.pos.model.Cliente
 import mx.lux.pos.model.ClienteProceso
 import mx.lux.pos.model.ClienteProcesoEtapa
+import mx.lux.pos.model.FormaContacto
+import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.service.ClienteService
 import mx.lux.pos.service.impl.ClienteServiceImpl
+import mx.lux.pos.ui.controller.ContactController
 import mx.lux.pos.ui.controller.CustomerController
 import mx.lux.pos.ui.resources.UI_Standards
 import mx.lux.pos.ui.view.dialog.EditRxDialog
@@ -14,6 +18,7 @@ import mx.lux.pos.ui.view.verifier.NotEmptyVerifier
 import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
 
+import java.awt.BorderLayout
 import java.awt.Component
 import java.awt.event.ActionEvent
 import java.awt.event.ItemEvent
@@ -27,7 +32,7 @@ class CustomerPanel extends JPanel {
     private static final String TXT_TAB_TITLE = 'Cliente'
 
     private SwingBuilder sb
-    private Customer customer
+    private Customer customer = new Customer()
     private String defaultState
     private List<String> states
     private List<String> domains
@@ -54,18 +59,38 @@ class CustomerPanel extends JPanel {
     public boolean cancel = false
     private NewCustomerAndRxDialog CustomerAndDialog = null
 
+    private static JComboBox tipo
+    private static List<String> tipos
+    private static JComboBox dominio
+    private static JLabel arroba
+    private static List<String> dominios
+    private static JTextField infoTipo
+    private static JTextField correo
 
+    private static JPanel contactEdit
+    private static JPanel contactReg
+    private static JPanel addContact
+    private List<FormaContacto> formasContacto  = new ArrayList<FormaContacto>()
 
+    private JTable tFormas
+    private DefaultTableModel model
 
-    CustomerPanel( Component parent, final Customer customer, boolean editar ) {
+    CustomerPanel( Component parent, Customer customer, boolean editar ) {
         CustomerAndDialog = parent
         edit = editar
+
+        if(editar == true){
+            this.formasContacto = ContactController.findCustomerContact(customer?.id)
+
+        }
         sb = new SwingBuilder()
-        this.customer = new Customer()
+        this.customer = customer
         defaultState = CustomerController.findDefaultState()
         states = CustomerController.findAllStates()
         titles = CustomerController.findAllCustomersTitles()
-        domains = CustomerController.findAllCustomersDomains()
+        //domains = CustomerController.findAllCustomersDomains()
+        tipos = CustomerController.findAllContactTypes()
+        dominios = CustomerController.findAllCustomersDomains()
         locations = [ ]
         tmpHomeContact = new Contact( type: ContactType.HOME_PHONE )
         tmpEmailContact = new Contact( type: ContactType.EMAIL )
@@ -79,11 +104,19 @@ class CustomerPanel extends JPanel {
     }
 
     private void initialize( Customer customer ) {
-        this.customer.type = CustomerType.DOMESTIC
-        this.customer.rfc = CustomerType.DOMESTIC.rfc
-        this.customer.gender = GenderType.MALE
-        this.customer.address = new Address( state: defaultState )
-        this.customer.contacts = [ ]
+
+        if(edit == true)  {
+            this.customer.type =  customer?.type
+            this.customer.rfc = customer.rfc
+            this.customer.gender = customer.gender
+        this.customer.address = customer.address
+         }   else{
+            this.customer.type = CustomerType.DOMESTIC
+            this.customer.rfc = CustomerType.DOMESTIC.rfc
+            this.customer.gender = GenderType.MALE
+            this.customer.address = new Address( state: defaultState )
+        }
+      //  this.customer.contacts = [ ]
         if ( customer?.id ) {
             this.customer.id = customer.id
             this.customer.name = customer.name
@@ -103,7 +136,7 @@ class CustomerPanel extends JPanel {
                         state: customer.address.state
                 )
             }
-            if ( customer.contacts?.any() ) {
+           /* if ( customer.contacts?.any() ) {
                 customer.contacts.each { Contact tmp ->
                     this.customer.contacts.add( tmp )
                     switch ( tmp.type ) {
@@ -118,7 +151,7 @@ class CustomerPanel extends JPanel {
                             break
                     }
                 }
-            }
+            }  */
         }
     }
 
@@ -161,7 +194,7 @@ class CustomerPanel extends JPanel {
                 zipcode = comboBox( editable: true )
                 button( 'Buscar', actionPerformed: doSearch )
             }
-
+                      /*
             panel( border: titledBorder( 'Contacto' ), layout: new MigLayout( '', '[][fill,180!][center,25!][fill,180!]' ) ) {
                 label( text: ContactType.HOME_PHONE )
                 homePhone = textField( constraints: 'wrap' )
@@ -171,6 +204,44 @@ class CustomerPanel extends JPanel {
                 label( '@' )
                 domain = comboBox( editable: true, items: domains )
             }
+                        */
+
+            panel( border: titledBorder( 'Contacto' ), layout: new MigLayout("wrap","[][]","[][]")) {
+                addContact = panel(layout: new MigLayout("wrap 3","[][][]","[]"  ),visible: edit){
+                    label()
+                    label()
+                    button( '+', preferredSize: [35,35], actionPerformed: { addContact() })
+                }
+                contactEdit = panel(layout: new MigLayout("wrap 3","[][][]","[][]"),visible: !edit){
+                    tipo = comboBox( items: tipos,itemStateChanged: typeChanged  )
+                    infoTipo =  textField(minimumSize: [140, 20], visible: false , constraints: 'span 2' )
+
+                    correo =  textField(minimumSize: [140, 20] )
+                    arroba = label(text: '@'  )
+                    dominio = comboBox( items: dominios  )
+                }
+
+                contactReg= panel( layout: new MigLayout("wrap","[]","[]") ,visible: edit, constraints: 'span 2' ) {
+                    scrollPane( constraints: BorderLayout.CENTER) {
+                    tFormas = table( selectionMode: ListSelectionModel.SINGLE_SELECTION) {
+                        model = tableModel( list: formasContacto ) {
+                            closureColumn(header:'Tipo de Contacto',minWidth: 180, read:{row -> return row.tipoContacto.descripcion})
+                            closureColumn(header:'Dato',minWidth: 180, read:{row -> return row.contacto})
+                        } as DefaultTableModel
+                    }
+                    }
+                }
+
+
+
+            }
+
+
+
+
+
+
+
 
             panel( layout: new MigLayout( 'right', '[fill,100!]' ) ) {
                 button( 'Borrar',
@@ -208,9 +279,9 @@ class CustomerPanel extends JPanel {
             bean( city, selectedItem: bind( source: customer.address, sourceProperty: 'city', mutual: true ) )
             bean( locationField, selectedItem: bind( source: customer.address, sourceProperty: 'location', mutual: true ) )
             bean( zipcode, selectedItem: bind( source: customer.address, sourceProperty: 'zipcode', mutual: true ) )
-            bean( homePhone, text: bind( source: tmpHomeContact, sourceProperty: 'primary', mutual: true ) )
-            bean( email, text: bind( source: tmpEmailContact, sourceProperty: 'primary', mutual: true ) )
-            bean( domain, selectedItem: bind( source: tmpEmailContact, sourceProperty: 'extra', mutual: true ) )
+           // bean( homePhone, text: bind( source: tmpHomeContact, sourceProperty: 'primary', mutual: true ) )
+           // bean( email, text: bind( source: tmpEmailContact, sourceProperty: 'primary', mutual: true ) )
+           // bean( domain, selectedItem: bind( source: tmpEmailContact, sourceProperty: 'extra', mutual: true ) )
         }
     }
 
@@ -268,6 +339,7 @@ class CustomerPanel extends JPanel {
         JButton source = ev.source as JButton
         source.enabled = false
         customer?.contacts?.clear()
+        /*
         if (StringUtils.isNotBlank(tmpHomeContact?.primary)) {
             customer.contacts.add(tmpHomeContact)
         }
@@ -276,16 +348,38 @@ class CustomerPanel extends JPanel {
             tmpEmailContact.primary = mail
             customer.contacts.add(tmpEmailContact)
         }
+        */
+
+
         if (isValidInput()) {
+            Customer tmpCustomer =  new Customer()
+          if(edit == false){
+             tmpCustomer = CustomerController.addCustomer(this.customer)
 
-            Customer tmpCustomer = CustomerController.addCustomer(this.customer)
-            println('Cliente ID ' +tmpCustomer?.id)
             CustomerController.addClienteProceso(tmpCustomer)        //Se agrega registro en la tabla cliente_proceso
-
+          }else{
+            tmpCustomer = customer
+        }
             if (tmpCustomer?.id) {
 
                 customer = tmpCustomer
+                if( tipo?.selectedIndex == 0){
+                    CustomerController.saveContact(customer,0,correo?.text + '@' + dominio?.selectedItem?.toString() )
+                } else if( tipo?.selectedIndex == 1) {
+                    CustomerController.saveContact(customer,1, infoTipo?.text)
+                } else if( tipo?.selectedIndex == 2) {
+                    CustomerController.saveContact(customer,2, infoTipo?.text)
+                } else if( tipo?.selectedIndex == 3) {
+                    CustomerController.saveContact(customer,3, infoTipo?.text)
+                }
+
+
+
                 this.doCancel()
+
+
+
+
                 //Agregar Recetas
                 /*    Integer agregaReceta = JOptionPane.showConfirmDialog(null,"Agregar receta", "¿Desea agregar una receta?", JOptionPane.YES_NO_OPTION);
                     if(agregaReceta == 0){
@@ -398,5 +492,33 @@ class CustomerPanel extends JPanel {
 
     String getTitle( ) {
         return TXT_TAB_TITLE
+    }
+
+    private void addContact(){
+        contactReg.visible = true
+        contactEdit.visible = true
+        addContact.visible = false
+
+    }
+
+    private def typeChanged = { ItemEvent ev ->
+        if ( ev.stateChange == ItemEvent.SELECTED ) {
+            String typeName = ev.item
+
+            if(typeName.trim()!='CORREO'){
+                infoTipo.setVisible(true)
+                correo.setVisible(false)
+                arroba.setVisible(false)
+                dominio.setVisible(false)
+            }else{
+                infoTipo.setVisible(false)
+                correo.setVisible(true)
+                arroba.setVisible(true)
+                dominio.setVisible(true)
+            }
+
+        } else {
+
+        }
     }
 }

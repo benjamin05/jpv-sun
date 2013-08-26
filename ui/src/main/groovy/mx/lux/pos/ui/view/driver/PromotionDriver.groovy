@@ -1,6 +1,7 @@
 package mx.lux.pos.ui.view.driver
 
 import mx.lux.pos.model.IPromotionAvailable
+import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.model.PromotionAvailable
 import mx.lux.pos.model.PromotionModel
 import mx.lux.pos.service.PromotionService
@@ -195,8 +196,11 @@ class PromotionDriver implements TableModelListener, ICorporateKeyVerifier {
 
   }
 
-  void requestPromotionSave( ) {
+  void requestPromotionSave(String idNotaVenta ) {
     log.debug( "Request promotion persist" )
+
+      service.saveTipoDescuento(idNotaVenta,this.model?.orderDiscount?.discountType?.idType)
+
     service.requestPersist( this.model )
   }
 

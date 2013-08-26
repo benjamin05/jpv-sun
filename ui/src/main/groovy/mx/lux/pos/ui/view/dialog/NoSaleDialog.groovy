@@ -430,10 +430,11 @@ class NoSaleDialog extends JDialog {
       if (!StringUtils.trimToEmpty(txtEmpleado.text).isEmpty()
               && !StringUtils.trimToEmpty(txtFolio.text).isEmpty() ) {
           String useGlass = cbUso.selectedItem.toString().trim()
+          itemUso = cbUso.selectedItem.toString().trim()
           println('UseGlass = ' + useGlass)
           println('ItemUse = ' + itemUso)
 
-          /*B*/   if(useGlass.equals(usoB[0])/*BIFOCAL*/ ){
+          /*B*/   if(useGlass.equals(itemUso)/*BIFOCAL*/ ){
               useGlass = 'BIFOCAL'
               if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
                   if( txtOdEsfera.text != '' &&
@@ -459,7 +460,7 @@ class NoSaleDialog extends JDialog {
                           .show()
               }
 
-              /*P*/     }else if(useGlass.equals(usoP[0])/*PROGRESIVO*/){
+              /*P*/     }else if(useGlass.equals(itemUso)/*PROGRESIVO*/){
               useGlass = 'PROGRESIVO'
               if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
                   if( txtOdEsfera.text != '' &&
@@ -486,7 +487,7 @@ class NoSaleDialog extends JDialog {
                           .show()
               }
 
-              /*SV*/    }else if(useGlass.equals(usoM[0])/*LEJOS*/ || useGlass.equals(usoM[1])/*CERCA*/  ){
+              /*SV*/    }else if(useGlass.equals(itemUso)/*LEJOS*/ || useGlass.equals(usoM[1])/*CERCA*/  ){
               useGlass = 'MONOFOCAL'
               if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
                   if( txtOdEsfera.text != '' &&

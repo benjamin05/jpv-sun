@@ -269,7 +269,8 @@ class ShowOrderPanel extends JPanel {
       JButton source = ev.source as JButton
       source.enabled = false
 
-      if(ppButton?.text.equals('Pagar')){
+
+      if(ppButton.getText().equals('Pagar')){
           doShowPayment()
       } else{
           doPrint()
@@ -284,19 +285,27 @@ class ShowOrderPanel extends JPanel {
 
     private  doShowPayment(){
         pagoN=null
+        println('Order ID: ' + order?.id)
+        String OrderID = order?.id
         if((order?.total - order?.paid) > 0){
 
             updatePagos()
              new PaymentDialog( pago, order, null,this ).show()
 
             updatePagos()
-            updateOrder( order?.id )
-        }
-        if(pagoN != null){
-            if(pagoN.confirmado == true){
-                OrderController.printPaid(order?.id, pagoN?.id)
+            println('Order ID: ' + order?.id)
+            if(pagoN != null){
+                if(pagoN.confirmado == true){
+                    println('Order ID: ' + order?.id)
+                    OrderController.printPaid(order?.id, pagoN?.id)
+                }
             }
+            updateOrder( order?.id )
+
+
         }
+
+
 
 
         if((order?.total - order?.paid) == 0){
@@ -349,7 +358,7 @@ class ShowOrderPanel extends JPanel {
           //  order = tmp
             navigatorPanel = new JPanel()
             navigatorPanel.add( new OrderNavigatorPanel( order, {doBindings()} ) )
-            doBindings()
+
         //}
     }
 
