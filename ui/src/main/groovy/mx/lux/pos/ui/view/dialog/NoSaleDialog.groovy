@@ -81,7 +81,7 @@ class NoSaleDialog extends JDialog {
   NoSaleDialog( Component parent, Integer idCliente, Integer idSucursal ) {
     this.sb = new SwingBuilder()
     this.component = parent
-    lstRazones = Arrays.asList('No quiso', 'Se le olvido el dinero', 'le pego su mujer') as List<String>
+    lstRazones = Arrays.asList('NO QUISO', 'NO PRESUPUESTO', 'OTRO DIA') as List<String>
     this.receta = new Rx()
     this.idCliente = idCliente
     this.idSucursal = idSucursal
@@ -360,7 +360,7 @@ class NoSaleDialog extends JDialog {
           bean( txtOdEje, text: bind( source: receta, sourceProperty: 'odEjeR' ) )
           bean( txtOdAd, text: bind( source: receta, sourceProperty: 'odAdcR' ), enabled: mostrarParametroP )
           bean( txtOdDm, text: bind( source: receta, sourceProperty: 'diOd' ), enabled: (mostrarParametroP && mostrarParametroB) )
-          bean( txtDILejos, text: bind( source: receta, sourceProperty: 'diLejosR' ), enabled: (mostrarParametroP && !mostrarParametroB) )
+          bean( txtDILejos, text: bind( source: receta, sourceProperty: 'diLejosR' ) )
           bean( txtOiEsfera, text: bind( source: receta, sourceProperty: 'oiEsfR' ) )
           bean( txtOiCil, text: bind( source: receta, sourceProperty: 'oiCilR' ) )
           bean( txtOiEje, text: bind( source: receta, sourceProperty: 'oiEjeR' ) )
@@ -408,15 +408,13 @@ class NoSaleDialog extends JDialog {
         receta.setObservacionesR(txtObservaciones.text)
         //  receta.setOdPrismaV(cbOdUbic.selectedItem.toString() ?: '')
         // receta.setOiPrismaV(cbOiUbic.selectedItem.toString() ?: '')
-        receta.setIdOpt(idEmpleado.toString())
+        receta.setIdOpt(txtEmpleado.text)
         receta.setFolio(txtFolio.text)
-        if (!receta?.idClient) {
-            receta.setIdStore(idSucursal)
-            receta.setIdClient(idCliente)
-        }
-
+        receta.setIdStore(idSucursal)
+        receta.setIdClient(idCliente)
 
         CustomerController.saveRx(receta)
+        CustomerController.deletedClienteProceso( idCliente )
         onButtonCancel()
 
     }
@@ -435,7 +433,7 @@ class NoSaleDialog extends JDialog {
       if (!StringUtils.trimToEmpty(txtEmpleado.text).isEmpty()
               && !StringUtils.trimToEmpty(txtFolio.text).isEmpty() ) {
           String useGlass = cbUso.selectedItem.toString().trim()
-          //itemUso = cbUso.selectedItem.toString().trim()
+          itemUso = useGlass.trim()
           println('UseGlass = ' + useGlass)
           //println('ItemUse = ' + itemUso)
 
@@ -494,6 +492,7 @@ class NoSaleDialog extends JDialog {
 
               /*SV*/    }else if(useGlass.equals(TAG_LEJOS)/*LEJOS*/ || useGlass.equals(TAG_CERCA)/*CERCA*/  ){
               useGlass = 'MONOFOCAL'
+              itemUso = useGlass
               if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
                   if( txtOdEsfera.text != '' &&
                           txtOdCil.text != '' &&

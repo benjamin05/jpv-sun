@@ -41,6 +41,9 @@ class ClienteServiceImpl implements ClienteService {
   private ClientePaisRepository clientePaisRepository
 
   @Resource
+  private ClienteProcesoRepository clienteProcesoRepository
+
+  @Resource
   private SucursalRepository sucursalRepository
 
   protected void eliminarCliente( Integer id ) {
@@ -189,11 +192,7 @@ class ClienteServiceImpl implements ClienteService {
   List<ClienteProceso> obtenerClientesEnProceso( Boolean pLoaded ) {
     ClienteProcesoRepository onSite = RepositoryFactory.customersOnSite
     List<ClienteProceso> customers = new ArrayList<ClienteProceso>()
-
-
     customers.addAll( onSite.findByEtapa( ClienteProcesoEtapa.PAYMENT.toString() ) )
-
-
     if ( pLoaded ) {
       for ( ClienteProceso cliente : customers ) {
         this.llenarCliente( cliente )
@@ -344,5 +343,9 @@ class ClienteServiceImpl implements ClienteService {
     return custList
   }
 
+    @Override
+    ClienteProceso obtieneClienteProceso( Integer idCliente ) {
+        return clienteProcesoRepository.findOne( idCliente )
+    }
 
 }

@@ -20,6 +20,7 @@ import mx.lux.pos.ui.view.dialog.SingleCustomerDialog
 import mx.lux.pos.ui.view.dialog.CustomerBrowserDialog
 
 import javax.swing.JOptionPane
+import java.text.NumberFormat
 
 @Slf4j
 @Component
@@ -624,5 +625,16 @@ class CustomerController {
         Cliente
         List<Receta> results = recetaService.recetaCliente( idCliente )
         results.collect { Rx.toRx(it) }
+    }
+
+    static ClienteProceso findProccesClient( Integer idCliente ){
+        log.debug( 'findProccesClient()' )
+        //Integer id = NumberFormat.getInstance().parse( idCliente ).intValue()
+        ClienteProceso cliente = clienteService.obtieneClienteProceso( idCliente )
+    }
+
+    static void deletedClienteProceso (Integer idCliente){
+        log.debug( 'deletedClienteProceso' )
+        clienteService.eliminarClienteProceso( idCliente )
     }
 }

@@ -1,5 +1,6 @@
 package mx.lux.pos.ui.view.dialog
 
+import mx.lux.pos.ui.controller.CustomerController
 import net.miginfocom.swing.MigLayout
 import org.hibernate.dialect.JDataStoreDialect
 import javax.swing.JDialog
@@ -165,13 +166,13 @@ class CustomerActiveSelectionDialog extends JDialog {
 
   // Triggers
   private def onCustomerClick = { MouseEvent ev ->
-    if (SwingUtilities.isLeftMouseButton(ev)) {
-        if (ev.clickCount == 1) {
+    //if (SwingUtilities.isLeftMouseButton(ev)) {
+        //if (ev.clickCount == 1) {
           ClienteProceso cliente = ev.source.selectedElement
           idCliente = cliente.idCliente
           idSucursal = cliente.idSucursal
-        }
-    }
+        //}
+    //}
   }
 
   protected void onCancel( ) {
@@ -205,7 +206,9 @@ class CustomerActiveSelectionDialog extends JDialog {
 
   protected void onNoSale( ){
     if( !model.getColumnModel().selectionModel.selectionEmpty ){
-      NoSaleDialog noSale = new NoSaleDialog( this, idCliente, idSucursal )
+      Map<String, String> selected = model.rowModel.getValue().getProperties()
+      ClienteProceso cliente = CustomerController.findProccesClient( selected.get('idCliente') )
+      NoSaleDialog noSale = new NoSaleDialog( this, cliente.idCliente, cliente.idSucursal )
       noSale.show()
     } else {
         sb.optionPane(message: "Seleccione un Cliente", optionType: JOptionPane.DEFAULT_OPTION)

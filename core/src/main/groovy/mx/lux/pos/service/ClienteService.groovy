@@ -36,4 +36,6 @@ interface ClienteService {
 
   List<Cliente> listAll( )
 
+  ClienteProceso obtieneClienteProceso( Integer idCliente )
+
 }
