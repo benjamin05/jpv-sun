@@ -71,6 +71,11 @@ class NoSaleDialog extends JDialog {
 
   private static String itemUso = null
   private static String limpiarAux
+  private static final String TAG_PROGRESIVO = 'PROGRESIVO'
+  private static final String TAG_BIFOCAL = 'BIFOCAL'
+  private static final String TAG_LEJOS = 'LEJOS'
+  private static final String TAG_CERCA = 'CERCA'
+
   List<String> uso = ["LEJOS", "CERCA", "PROGRESIVO", "BIFOCAL"]
 
   NoSaleDialog( Component parent, Integer idCliente, Integer idSucursal ) {
@@ -430,11 +435,11 @@ class NoSaleDialog extends JDialog {
       if (!StringUtils.trimToEmpty(txtEmpleado.text).isEmpty()
               && !StringUtils.trimToEmpty(txtFolio.text).isEmpty() ) {
           String useGlass = cbUso.selectedItem.toString().trim()
-          itemUso = cbUso.selectedItem.toString().trim()
+          //itemUso = cbUso.selectedItem.toString().trim()
           println('UseGlass = ' + useGlass)
-          println('ItemUse = ' + itemUso)
+          //println('ItemUse = ' + itemUso)
 
-          /*B*/   if(useGlass.equals(itemUso)/*BIFOCAL*/ ){
+          /*B*/   if(useGlass.equals(TAG_BIFOCAL)/*BIFOCAL*/ ){
               useGlass = 'BIFOCAL'
               if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
                   if( txtOdEsfera.text != '' &&
@@ -460,7 +465,7 @@ class NoSaleDialog extends JDialog {
                           .show()
               }
 
-              /*P*/     }else if(useGlass.equals(itemUso)/*PROGRESIVO*/){
+              /*P*/     }else if(useGlass.equals(TAG_PROGRESIVO)/*PROGRESIVO*/){
               useGlass = 'PROGRESIVO'
               if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
                   if( txtOdEsfera.text != '' &&
@@ -487,7 +492,7 @@ class NoSaleDialog extends JDialog {
                           .show()
               }
 
-              /*SV*/    }else if(useGlass.equals(itemUso)/*LEJOS*/ || useGlass.equals(usoM[1])/*CERCA*/  ){
+              /*SV*/    }else if(useGlass.equals(TAG_LEJOS)/*LEJOS*/ || useGlass.equals(TAG_CERCA)/*CERCA*/  ){
               useGlass = 'MONOFOCAL'
               if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
                   if( txtOdEsfera.text != '' &&

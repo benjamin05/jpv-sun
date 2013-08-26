@@ -383,8 +383,11 @@ class Registry {
 
   static Boolean isCardPaymentInDollars( String paymentType ){
     Boolean isPaymentDollar = false
-    if ( tipoPagoDolares.contains( paymentType.trim() ) ) {
-      isPaymentDollar = true
+    String[] pagos = tipoPagoDolares.split(',')
+    for(int i=0; i == pagos.length; i++){
+      if ( pagos[i].trim().contains( paymentType.trim() ) ) {
+          isPaymentDollar = true
+      }
     }
     return isPaymentDollar
   }
