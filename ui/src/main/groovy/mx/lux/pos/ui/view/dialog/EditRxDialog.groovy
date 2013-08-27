@@ -554,10 +554,8 @@ class EditRxDialog extends JDialog {
     }
 
     void doCancel() {
-
-        component.rec = rec
-
-        this.setVisible(false)
+        //component.rec = rec
+        //this.setVisible(false)
         this.dispose()
 
     }
@@ -624,11 +622,7 @@ class EditRxDialog extends JDialog {
             receta.setIdStore(idSucursal)
             receta.setIdClient(idCliente)
         }
-
-
         rec = CustomerController.saveRx(receta)
-
-
         doCancel()
 
     }

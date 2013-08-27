@@ -68,6 +68,7 @@ class NoSaleDialog extends JDialog {
   private boolean mostrarParametroSV = true
   private boolean mostrarParametroP = true
   private boolean mostrarParametroB = true
+  private boolean razon
 
   private static String itemUso = null
   private static String limpiarAux
@@ -78,9 +79,10 @@ class NoSaleDialog extends JDialog {
 
   List<String> uso = ["LEJOS", "CERCA", "PROGRESIVO", "BIFOCAL"]
 
-  NoSaleDialog( Component parent, Integer idCliente, Integer idSucursal ) {
+  NoSaleDialog( Component parent, Integer idCliente, Integer idSucursal, Boolean razon ) {
     this.sb = new SwingBuilder()
     this.component = parent
+    this.razon = razon
     lstRazones = Arrays.asList('NO QUISO', 'NO PRESUPUESTO', 'OTRO DIA') as List<String>
     this.receta = new Rx()
     this.idCliente = idCliente
@@ -117,8 +119,8 @@ class NoSaleDialog extends JDialog {
           lblEmpleado = label(border: titledBorder(title: ''), minimumSize: [150, 20])
           label( text: "Folio:", horizontalAlignment: SwingConstants.RIGHT )
           txtFolio = textField()
-          label( text: "Razon:" )
-          cbRazon = comboBox( items: lstRazones, constraints: 'span 2' )
+          label( text: "Razon:", visible: razon )
+          cbRazon = comboBox( items: lstRazones, constraints: 'span 2', visible: razon )
           label(text: 'Uso:', horizontalAlignment: SwingConstants.RIGHT )
           cbUso = comboBox(items: uso, itemStateChanged: {refreshRx()} )
           label( text: '' )
@@ -414,7 +416,9 @@ class NoSaleDialog extends JDialog {
         receta.setIdClient(idCliente)
 
         CustomerController.saveRx(receta)
-        CustomerController.deletedClienteProceso( idCliente )
+        if( razon ){
+          CustomerController.deletedClienteProceso( idCliente )
+        }
         onButtonCancel()
 
     }

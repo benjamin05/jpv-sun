@@ -32,6 +32,7 @@ class Order {
   String dioptra
   String udf2
   String udf3
+  Integer rx
 
   private Double usdRate
 
@@ -79,7 +80,8 @@ class Order {
           employee: "${[notaVenta.idEmpleado]}${notaVenta.empleado?.nombreCompleto}",
           dioptra: notaVenta.codigo_lente,
           udf2: notaVenta.udf2,
-          udf3: notaVenta.udf3
+          udf3: notaVenta.udf3,
+          rx: notaVenta.receta
       )
       order.deals = new ArrayList<IPromotion>()
       if ( notaVenta.ordenPromDet != null ) {

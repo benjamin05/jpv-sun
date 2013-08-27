@@ -36,7 +36,7 @@ class NewCustomerAndRxDialog extends JDialog {
 
         println('id cliente '+this.customer?.id)
         this.custPanel = new CustomerPanel( this, this.cliente, this.edit )
-        /*
+
          if ( FeatureController.isRxEnabled() ) {
 
            this.rxPanel = new RXPanel(custPanel.customer.id)
@@ -44,7 +44,6 @@ class NewCustomerAndRxDialog extends JDialog {
          } else {
            this.rxPanel = null
          }
-         */
         buildUI()
 
     }

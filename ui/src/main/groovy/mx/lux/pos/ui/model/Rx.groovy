@@ -75,6 +75,21 @@ class Rx {
         return tipo
     }
 
+    String getTipoEditRx(){
+        String tipo = ''
+        if( useGlasses.equalsIgnoreCase('l') ){
+            tipo = 'MONOFOCAL'
+        } else if( useGlasses.equalsIgnoreCase('c') ){
+            tipo = 'MONOFOCAL'
+        } else if( useGlasses.equalsIgnoreCase('b') ){
+            tipo = 'BIFOCAL'
+        } else if( useGlasses.equalsIgnoreCase('p') ){
+            tipo = 'PROGRESIVO'
+        }
+
+        return tipo
+    }
+
     String getTipoCorto( String tipo ){
         String tipoCorto = ''
         if(StringUtils.trimToEmpty( tipo ) ){
@@ -99,39 +114,39 @@ class Rx {
       Rx prescription = new Rx(
           id: receta.id,
           exam: receta.examen,
-          clientName: receta.cliente.nombreCompleto,
+          clientName: receta?.cliente?.nombreCompleto,
           idClient: receta.idCliente,
           rxDate: receta.fechaReceta,
           useGlasses: receta.sUsoAnteojos,
-          optometristName: receta.empleado.nombreCompleto,
+          optometristName: receta?.empleado?.nombre,
           idOpt: receta.idOptometrista,
-          typeOpt: receta.tipoOpt,
-          odEsfR: receta.odEsfR,
-          odCilR: receta.odCilR,
-          odEjeR: receta.odEjeR,
-          odAdcR: receta.odAdcR,
-          odAdiR: receta.odAdiR,
-          odPrismH: receta.odPrismaH,
-          oiEsfR: receta.oiEsfR,
-          oiCilR: receta.oiCilR,
-          oiEjeR: receta.oiEjeR,
-          oiAdcR: receta.oiAdcR,
-          oiAdiR: receta.oiAdiR,
-          oiPrismH: receta.oiPrismaH,
-          diLejosR: receta.diLejosR,
-          diCercaR: receta.diCercaR,
-          odAvR: "20/${receta.odAvR}" ?: '',
-          oiAvR: "20/${receta.oiAvR}" ?: '',
-          altOblR: receta.altOblR,
-          observacionesR: receta.observacionesR,
+          typeOpt: StringUtils.trimToEmpty(receta.tipoOpt),
+          odEsfR: StringUtils.trimToEmpty(receta.odEsfR),
+          odCilR: StringUtils.trimToEmpty(receta.odCilR),
+          odEjeR: StringUtils.trimToEmpty(receta.odEjeR),
+          odAdcR: StringUtils.trimToEmpty(receta.odAdcR),
+          odAdiR: StringUtils.trimToEmpty(receta.odAdiR),
+          odPrismH: StringUtils.trimToEmpty(receta.odPrismaH),
+          oiEsfR: StringUtils.trimToEmpty(receta.oiEsfR),
+          oiCilR: StringUtils.trimToEmpty(receta.oiCilR),
+          oiEjeR: StringUtils.trimToEmpty(receta.oiEjeR),
+          oiAdcR: StringUtils.trimToEmpty(receta.oiAdcR),
+          oiAdiR: StringUtils.trimToEmpty(receta.oiAdiR),
+          oiPrismH: StringUtils.trimToEmpty(receta.oiPrismaH),
+          diLejosR: StringUtils.trimToEmpty(receta.diLejosR),
+          diCercaR: StringUtils.trimToEmpty(receta.diCercaR),
+          odAvR: "20/${StringUtils.trimToEmpty(receta.odAvR)}" ?: '',
+          oiAvR: "20/${StringUtils.trimToEmpty(receta.oiAvR)}" ?: '',
+          altOblR: StringUtils.trimToEmpty(receta.altOblR),
+          observacionesR: StringUtils.trimToEmpty(receta.observacionesR),
           fPrint: receta.fImpresa,
           idSync: receta.idSync,
           DateMod: receta.fechaMod,
           modId: receta.idMod,
           idStore: receta.idSucursal,
-          diOd: receta.diOd,
-          diOi: receta.diOi,
-          materialArm: receta.material_arm,
+          diOd: StringUtils.trimToEmpty(receta.diOd),
+          diOi: StringUtils.trimToEmpty(receta.diOi),
+          materialArm: StringUtils.trimToEmpty(receta.material_arm),
           odPrismaV: receta.odPrismaV ?: '',
           oiPrismaV: receta.oiPrismaV ?: '',
           treatment: receta.tratamientos,

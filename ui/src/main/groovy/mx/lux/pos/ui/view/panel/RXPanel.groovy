@@ -5,6 +5,7 @@ import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.model.Branch
 import mx.lux.pos.ui.model.Session
 import mx.lux.pos.ui.model.SessionItem
+import mx.lux.pos.ui.view.dialog.NoSaleDialog
 import mx.lux.pos.ui.view.panel.RXPanel
 import mx.lux.pos.ui.model.Rx
 import mx.lux.pos.ui.controller.CustomerController
@@ -242,7 +243,7 @@ class RXPanel extends JPanel {
                 sb.popupMenu {
                     menuItem( text: 'Editar',
                             actionPerformed: {
-                                EditRxDialog editRx = new EditRxDialog( this, selection, selection.idClient, selection.idStore, EDITAR )
+                                EditRxDialog editRx = new EditRxDialog( this, selection, selection.idClient, selection.idStore, selection.clientName, selection.tipoEditRx )
                                 editRx.show()
                                 lstRecetas.clear()
                                 lstRecetas.addAll( CustomerController.findAllPrescriptions( idCliente ) )
@@ -252,8 +253,9 @@ class RXPanel extends JPanel {
                     )
                     menuItem( text: 'Nueva Receta',
                             actionPerformed: {
-                                EditRxDialog editRx = new EditRxDialog( this, new Rx(), selection.idClient, selection.idStore, NUEVA )
-                                editRx.show()
+                                NoSaleDialog newRx = new NoSaleDialog( this, selection.idClient, selection.idStore, false)
+                                //EditRxDialog editRx = new EditRxDialog( this, new Rx(), selection.idClient, selection.idStore, selection.clientName, NUEVA )
+                                newRx.show()
                                 lstRecetas.clear()
                                 lstRecetas.addAll( CustomerController.findAllPrescriptions( idCliente ) )
                                 doBindings()

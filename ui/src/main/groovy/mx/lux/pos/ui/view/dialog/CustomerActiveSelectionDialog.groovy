@@ -208,7 +208,7 @@ class CustomerActiveSelectionDialog extends JDialog {
     if( !model.getColumnModel().selectionModel.selectionEmpty ){
       Map<String, String> selected = model.rowModel.getValue().getProperties()
       ClienteProceso cliente = CustomerController.findProccesClient( selected.get('idCliente') )
-      NoSaleDialog noSale = new NoSaleDialog( this, cliente.idCliente, cliente.idSucursal )
+      NoSaleDialog noSale = new NoSaleDialog( this, cliente.idCliente, cliente.idSucursal, true )
       noSale.show()
     } else {
         sb.optionPane(message: "Seleccione un Cliente", optionType: JOptionPane.DEFAULT_OPTION)
