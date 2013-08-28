@@ -162,7 +162,6 @@ class CustomerPanel extends JPanel {
                 label('Nombre')
                 firstName = textField(document: new UpperCaseDocument()/*, inputVerifier: new NotEmptyVerifier()*/)
 
-<<<<<<< HEAD
                 label( 'Apellido Paterno' )
                 fathersName = textField( document: new UpperCaseDocument()/*, inputVerifier: new NotEmptyVerifier()*/ )
 
@@ -172,16 +171,6 @@ class CustomerPanel extends JPanel {
                 label( 'F. Nacimiento' )
                 dob = spinner( model: spinnerDateModel() )
 
-=======
-                label('F. Nacimiento')
-                dob = spinner(model: spinnerDateModel())
-
-                label('Apellido Paterno')
-                fathersName = textField(document: new UpperCaseDocument()/*, inputVerifier: new NotEmptyVerifier()*/)
-
-                label('Apellido Materno')
-                mothersName = textField(document: new UpperCaseDocument())
->>>>>>> origin/MasVision
             }
 
             panel(border: titledBorder('Dirección'), layout: new MigLayout('wrap 3', '[][fill,grow][]')) {
@@ -232,11 +221,6 @@ class CustomerPanel extends JPanel {
 
 
             }
-
-
-
-
-
 
 
 

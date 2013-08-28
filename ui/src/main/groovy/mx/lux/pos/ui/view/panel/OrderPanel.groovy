@@ -433,23 +433,31 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     if (results.size() == 1) {
                         item = results.first()
                         if( item.type.trim().equalsIgnoreCase(TAG_GENERICO_B) ){
-                          validarVentaNegativa(item, customer)
+                          if( customer != null ){
+                            validarVentaNegativa(item, customer)
+                          } else {
+                            optionPane(message: "Cliente invalido, dar de alta datos", optionType: JOptionPane.DEFAULT_OPTION)
+                                    .createDialog(new JTextField(), "Articulo Invalido")
+                                    .show()
+                          }
                         } else {
-                          optionPane(message: "Cliente invalido, dar de alta datos", optionType: JOptionPane.DEFAULT_OPTION)
-                                  .createDialog(new JTextField(), "Articulo Invalido")
-                                  .show()
+                          validarVentaNegativa(item, customer)
                         }
                     } else {
                         SuggestedItemsDialog dialog = new SuggestedItemsDialog(itemSearch, input, results)
                         dialog.show()
                         item = dialog.item
                         if (item?.id) {
-                          if(!item?.type.trim().equalsIgnoreCase(TAG_GENERICO_B) && customer!= null){
-                            validarVentaNegativa(item, customer)
-                          } else {
+                          if(!item?.type.trim().equalsIgnoreCase(TAG_GENERICO_B) ){
+                            if(customer != null){
+                              validarVentaNegativa(item, customer)
+                            } else {
                               optionPane(message: "Cliente invalido, dar de alta datos", optionType: JOptionPane.DEFAULT_OPTION)
                                       .createDialog(new JTextField(), "Articulo Invalido")
                                       .show()
+                            }
+                          } else {
+                            validarVentaNegativa(item, customer)validarVentaNegativa(item, customer)
                           }
                         }
                     }
