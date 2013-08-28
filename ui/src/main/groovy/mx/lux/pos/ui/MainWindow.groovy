@@ -3,11 +3,13 @@ package mx.lux.pos.ui
 import groovy.swing.SwingBuilder
 import mx.lux.pos.service.PromotionService
 import mx.lux.pos.ui.model.Branch
+import mx.lux.pos.ui.model.Order
 import mx.lux.pos.ui.model.Session
 import mx.lux.pos.ui.model.SessionItem
 import mx.lux.pos.ui.model.User
 import mx.lux.pos.ui.resources.ServiceManager
 import mx.lux.pos.ui.view.action.ExitAction
+import mx.lux.pos.ui.view.dialog.CustomerSearchDialog
 import mx.lux.pos.ui.view.dialog.EntregaTrabajoDialog
 import mx.lux.pos.ui.view.dialog.PartClassDialog
 import net.miginfocom.swing.MigLayout
@@ -43,6 +45,7 @@ class MainWindow extends JFrame implements KeyListener {
     private JPanel orderPanel
     private JPanel showOrderPanel
     private InvTrView invTrView
+    private CustomerSearchDialog customerDialog
     private JPanel dailyClosePanel
     private JPanel priceListPanel
     private JPanel invoicePanel
@@ -52,6 +55,7 @@ class MainWindow extends JFrame implements KeyListener {
     private JLabel versionLabel
     private JMenu toolsMenu
     private JMenu ordersMenu
+    private JMenu clientsMenu
     private JMenu inventoryMenu
     private JMenu reportsMenu
     private JMenuItem orderMenuItem
@@ -89,6 +93,7 @@ class MainWindow extends JFrame implements KeyListener {
     private JMenuItem salesTodayMenuItem
     private JMenuItem salesByPeriodMenuItem
     private JMenuItem entregaMenuItem
+    private JMenuItem nationalClientMenuItem
     private PromotionService promotionService
 
 
@@ -122,6 +127,7 @@ class MainWindow extends JFrame implements KeyListener {
                                 dailyCloseMenuItem.visible = userLoggedIn
                                 priceListMenuItem.visible = userLoggedIn
                                 invoiceMenuItem.visible = userLoggedIn
+                                nationalClientMenuItem.visible = userLoggedIn
                                 // TODO: Benja enable feature cotizacionMenuItem.visible = userLoggedIn
                             }
                     ) {
@@ -171,6 +177,24 @@ class MainWindow extends JFrame implements KeyListener {
                                     mainPanel.layout.show( mainPanel, 'invoicePanel' )
                                 }
                         )
+                    }
+                    clientsMenu = menu( text: 'Clientes', mnemonic: 'C',
+                            menuSelected: {
+                                boolean userLoggedIn = Session.contains( SessionItem.USER )
+                                nationalClientMenuItem.visible = userLoggedIn
+                            }
+                    ){
+                      nationalClientMenuItem = menuItem( text: "Cliente Nacional", visible: true,
+                              actionPerformed: { if ( customerDialog == null ) {
+                                  customerDialog = new CustomerSearchDialog( this, new Order() )
+                              }
+                                  customerDialog.show()
+                                  if (!customerDialog.canceled) {
+                                      orderPanel.setCustomerInOrderFromMenu( customerDialog.customer )
+                                      customerDialog = new CustomerSearchDialog( this, new Order() )
+                                  }
+                              }
+                      )
                     }
                     inventoryMenu = menu( text: 'Inventario', mnemonic: 'I',
                             menuSelected: {

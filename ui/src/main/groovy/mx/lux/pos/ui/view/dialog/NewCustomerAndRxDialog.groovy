@@ -25,8 +25,7 @@ class NewCustomerAndRxDialog extends JDialog {
     private Customer customer
     private CustomerPanel custPanel
     private RXPanel rxPanel
-
-
+    private Boolean rxEnabled
     private Boolean canceled
 
     NewCustomerAndRxDialog( Component parent, Customer customer, boolean editar ) {
@@ -36,11 +35,9 @@ class NewCustomerAndRxDialog extends JDialog {
 
         println('id cliente '+this.customer?.id)
         this.custPanel = new CustomerPanel( this, this.cliente, this.edit )
-
-         if ( FeatureController.isRxEnabled() ) {
-
+        rxEnabled = this.cliente?.id == null ? false : FeatureController.isRxEnabled()
+         if ( rxEnabled ) {
            this.rxPanel = new RXPanel(custPanel.customer.id)
-
          } else {
            this.rxPanel = null
          }

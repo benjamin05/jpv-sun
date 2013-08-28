@@ -420,7 +420,6 @@ class NoSaleDialog extends JDialog {
           CustomerController.deletedClienteProceso( idCliente )
         }
         onButtonCancel()
-
     }
 
 

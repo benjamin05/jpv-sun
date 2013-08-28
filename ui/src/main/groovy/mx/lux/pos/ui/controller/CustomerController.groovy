@@ -290,31 +290,21 @@ class CustomerController {
         dialog.customerList = clientes
         dialog.activate()
 
-
-
         if ( dialog.customerSelected != null ) {
             Customer c = Customer.toCustomer( dialog.customerSelected.cliente )
-
-
             pListener.reset()
-
-
             pListener.disableUI()
             pListener.operationTypeSelected = OperationType.PENDING
             pListener.setCustomer( c )
             pListener.enableUI()
-
         } else if ( dialog.isNewRequested() ) {
 
             requestNewCustomer( pListener )
 
         } else {
             pListener.operationTypeSelected = OperationType.DEFAULT
-
         }
-
         dialog.dispose()
-
     }
 
     static void requestOrderByCustomer (CustomerListener pListener, Customer customer){

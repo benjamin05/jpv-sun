@@ -505,6 +505,7 @@ class EditRxDialog extends JDialog {
             }
             */
             txtOiDm.setText(receta.diOi)
+            txtOiAd.setText(receta.oiAdcR)
             //txtOiPrisma.setText(receta.oiPrismH)
             /*if (receta.odPrismaV != null) {
                 cbOdUbic.setSelectedItem(receta.odPrismaV)

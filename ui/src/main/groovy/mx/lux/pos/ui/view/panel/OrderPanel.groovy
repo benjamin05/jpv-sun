@@ -60,6 +60,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private JTextArea comments
     private JTextField itemSearch
     private List<IPromotionAvailable> promotionList
+    private Collection<OperationType> customerTypes = OperationType.values()
     private DefaultTableModel itemsModel
     private DefaultTableModel paymentsModel
     private DefaultTableModel promotionModel
@@ -83,8 +84,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
 
     OrderPanel() {
-
-
         sb = new SwingBuilder()
         order = new Order()
         dioptra = new Dioptra()
@@ -92,10 +91,12 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         promotionList = new ArrayList<PromotionAvailable>()
         this.promotionDriver.init(this)
         ticketRx = false
+        customerTypes.remove(OperationType.DOMESTIC)
         buildUI()
         doBindings()
         itemsModel.addTableModelListener(this.promotionDriver)
         uiEnabled = true
+        OperationType
     }
 
     private PromotionDriver getPromotionDriver() {
@@ -110,7 +111,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     customerName = button(enabled: false, actionPerformed: doCustomerSearch)
 
                     label('Tipo')
-                    operationType = comboBox(items: OperationType.values(), itemStateChanged: operationTypeChanged)
+                    operationType = comboBox(items: customerTypes, itemStateChanged: operationTypeChanged)
                 }
 
                 panel(border: loweredEtchedBorder(), layout: new MigLayout('wrap 2', '[][grow,right]', '[top]')) {
@@ -350,14 +351,14 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         customer = dialog.customer
                     }
                     break
-                case OperationType.DOMESTIC:
+                /*case OperationType.DOMESTIC:
                     customer = new Customer(type: CustomerType.DOMESTIC)
                     CustomerSearchDialog dialog = new CustomerSearchDialog(ev.source as Component, order)
                     dialog.show()
                     if (!dialog.canceled) {
                         customer = dialog.customer
                     }
-                    break
+                    break*/
                 case OperationType.FOREIGN:
                     customer = new Customer(type: CustomerType.FOREIGN)
                     ForeignCustomerDialog dialog = new ForeignCustomerDialog(ev.source as Component, customer, false)
@@ -401,6 +402,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         CustomerController.requestPayingCustomer(this)
                     }
                     break
+            }
+            if(!operationType.selectedItem.equals(OperationType.DOMESTIC)){
+              operationType.removeItem( OperationType.DOMESTIC )
             }
             this.setCustomerInOrder()
             doBindings()
@@ -974,6 +978,21 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                 OrderController.saveCustomerForOrder(order.id, customer.id)
             }
         }
+    }
+
+    void setCustomerInOrderFromMenu( Customer customer ) {
+        if ((order?.id != null) && (customer != null)) {
+            if (!order.customer.equals(customer)) {
+                order.customer = customer
+                OrderController.saveCustomerForOrder(order.id, customer.id)
+            }
+        }
+        this.customer = customer
+        if(!operationType.selectedItem.equals(OperationType.DOMESTIC)){
+          operationType.addItem( OperationType.DOMESTIC )
+        }
+        operationType.setSelectedItem( OperationType.DOMESTIC )
+        doBindings()
     }
 
     void reset() {

@@ -210,6 +210,7 @@ class CustomerActiveSelectionDialog extends JDialog {
       ClienteProceso cliente = CustomerController.findProccesClient( selected.get('idCliente') )
       NoSaleDialog noSale = new NoSaleDialog( this, cliente.idCliente, cliente.idSucursal, true )
       noSale.show()
+      dispose()
     } else {
         sb.optionPane(message: "Seleccione un Cliente", optionType: JOptionPane.DEFAULT_OPTION)
                 .createDialog(new JTextField(), "Alerta")
