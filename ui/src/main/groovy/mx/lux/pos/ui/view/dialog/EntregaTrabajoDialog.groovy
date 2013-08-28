@@ -17,7 +17,7 @@ class EntregaTrabajoDialog extends JDialog {
     private Component component
 
     private static JTextField factura = new JTextField()
-
+    private static JTextField sucursal = new JTextField()
 
     EntregaTrabajoDialog(Component parent) {
 
@@ -35,14 +35,19 @@ class EntregaTrabajoDialog extends JDialog {
                 resizable: false,
                 pack: true,
                 modal: true,
-                preferredSize: [180, 100],
+                preferredSize: [240, 100],
                 location: [ 200, 250 ]
         ) {
-                 panel(layout: new MigLayout("wrap 2","[]10[]","[]20[]")) {
+                 panel(layout: new MigLayout("wrap 4","[]10[][][]","[]20[]")) {
 
-                     label(text: 'Factura: ')
+                     label(text: 'Ticket: ')
+                     sucursal = textField(text:'12001',minimumSize: [70, 20])
+                     label(text: '-')
                      factura = textField(minimumSize: [70, 20])
+
+                     label()
                      button(text: 'Cancelar',actionPerformed: {doCancel()})
+                     label()
                      button(text: 'Aceptar',actionPerformed: {doSave()})
 
 
@@ -55,7 +60,7 @@ class EntregaTrabajoDialog extends JDialog {
 
 
     private void doSave(){
-        OrderController.validaEntrega(factura.text,false)
+        OrderController.validaEntrega(factura.text,sucursal.text,false)
         doCancel()
     }
 

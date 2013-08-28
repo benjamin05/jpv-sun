@@ -24,46 +24,48 @@ import org.springframework.stereotype.Component
 @Component
 class ContactController {
 
-  private static JbService jbService
-  private static  FormaContactoService formaContactoService
-  private static TipoContactoRepository tipoContactoRepository
-  private static ClienteService clienteService
+    private static JbService jbService
+    private static FormaContactoService formaContactoService
+    private static TipoContactoRepository tipoContactoRepository
+    private static ClienteService clienteService
 
-  @Autowired
-  ContactController( JbService jbService, FormaContactoService formaContactoService, TipoContactoRepository tipoContactoRepository, ClienteService clienteService) {
-    this.jbService = jbService
-    this.formaContactoService = formaContactoService
-    this.tipoContactoRepository = tipoContactoRepository
-    this.clienteService = clienteService
+    @Autowired
+    ContactController(JbService jbService, FormaContactoService formaContactoService, TipoContactoRepository tipoContactoRepository, ClienteService clienteService) {
+        this.jbService = jbService
+        this.formaContactoService = formaContactoService
+        this.tipoContactoRepository = tipoContactoRepository
+        this.clienteService = clienteService
 
-  }
+    }
 
-  static Jb findJbxRX( String rx ) {
+    static Jb findJbxRX(String rx) {
 
-    return jbService.findJBbyRx(rx)
-  }
+        return jbService.findJBbyRx(rx)
+    }
 
-   static FormaContacto findFCbyRx(String rx){
-     return formaContactoService.findFCbyRx(rx)
-  }
+    static FormaContacto findFCbyRx(String rx) {
+        return formaContactoService.findFCbyRx(rx)
+    }
 
-    static List<FormaContacto> findCustomerContact(Integer idCliente){
+    static List<FormaContacto> findCustomerContact(Integer idCliente) {
         List<FormaContacto> contactos = new ArrayList<FormaContacto>()
 
         Cliente cliente = clienteService.obtenerCliente(idCliente)
-            FormaContacto formaContacto = new FormaContacto()
-            if (cliente.email != ''){
-             formaContacto = new FormaContacto()
+        FormaContacto formaContacto = new FormaContacto()
+        if (cliente.email != '') {
+            formaContacto = new FormaContacto()
             formaContacto?.contacto = cliente.email
-                TipoContacto tipoContacto = new TipoContacto()
-                tipoContacto?.descripcion = 'Correo'
-             formaContacto?.tipoContacto = tipoContacto
+            TipoContacto tipoContacto = new TipoContacto()
+            tipoContacto?.id_tipo_contacto = 1
+            tipoContacto?.descripcion = 'Correo'
+            formaContacto?.tipoContacto = tipoContacto
             contactos.add(formaContacto)
         }
-        if(cliente.telefonoCasa != ''){
-             formaContacto = new FormaContacto()
+        if (cliente.telefonoCasa != '') {
+            formaContacto = new FormaContacto()
             formaContacto?.contacto = cliente.telefonoCasa
             TipoContacto tipoContacto = new TipoContacto()
+            tipoContacto?.id_tipo_contacto = 3
             tipoContacto?.descripcion = 'Telefono'
             formaContacto?.tipoContacto = tipoContacto
             contactos.add(formaContacto)
@@ -71,20 +73,22 @@ class ContactController {
 
         }
 
-        if(cliente.telefonoTrabajo != ''){
-             formaContacto = new FormaContacto()
+        if (cliente.telefonoTrabajo != '') {
+            formaContacto = new FormaContacto()
             formaContacto?.contacto = cliente.telefonoTrabajo
             TipoContacto tipoContacto = new TipoContacto()
+            tipoContacto?.id_tipo_contacto = 2
             tipoContacto?.descripcion = 'Recados'
             formaContacto?.tipoContacto = tipoContacto
             contactos.add(formaContacto)
 
         }
 
-        if(cliente.telefonoAdicional != ''){
-             formaContacto = new FormaContacto()
+        if (cliente.telefonoAdicional != '') {
+            formaContacto = new FormaContacto()
             formaContacto?.contacto = cliente.telefonoAdicional
             TipoContacto tipoContacto = new TipoContacto()
+            tipoContacto?.id_tipo_contacto = 4
             tipoContacto?.descripcion = 'SMS'
             formaContacto?.tipoContacto = tipoContacto
             contactos.add(formaContacto)
@@ -93,30 +97,32 @@ class ContactController {
 
 
 
-           println(contactos.get(0).contacto)
+        println(contactos.get(0).contacto)
         println(contactos.get(0).tipoContacto.descripcion)
 
-       return  contactos
+        return contactos
 
     }
 
-   static List<FormaContacto> findByIdCliente(Integer idCliente){
-       List<FormaContacto> formaContactos = formaContactoService.findByidCliente(idCliente)
-       List<FormaContacto> contactos = new ArrayList<FormaContacto>()
-       Iterator iterator = formaContactos.iterator();
-       while (iterator.hasNext()) {
-           FormaContacto formaContacto = iterator.next()
-             formaContacto?.tipoContacto =  tipoContactoRepository.findOne(formaContacto?.id_tipo_contacto)
+    static List<FormaContacto> findByIdCliente(Integer idCliente) {
+        List<FormaContacto> formaContactos = formaContactoService.findByidCliente(idCliente)
+        List<FormaContacto> contactos = new ArrayList<FormaContacto>()
+        Iterator iterator = formaContactos.iterator();
+        while (iterator.hasNext()) {
+            FormaContacto formaContacto = iterator.next()
+            formaContacto?.tipoContacto = tipoContactoRepository.findOne(formaContacto?.id_tipo_contacto)
             contactos.add(formaContacto)
-       }
-           return contactos
-   }
+        }
 
-   static FormaContacto saveFormaContacto(FormaContacto formaContacto){
-      formaContacto = formaContactoService.saveFC(formaContacto)
-       return formaContacto
-   }
 
+
+        return contactos
+    }
+
+    static FormaContacto saveFormaContacto(FormaContacto formaContacto) {
+        formaContacto = formaContactoService.saveFC(formaContacto)
+        return formaContacto
+    }
 
 
 }
