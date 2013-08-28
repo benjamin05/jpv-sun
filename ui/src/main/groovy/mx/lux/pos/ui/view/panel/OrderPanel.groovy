@@ -45,6 +45,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private static final String TXT_QUITAR_PAGOS = 'Error al cerrar sesion.'
     private static final String MSJ_CAMBIAR_VENDEDOR = 'Esta seguro que desea salir de esta sesion.'
     private static final String TXT_CAMBIAR_VENDEDOR = 'Cerrar Sesion'
+    private static final String TAG_GENERICO_B = 'B'
 
     private Logger logger = LoggerFactory.getLogger(this.getClass())
     private SwingBuilder sb
@@ -429,17 +430,27 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                 }
                 if (results?.any()) {
                     Item item = new Item()
-
                     if (results.size() == 1) {
                         item = results.first()
-                        validarVentaNegativa(item, customer)
+                        if(!item.type.trim().equalsIgnoreCase(TAG_GENERICO_B)){
+                          validarVentaNegativa(item, customer)
+                        } else {
+                          optionPane(message: "Cliente invalido, dar de alta datos", optionType: JOptionPane.DEFAULT_OPTION)
+                                  .createDialog(new JTextField(), "Articulo Invalido")
+                                  .show()
+                        }
                     } else {
                         SuggestedItemsDialog dialog = new SuggestedItemsDialog(itemSearch, input, results)
                         dialog.show()
                         item = dialog.item
                         if (item?.id) {
-
+                          if(!item?.type.trim().equalsIgnoreCase(TAG_GENERICO_B)){
                             validarVentaNegativa(item, customer)
+                          } else {
+                              optionPane(message: "Cliente invalido, dar de alta datos", optionType: JOptionPane.DEFAULT_OPTION)
+                                      .createDialog(new JTextField(), "Articulo Invalido")
+                                      .show()
+                          }
                         }
                     }
                 } else {
