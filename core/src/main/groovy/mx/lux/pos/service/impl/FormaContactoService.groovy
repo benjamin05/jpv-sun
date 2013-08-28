@@ -12,4 +12,7 @@ public interface FormaContactoService {
 
     List<FormaContacto> findByidCliente( Integer idCliente )
 
+
+
+
 }

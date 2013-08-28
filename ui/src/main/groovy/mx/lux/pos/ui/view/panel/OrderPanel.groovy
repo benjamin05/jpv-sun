@@ -566,7 +566,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         return rec
     }
 
-    private SurteSwitch surteSu(Item item, SurteSwitch surteSwitch){
+    private SurteSwitch surteSu(Item item, SurteSwitch surteSwitch,Branch branch){
        if(surteSwitch?.surteSucursal==false){
         if(item?.type?.trim().equals('A') && item?.stock > 0 ){
             surteSwitch?.surteSucursal=true
@@ -590,8 +590,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         order.setEmployee(u.username)
         Branch branch = Session.get(SessionItem.BRANCH) as Branch
 
-        SurteSwitch surteSwitch = OrderController.surteCallWS(branch, item, 'S')
-        surteSwitch = surteSu(item,surteSwitch)
+        SurteSwitch surteSwitch = OrderController.surteCallWS(branch, item, 'S',order)
+        surteSwitch = surteSu(item,surteSwitch,branch)
 
         if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
              String surte = surteSwitch?.surte
@@ -733,6 +733,13 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void controlItem(Item item){
+
+
+
+
+        Branch branch = Session.get(SessionItem.BRANCH) as Branch
+        OrderController.insertaAcuseAPAR(order,branch,item)
+
 
         String indexDioptra = item?.indexDiotra
         println('Index Dioptra del Articulo : ' +item?.indexDiotra)
@@ -1096,10 +1103,12 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
                         try {
                             OrderController.saveRxOrder(order?.id, rec.id)
+                           /*
                             if (armOrder?.udf2.equals('')) {
                                 ArmRxDialog armazon = new ArmRxDialog(this, order?.id, armazonString)
                                 armazon.show()
                             }
+                             */
                             flujoContinuar()
                         } catch (ex) {
                             flujoContinuar()
@@ -1112,11 +1121,13 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                            Branch branch = Session.get( SessionItem.BRANCH ) as Branch
                            EditRxDialog editRx = new EditRxDialog( this, rx, customer?.id, branch?.id, 'Nueva Receta',tipoArt )
                            editRx.show()
-                          */
+
+
                         if (armOrder?.udf2.equals('')) {
                             ArmRxDialog armazon = new ArmRxDialog(this, order?.id, armazonString)
                             armazon.show()
                         }
+                          */
                         flujoContinuar()
 
                     }

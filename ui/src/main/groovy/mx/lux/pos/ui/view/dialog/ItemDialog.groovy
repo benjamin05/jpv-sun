@@ -148,7 +148,7 @@ class ItemDialog extends JDialog {
     println('Seleccionado: '+surte.selectedItem?.toString())
 
 
-      SurteSwitch surteSwitch = OrderController.surteCallWS(order?.branch, orderItem?.item, 'S')
+      SurteSwitch surteSwitch = OrderController.surteCallWS(order?.branch, orderItem?.item, 'S',order)
       surteSwitch = surteSu(orderItem?.item,surteSwitch)
       if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
 

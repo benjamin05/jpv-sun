@@ -178,6 +178,7 @@ class CustomerController {
             cliente.rfc = customer.rfc ?: customer.type?.rfc
             cliente.idEstado = localidad?.idEstado ?: estado?.id
             cliente.idLocalidad = localidad?.idLocalidad
+            /*
             def homeContact = customer.contacts?.find {
                 ContactType.HOME_PHONE.equals( it?.type )
             }
@@ -186,6 +187,7 @@ class CustomerController {
                 ContactType.EMAIL.equals( it?.type )
             }
             cliente.email = emailContact?.primary
+            */
             cliente.udf1 = customer.age
 
             cliente = clienteService.agregarCliente( cliente )
@@ -241,10 +243,7 @@ class CustomerController {
      static void saveContact(Customer customer, Integer tipo, String valor){
 
          Cliente cliente = clienteService?.obtenerCliente(customer?.id)
-         println('Tipo de Contacto E: '+cliente?.email)
-         println('Tipo de Contacto TT: '+cliente?.telefonoTrabajo)
-         println('Tipo de Contacto TC: '+cliente?.telefonoCasa)
-         println('Tipo de Contacto TA: '+cliente?.telefonoAdicional)
+
 
          if( tipo == 0){
              cliente?.email = valor
@@ -319,7 +318,7 @@ class CustomerController {
             if(nueva == 0){
                 pListener.reset()
                 pListener.disableUI()
-                pListener.operationTypeSelected = OperationType.PENDING
+                pListener.operationTypeSelected = OperationType.PAYING
                 pListener.setCustomer( customer )
                 pListener.enableUI()
             }

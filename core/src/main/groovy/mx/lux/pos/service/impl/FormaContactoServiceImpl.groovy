@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 import javax.annotation.Resource
+import javax.persistence.criteria.Expression
 
 @Slf4j
 @Service( 'FormaContactoService' )
@@ -46,10 +47,15 @@ class FormaContactoServiceImpl extends QueryDslRepositorySupport  implements For
             predicates.add( formaContacto.id_cliente.eq( idCliente ) )
         }
         JPQLQuery query = from( formaContacto )
+
         query.where( predicates as Predicate[] )
+      //  query.groupBy(formaContacto?.contacto,formaContacto?.id_tipo_contacto)
 
         return query.list( formaContacto )
+
     }
+
+
 
 
 }

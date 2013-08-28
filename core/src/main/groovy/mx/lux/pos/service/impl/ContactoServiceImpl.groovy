@@ -27,6 +27,7 @@ class ContactoServiceImpl implements ContactoService{
     @Override
     List<TipoContacto> obtenerTiposContacto() {
        List<TipoContacto> contactos = tipoContactoRepository.findAll()
+
      return contactos
     }
 }

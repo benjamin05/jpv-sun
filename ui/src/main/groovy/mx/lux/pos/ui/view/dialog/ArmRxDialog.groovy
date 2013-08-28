@@ -70,7 +70,7 @@ class ArmRxDialog extends JDialog {
                      })
                      pasta.setActionCommand('Pasta')
                      opacado =  radioButton(text:"Opacado", buttonGroup:acabado)
-                      opacado.setSelected(true)
+
                       opacado.setActionCommand("Opacado")
                     metal = radioButton(text:"Metal", buttonGroup:material)
                      metal.setActionCommand('Metal')
@@ -97,6 +97,7 @@ class ArmRxDialog extends JDialog {
                      })
 
                      ninguno = radioButton(text:"Ninguno", buttonGroup: acabado )
+                     ninguno.setSelected(true)
                      ninguno.setActionCommand('Ninguno')
                     aire = radioButton(text:"Aire", buttonGroup:material)
 

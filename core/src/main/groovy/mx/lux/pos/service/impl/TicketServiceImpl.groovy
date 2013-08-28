@@ -232,7 +232,7 @@ class TicketServiceImpl implements TicketService {
               monto: '$'+pagoN?.monto,
               anterior: '$' + ant,
               parcialidad:'$'+pagoN?.monto,
-              noParcialidad: pagoN?.parcialidad,
+              noParcialidad: (pagoN?.parcialidad.trim().toInteger() - 1).toString(),
               nuevoSaldo:nSaldo
       ]
       def sucu = [
