@@ -988,10 +988,14 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             }
         }
         this.customer = customer
-        if(!operationType.selectedItem.equals(OperationType.DOMESTIC)){
+        if(!operationType.selectedItem.equals(OperationType.DOMESTIC) ){
           operationType.addItem( OperationType.DOMESTIC )
         }
-        operationType.setSelectedItem( OperationType.DOMESTIC )
+        if(this.customer != null){
+          operationType.setSelectedItem( OperationType.DOMESTIC )
+        } else {
+          operationType.removeItem( OperationType.DOMESTIC )
+        }
         doBindings()
     }
 

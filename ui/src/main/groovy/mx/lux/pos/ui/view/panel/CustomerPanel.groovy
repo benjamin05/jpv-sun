@@ -167,14 +167,15 @@ class CustomerPanel extends JPanel {
                 label( 'Nombre' )
                 firstName = textField( document: new UpperCaseDocument()/*, inputVerifier: new NotEmptyVerifier()*/ )
 
-                label( 'F. Nacimiento' )
-                dob = spinner( model: spinnerDateModel() )
-
                 label( 'Apellido Paterno' )
                 fathersName = textField( document: new UpperCaseDocument()/*, inputVerifier: new NotEmptyVerifier()*/ )
 
                 label( 'Apellido Materno' )
                 mothersName = textField( document: new UpperCaseDocument() )
+
+                label( 'F. Nacimiento' )
+                dob = spinner( model: spinnerDateModel() )
+
             }
 
             panel( border: titledBorder( 'Dirección' ), layout: new MigLayout( 'wrap 3', '[][fill,grow][]' ) ) {
@@ -421,9 +422,12 @@ class CustomerPanel extends JPanel {
         gender.selectedItem = GenderType.MALE
         primary.text = null
         stateField.selectedItem = defaultState
-        homePhone.text = null
-        email.text = null
-        domain.selectedItem = null
+        //homePhone.text = null
+        //email.text = null
+        //domain.selectedItem = null
+        city.selectedItem = null
+        locationField.selectedItem = null
+        zipcode.selectedItem = null
     }
 
     private def titleChanged = { ItemEvent ev ->

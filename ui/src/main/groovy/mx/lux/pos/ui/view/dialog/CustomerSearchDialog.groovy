@@ -143,7 +143,6 @@ class CustomerSearchDialog extends JDialog {
   }
 
   public def doNewCustomer = {
-
     dispose()
     customer = new Customer()
     openCustomerDialog( customer, false )
