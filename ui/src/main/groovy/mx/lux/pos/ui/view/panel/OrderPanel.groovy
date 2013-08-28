@@ -432,7 +432,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     Item item = new Item()
                     if (results.size() == 1) {
                         item = results.first()
-                        if(!item.type.trim().equalsIgnoreCase(TAG_GENERICO_B)){
+                        if( item.type.trim().equalsIgnoreCase(TAG_GENERICO_B) ){
                           validarVentaNegativa(item, customer)
                         } else {
                           optionPane(message: "Cliente invalido, dar de alta datos", optionType: JOptionPane.DEFAULT_OPTION)
@@ -444,7 +444,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         dialog.show()
                         item = dialog.item
                         if (item?.id) {
-                          if(!item?.type.trim().equalsIgnoreCase(TAG_GENERICO_B)){
+                          if(!item?.type.trim().equalsIgnoreCase(TAG_GENERICO_B) && customer!= null){
                             validarVentaNegativa(item, customer)
                           } else {
                               optionPane(message: "Cliente invalido, dar de alta datos", optionType: JOptionPane.DEFAULT_OPTION)

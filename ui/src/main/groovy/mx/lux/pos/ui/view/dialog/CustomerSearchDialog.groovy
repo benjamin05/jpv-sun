@@ -123,6 +123,7 @@ class CustomerSearchDialog extends JDialog {
     if ( SwingUtilities.isLeftMouseButton( ev ) ) {
       if ( ev.clickCount == 2 ) {
         customer = ev.source.selectedElement
+        canceled = false
         dispose()
       }
     }
