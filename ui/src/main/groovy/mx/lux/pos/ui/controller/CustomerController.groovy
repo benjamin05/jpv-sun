@@ -141,7 +141,6 @@ class CustomerController {
     static ClienteProceso addClienteProceso (Customer tmpCustomer){
 
         Branch branch = Session.get(SessionItem.BRANCH) as Branch
-
         ClienteProceso clientePro = new ClienteProceso()
         String IdSync = '1'
         String IdMod = '0'
@@ -149,10 +148,8 @@ class CustomerController {
         clientePro.setEtapa(ClienteProcesoEtapa.PAYMENT.toString())
         clientePro.setIdSync(IdSync)
         clientePro.setFechaMod(new Date())
-
         clientePro.setIdMod(IdMod)
         clientePro.setIdSucursal(branch?.id)
-
         clienteService.agregarClienteProceso(clientePro)
 
     }

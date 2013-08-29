@@ -338,13 +338,11 @@ class CustomerPanel extends JPanel {
             Customer tmpCustomer = new Customer()
             if (edit == false) {
                 tmpCustomer = CustomerController.addCustomer(this.customer)
-
                 CustomerController.addClienteProceso(tmpCustomer)        //Se agrega registro en la tabla cliente_proceso
             } else {
                 tmpCustomer = customer
             }
             if (tmpCustomer?.id) {
-
                 customer = tmpCustomer
                 CustomerController.saveContact(customer,0,'')
                 for(int b=1;b<=3;b++){

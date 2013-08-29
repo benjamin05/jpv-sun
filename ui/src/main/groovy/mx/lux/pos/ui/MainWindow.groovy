@@ -190,9 +190,10 @@ class MainWindow extends JFrame implements KeyListener {
                               }
                                   customerDialog.show()
                                   if (!customerDialog.canceled) {
-                                      orderPanel.setCustomerInOrderFromMenu( customerDialog.customer )
-                                      customerDialog = new CustomerSearchDialog( this, new Order() )
+                                    orderPanel.setCustomerInOrderFromMenu( customerDialog.customer )
+                                    customerDialog = new CustomerSearchDialog( this, new Order() )
                                   }
+                                  customerDialog = new CustomerSearchDialog( this, new Order() )
                               }
                       )
                     }

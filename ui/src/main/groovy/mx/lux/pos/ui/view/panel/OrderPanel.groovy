@@ -81,6 +81,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private Dioptra antDioptra = new Dioptra()
     private static boolean ticketRx
     private String armazonString = null
+    private Boolean activeDialogProccesCustomer = true
 
 
 
@@ -279,12 +280,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
 
         if (order?.id != null) {
-
-
             if (order?.dioptra != null) {
-
                 dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
-
             }
            //  println('antDioptra: ' +  OrderController.codigoDioptra(antDioptra))
           //  println('Dioptra: ' +  OrderController.codigoDioptra(dioptra))
@@ -302,7 +299,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         Order tmp = OrderController.getOrder(pOrderId)
         if (tmp?.id) {
             order = tmp
-
             doBindings()
         }
     }
@@ -319,17 +315,26 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         JButton source = ev.source as JButton
         source.enabled = false
         if (order.customer.id == null) {
-            CustomerController.browseCustomer(this)
+            //CustomerController.browseCustomer(this)
             sb.doLater {
                 if (this.customer == null) {
                     this.operationType.setSelectedItem(OperationType.DEFAULT)
                 }
             }
         } else {
-            order.rx = CustomerController.queryCustomer(order.customer)
-            sb.doLater {
-                this.doBindings()
-            }
+          if ( CustomerType.FOREIGN.equals( customer.type ) ) {
+              ForeignCustomerDialog dialog = new ForeignCustomerDialog( this, customer, true )
+              dialog.show()
+              this.customer = dialog.customer
+          } else {
+              NewCustomerAndRxDialog dialog = new NewCustomerAndRxDialog( this, customer, true )
+              dialog.show()
+              this.customer = dialog.customer
+          }
+          //order.rx = CustomerController.queryCustomer(order.customer)
+          sb.doLater {
+              this.doBindings()
+          }
         }
 
         doBindings()
@@ -395,7 +400,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     break
                 case OperationType.PENDING:
                     sb.doLater {
-                        CustomerController.requestPendingCustomer(this)
+                        if(activeDialogProccesCustomer){
+                          CustomerController.requestPendingCustomer(this)
+                        }
+                        activeDialogProccesCustomer = true
                     }
                     break
                 case OperationType.PAYING:
@@ -472,7 +480,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
             }
             sb.doLater {
-
                 itemSearch.text = null
             }
 
@@ -539,24 +546,19 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private Receta validarGenericoB(Item item) {
-
         rec = null
         try {
             //Receta Nueva
             String artString = item.name
             if (artString.equals('SV') || artString.equals('P') || artString.equals('B')) {
-
                 Branch branch = Session.get(SessionItem.BRANCH) as Branch
                 EditRxDialog editRx = new EditRxDialog(this, new Rx(), customer?.id, branch?.id, 'Nueva Receta', item.description)
-
                 editRx.show()
-
 
                 this.disableUI()
                 this.setCustomer(customer)
                 this.setOrder(order)
                 this.enableUI()
-
 
             } else {
                 rec = null
@@ -600,13 +602,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
         SurteSwitch surteSwitch = OrderController.surteCallWS(branch, item, 'S',order)
         surteSwitch = surteSu(item,surteSwitch,branch)
-
         if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
              String surte = surteSwitch?.surte
-
             if (item.stock > 0) {
                 order = OrderController.addItemToOrder(order, item, surte)
-
                 controlItem(item)
                 if (customer != null) {
                     order.customer = customer
@@ -616,7 +615,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                 order.customer = customer
                 if (SalesWithNoInventory.ALLOWED.equals(onSalesWithNoInventory)) {
                     order = OrderController.addItemToOrder(order, item, surte)
-
                     controlItem(item)
                 } else if (SalesWithNoInventory.REQUIRE_AUTHORIZATION.equals(onSalesWithNoInventory)) {
                     boolean authorized
@@ -629,7 +627,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     }
                     if (authorized) {
                         order = OrderController.addItemToOrder(order, item, surte)
-
                         controlItem(item)
                     }
                 } else {
@@ -741,14 +738,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void controlItem(Item item){
-
-
-
-
         Branch branch = Session.get(SessionItem.BRANCH) as Branch
         OrderController.insertaAcuseAPAR(order,branch,item)
-
-
         String indexDioptra = item?.indexDiotra
         println('Index Dioptra del Articulo : ' +item?.indexDiotra)
         if (!indexDioptra.equals(null)) {
@@ -766,13 +757,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         if (item?.type.trim().equals('A')) {
             armazonString = item?.name
         }
-
-
         rec = validarGenericoB(item)
         OrderController.saveRxOrder(order?.id, rec.id)
-
-
-
         updateOrder(order?.id)
         if (!order.customer.equals(customer)) {
             order.customer = customer
@@ -1018,7 +1004,12 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
           operationType.addItem( OperationType.DOMESTIC )
         }
         if(this.customer != null){
-          operationType.setSelectedItem( OperationType.DOMESTIC )
+          if( CustomerController.findProccesClient(this.customer.id) != null ){
+            activeDialogProccesCustomer = false
+            operationType.setSelectedItem( OperationType.PENDING )
+          } else {
+            operationType.setSelectedItem( OperationType.DOMESTIC )
+          }
         } else {
           operationType.removeItem( OperationType.DOMESTIC )
         }
