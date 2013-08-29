@@ -24,6 +24,7 @@ import mx.lux.pos.repository.*
 class NotaVentaServiceImpl implements NotaVentaService {
 
   private static final String DATE_TIME_FORMAT = 'dd-MM-yyyy HH:mm:ss'
+  private static final String TAG_SURTE_SUCURSAL = 'S'
 
   @Resource
   private NotaVentaRepository notaVentaRepository
@@ -98,15 +99,14 @@ class NotaVentaServiceImpl implements NotaVentaService {
     if ( StringUtils.isNotBlank( notaVenta?.id ) ) {
       String idNotaVenta = notaVenta.id
       if ( notaVentaRepository.exists( idNotaVenta ) ) {
-
         notaVenta.idSucursal = sucursalRepository.getCurrentSucursalId()
         BigDecimal total = BigDecimal.ZERO
         List<DetalleNotaVenta> detalles = detalleNotaVentaRepository.findByIdFactura( idNotaVenta )
         detalles?.each { DetalleNotaVenta detalleNotaVenta ->
-          BigDecimal precio = detalleNotaVenta?.precioUnitFinal ?: 0
-          Integer cantidad = detalleNotaVenta?.cantidadFac ?: 0
-          BigDecimal subtotal = precio.multiply( cantidad )
-          total = total.add( subtotal )
+            BigDecimal precio = detalleNotaVenta?.precioUnitFinal ?: 0
+            Integer cantidad = detalleNotaVenta?.cantidadFac ?: 0
+            BigDecimal subtotal = precio.multiply( cantidad )
+            total = total.add( subtotal )
         }
 
         BigDecimal pagado = BigDecimal.ZERO

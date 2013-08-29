@@ -663,7 +663,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             Item i = OrderController.findArt(dio.trim())
             if (i?.id != null || dio.trim().equals('nullnullnullnullnullnull')) {
                 String tipoArt = null
-
                 for (int row = 0; row <= itemsModel.rowCount; row++) {
                     String artString = itemsModel.getValueAt(row, 0).toString()
                     if (artString.trim().equals('SV')) {
@@ -677,28 +676,21 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         tipoArt = 'PROGRESIVO'
                     }
                 }
-
                 if (artCount == 0) {
                     JButton source = ev.source as JButton
                     source.enabled = false
                     ticketRx = false
                     flujoImprimir(artCount)
                     source.enabled = true
-
                 } else {
-
                     rec = OrderController.findRx(order, customer)
                     Order armOrder = OrderController.getOrder(order?.id)
-
                     if (rec.id == null) {   //Receta Nueva
                         Branch branch = Session.get(SessionItem.BRANCH) as Branch
-
                         EditRxDialog editRx = new EditRxDialog(this, new Rx(), customer?.id, branch?.id, 'Nueva Receta', tipoArt)
                         editRx.show()
-
                         try {
                             OrderController.saveRxOrder(order?.id, rec.id)
-
                             JButton source = ev.source as JButton
                             source.enabled = false
                             ticketRx = true
@@ -708,9 +700,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                             }
                             flujoImprimir(artCount)
                             source.enabled = true
-                        } catch (ex) {
-
-                        }
+                        } catch (ex) { }
                     } else {
                         JButton source = ev.source as JButton
                         source.enabled = false
@@ -721,10 +711,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         }
                         flujoImprimir(artCount)
                         source.enabled = true
-
                     }
-
-
                 }
             } else {
                 sb.optionPane(message: "Codigo Dioptra Incorrecto", optionType: JOptionPane.DEFAULT_OPTION)
@@ -768,42 +755,28 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private void flujoImprimir(int artCount) {
         Boolean validOrder = isValidOrder()
         if (artCount != 0) {
-
-
             Parametro diaIntervalo = Registry.find(TipoParametro.DIA_PRO)
-
             Date diaPrometido = new Date() + diaIntervalo?.valor.toInteger()
             OrderController.savePromisedDate(order?.id, diaPrometido)
-
-
             Double pAnticipo = Registry.getAdvancePct()
             if (order?.paid < (order?.total * pAnticipo)) {
-
                 AuthorizationDialog authDialog = new AuthorizationDialog(this, "Anticipo menor al permitido, esta operacion requiere autorizaci\u00f3n")
                 authDialog.show()
-
-
                 if (authDialog.authorized) {
                     validOrder = isValidOrder()
                 } else {
-
                     validOrder = false
-
                     sb.optionPane(
                             message: 'El monto del anticipo tiene que ser minimo de: $' + (order?.total * pAnticipo),
                             messageType: JOptionPane.ERROR_MESSAGE
                     ).createDialog(this, 'No se puede registrar la venta')
                             .show()
                 }
-
             } else {
                 validOrder = isValidOrder()
             }
-
         }
         if (validOrder) {
-
-
             if (operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.WALKIN.value) ||
                     operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.DOMESTIC.value)) {
                 order.country = 'MEXICO'
@@ -829,7 +802,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     saveOrder()
                 }
             } else if (operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.PAYING.value)) {
-
                 saveOrder()
             }
         }
@@ -837,7 +809,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void saveOrder() {
-
         Order newOrder = OrderController.placeOrder(order)
         CustomerController.saveOrderCountries(order.country)
         this.promotionDriver.requestPromotionSave(newOrder?.id)
@@ -845,8 +816,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         // if(newOrder?.due > 0){
         //   cSaldo = true
         // }
-        OrderController.creaJb(newOrder?.ticket.trim(), cSaldo)
-        OrderController.validaEntrega(newOrder?.ticket.trim(), true)
+        OrderController.creaJb(newOrder?.ticket?.trim(), cSaldo)
+        OrderController.validaEntrega(newOrder?.ticket?.trim(), true)
 
         if (StringUtils.isNotBlank(newOrder?.id)) {
 
