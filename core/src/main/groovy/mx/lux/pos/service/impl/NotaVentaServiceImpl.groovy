@@ -300,20 +300,21 @@ class NotaVentaServiceImpl implements NotaVentaService {
     return null
   }
     @Transactional
-    void saveFrame(NotaVenta rNotaVenta, String opciones, String forma) {
+    void saveFrame(String idNotaVenta, String opciones, String forma) {
+        NotaVenta rNotaVenta = obtenerNotaVenta(idNotaVenta)
 
-            if ( notaVentaRepository.exists( rNotaVenta.id ) ) {
                 println('Material: ' + opciones)
                 println('Acabado: '+ forma)
-                rNotaVenta?.udf2 = opciones
-                rNotaVenta?.udf3 = forma
+                rNotaVenta?.setUdf2(opciones)
+                rNotaVenta?.setUdf3(forma)
 
-                notaVentaRepository.saveAndFlush( rNotaVenta )
+        rNotaVenta =  notaVentaRepository.save( rNotaVenta )
+        println('Material: ' + rNotaVenta?.udf2)
+        println('Acabado: '+ rNotaVenta?.udf3)
+
+            notaVentaRepository.flush()
 
 
-            } else {
-                log.warn( "id no existe" )
-            }
 
     }
 

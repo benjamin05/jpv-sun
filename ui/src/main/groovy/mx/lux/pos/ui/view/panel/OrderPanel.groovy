@@ -551,7 +551,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         return rec
     }
 
-    private SurteSwitch surteSu(Item item, SurteSwitch surteSwitch,Branch branch){
+    private SurteSwitch surteSu(Item item, SurteSwitch surteSwitch){
        if(surteSwitch?.surteSucursal==false){
         if(item?.type?.trim().equals('A') && item?.stock > 0 ){
             surteSwitch?.surteSucursal=true
@@ -576,7 +576,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         Branch branch = Session.get(SessionItem.BRANCH) as Branch
 
         SurteSwitch surteSwitch = OrderController.surteCallWS(branch, item, 'S',order)
-        surteSwitch = surteSu(item,surteSwitch,branch)
+        surteSwitch = surteSu(item,surteSwitch)
 
         if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
              String surte = surteSwitch?.surte
@@ -757,6 +757,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void flujoImprimir(int artCount) {
+        armazonString = null
         Boolean validOrder = isValidOrder()
         if (artCount != 0) {
 
@@ -837,7 +838,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         //   cSaldo = true
         // }
         OrderController.creaJb(newOrder?.ticket.trim(), cSaldo)
-        OrderController.validaEntrega(newOrder?.ticket.trim(), true)
+        OrderController.validaEntrega(newOrder?.bill.trim(),newOrder?.branch?.id.toString(), true)
 
         if (StringUtils.isNotBlank(newOrder?.id)) {
 

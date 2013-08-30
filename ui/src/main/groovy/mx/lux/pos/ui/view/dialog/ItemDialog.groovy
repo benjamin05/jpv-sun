@@ -49,7 +49,7 @@ class ItemDialog extends JDialog {
 
         surteVisible = OrderController.surteEnabled(orderItem?.tipo.trim())
         if(surteVisible == true){
-            surteOption = OrderController.surteOption(orderItem?.tipo.trim())
+            surteOption = OrderController.surteOption(orderItem?.tipo.trim(),orderItem?.delivers.trim())
         }
 
         items.addAll( ItemController.findItems( tmpOrderItem.item?.name ) )
@@ -94,6 +94,7 @@ class ItemDialog extends JDialog {
   private void doBindings( ) {
     sb.build {
       bean( quantity, value: bind( source: tmpOrderItem, sourceProperty: 'quantity', mutual: true ) )
+
       //bean( color, selectedItem: bind( source: tmpOrderItem.item, sourceProperty: 'color' ) )
       //bean( delivers, selectedItem: bind( source: tmpOrderItem, sourceProperty: 'delivers', mutual: true ) )
     }

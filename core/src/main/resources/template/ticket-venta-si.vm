@@ -55,7 +55,7 @@ ${LF}
 #if( ${despliega_atencion_a_clientes} )
 #SET_STYLE(${FUENTE_B} 0 0 0 0)ATENCION A CLIENTES
 #SET_STYLE(${FUENTE_B} 0 0 0 0)${compania.webAddress}${CR}
-#SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 ${SUBRAYADO})www.opticasmasvision.com${LF}
+#SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 ${SUBRAYADO})www.opticasmasvision.com.mx${LF}
 #end
 #SET_STYLE(${FUENTE_A} ${NEGRITA} ${DOBLE_ALTURA} ${DOBLE_ANCHURA} 0)#altnull(${sucursal.centroCostos})-#altnull(${nota_venta.factura})${LF}
 #AVANZAR_LINEAS(4)
