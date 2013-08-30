@@ -418,19 +418,13 @@ class EditRxDialog extends JDialog {
 
         //limpiarAux = txtField.text
         //txtField.text = txtField.text.substring(1,txtField.text.indexOf('.'))
-
-            if(txtField.text.substring(txtField.text.indexOf('.') + 1,txtField.text.size()).toInteger() > 0){
-                 txtField.text = txtField.text.substring(1,txtField.text.indexOf('.')) + '.' + txtField.text.substring(txtField.text.indexOf('.') + 1,txtField.text.size())
-            }   else{
-                txtField.text = txtField.text.substring(1,txtField.text.indexOf('.'))
-            }
-
-
-
-
-
-        //txtField.text = ''
-
+        if(txtField.text != ''){
+          if(txtField.text.substring(txtField.text.indexOf('.') + 1,txtField.text.size()).toInteger() > 0){
+              txtField.text = txtField.text.substring(1,txtField.text.indexOf('.')) + '.' + txtField.text.substring(txtField.text.indexOf('.') + 1,txtField.text.size())
+          }   else{
+              txtField.text = txtField.text.substring(1,txtField.text.indexOf('.'))
+          }
+        }
     }
 
     private void validacion(JTextField txtField, double max, double min, double interval, String format, String mask){
