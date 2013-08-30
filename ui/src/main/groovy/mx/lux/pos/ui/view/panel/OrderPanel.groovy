@@ -1029,15 +1029,12 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private void fireRequestContinue(DefaultTableModel itemsModel) {
 
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
-
         String dio = OrderController.codigoDioptra(dioptra)
-
         if (!dioptra.getLente().equals(null)) {
 
             Item i = OrderController.findArt(dio.trim())
 
             if (i?.id != null || dio.trim().equals('nullnullnullnullnullnull')) {
-
                 String tipoArt = null
                 int artCount = 0
                 for (int row = 0; row <= itemsModel.rowCount; row++) {
@@ -1053,14 +1050,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         tipoArt = 'PROGRESIVO'
                     }
                 }
-
-
                 if (artCount == 0) {
                     flujoContinuar()
 
                 } else {
-
-
                     rec = OrderController.findRx(order, customer)
                     Order armOrder = OrderController.getOrder(order?.id)
 
