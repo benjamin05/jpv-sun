@@ -300,7 +300,8 @@ class NotaVentaServiceImpl implements NotaVentaService {
     return null
   }
     @Transactional
-    void saveFrame(String idNotaVenta, String opciones, String forma) {
+    NotaVenta saveFrame(String idNotaVenta, String opciones, String forma) {
+
         NotaVenta rNotaVenta = obtenerNotaVenta(idNotaVenta)
 
                 println('Material: ' + opciones)
@@ -308,11 +309,11 @@ class NotaVentaServiceImpl implements NotaVentaService {
                 rNotaVenta?.setUdf2(opciones)
                 rNotaVenta?.setUdf3(forma)
 
-        rNotaVenta =  notaVentaRepository.save( rNotaVenta )
+        rNotaVenta =  notaVentaRepository.saveAndFlush( rNotaVenta )
         println('Material: ' + rNotaVenta?.udf2)
         println('Acabado: '+ rNotaVenta?.udf3)
 
-            notaVentaRepository.flush()
+            return rNotaVenta
 
 
 

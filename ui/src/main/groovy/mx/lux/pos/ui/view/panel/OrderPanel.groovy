@@ -683,8 +683,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                             source.enabled = false
                             ticketRx = true
                             if (armOrder?.udf2.equals('')) {
-                                ArmRxDialog armazon = new ArmRxDialog(this, order?.id, armazonString)
+                                ArmRxDialog armazon = new ArmRxDialog(this, order, armazonString)
                                 armazon.show()
+                                order = armazon.order
                             }
                             flujoImprimir(artCount)
                             source.enabled = true
@@ -696,8 +697,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         source.enabled = false
                         ticketRx = true
                         if (armOrder?.udf2.equals('')) {
-                            ArmRxDialog armazon = new ArmRxDialog(this, order?.id, armazonString)
+                            ArmRxDialog armazon = new ArmRxDialog(this, order, armazonString)
                             armazon.show()
+                           order = armazon.order
                         }
                         flujoImprimir(artCount)
                         source.enabled = true
