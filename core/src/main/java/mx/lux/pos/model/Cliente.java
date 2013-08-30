@@ -107,7 +107,7 @@ public class Cliente implements Serializable {
     @Column( name = "ext_adi_cli", length = 5 )
     private String extAdicional;
 
-    @Email
+    //@Email
     @Column( name = "email_cli" )
     private String email;
 

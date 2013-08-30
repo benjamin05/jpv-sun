@@ -130,7 +130,7 @@ class PrepareInvTrBusiness {
     request.reference = pNotaVenta.id
 
     for ( DetalleNotaVenta det in pNotaVenta.detalles ) {
-      if ( parts.validarArticulo( det.idArticulo ) && det.surte.trim().equals(TAG_SURTE_SUCURSAL) ) {
+      if ( parts.validarArticulo( det.idArticulo ) && det?.surte?.trim().equals(TAG_SURTE_SUCURSAL) ) {
         request.skuList.add( new InvTrDetRequest( det.idArticulo, det.cantidadFac.intValue() ) )
       }
     }

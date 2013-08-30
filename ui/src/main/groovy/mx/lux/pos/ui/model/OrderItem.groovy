@@ -43,6 +43,7 @@ class OrderItem {
             item: Item.toItem( detalleNotaVenta ),
             quantity: detalleNotaVenta.cantidadFac,
             delivers: detalleNotaVenta.surte
+
         )
         return orderItem
       }

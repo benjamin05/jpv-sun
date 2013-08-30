@@ -114,6 +114,45 @@ class ContactController {
             contactos.add(formaContacto)
         }
 
+       Cliente cliente = clienteService.obtenerCliente(idCliente)
+
+
+
+       if( cliente?.email != null ){
+           if (!cliente?.email.trim().equals('') ){
+           FormaContacto formaContacto = new FormaContacto()
+           formaContacto?.contacto = cliente?.email
+           formaContacto?.tipoContacto = tipoContactoRepository.findOne(1)
+           contactos.add(formaContacto)
+       }
+       }
+       if( cliente?.telefonoCasa != null ){
+           if( !cliente?.telefonoCasa.trim().equals('') ){
+           FormaContacto formaContacto = new FormaContacto()
+           formaContacto?.contacto = cliente?.telefonoCasa
+           formaContacto?.tipoContacto = tipoContactoRepository.findOne(2)
+           contactos.add(formaContacto)
+           }
+       }
+       if( cliente?.telefonoTrabajo != null ){
+           if( !cliente?.telefonoTrabajo.trim().equals('') ){
+           FormaContacto formaContacto = new FormaContacto()
+           formaContacto?.contacto = cliente?.telefonoTrabajo
+           formaContacto?.tipoContacto = tipoContactoRepository.findOne(3)
+           contactos.add(formaContacto)
+       }
+       }
+       if( cliente?.telefonoAdicional != null  ){
+           if( !cliente?.telefonoAdicional.trim().equals('')  ){
+           FormaContacto formaContacto = new FormaContacto()
+           formaContacto?.contacto = cliente?.telefonoAdicional
+           formaContacto?.tipoContacto = tipoContactoRepository.findOne(4)
+           contactos.add(formaContacto)
+           }
+       }
+
+
+
 
 
         return contactos

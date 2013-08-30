@@ -219,8 +219,8 @@ class OrderController {
     }
 
     static void saveFrame(String idNotaVenta, String opciones, String forma) {
-        NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(idNotaVenta)
-        notaVentaService.saveFrame(notaVenta, opciones, forma)
+
+        notaVentaService.saveFrame(idNotaVenta, opciones, forma)
     }
 
     static Dioptra addDioptra(Order order, String dioptra) {
@@ -524,7 +524,7 @@ class OrderController {
                 }
                 notaVenta.observacionesNv = order.comments
                 //notaVenta.empEntrego = user?.username
-                notaVenta.udf2 = order.country.toUpperCase()
+                //notaVenta.udf2 = order.country.toUpperCase()
                 notaVenta = notaVentaService.cerrarNotaVenta(notaVenta)
                 if (inventarioService.solicitarTransaccionVenta(notaVenta)) {
                     log.debug("transaccion de inventario correcta")
@@ -1070,15 +1070,18 @@ class OrderController {
     }
 
 
-    static List<String> surteOption(String idGenerico) {
+    static List<String> surteOption(String idGenerico, String surte) {
         Generico generico = genericoRepository.findOne(idGenerico)
 
         List<String> surteOption = new ArrayList<String>()
+        surteOption.add(surte)
         String s = generico?.surte
         StringTokenizer st = new StringTokenizer(s.trim(), ",")
         Iterator its = st.iterator()
         while (its.hasNext()) {
+            if(!its.next().toString().trim().equals(surte)){
             surteOption.add(its.next().toString())
+            }
         }
 
         return surteOption

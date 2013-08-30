@@ -29,6 +29,7 @@ class ArmRxDialog extends JDialog {
     private static JRadioButton ninguno
     private static String idNotaV
     private static String armazon
+    private static String titulo  = 'Armazon'
 
     ArmRxDialog(Component parent, String idNotaVenta, String armazonString) {
         println( 'Armazoon: '+armazonString)
@@ -36,6 +37,10 @@ class ArmRxDialog extends JDialog {
         component = parent
         idNotaV = idNotaVenta
         armazon = armazonString
+
+        if(armazon != null){
+            titulo = 'Armazon ' + armazon
+        }
         buildUI()
 
 
@@ -44,7 +49,7 @@ class ArmRxDialog extends JDialog {
 
     void buildUI() {
         sb.dialog(this,
-                title: 'Armazon',
+                title: titulo,
                 resizable: false,
                 pack: true,
                 modal: true,
@@ -135,6 +140,8 @@ class ArmRxDialog extends JDialog {
         if(!acabado.selection.actionCommand.equals('Ninguno')){
           opciones = opciones   +', '+acabado.selection.actionCommand
         }
+
+        println('Armazon: ' + opciones)
         String form = forma.text
       OrderController.saveFrame(idNotaV,opciones,form)
 

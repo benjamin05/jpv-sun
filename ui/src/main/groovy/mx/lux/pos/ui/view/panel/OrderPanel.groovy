@@ -441,7 +441,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     if (results.size() == 1) {
                         item = results.first()
                         if( item.type.trim().equalsIgnoreCase(TAG_GENERICO_B) ){
-                          if( customer != null ){
+                          if( customer.id != 1 ){
                             validarVentaNegativa(item, customer)
                           } else {
                             optionPane(message: "Cliente invalido, dar de alta datos", optionType: JOptionPane.DEFAULT_OPTION)
@@ -457,7 +457,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         item = dialog.item
                         if (item?.id) {
                           if(!item?.type.trim().equalsIgnoreCase(TAG_GENERICO_B) ){
-                            if(customer != null){
+                            if(customer.id != 1){
                               validarVentaNegativa(item, customer)
                             } else {
                               optionPane(message: "Cliente invalido, dar de alta datos", optionType: JOptionPane.DEFAULT_OPTION)
@@ -465,7 +465,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                                       .show()
                             }
                           } else {
-                            validarVentaNegativa(item, customer)validarVentaNegativa(item, customer)
+                            validarVentaNegativa(item, customer)
                           }
                         }
                     }
@@ -576,7 +576,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         return rec
     }
 
-    private SurteSwitch surteSu(Item item, SurteSwitch surteSwitch,Branch branch){
+    private SurteSwitch surteSu(Item item, SurteSwitch surteSwitch){
        if(surteSwitch?.surteSucursal==false){
         if(item?.type?.trim().equals('A') && item?.stock > 0 ){
             surteSwitch?.surteSucursal=true
@@ -601,7 +601,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         Branch branch = Session.get(SessionItem.BRANCH) as Branch
 
         SurteSwitch surteSwitch = OrderController.surteCallWS(branch, item, 'S',order)
-        surteSwitch = surteSu(item,surteSwitch,branch)
+        surteSwitch = surteSu(item,surteSwitch)
         if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
              String surte = surteSwitch?.surte
             if (item.stock > 0) {
@@ -753,6 +753,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void flujoImprimir(int artCount) {
+        armazonString = null
         Boolean validOrder = isValidOrder()
         if (artCount != 0) {
             Parametro diaIntervalo = Registry.find(TipoParametro.DIA_PRO)
@@ -777,14 +778,14 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             }
         }
         if (validOrder) {
-            if (operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.WALKIN.value) ||
+            /*if (operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.WALKIN.value) ||
                     operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.DOMESTIC.value)) {
-                order.country = 'MEXICO'
+                //order.country = 'MEXICO'
                 saveOrder()
             } else if (operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.FOREIGN.value)) {
                 String paisCliente = CustomerController.countryCustomer(order)
                 if (paisCliente.length() > 0) {
-                    order.country = paisCliente
+                    //order.country = paisCliente
                     saveOrder()
                 } else {
                     CountryCustomerDialog dialog = new CountryCustomerDialog(MainWindow.instance)
@@ -801,43 +802,33 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     order.country = dialog.pais
                     saveOrder()
                 }
-            } else if (operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.PAYING.value)) {
+            } else if (operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.PAYING.value)) {*/
                 saveOrder()
-            }
+            //}
         }
 
     }
 
     private void saveOrder() {
         Order newOrder = OrderController.placeOrder(order)
-        CustomerController.saveOrderCountries(order.country)
+        //CustomerController.saveOrderCountries(order.country)
         this.promotionDriver.requestPromotionSave(newOrder?.id)
         Boolean cSaldo = false
         // if(newOrder?.due > 0){
         //   cSaldo = true
         // }
-        OrderController.creaJb(newOrder?.ticket?.trim(), cSaldo)
-        OrderController.validaEntrega(newOrder?.ticket?.trim(), true)
-
+        OrderController.creaJb(newOrder?.ticket.trim(), cSaldo)
+        OrderController.validaEntrega(newOrder?.bill.trim(),newOrder?.branch?.id.toString(), true)
         if (StringUtils.isNotBlank(newOrder?.id)) {
-
-
             OrderController.printOrder(newOrder.id)
             if (ticketRx == true) {
                 OrderController.printRx(newOrder.id, false)
                 OrderController.fieldRX(newOrder.id)
-
-
             }
             reviewForTransfers(newOrder.id)
-
             // Flujo despues de imprimir nota de venta
-
-
             CustomerController.requestOrderByCustomer(this, customer)
-
             // Flujo despues de imprimir nota de venta
-
         } else {
             sb.optionPane(
                     message: 'Ocurrio un error al registrar la venta, intentar nuevamente',
