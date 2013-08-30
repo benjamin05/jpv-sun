@@ -45,6 +45,8 @@ import java.util.concurrent.TimeoutException
 @Component
 class OrderController {
 
+    private ExecutorService executor = Executors.newFixedThreadPool(1)
+
     private static final Double ZERO_TOLERANCE = 0.0005
 
     private static NotaVentaService notaVentaService
@@ -220,7 +222,7 @@ class OrderController {
 
     static Order saveFrame(String idNotaVenta, String opciones, String forma) {
 
-       NotaVenta notaVenta = notaVentaService.saveFrame(idNotaVenta, opciones, forma)
+        NotaVenta notaVenta = notaVentaService.saveFrame(idNotaVenta, opciones, forma)
 
         return Order.toOrder(notaVenta)
     }
@@ -1081,8 +1083,8 @@ class OrderController {
         StringTokenizer st = new StringTokenizer(s.trim(), ",")
         Iterator its = st.iterator()
         while (its.hasNext()) {
-            if(!its.next().toString().trim().equals(surte)){
-            surteOption.add(its.next().toString())
+            if (!its.next().toString().trim().equals(surte)) {
+                surteOption.add(its.next().toString())
             }
         }
 
@@ -1101,7 +1103,7 @@ class OrderController {
             AcusesTipo acusesTipo = acusesTipoRepository.findOne('AUT')
             String url = acusesTipo?.pagina + '?id_suc=' + branch?.id.toString().trim() + '&id_col=' + item?.color?.trim() + '&id_art=' + item?.name.toString().trim()
             println(url)
-            String resultado = callWS(url)
+            String resultado = callUrlMethod(url)
             println(resultado)
             int index
             try {
@@ -1164,30 +1166,30 @@ class OrderController {
                 parte = parte + detalleNotaVenta?.idTipoDetalle.trim() + ','
             }
 
-            if(detalleNotaVenta?.surte.trim().equals('P') && detalleNotaVenta?.articulo?.idGenerico.trim().equals('A')){
-                insertarAcuse   = true
+            if (detalleNotaVenta?.surte.trim().equals('P') && detalleNotaVenta?.articulo?.idGenerico.trim().equals('A')) {
+                insertarAcuse = true
             }
 
-            println('insertaAcuse: '+detalleNotaVenta?.surte.trim() )
-            println('insertaAcuse: '+detalleNotaVenta?.articulo?.idGenerico.trim() )
+            println('insertaAcuse: ' + detalleNotaVenta?.surte.trim())
+            println('insertaAcuse: ' + detalleNotaVenta?.articulo?.idGenerico.trim())
         }
-        println('insertaAcuse: '+insertarAcuse)
-        if(insertarAcuse){
+        println('insertaAcuse: ' + insertarAcuse)
+        if (insertarAcuse) {
 
-        String contenidoAPAR = "parteVal=" + parte
-        contenidoAPAR = contenidoAPAR + "|facturaVal=" + order?.bill
-        contenidoAPAR = contenidoAPAR + "|rxVal=" + rx
-        contenidoAPAR = contenidoAPAR + "|id_colVal=" + item?.color
-        contenidoAPAR = contenidoAPAR + "|id_sucVal=" + branch?.id
-        contenidoAPAR = contenidoAPAR + "|id_artVal=" + item?.name
-        contenidoAPAR = contenidoAPAR + "|id_acuseVal=" + (acuseRepository?.nextIdAcuse() + 1).toString() + '|'
+            String contenidoAPAR = "parteVal=" + parte
+            contenidoAPAR = contenidoAPAR + "|facturaVal=" + order?.bill
+            contenidoAPAR = contenidoAPAR + "|rxVal=" + rx
+            contenidoAPAR = contenidoAPAR + "|id_colVal=" + item?.color
+            contenidoAPAR = contenidoAPAR + "|id_sucVal=" + branch?.id
+            contenidoAPAR = contenidoAPAR + "|id_artVal=" + item?.name
+            contenidoAPAR = contenidoAPAR + "|id_acuseVal=" + (acuseRepository?.nextIdAcuse() + 1).toString() + '|'
 
-        Acuse acuseAPAR = new Acuse()
-        acuseAPAR?.contenido = contenidoAPAR
-        acuseAPAR?.idTipo = 'APAR'
-        acuseAPAR?.intentos = 0
+            Acuse acuseAPAR = new Acuse()
+            acuseAPAR?.contenido = contenidoAPAR
+            acuseAPAR?.idTipo = 'APAR'
+            acuseAPAR?.intentos = 0
 
-        acuseRepository.saveAndFlush(acuseAPAR)
+            acuseRepository.saveAndFlush(acuseAPAR)
             insertarAcuse = false
         }
     }
@@ -1204,58 +1206,96 @@ class OrderController {
         }
     }
 
-    static String callWS(String url) {
+    static String callUrlMethod(String url) {
         String resultado = new String()
-        int NTHREDS = 10
-        ExecutorService executor = Executors.newFixedThreadPool(NTHREDS);
-        Future<String> future = executor.submit(new Callable<String>() {
-            public String call() {
-                def urlTexto = url
-                def resp = urlTexto?.toURL()
-                return resp.text
+        def urlTexto = url
+        def resp = urlTexto?.toURL()
+        resp = resp.text
+
+        List<String> htmlList = new ArrayList<String>()
+
+        String s = resp?.replaceAll("[\n\r\t]", "")
+
+        println(s)
+        StringTokenizer st = new StringTokenizer(s.trim(), ">")
+        Iterator its = st.iterator()
+        int ini = 0
+        Boolean xx = false
+
+        while (its.hasNext()) {
+            htmlList.add(its.next().toString() + ">")
+            if (xx == true) {
+
+                int index = htmlList.get(ini).indexOf('<')
+
+                resultado = htmlList.get(ini).substring(0, index)
+
+                xx = false
+
             }
-        })
-
-        try {
-            String resp = future.get(10, TimeUnit.SECONDS)
-
-            List<String> htmlList = new ArrayList<String>()
-
-            String s = resp?.replaceAll("[\n\r\t]", "")
-
-            println(s)
-            StringTokenizer st = new StringTokenizer(s.trim(), ">")
-            Iterator its = st.iterator()
-            int ini = 0
-            Boolean xx = false
-
-            while (its.hasNext()) {
-                htmlList.add(its.next().toString() + ">")
-                if (xx == true) {
-
-                    int index = htmlList.get(ini).indexOf('<')
-
-                    resultado = htmlList.get(ini).substring(0, index)
-
-                    xx = false
-
-                }
-                if (htmlList.get(ini).trim().equals('<XX>')) {
-                    xx = true
-                }
-                ini = ini + 1
+            if (htmlList.get(ini).trim().equals('<XX>')) {
+                xx = true
             }
-
-
-        } catch (TimeoutException ex) {
-            resultado = ''
-
+            ini = ini + 1
         }
-
-
-
         return resultado
     }
 
+
+
+
+    String callWS(String url) {
+        String respuesta = new String()
+        int timeoutSecs = 1
+        final Future<?> future = executor.submit(new Runnable() {
+
+            public void run() {
+
+                try {
+
+                    respuesta = callUrlMethod(url)
+
+                } catch (Exception e) {
+
+                    throw new RuntimeException(e)
+
+                }
+
+            }
+
+        })
+
+
+        try {
+
+            future.get(timeoutSecs, TimeUnit.SECONDS)
+
+        } catch (Exception e) {
+
+            future.cancel(true)
+            respuesta = ''
+            log.warn("encountered problem while doing some work", e)
+
+        }
+
+        return respuesta
+
+    }
+
+
+    static String armazonString(String idNotaVenta){
+        String armazonString = ''
+        List<DetalleNotaVenta> detalleVenta = detalleNotaVentaService.listarDetallesNotaVentaPorIdFactura(idNotaVenta)
+            Iterator iterator = detalleVenta.iterator();
+            while (iterator.hasNext()) {
+                DetalleNotaVenta detalle = iterator.next()
+
+                if(detalle?.articulo?.idGenerico.trim().equals('A')){
+                      armazonString =  detalle?.articulo?.articulo.trim()
+                }
+
+            }
+        return armazonString
+    }
 
 }

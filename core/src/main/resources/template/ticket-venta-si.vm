@@ -48,7 +48,7 @@ ${COLUMNAS}
 #SET_STYLE(${FUENTE_B} 0 0 0 0)Ley Federal de Proteccion de Datos Personales
 #SET_STYLE(${FUENTE_B} 0 0 0 0)en Posesion de los Particulares
 #SET_STYLE(${FUENTE_B} 0 0 0 0)En Mas Vision sus datos estan protegidos, consulte el
-#SET_STYLE(${FUENTE_B} 0 0 0 0)Aviso de Privacidad en www.opticasmasvision.com
+#SET_STYLE(${FUENTE_B} 0 0 0 0)Aviso de Privacidad en www.opticasmasvision.com.mx
 #LINEA_SEPARACION_SIMPLE()
 ${LF}
 #ALINEAR_CENTRO()#SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 0)GRACIAS POR SU PREFERENCIA

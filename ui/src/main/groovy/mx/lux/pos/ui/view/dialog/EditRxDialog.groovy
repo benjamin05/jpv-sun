@@ -418,12 +418,16 @@ class EditRxDialog extends JDialog {
 
         //limpiarAux = txtField.text
         //txtField.text = txtField.text.substring(1,txtField.text.indexOf('.'))
-
+      /*
+        if(txtField.text != ''){
             if(txtField.text.substring(txtField.text.indexOf('.') + 1,txtField.text.size()).toInteger() > 0){
                  txtField.text = txtField.text.substring(1,txtField.text.indexOf('.')) + '.' + txtField.text.substring(txtField.text.indexOf('.') + 1,txtField.text.size())
             }   else{
                 txtField.text = txtField.text.substring(1,txtField.text.indexOf('.'))
             }
+        }
+           */
+
 
 
 
@@ -437,6 +441,20 @@ class EditRxDialog extends JDialog {
         if (txtField.text.trim().length() > 0 || txtField.text.trim() == '0') {
             double number
             String txt = txtField.text.trim()
+            String signo = ''
+
+            if(txt.substring(0,1)=='-'){
+                  txt = txt.substring(1,txtField.text.trim().size())
+                  signo = '-'
+            } else if(txt.substring(0,1)=='+'){
+                txt = txt.substring(1,txtField.text.trim().size())
+            }
+            if(txt.substring(0,1)=='0') {
+                txt = txt.substring(1,txtField.text.trim().size())
+            }
+
+            println('Valor: ' + txt)
+            println('Signo: ' + signo)
 
             txtField.text = ''
             Double multiplo = 0.0
@@ -465,10 +483,10 @@ class EditRxDialog extends JDialog {
 
                         if(mask.equals('+')){
 
-                            txtField.text = signoMas(txt)
+                            txtField.text = signoMas(signo + txt)
                         }else if(mask.equals('-')){
 
-                            txtField.text = signoMenos(txt)
+                            txtField.text = signoMenos(signo + txt)
                         }else{
                             txtField.text = txt
                         }
