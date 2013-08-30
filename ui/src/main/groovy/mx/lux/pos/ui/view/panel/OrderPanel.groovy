@@ -456,7 +456,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         dialog.show()
                         item = dialog.item
                         if (item?.id) {
-                          if(!item?.type.trim().equalsIgnoreCase(TAG_GENERICO_B) ){
+                          if( item?.type.trim().equalsIgnoreCase(TAG_GENERICO_B) ){
                             if(customer.id != 1){
                               validarVentaNegativa(item, customer)
                             } else {
