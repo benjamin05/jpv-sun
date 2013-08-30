@@ -416,8 +416,20 @@ class EditRxDialog extends JDialog {
 
     private void limpiar(JTextField txtField){
 
-        limpiarAux = txtField.text
-        txtField.text = ''
+        //limpiarAux = txtField.text
+        //txtField.text = txtField.text.substring(1,txtField.text.indexOf('.'))
+
+            if(txtField.text.substring(txtField.text.indexOf('.') + 1,txtField.text.size()).toInteger() > 0){
+                 txtField.text = txtField.text.substring(1,txtField.text.indexOf('.')) + '.' + txtField.text.substring(txtField.text.indexOf('.') + 1,txtField.text.size())
+            }   else{
+                txtField.text = txtField.text.substring(1,txtField.text.indexOf('.'))
+            }
+
+
+
+
+
+        //txtField.text = ''
 
     }
 
@@ -572,9 +584,9 @@ class EditRxDialog extends JDialog {
     }
     private String signoMenos(String numero){
 
-
+          if(!numero.substring(0,1).equals('-')){
             numero = '-' + numero
-
+          }
 
         return numero
 
@@ -641,6 +653,7 @@ class EditRxDialog extends JDialog {
 
                         if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
 
+                            /*
                             if( txtOdEsfera.text != '' &&
                                     txtOdCil.text != '' &&
                                     txtOdEje.text != '' &&
@@ -657,13 +670,14 @@ class EditRxDialog extends JDialog {
 
 
                                     txtAltOblea.text  != ''
-                            ){
+                            ){ */
                                 useGlasess()
-                            }else{
+                           /* }else{
                                 sb.optionPane(message: "Llenar todos los campos", optionType: JOptionPane.DEFAULT_OPTION)
                                         .createDialog(new JTextField(), "Error")
                                         .show()
                             }
+                           */
                         } else{
                             sb.optionPane(message: "Receta: "+useGlass+" Articulo: "+itemUso, optionType: JOptionPane.DEFAULT_OPTION)
                                     .createDialog(new JTextField(), "Error")
@@ -673,7 +687,7 @@ class EditRxDialog extends JDialog {
                     useGlass = 'PROGRESIVO'
 
                     if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
-
+                 /*
                         if( txtOdEsfera.text != '' &&
                                 txtOdCil.text != '' &&
                                 txtOdEje.text != '' &&
@@ -691,12 +705,13 @@ class EditRxDialog extends JDialog {
 
                                 txtAltOblea.text  != ''
                         ){
-                            useGlasess()
-                        }else{
+                    */        useGlasess()
+                      /*  }else{
                             sb.optionPane(message: "Llenar todos los campos", optionType: JOptionPane.DEFAULT_OPTION)
                                     .createDialog(new JTextField(), "Error")
                                     .show()
                         }
+                        */
                     } else{
                         sb.optionPane(message: "Receta: "+useGlass+" Articulo: "+itemUso, optionType: JOptionPane.DEFAULT_OPTION)
                                 .createDialog(new JTextField(), "Error")
@@ -707,7 +722,7 @@ class EditRxDialog extends JDialog {
                 useGlass = 'MONOFOCAL'
 
                 if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
-
+                   /*
                     if( txtOdEsfera.text != '' &&
                         txtOdCil.text != '' &&
                         txtOdEje.text != '' &&
@@ -718,13 +733,13 @@ class EditRxDialog extends JDialog {
                          txtOiEje.text  != ''
 
 
-                    ){
+                    ){ */
                         useGlasess()
-                    }else{
+              /*      }else{
                         sb.optionPane(message: "Llenar todos los campos", optionType: JOptionPane.DEFAULT_OPTION)
                                 .createDialog(new JTextField(), "Error")
                                 .show()
-                    }
+                    }   */
                     } else{
                         sb.optionPane(message: "Receta: "+useGlass+" Articulo: "+itemUso, optionType: JOptionPane.DEFAULT_OPTION)
                                 .createDialog(new JTextField(), "Error")

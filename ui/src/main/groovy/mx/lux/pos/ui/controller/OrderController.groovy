@@ -218,9 +218,11 @@ class OrderController {
 
     }
 
-    static void saveFrame(String idNotaVenta, String opciones, String forma) {
+    static Order saveFrame(String idNotaVenta, String opciones, String forma) {
 
-        notaVentaService.saveFrame(idNotaVenta, opciones, forma)
+       NotaVenta notaVenta = notaVentaService.saveFrame(idNotaVenta, opciones, forma)
+
+        return Order.toOrder(notaVenta)
     }
 
     static Dioptra addDioptra(Order order, String dioptra) {

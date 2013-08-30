@@ -2,6 +2,7 @@ package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.controller.OrderController
+import mx.lux.pos.ui.model.Order
 import net.miginfocom.swing.MigLayout
 
 
@@ -30,12 +31,18 @@ class ArmRxDialog extends JDialog {
     private static String idNotaV
     private static String armazon
     private static String titulo  = 'Armazon'
+    private static Order order
 
-    ArmRxDialog(Component parent, String idNotaVenta, String armazonString) {
+    static Order getOrder() {
+        return order
+    }
+
+    ArmRxDialog(Component parent, Order order, String armazonString) {
         println( 'Armazoon: '+armazonString)
         sb = new SwingBuilder()
+        this.order = order
         component = parent
-        idNotaV = idNotaVenta
+        idNotaV = order.id
         armazon = armazonString
 
         if(armazon != null){
@@ -143,7 +150,7 @@ class ArmRxDialog extends JDialog {
 
         println('Armazon: ' + opciones)
         String form = forma.text
-      OrderController.saveFrame(idNotaV,opciones,form)
+      order = OrderController.saveFrame(idNotaV,opciones,form)
 
         doCancel()
     }

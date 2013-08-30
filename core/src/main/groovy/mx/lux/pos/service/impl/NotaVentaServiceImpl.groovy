@@ -300,7 +300,8 @@ class NotaVentaServiceImpl implements NotaVentaService {
     return null
   }
     @Transactional
-    void saveFrame(String idNotaVenta, String opciones, String forma) {
+    NotaVenta saveFrame(String idNotaVenta, String opciones, String forma) {
+
         NotaVenta rNotaVenta = obtenerNotaVenta(idNotaVenta)
 
                 println('Material: ' + opciones)
@@ -314,6 +315,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
         } catch ( Exception e ){
             println e
         }
+        return rNotaVenta
     }
 
 

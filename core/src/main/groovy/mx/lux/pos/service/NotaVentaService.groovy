@@ -40,5 +40,5 @@ interface NotaVentaService {
 
     void saveProDate(NotaVenta rNotaVenta, Date fechaPrometida)
 
-    void saveFrame(String idNotaVenta, String opciones, String forma)
+    NotaVenta saveFrame(String idNotaVenta, String opciones, String forma)
 }
