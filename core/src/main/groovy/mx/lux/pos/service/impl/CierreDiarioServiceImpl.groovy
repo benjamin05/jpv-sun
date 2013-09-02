@@ -35,6 +35,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
   private static final String FMT_ARCHIVE_FILENAME = '%d.%s'
   private static final String FMT_FILE_PATTERN = '*%s.*'
   private static final Double VALOR_CERO = 0.005
+  private static final String TAG_TIPO_PAGO_EFECTIVO = 'EF'
 
   @Resource
   private ClienteRepository clienteRepository
@@ -1239,7 +1240,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
       pagos.each { Pago pago ->
         BigDecimal montoPago = ( pago?.monto ) ?: 0
         ingresoBruto += montoPago
-        if ( 'EFM'.equalsIgnoreCase( pago?.idFPago ) ) {
+        if ( TAG_TIPO_PAGO_EFECTIVO.equalsIgnoreCase( pago?.idFPago ) ) {
           efectivoRecibido += montoPago
         } else if ( 'EFD'.equalsIgnoreCase( pago?.idFPago ) ) {
           dolaresRecibidos += montoPago
