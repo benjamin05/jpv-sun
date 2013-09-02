@@ -50,9 +50,11 @@ ${COLUMNA_1}Neto${COLUMNA_5}${importe_efectivo_neto}
 #end
 #end
 
+#if( $tipo_cambio_USD != '0.00' && $tipo_cambio_EUR != '0.00' )
 #NEGRITA()#DOBLE_ALTURA()#DOBLE_ANCHURA()#FUENTE_B()#DO()TIPO DE CAMBIO${LF}
 #RESET_TEXTO()#FUENTE_B()#DO()${COLUMNA_1}USD${COLUMNA_5}${tipo_cambio_USD}
 #RESET_TEXTO()#FUENTE_B()#DO()${COLUMNA_1}EUR${COLUMNA_5}${tipo_cambio_EUR}
+#end
 
 #* DOLARES *#
 #if( $importe_dolares_recibido != '0' or $importe_dolares_devoluciones != '0' or $importe_dolares_pesos != '0' )

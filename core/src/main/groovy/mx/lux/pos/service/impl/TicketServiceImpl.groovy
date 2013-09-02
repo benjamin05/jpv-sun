@@ -531,6 +531,7 @@ class TicketServiceImpl implements TicketService {
       String textoVentaNeta = ( "${textFormatter.format( ventaNeta.intValue() )} PESOS "+ "${ventaNeta.remainder( 1 ).unscaledValue()}/100 M.N." )
 
       AddressAdapter companyAddress = Registry.companyAddress
+      BigDecimal saldo = notaVenta.ventaNeta.subtract(notaVenta.sumaPagos)
 
         def items = [
           nombre_ticket: 'ticket-venta',
@@ -543,6 +544,7 @@ class TicketServiceImpl implements TicketService {
           detalles: detalles,
           pagos: pagos,
           articulos: totalArticulos,
+          saldo: String.format( '%.2f', saldo.compareTo(BigDecimal.ZERO) > 0 ? saldo : BigDecimal.ZERO ),
           cliente: notaVenta.cliente,
           empleado: empleado,
           sucursal: notaVenta.sucursal,
@@ -973,8 +975,8 @@ class TicketServiceImpl implements TicketService {
           iva_vigente: montoTotalIva.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( montoTotalIva ) ),
           artSinExis: lstArticulos.size() > 0 ? lstArticulos : null,
           today: MyDateUtils.format( new Date(), 'dd-MM-yyyy' ),
-          tipo_cambio_USD: String.format( '%.2f', tipoCambioUsd.tipoCambio ),
-          tipo_cambio_EUR: String.format( '%.2f', tipoCambioEur.tipoCambio ),
+          tipo_cambio_USD: String.format( '%.2f', tipoCambioUsd?.tipoCambio != null ? tipoCambioUsd?.tipoCambio : BigDecimal.ZERO ),
+          tipo_cambio_EUR: String.format( '%.2f', tipoCambioEur?.tipoCambio != null ? tipoCambioEur?.tipoCambio : BigDecimal.ZERO ),
           depositos: depositos.size() > 0 ? depositos : null,
           faltanteMN: diferenciaEfectivoMN < 0 ? String.format('%10s', formatter.format( diferenciaEfectivoMN ) ) : null,
           sobranteMN: diferenciaEfectivoMN > 0 ? String.format('%10s', formatter.format( diferenciaEfectivoMN ) ) : null,
