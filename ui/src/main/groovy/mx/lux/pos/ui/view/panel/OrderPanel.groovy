@@ -676,6 +676,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         tipoArt = 'PROGRESIVO'
                     }
                 }
+                armazonString = OrderController.armazonString(order?.id)
+
                 if (artCount == 0) {
                     JButton source = ev.source as JButton
                     source.enabled = false
@@ -743,9 +745,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         }
         println('Codigo Dioptra :' + antDioptra)
 
-        if (item?.type.trim().equals('A')) {
-            armazonString = item?.name
-        }
+
         rec = validarGenericoB(item)
         OrderController.saveRxOrder(order?.id, rec.id)
         updateOrder(order?.id)
@@ -829,6 +829,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             }
             reviewForTransfers(newOrder.id)
             // Flujo despues de imprimir nota de venta
+
             CustomerController.requestOrderByCustomer(this, customer)
             // Flujo despues de imprimir nota de venta
         } else {
