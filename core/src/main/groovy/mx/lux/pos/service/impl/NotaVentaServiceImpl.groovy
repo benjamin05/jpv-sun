@@ -25,6 +25,8 @@ class NotaVentaServiceImpl implements NotaVentaService {
 
   private static final String DATE_TIME_FORMAT = 'dd-MM-yyyy HH:mm:ss'
   private static final String TAG_SURTE_SUCURSAL = 'S'
+  private static final String TAG_GENERICOS_INVENTARIABLES = 'A,E'
+  private static final String TAG_TIPO_NOTA_VENTA = 'F'
 
   @Resource
   private NotaVentaRepository notaVentaRepository
@@ -121,6 +123,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
         notaVenta.ventaNeta = total
         notaVenta.ventaTotal = total
         notaVenta.sumaPagos = pagado
+        notaVenta.tipoNotaVenta = TAG_TIPO_NOTA_VENTA
         try {
           notaVenta = notaVentaRepository.save( notaVenta )
           log.info( "notaVenta registrada id: ${notaVenta?.id}" )
@@ -529,4 +532,16 @@ class NotaVentaServiceImpl implements NotaVentaService {
   }
 
 
+  @Override
+  @Transactional
+  void validaSurtePorGenericoInventariable( NotaVenta notaVenta ){
+    List<DetalleNotaVenta> detalles = detalleNotaVentaRepository.findByIdFactura( notaVenta.id )
+    for(DetalleNotaVenta det : detalles){
+        if(!TAG_GENERICOS_INVENTARIABLES.contains(det.articulo.idGenerico)){
+            det.surte = ' '
+            detalleNotaVentaRepository.save( det )
+            detalleNotaVentaRepository.flush()
+        }
+    }
+  }
 }

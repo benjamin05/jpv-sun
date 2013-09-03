@@ -703,7 +703,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                             }
                             flujoImprimir(artCount)
                             source.enabled = true
-                        } catch (ex) { }
+                        } catch ( Exception e) { println e }
                     } else {
                         JButton source = ev.source as JButton
                         source.enabled = false
@@ -821,6 +821,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         // }
         OrderController.creaJb(newOrder?.ticket.trim(), cSaldo)
         OrderController.validaEntrega(newOrder?.bill.trim(),newOrder?.branch?.id.toString(), true)
+        OrderController.validaSurtePorGenerico( order )
         if (StringUtils.isNotBlank(newOrder?.id)) {
             OrderController.printOrder(newOrder.id)
             if (ticketRx == true) {

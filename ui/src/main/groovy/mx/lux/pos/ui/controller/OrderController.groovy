@@ -1298,4 +1298,9 @@ class OrderController {
         return armazonString
     }
 
+
+    static validaSurtePorGenerico( Order order ){
+        NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(order.id)
+        notaVentaService.validaSurtePorGenericoInventariable( notaVenta )
+    }
 }

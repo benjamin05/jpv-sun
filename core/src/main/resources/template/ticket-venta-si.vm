@@ -38,7 +38,7 @@ ${COLUMNAS}
 #ALINEAR_IZQUIERDA()#SET_STYLE(${FUENTE_B} 0 0 0 0)#foreach( $pago in $pagos )${COL_DET_2}${pago.tipo_pago}${COL_DET_3}${pago.monto}${LF}#end${CR}
 #if(${saldo} != '0.00')#ALINEAR_IZQUIERDA()#SET_STYLE(${FUENTE_B} 0 0 0 0)${COL_DET_2}SALDO:${COL_DET_3}$${saldo}${CR}#end
 #ALINEAR_IZQUIERDA()#SET_STYLE(${FUENTE_B} 0 0 0 0)#foreach( $comentario in $comentarios )${comentario}${LF}#end${CR}
-#ALINEAR_CENTRO()#SET_STYLE(${FUENTE_B} 0 0 0 0)Pago hecho en una sola exhibicion
+#if(${saldo} == '0.00')#ALINEAR_CENTRO()#SET_STYLE(${FUENTE_B} 0 0 0 0)Pago hecho en una sola exhibicion#end${CR}
 #LINEA_SEPARACION_SIMPLE()
 #ALINEAR_CENTRO()#SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 0)Fecha de Entrega: ${fecha_entrega}${CR}
 #ALINEAR_CENTRO()#SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 0)a partir de las  14:00 hrs. ${CR}${LF}
