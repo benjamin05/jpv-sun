@@ -190,6 +190,12 @@ class MainWindow extends JFrame implements KeyListener {
                               }
                                   customerDialog.show()
                                   if (!customerDialog.canceled) {
+                                    if( orderPanel.order.id == null ){
+                                      mainPanel.remove( orderPanel )
+                                      orderPanel = new OrderPanel()
+                                      mainPanel.add( 'orderPanel', orderPanel )
+                                      mainPanel.layout.show( mainPanel, 'orderPanel' )
+                                    }
                                     orderPanel.setCustomerInOrderFromMenu( customerDialog.customer )
                                     customerDialog = new CustomerSearchDialog( this, new Order() )
                                   }
