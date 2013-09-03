@@ -12,6 +12,7 @@ import mx.lux.pos.ui.controller.CustomerController
 import mx.lux.pos.ui.view.dialog.EditRxDialog
 import mx.lux.pos.ui.view.renderer.DateCellRenderer
 import net.miginfocom.swing.MigLayout
+import org.apache.commons.lang.StringUtils
 
 import javax.swing.BorderFactory
 import javax.swing.ButtonGroup
@@ -108,6 +109,7 @@ class RXPanel extends JPanel {
                     rxModel = tableModel( list: lstRecetas ) {
                         closureColumn( header: 'Fecha', read: {Rx tmp -> tmp?.rxDate}, minWidth: 90, cellRenderer: new DateCellRenderer() )
                         closureColumn( header: 'Optometrista', read: {Rx tmp -> tmp?.optometristName}, minWidth: 190 )
+                        closureColumn( header: 'Factura', read: {Rx tmp -> StringUtils.trimToEmpty(tmp?.order?.bill)} )
                         closureColumn( header: 'Tipo', read: {Rx tmp -> tmp?.getTipo()}, minWidth: 90 )
                         closureColumn( header: 'Folio', read: {Rx tmp -> tmp?.folio} )
                     } as DefaultTableModel
@@ -236,7 +238,7 @@ class RXPanel extends JPanel {
         if ( SwingUtilities.isLeftMouseButton( ev ) && ev.source.selectedElement != null ) {
             Rx selection = ev.source.selectedElement as Rx
             receta = selection
-            println "Receta ${receta.id} seleccionada"
+            //println "Receta ${receta.id} seleccionada"
             doBindings()
         }
     }
@@ -246,7 +248,7 @@ class RXPanel extends JPanel {
             Rx selection = ev.source.selectedElement as Rx
             if ( selection.id ) {
                 sb.popupMenu {
-                    menuItem( text: 'Editar',
+                    menuItem( text: 'Editar', visible: selection?.order?.deliveryDate == null,
                             actionPerformed: {
                                 EditRxDialog editRx = new EditRxDialog( this, selection, selection.idClient, selection.idStore, selection.clientName, selection.tipoEditRx )
                                 editRx.show()

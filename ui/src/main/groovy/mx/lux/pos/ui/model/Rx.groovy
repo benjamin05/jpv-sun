@@ -4,6 +4,7 @@ import groovy.beans.Bindable
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 import mx.lux.pos.model.CierreDiario
+import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.model.Receta
 //import sun.swing.StringUIClientPropertyKey
 import org.apache.commons.lang.StringUtils
@@ -54,6 +55,7 @@ class Rx {
   String udf5
   String udf6
   String idRxOri
+  Order order
 
 
     String getTipo(){
@@ -153,7 +155,8 @@ class Rx {
           udf5: receta.udf5,
           udf6: receta.udf6,
           idRxOri: receta.idRxOri,
-          folio: receta.folio
+          folio: receta.folio,
+          order: Order.toOrder(receta?.notaVenta != null ? receta?.notaVenta : new NotaVenta())
       )
       return prescription
     }

@@ -19,6 +19,7 @@ class Order {
   String comments
   String status
   Date date
+  Date deliveryDate
   Branch branch
   Customer customer
   String employee
@@ -68,6 +69,7 @@ class Order {
           id: notaVenta.id,
           bill: notaVenta.factura,
           date: notaVenta.fechaHoraFactura,
+          deliveryDate: notaVenta.fechaEntrega,
           comments: notaVenta.observacionesNv,
           status: notaVenta.sFactura,
           branch: Branch.toBranch( notaVenta.sucursal ),
