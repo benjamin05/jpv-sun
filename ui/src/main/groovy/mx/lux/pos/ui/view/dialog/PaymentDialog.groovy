@@ -25,6 +25,7 @@ import mx.lux.pos.ui.view.panel.OrderPanel
 class PaymentDialog extends JDialog {
 
   private static Double ZERO_TOLERANCE = 0.005
+  private static final String TAG_FORMA_PAGO_EFECTIVO = 'EFECTIVO'
 
   private SwingBuilder sb
   private Payment tmpPayment
@@ -362,7 +363,7 @@ class PaymentDialog extends JDialog {
           valid &= true
         }
       } else {
-          if( paymentType.selectedItem.equals('MN EFECTIVO') ){
+          if( paymentType.selectedItem.equals(TAG_FORMA_PAGO_EFECTIVO) ){
               amount.text = order.due.toString()
               BigDecimal cambio = tmpPayment.amount.subtract(order.due)
               new ChangeDialog( cambio, tmpPayment.amount, order.due ).show()

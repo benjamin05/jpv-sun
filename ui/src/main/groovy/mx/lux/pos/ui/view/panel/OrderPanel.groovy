@@ -912,7 +912,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void fireRequestQuote() {
-
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
         String dio = OrderController.codigoDioptra(dioptra)
         if (dioptra.getLente() != null) {
@@ -932,18 +931,14 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         OrderController.notifyAlert(TXT_REQUEST_QUOTE, TXT_NO_ORDER_PRESENT)
                     }
                 }
-
-
             } else {
                 sb.optionPane(message: "Codigo Dioptra Incorrecto", optionType: JOptionPane.DEFAULT_OPTION)
                         .createDialog(new JTextField(), "Error")
                         .show()
             }
-
         } else {
             flujoContinuar()
         }
-
     }
 
     private void setCustomerInOrder() {

@@ -427,12 +427,6 @@ class EditRxDialog extends JDialog {
             }
         }
            */
-
-
-
-
-
-
         //txtField.text = ''
 
     }
