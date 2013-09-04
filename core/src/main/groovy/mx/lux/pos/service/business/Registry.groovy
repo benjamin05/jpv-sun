@@ -152,6 +152,10 @@ class Registry {
     return asString( TipoParametro.TIPO_PAGO_CRE_EMP )
   }
 
+  static String getFechaPrimerArranque( ){
+      return asString( TipoParametro.FECHA_PRIMER_ARRANQUE )
+  }
+
   static Contribuyente getCompany( ) {
 
     Contribuyente company = null

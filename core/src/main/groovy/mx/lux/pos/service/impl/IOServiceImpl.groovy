@@ -253,4 +253,11 @@ class IOServiceImpl implements IOService {
     RepositoryFactory.acknowledgements.saveAndFlush( pAcknowledgement )
   }
 
+
+  @Transactional
+  void saveActualDate( String date ) {
+      Parametro paramFecha = RepositoryFactory.registry.findOne(TipoParametro.FECHA_PRIMER_ARRANQUE.value)
+      paramFecha.valor = date
+      RepositoryFactory.registry.save( paramFecha )
+  }
 }

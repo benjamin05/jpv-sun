@@ -15,6 +15,8 @@ import java.awt.Point
 import javax.swing.*
 import mx.lux.pos.model.NotaVenta
 
+import java.text.SimpleDateFormat
+
 
 
 class OrderActiveSelectionDialog extends JDialog {
@@ -120,9 +122,12 @@ class OrderActiveSelectionDialog extends JDialog {
 
   void setCustomerList( List<ClienteProceso> pCustomerList ) {
     this.orderList.clear()
+    SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yyyy")
     for (ClienteProceso c : pCustomerList) {
       for (NotaVenta o : c.notaVentas) {
-        if (o.detalles.size() > 0) {
+        String fechaFactura = fecha.format(o.fechaHoraFactura)
+        String fechaActual = fecha.format(new Date())
+        if (o.detalles.size() > 0 && fechaActual.trim().equalsIgnoreCase(fechaFactura)) {
           this.orderList.add( new OrderActive(o, c.cliente))
         }
       }

@@ -42,4 +42,6 @@ public interface IOService {
 
   void saveAcknowledgement(Acuse pAcknowledgement)
 
+  void saveActualDate( String date )
+
 }

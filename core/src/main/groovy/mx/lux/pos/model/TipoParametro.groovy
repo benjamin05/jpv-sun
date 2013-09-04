@@ -18,6 +18,7 @@ enum TipoParametro {
   DESPLIEGA_USD( 'despliega_dolares', 'no' ),
   DIA_PRO('DIA_PRO','7'),
   EMP_ELECTRONICO( 'emp_electronico', '' ),
+  FECHA_PRIMER_ARRANQUE( 'fecha_primer_arranque', ''),
   FORMATO_ARCHIVO( 'formato_archivo_salida', 'default' ),
   GRUPO_COMPANIA( 'grupo_compania', 'lux' ),
   GENERICOS_NO_ETREGABLES( 'genericos_no_entregables', 'B' ),

@@ -504,12 +504,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         if (SwingUtilities.isLeftMouseButton(ev)) {
             if (ev.clickCount == 1) {
                 if (order.due) {
-
-
                     new PaymentDialog(ev.component, order, null).show()
                     updateOrder(order?.id)
-
-
                 } else {
                     sb.optionPane(
                             message: 'No hay saldo para aplicar pago',
@@ -805,7 +801,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     saveOrder()
                 }
             } else if (operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.PAYING.value)) {*/
-                saveOrder()
+            doBindings()
+            saveOrder()
             //}
         }
 

@@ -29,11 +29,14 @@ import javax.swing.*
 import mx.lux.pos.service.business.Registry
 import mx.lux.pos.model.TipoParametro
 
+import java.text.SimpleDateFormat
+
 class MainWindow extends JFrame implements KeyListener {
 
     static final String MSG_LOAD_PARTS = "No se encuentra el archivo: %s"
     static final String TEXT_LOAD_PARTS_TITLE = "Importar Catálogo de Artículos"
     static final String TEXT_LOAD_PART_CLASS_TITLE = "Importar Clasificación de Artículos"
+    static SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yyyy")
 
     static String version
 
@@ -481,6 +484,16 @@ class MainWindow extends JFrame implements KeyListener {
     }
 
     private void initialize( ) {
+        String fechaParametro = Registry.fechaPrimerArranque
+        String fechaActual = fecha.format(new Date())
+        if(fechaParametro != ''){
+          if(!fechaActual.trim().equalsIgnoreCase(fechaParametro)){
+            IOController.getInstance().deletCustomerProcess()
+            IOController.getInstance().updateInitialDate(fechaActual)
+          }
+        } else {
+            IOController.getInstance().updateInitialDate(fechaActual)
+        }
         sb.doOutside {
             IOController.getInstance().autoUpdateFxRates()
             PriceListController.loadExpiredPriceList()

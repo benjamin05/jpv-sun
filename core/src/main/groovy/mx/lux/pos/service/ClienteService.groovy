@@ -38,4 +38,6 @@ interface ClienteService {
 
   ClienteProceso obtieneClienteProceso( Integer idCliente )
 
+  void eliminarTodoClienteProceso( )
+
 }

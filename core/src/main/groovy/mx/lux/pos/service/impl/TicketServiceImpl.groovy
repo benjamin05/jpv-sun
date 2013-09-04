@@ -311,7 +311,7 @@ class TicketServiceImpl implements TicketService {
           String fechaImpresion = fecha.format(fechaA)
 
           Receta rx = recetaRepository.findById(notaVenta?.receta)
-          Date fechaS = rx?.fechaReceta
+          Date fechaS = rx?.fechaReceta != null ? rx?.fechaReceta : new Date()
           fecha = new SimpleDateFormat("dd-MM-yy")
           String fechaSolicitada = fecha.format(fechaS)
 
@@ -323,7 +323,10 @@ class TicketServiceImpl implements TicketService {
           String fechaPrometida = fecha.format(fechaP)
 
           Empleado opto = empleadoRepository.findById(rx?.idOptometrista)
-          String optometrista = opto?.nombreCompleto + ' [' + opto?.id.trim() + ']'
+          String optometrista = ''
+          if( opto != null ){
+            optometrista = opto != null ? opto?.nombreCompleto : '' + ' [' + opto != null ? opto?.id.trim() : '' + ']'
+          }
 
           def infoGeneral = [
                 sucursal: notaVenta?.sucursal?.nombre + ' ['+ notaVenta?.sucursal?.id +']',
@@ -379,7 +382,7 @@ class TicketServiceImpl implements TicketService {
                      }
                  }
 
-                  String usoLente = rx?.sUsoAnteojos.trim()
+                  String usoLente = rx != null ? rx?.sUsoAnteojos.trim() : ''
                   switch (usoLente) {
                     case 'i': usoLente = 'INTERMEDIO'
                         break
@@ -548,6 +551,7 @@ class TicketServiceImpl implements TicketService {
           cliente: notaVenta.cliente,
           empleado: empleado,
           sucursal: notaVenta.sucursal,
+          observaciones: notaVenta.observacionesNv,
           fecha: DateFormatUtils.format( notaVenta.fechaHoraFactura, dateTextFormat, locale ),
           hora: new Date().format( TIME_FORMAT ),
           texto_venta_neta: textoVentaNeta.toUpperCase(),

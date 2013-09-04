@@ -348,4 +348,10 @@ class ClienteServiceImpl implements ClienteService {
         return clienteProcesoRepository.findOne( idCliente )
     }
 
+
+  @Transactional
+  void eliminarTodoClienteProceso(  ) {
+      ClienteProcesoRepository repository = RepositoryFactory.customersOnSite
+      repository.deleteAll()
+  }
 }
