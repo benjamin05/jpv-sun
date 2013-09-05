@@ -41,7 +41,7 @@ class EntregaTrabajoDialog extends JDialog {
                  panel(layout: new MigLayout("wrap 4","[]10[][][]","[]20[]")) {
 
                      label(text: 'Ticket: ')
-                     sucursal = textField(text:'12001',minimumSize: [70, 20])
+                     sucursal = textField(text:'12002',minimumSize: [70, 20])
                      label(text: '-')
                      factura = textField(minimumSize: [70, 20])
 

@@ -6,8 +6,9 @@ import mx.lux.pos.repository.AcusesTipoRepository
 import mx.lux.pos.repository.DescuentoClaveRepository
 import mx.lux.pos.repository.GenericoRepository
 import mx.lux.pos.repository.JbLlamadaRepository
+import mx.lux.pos.repository.JbNotasRepository
 import mx.lux.pos.repository.JbRepository
-
+import mx.lux.pos.repository.JbServiciosRepository
 import mx.lux.pos.repository.ParametroRepository
 import mx.lux.pos.repository.PrecioRepository
 import mx.lux.pos.repository.TmpServiciosRepository
@@ -72,6 +73,8 @@ class OrderController {
     private static PrecioRepository precioRepository
     private static AcusesTipoRepository acusesTipoRepository
     private static AcuseRepository acuseRepository
+    private static JbServiciosRepository jbServiciosRepository
+    private static JbNotasRepository jbNotasRepository
 
     private static final String TAG_USD = "USD"
 
@@ -97,7 +100,9 @@ class OrderController {
             GenericoRepository genericoRepository,
             PrecioRepository precioRepository,
             AcusesTipoRepository acusesTipoRepository,
-            AcuseRepository acuseRepository
+            AcuseRepository acuseRepository,
+            JbServiciosRepository jbServiciosRepository,
+            JbNotasRepository jbNotasRepository
 
     ) {
         this.notaVentaService = notaVentaService
@@ -121,6 +126,8 @@ class OrderController {
         this.precioRepository = precioRepository
         this.acusesTipoRepository = acusesTipoRepository
         this.acuseRepository = acuseRepository
+        this.jbServiciosRepository = jbServiciosRepository
+        this.jbNotasRepository = jbNotasRepository
     }
 
     static Order getOrder(String orderId) {
@@ -559,6 +566,7 @@ class OrderController {
             log.warn("no se imprime receta, parametros invalidos")
         }
     }
+
 
     static Jb entraJb(String rx) {
         return jbRepository.findOne(rx)
@@ -1269,21 +1277,20 @@ class OrderController {
     }
 
 
-    static String armazonString(String idNotaVenta){
+    static String armazonString(String idNotaVenta) {
         String armazonString = ''
         List<DetalleNotaVenta> detalleVenta = detalleNotaVentaService.listarDetallesNotaVentaPorIdFactura(idNotaVenta)
-            Iterator iterator = detalleVenta.iterator();
-            while (iterator.hasNext()) {
-                DetalleNotaVenta detalle = iterator.next()
+        Iterator iterator = detalleVenta.iterator();
+        while (iterator.hasNext()) {
+            DetalleNotaVenta detalle = iterator.next()
 
-                if(detalle?.articulo?.idGenerico.trim().equals('A')){
-                      armazonString =  detalle?.articulo?.articulo.trim()
-                }
-
+            if (detalle?.articulo?.idGenerico.trim().equals('A')) {
+                armazonString = detalle?.articulo?.articulo.trim()
             }
+
+        }
         return armazonString
     }
-
 
     static validaSurtePorGenerico( Order order ){
         NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(order.id)
@@ -1293,6 +1300,65 @@ class OrderController {
 
     static String obtieneTiposClientesActivos( ){
         return Registry.activeCustomers
+    }
+
+
+    static void saveSuyo(Order order, User user, String dejo, String instrucciones, String condiciones, String serv) {
+        TmpServicios servicios = new TmpServicios()
+        servicios?.id_factura = order?.id
+        servicios?.fecha_prom = new Date()
+        servicios?.emp = user?.username
+        servicios?.id_cliente = order?.customer?.id
+        servicios?.cliente = order?.customer?.name + ' ' + order?.customer?.fathersName + ' ' + order?.customer?.mothersName
+        servicios?.condicion = condiciones
+        servicios?.dejo = dejo
+        servicios?.instruccion = instrucciones
+
+        servicios?.servicio = serv
+        tmpServiciosRepository.saveAndFlush(servicios)
+    }
+
+    static void printSuyo(Order order, User user) {
+        TmpServicios servicios = tmpServiciosRepository.findOne( tmpServiciosRepository.tmpExiste(order?.id))
+        JbNotas jbNotas = new JbNotas()
+        jbNotas?.id_nota = order?.bill.toInteger()
+        jbNotas?.id_cliente = order?.customer?.id
+        jbNotas?.cliente = order?.customer?.name + ' ' + order?.customer?.fathersName + ' ' + order?.customer?.mothersName
+        jbNotas?.dejo = servicios?.dejo
+        jbNotas?.instruccion =  servicios?.instruccion
+        jbNotas?.emp = user?.username
+        jbNotas?.servicio = servicios?.servicio
+        jbNotas?.condicion = servicios?.condicion
+        jbNotas?.fecha_prom = servicios?.fecha_prom
+        jbNotas?.fecha_orden = order?.date
+        jbNotas?.fecha_mod = new Date()
+        jbNotas?.tipo_serv = 'RECEPCION'
+        jbNotas?.id_mod = '0'
+
+        jbNotas = jbNotasRepository.saveAndFlush(jbNotas)
+
+
+        ticketService.imprimeSuyo(order?.id, jbNotas)
+    }
+
+    static Boolean revisaTmpservicios(String idNotaVenta) {
+        Boolean existe = false
+        Integer idTmpServicio = tmpServiciosRepository.tmpExiste(idNotaVenta)
+        if (idTmpServicio != null) {
+            existe = true
+        }
+        return existe
+    }
+
+    static ArrayList<String> findAllServices() {
+        ArrayList<String> list = new ArrayList<>()
+        List<JbServicios> jbServiciosList = jbServiciosRepository.findAll()
+        Iterator iterator = jbServiciosList.iterator()
+        while (iterator.hasNext()) {
+
+            list.add(iterator.next().servicio)
+        }
+        return list
     }
 
 }

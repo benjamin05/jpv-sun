@@ -85,30 +85,29 @@ class EditRxDialog extends JDialog {
     Boolean canceled
     String Title
 
-    EditRxDialog(Component parent, Rx receta, Integer idCliente, Integer idSucursal, String titulo,String uso) {
+    EditRxDialog(Component parent, Rx receta, Integer idCliente, Integer idSucursal, String titulo, String uso) {
 
         sb = new SwingBuilder()
         component = parent
-        itemUso =  uso
+        itemUso = uso
         rec = null
 
         title = titulo
-        if(itemUso.trim().equals('MONOFOCAL'))
-        {
+        if (itemUso.trim().equals('MONOFOCAL')) {
             mostrarParametroSV = true
             mostrarParametroP = false
             mostrarParametroB = false
-            comboUso= usoM
-        }else if(itemUso.trim().equals('BIFOCAL')){
+            comboUso = usoM
+        } else if (itemUso.trim().equals('BIFOCAL')) {
             mostrarParametroSV = false
             mostrarParametroP = true
             mostrarParametroB = false
-            comboUso= usoB
-        }else if(itemUso.trim().equals('PROGRESIVO')){
+            comboUso = usoB
+        } else if (itemUso.trim().equals('PROGRESIVO')) {
             mostrarParametroSV = false
             mostrarParametroP = true
             mostrarParametroB = true
-            comboUso= usoP
+            comboUso = usoP
         }
 
         if (receta?.id == null) {
@@ -128,21 +127,22 @@ class EditRxDialog extends JDialog {
 
     // UI Layout Definition
     void buildUI() {
-          sb.dialog(this,
+        sb.dialog(this,
                 title: title,
                 resizable: false,
                 pack: true,
                 modal: true,
                 preferredSize: [520, 380],
                 layout: new MigLayout('wrap,center', '[fill,grow]'),
-                location: [ 200, 250 ],
+                location: [200, 250],
         ) {
             empleadoPanel = panel(layout: new MigLayout('fill,wrap 3, left', '[fill][fill][fill,grow,left]')) {
                 label(text: 'Optometrista:')
-                txtEmpleado = textField( minimumSize: [50, 20], actionPerformed: {doOptSearch()})
+                txtEmpleado = textField(minimumSize: [50, 20], actionPerformed: { doOptSearch() })
                 txtEmpleado.addFocusListener(new FocusListener() {
                     @Override
-                    void focusGained(FocusEvent e) { }
+                    void focusGained(FocusEvent e) {}
+
                     @Override
                     void focusLost(FocusEvent e) {
                         if (txtEmpleado.text.length() > 0) {
@@ -152,18 +152,18 @@ class EditRxDialog extends JDialog {
                 })
                 lblEmpleado = label(border: titledBorder(title: ''), minimumSize: [150, 20])
                 lblFolio = label(text: 'FolioPlantilla: ')
-                txtFolio = textField( minimumSize: [50, 20])
+                txtFolio = textField(minimumSize: [50, 20])
                 label()
                 label(text: 'Uso:')
                 cbUso = comboBox(items: comboUso)
                 label()
             }
 
-           /* panel( layout: new MigLayout( 'fill,wrap 3','[fill][fill][fill,grow]' )){
-                label(text: 'Uso')
-                cbUso = comboBox(items: comboUso)
-                label()
-            } */
+            /* panel( layout: new MigLayout( 'fill,wrap 3','[fill][fill][fill,grow]' )){
+                 label(text: 'Uso')
+                 cbUso = comboBox(items: comboUso)
+                 label()
+             } */
 
             panel(border: titledBorder("Rx"), layout: new MigLayout('fill,wrap ,center', '[fill,grow]')) {
                 panel(layout: new MigLayout('fill,wrap 8,center',
@@ -172,20 +172,19 @@ class EditRxDialog extends JDialog {
                     label()
 
                     label(text: 'Esfera', horizontalAlignment: JTextField.CENTER)
-                    label(text: 'Cil.', toolTipText: 'Cilindro', horizontalAlignment: JTextField.CENTER )
-                    label(text: 'Eje', horizontalAlignment: JTextField.CENTER )
-                    label(text: 'Ad.', toolTipText: 'Adición', horizontalAlignment: JTextField.CENTER,visible:mostrarParametroP,enabled:  mostrarParametroP)
-
+                    label(text: 'Cil.', toolTipText: 'Cilindro', horizontalAlignment: JTextField.CENTER)
+                    label(text: 'Eje', horizontalAlignment: JTextField.CENTER)
+                    label(text: 'Ad.', toolTipText: 'Adición', horizontalAlignment: JTextField.CENTER, visible: mostrarParametroP, enabled: mostrarParametroP)
 
                     /*label(text: 'A.V.', toolTipText: 'Agudeza Visual', horizontalAlignment: JTextField.CENTER,visible:false )        */
-                    label(text: 'D.M.', toolTipText: 'Distancia Monocular', horizontalAlignment: JTextField.CENTER,visible:(mostrarParametroP && mostrarParametroB),enabled:(mostrarParametroP && mostrarParametroB)  )
+                    label(text: 'D.M.', toolTipText: 'Distancia Monocular', horizontalAlignment: JTextField.CENTER, visible: (mostrarParametroP && mostrarParametroB), enabled: (mostrarParametroP && mostrarParametroB))
                     /*label(text: 'Prisma', horizontalAlignment: JTextField.CENTER,visible:false )   */
                     /*label(text: 'Ubic.', toolTipText: 'Ubicación', horizontalAlignment: JTextField.CENTER,visible:false )    */
 
                     label()
                     label()
                     label(text: 'O.D.', toolTipText: 'Ojo Derecho')
-                    txtOdEsfera = textField( horizontalAlignment: JTextField.RIGHT )
+                    txtOdEsfera = textField(horizontalAlignment: JTextField.RIGHT)
                     txtOdEsfera.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
@@ -194,47 +193,48 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOdEsfera,35,-35,0.25,'.00','+')
+                            validacion(txtOdEsfera, 35, -35, 0.25, '.00', '+')
 
                         }
                     })
 
-                    txtOdCil = textField(toolTipText: 'Cilindro', horizontalAlignment: JTextField.RIGHT )
+                    txtOdCil = textField(toolTipText: 'Cilindro', horizontalAlignment: JTextField.RIGHT)
                     txtOdCil.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                         limpiar(txtOdCil)
+                            limpiar(txtOdCil)
                         }
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOdCil,12,-12,0.25,'.00','-')
+                            validacion(txtOdCil, 12, -12, 0.25, '.00', '-')
                         }
                     })
 
-                    txtOdEje = textField(toolTipText: 'Eje',horizontalAlignment: JTextField.RIGHT )
+                    txtOdEje = textField(toolTipText: 'Eje', horizontalAlignment: JTextField.RIGHT)
                     txtOdEje.addFocusListener(new FocusListener() {
-                            @Override
-                            void focusGained(FocusEvent e) {
-                                limpiar(txtOdEje)
-                            }
-                            @Override
-                            void focusLost(FocusEvent e) {
-                                validacion(txtOdEje,180,0,1,'0','')
-                            }
+                        @Override
+                        void focusGained(FocusEvent e) {
+                            limpiar(txtOdEje)
+                        }
+
+                        @Override
+                        void focusLost(FocusEvent e) {
+                            validacion(txtOdEje, 180, 0, 1, '0', '')
+                        }
                     })
 
-                    txtOdAd = textField( toolTipText: 'Adición', horizontalAlignment: JTextField.RIGHT,visible:mostrarParametroP,enabled:mostrarParametroP)
+                    txtOdAd = textField(toolTipText: 'Adición', horizontalAlignment: JTextField.RIGHT, visible: mostrarParametroP, enabled: mostrarParametroP)
                     txtOdAd.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                             limpiar(txtOdAd)
+                            limpiar(txtOdAd)
                         }
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOdAd,4,0.75,0.25,'.00','+')
-                    }
+                            validacion(txtOdAd, 4, 0.75, 0.25, '.00', '+')
+                        }
                     })
                     /*txtOdAv = textField( toolTipText: 'Agudeza Visual', horizontalAlignment: JTextField.LEFT,visible:false )
                     txtOdAv.addFocusListener(new FocusListener() {
@@ -247,7 +247,7 @@ class EditRxDialog extends JDialog {
                         @Override
                         void focusLost(FocusEvent e) { }
                     })*/
-                    txtOdDm = textField( toolTipText: 'Distancia Monocular', horizontalAlignment: JTextField.RIGHT,visible:(mostrarParametroP && mostrarParametroB),enabled:(mostrarParametroP && mostrarParametroB))
+                    txtOdDm = textField(toolTipText: 'Distancia Monocular', horizontalAlignment: JTextField.RIGHT, visible: (mostrarParametroP && mostrarParametroB), enabled: (mostrarParametroP && mostrarParametroB))
                     txtOdDm.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
@@ -256,7 +256,7 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOdDm,45,22,0.1,'.0','')
+                            validacion(txtOdDm, 45, 22, 0.1, '.0', '')
                         }
                     })
                     /*txtOdPrisma = textField( horizontalAlignment: JTextField.RIGHT,visible:false)
@@ -286,8 +286,8 @@ class EditRxDialog extends JDialog {
                             validacion(txtDICerca,90,45,1,'0','')
                         }
                     })*/
-                    label(text: 'D.I. Binocular', toolTipText: 'Distancia Interpupilar Binocular',visible:(mostrarParametroP && !mostrarParametroB)||mostrarParametroSV ,enabled:(mostrarParametroP && !mostrarParametroB)||mostrarParametroSV)
-                    txtDILejos = textField(minimumSize: [20, 20], toolTipText: 'Distancia Interpupilar Binocular', horizontalAlignment: JTextField.RIGHT,visible:(mostrarParametroP && !mostrarParametroB)||mostrarParametroSV  ,enabled:(mostrarParametroP && !mostrarParametroB)||mostrarParametroSV )
+                    label(text: 'D.I. Binocular', toolTipText: 'Distancia Interpupilar Binocular', visible: (mostrarParametroP && !mostrarParametroB) || mostrarParametroSV, enabled: (mostrarParametroP && !mostrarParametroB) || mostrarParametroSV)
+                    txtDILejos = textField(minimumSize: [20, 20], toolTipText: 'Distancia Interpupilar Binocular', horizontalAlignment: JTextField.RIGHT, visible: (mostrarParametroP && !mostrarParametroB) || mostrarParametroSV, enabled: (mostrarParametroP && !mostrarParametroB) || mostrarParametroSV)
                     txtDILejos.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
@@ -296,12 +296,12 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtDILejos,90,45,1,'0','')
+                            validacion(txtDILejos, 90, 45, 1, '0', '')
                         }
                     })
 
                     label(text: 'O.I.', toolTipText: 'Ojo Izquierdo')
-                    txtOiEsfera = textField( horizontalAlignment: JTextField.RIGHT )
+                    txtOiEsfera = textField(horizontalAlignment: JTextField.RIGHT)
                     txtOiEsfera.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
@@ -310,11 +310,11 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOiEsfera,35,-35,0.25,'.00','+')
+                            validacion(txtOiEsfera, 35, -35, 0.25, '.00', '+')
 
                         }
                     })
-                    txtOiCil = textField( toolTipText: 'Cilindro', horizontalAlignment: JTextField.RIGHT )
+                    txtOiCil = textField(toolTipText: 'Cilindro', horizontalAlignment: JTextField.RIGHT)
                     txtOiCil.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
@@ -323,23 +323,24 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOiCil,12,-12,0.25,'.00','-')
+                            validacion(txtOiCil, 12, -12, 0.25, '.00', '-')
                         }
                     })
 
-                    txtOiEje = textField( horizontalAlignment: JTextField.RIGHT )
+                    txtOiEje = textField(horizontalAlignment: JTextField.RIGHT)
                     txtOiEje.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
                             limpiar(txtOiEje)
                         }
+
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOiEje,180,0,1,'0','')
+                            validacion(txtOiEje, 180, 0, 1, '0', '')
                         }
                     })
 
-                    txtOiAd = textField( toolTipText: 'Adición', horizontalAlignment: JTextField.RIGHT,visible:mostrarParametroP,enabled:mostrarParametroP )
+                    txtOiAd = textField(toolTipText: 'Adición', horizontalAlignment: JTextField.RIGHT, visible: mostrarParametroP, enabled: mostrarParametroP)
                     txtOiAd.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
@@ -348,7 +349,7 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtOiAd,4,0.75,0.25,'.00','+')
+                            validacion(txtOiAd, 4, 0.75, 0.25, '.00', '+')
                         }
                     })
                     /*txtOiAv = textField( toolTipText: 'Agudeza Visual', horizontalAlignment: JTextField.LEFT,visible:false)
@@ -362,18 +363,18 @@ class EditRxDialog extends JDialog {
                         @Override
                         void focusLost(FocusEvent e) { }
                     }) */
-                    txtOiDm = textField( toolTipText: 'Distancia Monocular', horizontalAlignment: JTextField.RIGHT,visible:(mostrarParametroP && mostrarParametroB),enabled:(mostrarParametroP && mostrarParametroB) )
-                        txtOiDm.addFocusListener(new FocusListener() {
-                            @Override
-                            void focusGained(FocusEvent e) {
-                                limpiar(txtOiDm)
-                            }
+                    txtOiDm = textField(toolTipText: 'Distancia Monocular', horizontalAlignment: JTextField.RIGHT, visible: (mostrarParametroP && mostrarParametroB), enabled: (mostrarParametroP && mostrarParametroB))
+                    txtOiDm.addFocusListener(new FocusListener() {
+                        @Override
+                        void focusGained(FocusEvent e) {
+                            limpiar(txtOiDm)
+                        }
 
-                            @Override
-                            void focusLost(FocusEvent e) {
-                                validacion(txtOiDm,45,22,0.1,'.0','')
-                            }
-                        })
+                        @Override
+                        void focusLost(FocusEvent e) {
+                            validacion(txtOiDm, 45, 22, 0.1, '.0', '')
+                        }
+                    })
                     /*txtOiPrisma = textField( horizontalAlignment: JTextField.RIGHT,visible:false)
                     txtOiPrisma.addFocusListener(new FocusListener() {
                         @Override
@@ -387,8 +388,8 @@ class EditRxDialog extends JDialog {
                         }
                     })*/
                     /*cbOiUbic = comboBox(items: ubicacion, toolTipText: 'Ubicación',visible:false)*/
-                    label(text: 'Alt. Seg.', toolTipText: 'Altura Segmento',visible:mostrarParametroP,enabled:mostrarParametroP)
-                    txtAltOblea = textField( minimumSize: [20, 20], toolTipText: 'Altura Segmento', horizontalAlignment: JTextField.RIGHT,visible:mostrarParametroP,enabled:mostrarParametroP )
+                    label(text: 'Alt. Seg.', toolTipText: 'Altura Segmento', visible: mostrarParametroP, enabled: mostrarParametroP)
+                    txtAltOblea = textField(minimumSize: [20, 20], toolTipText: 'Altura Segmento', horizontalAlignment: JTextField.RIGHT, visible: mostrarParametroP, enabled: mostrarParametroP)
                     txtAltOblea.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
@@ -397,90 +398,127 @@ class EditRxDialog extends JDialog {
 
                         @Override
                         void focusLost(FocusEvent e) {
-                            validacion(txtAltOblea,40,10,0.5,'.00','')
+                            validacion(txtAltOblea, 40, 10, 0.5, '.00', '')
                         }
                     })
 
                 }
-                scrollPane( border: titledBorder( title: 'Observaciones' ) ) {
-                    txtObservaciones = textArea(document: new UpperCaseDocument(), lineWrap: true )
+                scrollPane(border: titledBorder(title: 'Observaciones')) {
+                    txtObservaciones = textArea(document: new UpperCaseDocument(), lineWrap: true)
 
                 }
             }
             panel(layout: new MigLayout('wrap 2,right', '[right][right]')) {
-                button(text: 'Guardar', actionPerformed: {doRxSave()}, maximumSize: [110, 90])
-                button(text: 'Cancelar', actionPerformed: {doCancel()}, maximumSize: [110, 90])
+                button(text: 'Guardar', actionPerformed: { doRxSave() }, maximumSize: [110, 90])
+                button(text: 'Cancelar', actionPerformed: { doCancel() }, maximumSize: [110, 90])
             }
         }
     }
 
-    private void limpiar(JTextField txtField){
-        //limpiarAux = txtField.text
+    private void limpiar(JTextField txtField) {
+
+        //   limpiarAux = txtField.text
         //txtField.text = txtField.text.substring(1,txtField.text.indexOf('.'))
-      /*
-        if(txtField.text != ''){
-            if(txtField.text.substring(txtField.text.indexOf('.') + 1,txtField.text.size()).toInteger() > 0){
-                 txtField.text = txtField.text.substring(1,txtField.text.indexOf('.')) + '.' + txtField.text.substring(txtField.text.indexOf('.') + 1,txtField.text.size())
-            }   else{
-                txtField.text = txtField.text.substring(1,txtField.text.indexOf('.'))
-            }
-        }
-           */
+        /*
+          if(txtField.text != ''){
+              if(txtField.text.substring(txtField.text.indexOf('.') + 1,txtField.text.size()).toInteger() > 0){
+                   txtField.text = txtField.text.substring(1,txtField.text.indexOf('.')) + '.' + txtField.text.substring(txtField.text.indexOf('.') + 1,txtField.text.size())
+              }   else{
+                  txtField.text = txtField.text.substring(1,txtField.text.indexOf('.'))
+              }
+          }
+             */
         //txtField.text = ''
-
     }
 
-    private void validacion(JTextField txtField, double max, double min, double interval, String format, String mask){
+    private void validacion(JTextField txtField, double max, double min, double interval, String format, String mask) {
         if (txtField.text.trim().length() > 0 || txtField.text.trim() == '0') {
             double number
             String txt = txtField.text.trim()
             String signo = ''
-            if(txt.substring(0,1)=='-'){
-                  txt = txt.substring(1,txtField.text.trim().size())
-                  signo = '-'
-            } else if(txt.substring(0,1)=='+'){
-                txt = txt.substring(1,txtField.text.trim().size())
+            if (txt.substring(0, 1) == '-') {
+                txt = txt.substring(1, txt.size())
+                signo = '-'
+            } else if (txt.substring(0, 1) == '+') {
+                txt = txt.substring(1, txt.size())
+                signo = '+'
             }
-            if(txt.substring(0,1)=='0') {
-                txt = txt.substring(1,txtField.text.trim().size())
+            if (txt.substring(0, 1) == '0') {
+                txt = txt.substring(1, txt.size())
             }
-            println('Valor: ' + txt)
-            println('Signo: ' + signo)
+            try {
+                if (txt.substring(txt.size() - 2, txt.size() - 1).equals('.')) {
+                    txt = txt + '0'
+                }
+            } catch (e) {
+
+            }
+            try {
+
+                if (txt.substring(txt.size() - 3, txt.size()).equals('.00')) {
+                    txt = txt.substring(0, txt.indexOf('.'))
+                } else if (txt.substring(txt.size() - 2, txt.size()).equals('.0')) {
+                    txt = txt.substring(0, txt.indexOf('.'))
+                }
+            } catch (e) {
+
+            }
+            println(signo)
+            println(txt)
             txtField.text = ''
             Double multiplo = 0.0
             if (txt.length() > 0) {
                 number = Double.parseDouble(txt);
                 multiplo = number / interval;
                 multiplo = multiplo % 1
+                if (multiplo == 0 || multiplo.toString().equals('-0.0')) {
 
-                if (multiplo ==0 || multiplo.toString().equals('-0.0')) {
-                    if (number >= min && number <= max){
-                        if (format.equals('.00') &&  number.toString().substring(number.toString().indexOf('.'),number.toString().length()).equals('.0'))
-                        {
-                            txt=txt + '.00'
+                    if (number >= min && number <= max) {
+                        println('nimber: ' + number)
+                        println(number.toString().substring(number.toString().indexOf('.'), number.toString().size()))
+                        if (format.equals('.00') && number.toString().substring(number.toString().indexOf('.'), number.toString().size()).equals('.0')) {
+                            txt = txt + '.00'
+                        } else if (format.equals('.0') && number.toString().substring(number.toString().indexOf('.'), number.toString().size()).equals('.0')) {
+                            txt = txt + '.0'
                         }
-                        else if(format.equals('.0')&& number.toString().substring(number.toString().indexOf('.'),number.toString().length()).equals('.0'))
-                        {
-                            txt=txt + '.0'
+                        println('val: ' + txt)
+                        if (number > -1 && number < 1 && number != 0) {
+                            txt = '0' + txt
                         }
-                        println('val: '+txt)
-                        if(number>-1 && number<1 && number != 0){
-                           txt = '0' + txt
+                        if (mask.equals('+')) {
+                            if (signo.equals('')) {
+                                txtField.text = '+' + txt
+                            } else if (signo.equals('-')) {
+                                txtField.text = signo + txt
+                            } else if (signo.equals('+')) {
+                                txtField.text = signo + txt
+                            }
+                        } else if (mask.equals('-')) {
+                            if (signo.equals('')) {
+                                txtField.text = '-' + txt
+                            } else if (signo.equals('-')) {
+                                txtField.text = signo + txt
+                            } else if (signo.equals('+')) {
+                                txtField.text = signo + txt
+                            }
+                        } else {
+                            if (signo.equals('')) {
+                                txtField.text = txt
+                            } else if (signo.equals('-')) {
+                                txtField.text = signo + txt
+                            } else if (signo.equals('+')) {
+                                txtField.text = signo + txt
+                            }
                         }
-                        if(mask.equals('+')){
-                          txtField.text = signoMas(signo + txt)
-                        }else if(mask.equals('-')){
-                            txtField.text = signoMenos(signo + txt)
-                        }else{
-                            txtField.text = txt
-                        }
-                    }else{
+
+
+                    } else {
                         txtField.text = ''
                     }
                 } else {
                     txtField.text = ''
                 }
-            }else{
+            } else {
                 txtField.text = ''
             }
         } else {
@@ -494,24 +532,24 @@ class EditRxDialog extends JDialog {
             txtOdCil.setText(receta.odCilR)
             txtOdEje.setText(receta.odEjeR)
             txtOdAd.setText(receta.odAdcR)
-       /*     if (receta.odAvR != null) {
-                txtOdAv.setText(receta.odAvR)
-            } else {
-                txtOdAv.setText("20/")
-            }
-            */
+            /*     if (receta.odAvR != null) {
+                     txtOdAv.setText(receta.odAvR)
+                 } else {
+                     txtOdAv.setText("20/")
+                 }
+                 */
             txtOdDm.setText(receta.diOd)
-           // txtOdPrisma.setText(receta.odPrismH)
+            // txtOdPrisma.setText(receta.odPrismH)
             txtDILejos.setText(receta.diLejosR)
             txtOiEsfera.setText(receta.oiEsfR)
             txtOiCil.setText(receta.oiCilR)
             txtOiEje.setText(receta.oiEjeR)
-           /* if (receta.oiAvR != null) {
-                txtOiAv.setText(receta.oiAvR)
-            } else {
-                txtOiAv.setText("20/")
-            }
-            */
+            /* if (receta.oiAvR != null) {
+                 txtOiAv.setText(receta.oiAvR)
+             } else {
+                 txtOiAv.setText("20/")
+             }
+             */
             txtOiDm.setText(receta.diOi)
             txtOiAd.setText(receta.oiAdcR)
             //txtOiPrisma.setText(receta.oiPrismH)
@@ -569,27 +607,11 @@ class EditRxDialog extends JDialog {
 
     }
 
-    private String signoMas(String numero){
 
-        if(numero.toDouble()>0.0){
-            numero = '+' + numero
-        }
 
-        return numero
 
-    }
-    private String signoMenos(String numero){
-
-          if(!numero.substring(0,1).equals('-')){
-            numero = '-' + numero
-          }
-
-        return numero
-
-    }
-
-    private void useGlasess(){
-         println(cbUso.selectedItem.toString().trim() + '   USO')
+    private void useGlasess() {
+        println(cbUso.selectedItem.toString().trim() + '   USO')
         if (cbUso.selectedItem.toString().trim().equals('LEJOS')) {
             receta.setUseGlasses('l')
         } else if (cbUso.selectedItem.toString().trim().equals('CERCA')) {
@@ -608,23 +630,23 @@ class EditRxDialog extends JDialog {
         receta.setOdCilR(txtOdCil.text)
         receta.setOdEjeR(txtOdEje.text)
         receta.setOdAdcR(txtOdAd.text)
-       // receta.setOdAvR(txtOdAv.text)
+        // receta.setOdAvR(txtOdAv.text)
         receta.setDiOd(txtOdDm.text)
-       // receta.setOdPrismH(txtOdPrisma.text)
+        // receta.setOdPrismH(txtOdPrisma.text)
         receta.setDiLejosR(txtDILejos.text)
         receta.setOiAdcR(txtOiAd.text)
         receta.setOiEsfR(txtOiEsfera.text)
         receta.setOiCilR(txtOiCil.text)
         receta.setOiEjeR(txtOiEje.text)
-       // receta.setOiAvR(txtOiAv.text)
+        // receta.setOiAvR(txtOiAv.text)
         receta.setDiOi(txtOiDm.text)
         //receta.setOiPrismH(txtOiPrisma.text)
         //receta.setDiCercaR(txtDICerca.text)
         receta.setAltOblR(txtAltOblea.text)
 
         receta.setObservacionesR(txtObservaciones.text)
-      //  receta.setOdPrismaV(cbOdUbic.selectedItem.toString() ?: '')
-       // receta.setOiPrismaV(cbOiUbic.selectedItem.toString() ?: '')
+        //  receta.setOdPrismaV(cbOdUbic.selectedItem.toString() ?: '')
+        // receta.setOiPrismaV(cbOiUbic.selectedItem.toString() ?: '')
         receta.setIdOpt(txtEmpleado.text)
         receta.setFolio(txtFolio.text)
         if (!receta?.idClient) {
@@ -638,109 +660,111 @@ class EditRxDialog extends JDialog {
 
     private void doRxSave() {
         if (!StringUtils.trimToEmpty(txtEmpleado.text).isEmpty()
-              && !StringUtils.trimToEmpty(txtFolio.text).isEmpty() ) {
+                && !StringUtils.trimToEmpty(txtFolio.text).isEmpty()) {
 
-                     String useGlass = cbUso.selectedItem.toString().trim()
-                      println('UseGlass = ' + useGlass)
-                      println('ItemUse = ' + itemUso)
+            String useGlass = cbUso.selectedItem.toString().trim()
+            println('UseGlass = ' + useGlass)
+            println('ItemUse = ' + itemUso)
 
-    /*B*/   if(useGlass.equals(usoB[0])/*BIFOCAL*/ ){
-                        useGlass = 'BIFOCAL'
+            /*B*/ if (useGlass.equals(usoB[0])/*BIFOCAL*/) {
+                useGlass = 'BIFOCAL'
 
-                        if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
+                if ((itemUso != null) && (useGlass.equals(itemUso.trim()))) {
 
-                            /*
-                            if( txtOdEsfera.text != '' &&
-                                    txtOdCil.text != '' &&
-                                    txtOdEje.text != '' &&
-                                    txtOdAd.text  != '' &&
-                                    txtDILejos.text   != '' &&
-
-
-
-                                    txtOiEsfera.text  != '' &&
-                                    txtOiCil.text  != '' &&
-                                    txtOiEje.text  != '' &&
-                                    txtOiAd.text != '' &&
+                    /*
+                    if( txtOdEsfera.text != '' &&
+                            txtOdCil.text != '' &&
+                            txtOdEje.text != '' &&
+                            txtOdAd.text  != '' &&
+                            txtDILejos.text   != '' &&
 
 
 
-                                    txtAltOblea.text  != ''
-                            ){ */
-                                useGlasess()
-                           /* }else{
-                                sb.optionPane(message: "Llenar todos los campos", optionType: JOptionPane.DEFAULT_OPTION)
-                                        .createDialog(new JTextField(), "Error")
-                                        .show()
-                            }
-                           */
-                        } else{
-                            sb.optionPane(message: "Receta: "+useGlass+" Articulo: "+itemUso, optionType: JOptionPane.DEFAULT_OPTION)
-                                    .createDialog(new JTextField(), "Error")
-                                    .show()
-                        }
-   /*P*/     }else if(useGlass.equals(usoP[0])/*PROGRESIVO*/){
-                    useGlass = 'PROGRESIVO'
-
-                    if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
-                 /*
-                        if( txtOdEsfera.text != '' &&
-                                txtOdCil.text != '' &&
-                                txtOdEje.text != '' &&
-                                txtOdAd.text  != '' &&
-
-                                txtOdDm.text  != '' &&
+                            txtOiEsfera.text  != '' &&
+                            txtOiCil.text  != '' &&
+                            txtOiEje.text  != '' &&
+                            txtOiAd.text != '' &&
 
 
-                                txtOiEsfera.text  != '' &&
-                                txtOiCil.text  != '' &&
-                                txtOiEje.text  != '' &&
-                                txtOiAd.text != '' &&
-                                txtOiDm.text  != '' &&
+
+                            txtAltOblea.text  != ''
+                    ){ */
+                    useGlasess()
+                    /* }else{
+                         sb.optionPane(message: "Llenar todos los campos", optionType: JOptionPane.DEFAULT_OPTION)
+                                 .createDialog(new JTextField(), "Error")
+                                 .show()
+                     }
+                    */
+                } else {
+                    sb.optionPane(message: "Receta: " + useGlass + " Articulo: " + itemUso, optionType: JOptionPane.DEFAULT_OPTION)
+                            .createDialog(new JTextField(), "Error")
+                            .show()
+                }
+                /*P*/
+            } else if (useGlass.equals(usoP[0])/*PROGRESIVO*/) {
+                useGlass = 'PROGRESIVO'
+
+                if ((itemUso != null) && (useGlass.equals(itemUso.trim()))) {
+                    /*
+                           if( txtOdEsfera.text != '' &&
+                                   txtOdCil.text != '' &&
+                                   txtOdEje.text != '' &&
+                                   txtOdAd.text  != '' &&
+
+                                   txtOdDm.text  != '' &&
 
 
-                                txtAltOblea.text  != ''
-                        ){
-                    */        useGlasess()
-                      /*  }else{
-                            sb.optionPane(message: "Llenar todos los campos", optionType: JOptionPane.DEFAULT_OPTION)
-                                    .createDialog(new JTextField(), "Error")
-                                    .show()
-                        }
-                        */
-                    } else{
-                        sb.optionPane(message: "Receta: "+useGlass+" Articulo: "+itemUso, optionType: JOptionPane.DEFAULT_OPTION)
-                                .createDialog(new JTextField(), "Error")
-                                .show()
-                    }
+                                   txtOiEsfera.text  != '' &&
+                                   txtOiCil.text  != '' &&
+                                   txtOiEje.text  != '' &&
+                                   txtOiAd.text != '' &&
+                                   txtOiDm.text  != '' &&
 
-  /*SV*/    }else if(useGlass.equals(usoM[0])/*LEJOS*/ || useGlass.equals(usoM[1])/*CERCA*/  ){
+
+                                   txtAltOblea.text  != ''
+                           ){
+                       */ useGlasess()
+                    /*  }else{
+                          sb.optionPane(message: "Llenar todos los campos", optionType: JOptionPane.DEFAULT_OPTION)
+                                  .createDialog(new JTextField(), "Error")
+                                  .show()
+                      }
+                      */
+                } else {
+                    sb.optionPane(message: "Receta: " + useGlass + " Articulo: " + itemUso, optionType: JOptionPane.DEFAULT_OPTION)
+                            .createDialog(new JTextField(), "Error")
+                            .show()
+                }
+
+                /*SV*/
+            } else if (useGlass.equals(usoM[0])/*LEJOS*/ || useGlass.equals(usoM[1])/*CERCA*/) {
                 useGlass = 'MONOFOCAL'
 
-                if((itemUso != null) && (useGlass.equals(itemUso.trim()))){
-                   /*
-                    if( txtOdEsfera.text != '' &&
-                        txtOdCil.text != '' &&
-                        txtOdEje.text != '' &&
+                if ((itemUso != null) && (useGlass.equals(itemUso.trim()))) {
+                    /*
+                     if( txtOdEsfera.text != '' &&
+                         txtOdCil.text != '' &&
+                         txtOdEje.text != '' &&
 
-                         txtDILejos.text   != '' &&
-                         txtOiEsfera.text  != '' &&
-                         txtOiCil.text  != '' &&
-                         txtOiEje.text  != ''
+                          txtDILejos.text   != '' &&
+                          txtOiEsfera.text  != '' &&
+                          txtOiCil.text  != '' &&
+                          txtOiEje.text  != ''
 
 
-                    ){ */
-                        useGlasess()
-              /*      }else{
-                        sb.optionPane(message: "Llenar todos los campos", optionType: JOptionPane.DEFAULT_OPTION)
-                                .createDialog(new JTextField(), "Error")
-                                .show()
-                    }   */
-                    } else{
-                        sb.optionPane(message: "Receta: "+useGlass+" Articulo: "+itemUso, optionType: JOptionPane.DEFAULT_OPTION)
-                                .createDialog(new JTextField(), "Error")
-                                .show()
-                    }
+                     ){ */
+                    useGlasess()
+                    /*      }else{
+                              sb.optionPane(message: "Llenar todos los campos", optionType: JOptionPane.DEFAULT_OPTION)
+                                      .createDialog(new JTextField(), "Error")
+                                      .show()
+                          }   */
+                } else {
+                    sb.optionPane(message: "Receta: " + useGlass + " Articulo: " + itemUso, optionType: JOptionPane.DEFAULT_OPTION)
+                            .createDialog(new JTextField(), "Error")
+                            .show()
+                }
             }
 
         } else {

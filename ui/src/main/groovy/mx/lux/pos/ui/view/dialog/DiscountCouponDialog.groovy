@@ -20,8 +20,6 @@ class DiscountCouponDialog extends JDialog {
 
 
 
-  private static final String TXT_DISCOUNT_TITLE = "Aplicar descuento en tienda"
-  private static final String TXT_CORPORATE_TITLE = "Aplicar descuento corporativo"
   private static final String TXT_AMOUNT_LABEL = "Monto"
   private static final String TXT_CORPORATE_KEY_LABEL = "Clave Descuento"
   private static final String TXT_PERCENT_LABEL = "%Descuento"
@@ -76,7 +74,7 @@ class DiscountCouponDialog extends JDialog {
   
   protected void buildUI( JComponent pParent) {
     sb.dialog( this,
-        title: ( corporateEnabled ? TXT_CORPORATE_TITLE : TXT_DISCOUNT_TITLE ) ,
+        title: "Descuento por Cupon" ,
         location: [ 300, 300 ] ,
         resizable: false,
         modal: true,
