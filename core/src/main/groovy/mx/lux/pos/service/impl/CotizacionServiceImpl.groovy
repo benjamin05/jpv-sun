@@ -118,8 +118,7 @@ class CotizacionServiceImpl implements CotizacionService {
     if ( order != null ) {
       log.debug( String.format( 'Quote.copyFrom(Order:%s, Items:%d)', order.id, order.detalles.size() ) )
       Cliente cust = RepositoryFactory.customerCatalog.findOne( order.idCliente )
-
-        quote = this.createQuote()
+      quote = this.createQuote()
       quote.idCliente = pCustomerId
       quote.idEmpleado = pIdEmpleado
       quote.idReceta = order.receta
@@ -183,7 +182,7 @@ class CotizacionServiceImpl implements CotizacionService {
     Cotizacion quote = RepositoryFactory.quotes.findOne( pQuoteId )
     if ( quote != null ) {
       if ( this.isQuoteOpen( quote.idCotiza ) ) {
-        NotaVenta order = ServiceFactory.salesOrders.abrirNotaVenta()
+        NotaVenta order = ServiceFactory.salesOrders.abrirNotaVenta(quote.idCliente.toString(), quote.idSucursal.toString())
         order.idCliente = quote.idCliente
         order.idEmpleado = quote.idEmpleado
         order.receta = quote.idReceta

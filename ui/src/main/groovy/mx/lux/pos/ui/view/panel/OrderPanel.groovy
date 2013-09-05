@@ -61,7 +61,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private JTextArea comments
     private JTextField itemSearch
     private List<IPromotionAvailable> promotionList
-    private Collection<OperationType> customerTypes = OperationType.values()
+    private List<OperationType> lstCustomers = OperationType.values()
+    private Collection<OperationType> customerTypes = new ArrayList<OperationType>()
     private DefaultTableModel itemsModel
     private DefaultTableModel paymentsModel
     private DefaultTableModel promotionModel
@@ -89,11 +90,16 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         sb = new SwingBuilder()
         order = new Order()
         dioptra = new Dioptra()
+        String clientesActivos = OrderController.obtieneTiposClientesActivos()
+        for(OperationType customer : lstCustomers){
+            if(clientesActivos.contains(customer.value)){
+               customerTypes.add(customer)
+            }
+        }
         customer = CustomerController.findDefaultCustomer()
         promotionList = new ArrayList<PromotionAvailable>()
         this.promotionDriver.init(this)
         ticketRx = false
-        customerTypes.remove(OperationType.DOMESTIC)
         buildUI()
         doBindings()
         itemsModel.addTableModelListener(this.promotionDriver)
@@ -966,7 +972,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             activeDialogProccesCustomer = false
             operationType.setSelectedItem( OperationType.PENDING )
           } else {
-            operationType.setSelectedItem( OperationType.DOMESTIC )
+            activeDialogProccesCustomer = false
+            operationType.setSelectedItem( OperationType.PENDING )
+            //operationType.setSelectedItem( OperationType.DOMESTIC )
           }
         } else {
           operationType.removeItem( OperationType.DOMESTIC )
@@ -975,11 +983,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     void reset() {
-
         order = new Order()
         customer = CustomerController.findDefaultCustomer()
-        // Benja: Favor de no cambiar la siguiente linea. Esta comentada porque NO debe de estar
-        // this.promotionList = new ArrayList<PromotionAvailable>()
         this.getPromotionDriver().init(this)
         dioptra = new Dioptra()
         antDioptra = new Dioptra()
@@ -1097,18 +1102,11 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void flujoContinuar() {
-
         if (isPaymentListEmpty()) {
-
-
             sb.doLater {
-
                 OrderController.saveOrder(order)
                 CustomerController.updateCustomerInSite(this.customer.id)
-
                 this.reset()
-
-
             }
         } else {
             sb.doLater {

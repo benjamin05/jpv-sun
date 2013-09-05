@@ -1,5 +1,7 @@
 package mx.lux.pos.ui.model
 
+import mx.lux.pos.ui.controller.OrderController
+
 enum OperationType {
   DEFAULT( 'Público General' ),
   NEW( 'Cliente Nuevo' ),
@@ -14,7 +16,10 @@ enum OperationType {
   final String value
 
   private OperationType( String value ) {
-    this.value = value
+    //String clientesActivos = OrderController.obtieneTiposClientesActivos()
+    //if(clientesActivos.contains(value)){
+      this.value = value
+    //}
   }
 
   static OperationType parse( String value ) {

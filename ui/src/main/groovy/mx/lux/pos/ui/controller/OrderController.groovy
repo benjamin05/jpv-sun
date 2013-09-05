@@ -11,6 +11,7 @@ import mx.lux.pos.repository.JbRepository
 import mx.lux.pos.repository.ParametroRepository
 import mx.lux.pos.repository.PrecioRepository
 import mx.lux.pos.repository.TmpServiciosRepository
+import mx.lux.pos.service.business.Registry
 import mx.lux.pos.ui.MainWindow
 import mx.lux.pos.ui.resources.ServiceManager
 import mx.lux.pos.ui.view.dialog.ContactClientDialog
@@ -228,18 +229,12 @@ class OrderController {
     }
 
     static Dioptra addDioptra(Order order, String dioptra) {
-
-
         NotaVenta nota = notaVentaService.obtenerNotaVenta(order.id)
         nota.setCodigo_lente(dioptra)
         nota = notaVentaService.registrarNotaVenta(nota)
-
-
         Dioptra diop = generaDioptra(preDioptra(nota.codigo_lente))
-
         println('Codigo Lente: ' + nota.codigo_lente)
         return diop
-
     }
 
     static String preDioptra(String dioString) {
@@ -260,25 +255,19 @@ class OrderController {
     }
 
     static Dioptra generaDioptra(String dioString) {
-
-
         Dioptra nuevoDioptra = new Dioptra()
         if (dioString == null) {
-
         } else {
             ArrayList<String> caract = new ArrayList<String>()
             String s = dioString
             StringTokenizer st = new StringTokenizer(s.trim(), ",")
             Iterator its = st.iterator()
-
             while (its.hasNext()) {
                 caract.add(its.next().toString())
             }
             nuevoDioptra = new Dioptra(caract.get(0).toString(), caract.get(1).toString(), caract.get(2).toString(), caract.get(3).toString(), caract.get(4).toString(), caract.get(5).toString())
         }
-
         return nuevoDioptra
-
     }
 
     static Order addItemToOrder(Order order, Item item, String surte) {
@@ -366,7 +355,6 @@ class OrderController {
 
 
     static String codigoDioptra(Dioptra codDioptra) {
-
         String codigo
         if (!codDioptra.equals(null)) {
             codigo = codDioptra.material + codDioptra.lente + codDioptra.tipo + codDioptra.especial + codDioptra.tratamiento + codDioptra.color
@@ -693,10 +681,8 @@ class OrderController {
     }
 
     static void requestSaveAsQuote(Order pOrder, Customer pCustomer) {
-
         Integer pQuoteId = ServiceManager.quote.copyFromOrder(pOrder.id, pCustomer.id,
                 ((User) Session.get(SessionItem.USER)).username)
-
         if (pQuoteId != null) {
             ticketService.imprimeCotizacion(pQuoteId)
             notaVentaService.eliminarNotaVenta(pOrder.id)
@@ -958,8 +944,8 @@ class OrderController {
                 }
 
             }
-
-            if (detalle?.surte.trim().equals('P')) {
+            String surt = StringUtils.trimToEmpty(detalle?.surte) != '' ? detalle?.surte.trim() : ''
+            if (surt.equals('P')) {
                 creaJB = true
             }
 
@@ -1303,4 +1289,10 @@ class OrderController {
         NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(order.id)
         notaVentaService.validaSurtePorGenericoInventariable( notaVenta )
     }
+
+
+    static String obtieneTiposClientesActivos( ){
+        return Registry.activeCustomers
+    }
+
 }

@@ -415,7 +415,6 @@ class EditRxDialog extends JDialog {
     }
 
     private void limpiar(JTextField txtField){
-
         //limpiarAux = txtField.text
         //txtField.text = txtField.text.substring(1,txtField.text.indexOf('.'))
       /*
@@ -436,7 +435,6 @@ class EditRxDialog extends JDialog {
             double number
             String txt = txtField.text.trim()
             String signo = ''
-
             if(txt.substring(0,1)=='-'){
                   txt = txt.substring(1,txtField.text.trim().size())
                   signo = '-'
@@ -446,22 +444,17 @@ class EditRxDialog extends JDialog {
             if(txt.substring(0,1)=='0') {
                 txt = txt.substring(1,txtField.text.trim().size())
             }
-
             println('Valor: ' + txt)
             println('Signo: ' + signo)
-
             txtField.text = ''
             Double multiplo = 0.0
             if (txt.length() > 0) {
                 number = Double.parseDouble(txt);
-
                 multiplo = number / interval;
                 multiplo = multiplo % 1
 
                 if (multiplo ==0 || multiplo.toString().equals('-0.0')) {
-
                     if (number >= min && number <= max){
-
                         if (format.equals('.00') &&  number.toString().substring(number.toString().indexOf('.'),number.toString().length()).equals('.0'))
                         {
                             txt=txt + '.00'
@@ -474,31 +467,22 @@ class EditRxDialog extends JDialog {
                         if(number>-1 && number<1 && number != 0){
                            txt = '0' + txt
                         }
-
                         if(mask.equals('+')){
-
-                            txtField.text = signoMas(signo + txt)
+                          txtField.text = signoMas(signo + txt)
                         }else if(mask.equals('-')){
-
                             txtField.text = signoMenos(signo + txt)
                         }else{
                             txtField.text = txt
                         }
-
-
                     }else{
                         txtField.text = ''
                     }
-
                 } else {
                     txtField.text = ''
                 }
-
             }else{
                 txtField.text = ''
             }
-
-
         } else {
             txtField.text = limpiarAux
         }

@@ -9,6 +9,7 @@ enum TipoParametro {
   ARCHIVO_TIPO_CAMBIO( 'archivo_tipo_cambio', 'tc.*.{FECHA}.txt' ),
   ARCHIVO_CLASIFICACION_ARTICULOS( 'archivo_clasificacion_articulos', 'articulos.*.csv' ),
   CAN_MISMO_DIA( 'can_mismo_dia', 'no' ),
+  CLIENTES_ACTIVOS( 'clientes_activos', 'Público General,Cliente Nuevo,Cliente en Proceso,Cliente en Caja,Cotización' ),
   CONV_NOMINA( 'conv_nomina' ),
   COMANDO_ZIP( 'comando_zip', '/Apps/7z/7za a -tzip' ),
   COMPANIA_NOMBRE_CORTO( 'compania_nombre_corto', 'OPTICAS LUX' ),

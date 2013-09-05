@@ -65,17 +65,11 @@ class NotaVentaServiceImpl implements NotaVentaService {
 
   @Override
   @Transactional
-  NotaVenta abrirNotaVenta(String clienteID,String empleadoID ) {
+  NotaVenta abrirNotaVenta(String clienteID, String empleadoID ) {
     log.info( 'abriendo nueva notaVenta' )
-
-
-
     Parametro parametro = new Parametro()
       parametro.setValor(clienteID)
-
-
       //Cambiar el parametro por clienteID
-
 
     NotaVenta notaVenta = new NotaVenta(
         id: notaVentaRepository.getNotaVentaSequence(),

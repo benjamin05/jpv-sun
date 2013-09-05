@@ -160,13 +160,9 @@ class Registry {
 
     Contribuyente company = null
     String rfc = asString( TipoParametro.COMPANIA_RFC )
-
     List<Contribuyente> companies = new ArrayList<Contribuyente>()
-
       companies.clear()
-
     if ( rfc.length() > 0 ) {
-
       Integer idCliente = RepositoryFactory.rfcMaster.getIdCliente(rfc.trim())
 
         if ( ( idCliente == null )) {
@@ -185,6 +181,10 @@ class Registry {
 
   static Integer getCurrentSite( ) {
     return asInteger( TipoParametro.ID_SUCURSAL )
+  }
+
+  static String getActiveCustomers( ) {
+    return asString( TipoParametro.CLIENTES_ACTIVOS )
   }
 
   static Boolean isUsdDisplayEnabled( ) {

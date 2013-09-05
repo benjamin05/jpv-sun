@@ -139,7 +139,6 @@ class CustomerController {
     }
 
     static ClienteProceso addClienteProceso (Customer tmpCustomer){
-
         Branch branch = Session.get(SessionItem.BRANCH) as Branch
         ClienteProceso clientePro = new ClienteProceso()
         String IdSync = '1'
@@ -151,7 +150,6 @@ class CustomerController {
         clientePro.setIdMod(IdMod)
         clientePro.setIdSucursal(branch?.id)
         clienteService.agregarClienteProceso(clientePro)
-
     }
 
     static Customer addCustomer( Customer customer ) {
@@ -294,9 +292,7 @@ class CustomerController {
             pListener.setCustomer( c )
             pListener.enableUI()
         } else if ( dialog.isNewRequested() ) {
-
             requestNewCustomer( pListener )
-
         } else {
             pListener.operationTypeSelected = OperationType.DEFAULT
         }
