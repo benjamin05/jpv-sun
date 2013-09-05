@@ -451,6 +451,66 @@ class TicketServiceImpl implements TicketService {
       }
   }
 
+    @Override
+    void imprimeSuyo(String idNotaVenta, JbNotas jbNotas){
+
+
+        NotaVenta notaVenta = notaVentaService.obtenerNotaVenta( idNotaVenta )
+
+
+        if ( StringUtils.isNotBlank( notaVenta?.id )  &&  StringUtils.isNotBlank( jbNotas?.id_nota.toString() )) {
+
+            Sucursal sucursal = sucursalRepository.findOne(notaVenta?.idSucursal)
+            Empleado empleado = empleadoRepository.findOne(notaVenta?.idEmpleado)
+            Cliente cliente = clienteRepository.findOne(notaVenta?.idCliente)
+            Date fechaA = new Date()
+            SimpleDateFormat fecha = new SimpleDateFormat("dd-MM-yyyy")
+            String fechaImpresion = fecha.format(fechaA)
+
+
+            def tienda = [
+                    sucursal: sucursal?.nombre + ' [' + sucursal?.id + ']',
+                    telefono: sucursal?.telefonos,
+                    empleado:  empleado?.nombre,
+                    fecha: fechaImpresion
+            ]
+            def customer = [
+                    nombre: cliente?.nombre + ' ' + cliente?.apellidoPaterno + ' ' + cliente?.apellidoMaterno,
+                    domicilio: cliente?.direccion,
+                    colonia: cliente?.colonia,
+                    cp: cliente?.codigo,
+                    telCasa: cliente?.telefonoCasa,
+                    telTrab: cliente?.telefonoTrabajo,
+                    telAd: cliente?.telefonoAdicional,
+                    extTrab: cliente?.extTrabajo,
+                    extAd: cliente?.extAdicional
+            ]
+
+            def dejo = [
+                    factura: jbNotas?.id_nota,
+                    dejo: jbNotas?.dejo,
+                    fechaEntrega: jbNotas?.fecha_prom,
+                    servicio: jbNotas?.servicio,
+                    instruccion: jbNotas?.instruccion,
+                    condiciones: jbNotas?.condicion
+            ]
+
+        def items = [
+                nombre_ticket: 'ticket-suyo',
+                id_nota: jbNotas.id_nota.toString(),
+                infoTienda: tienda,
+                infoCliente: customer,
+                infoDejo: dejo,
+                firmaGerente: 'Vo. Bo. Gerente'
+
+        ] as Map<String, Object>
+
+        imprimeTicket( 'template/ticket-suyo.vm', items )
+        } else {
+            log.warn( 'no se imprime ticket venta, parametros invalidos' )
+        }
+    }
+
 
 
   @Override

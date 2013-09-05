@@ -48,6 +48,9 @@ class RepositoryFactory {
   private static FormaContactoRepository formaContactoRepository
   private static DescuentoClaveRepository descuentoClaveRepository
   private static AcusesTipoRepository acusesTipoRepository
+  private static JbServiciosRepository jbServiciosRepository
+  private static JbNotasRepository jbNotasRepository
+
 
   @Autowired
   RepositoryFactory( ArticuloRepository pArticuloRepository,
@@ -88,7 +91,9 @@ class RepositoryFactory {
           TipoContactoRepository pTipoContactoRepository,
           FormaContactoRepository pFormaContactoRepository,
           DescuentoClaveRepository pDescuentoClaveRepository,
-          AcusesTipoRepository pAcusesTipoRepository
+          AcusesTipoRepository pAcusesTipoRepository,
+          JbServiciosRepository pJbServiciosRepository,
+          JbNotasRepository pJbNotasRepository
 
   ) {
     customerCatalog = pClienteRepository
@@ -131,7 +136,17 @@ class RepositoryFactory {
       formaContactoRepository  = pFormaContactoRepository
       descuentoClaveRepository = pDescuentoClaveRepository
       acusesTipoRepository = pAcusesTipoRepository
+      jbServiciosRepository  = pJbServiciosRepository
+      jbNotasRepository  = pJbNotasRepository
   }
+
+    static JbNotasRepository getJbNotasRepository() {
+        return jbNotasRepository
+    }
+
+    static JbServiciosRepository getJbServiciosRepository() {
+        return jbServiciosRepository
+    }
 
     static AcusesTipoRepository getAcusesTipoRepository() {
         return acusesTipoRepository

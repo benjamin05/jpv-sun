@@ -284,8 +284,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                 dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
 
             }
-           //  println('antDioptra: ' +  OrderController.codigoDioptra(antDioptra))
-          //  println('Dioptra: ' +  OrderController.codigoDioptra(dioptra))
+            //  println('antDioptra: ' +  OrderController.codigoDioptra(antDioptra))
+            //  println('Dioptra: ' +  OrderController.codigoDioptra(dioptra))
             change.text = OrderController.requestEmployee(order?.id)
         } else {
 
@@ -551,21 +551,21 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         return rec
     }
 
-    private SurteSwitch surteSu(Item item, SurteSwitch surteSwitch){
-       if(surteSwitch?.surteSucursal==false){
-        if(item?.type?.trim().equals('A') && item?.stock > 0 ){
-            surteSwitch?.surteSucursal=true
-        }else{
-            AuthorizationDialog authDialog = new AuthorizationDialog(this, "Esta operacion requiere autorizaci\u00f3n")
-            authDialog.show()
-            println('Autorizado: ' + authDialog.authorized)
-            if (authDialog.authorized) {
-                surteSwitch?.surteSucursal=true
+    private SurteSwitch surteSu(Item item, SurteSwitch surteSwitch) {
+        if (surteSwitch?.surteSucursal == false) {
+            if (item?.type?.trim().equals('A') && item?.stock > 0) {
+                surteSwitch?.surteSucursal = true
             } else {
-                OrderController.notifyAlert('Se requiere autorizacion para esta operacion', 'Se requiere autorizacion para esta operacion')
+                AuthorizationDialog authDialog = new AuthorizationDialog(this, "Esta operacion requiere autorizaci\u00f3n")
+                authDialog.show()
+                println('Autorizado: ' + authDialog.authorized)
+                if (authDialog.authorized) {
+                    surteSwitch?.surteSucursal = true
+                } else {
+                    OrderController.notifyAlert('Se requiere autorizacion para esta operacion', 'Se requiere autorizacion para esta operacion')
+                }
             }
         }
-       }
         return surteSwitch
     }
 
@@ -575,11 +575,11 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         order.setEmployee(u.username)
         Branch branch = Session.get(SessionItem.BRANCH) as Branch
 
-        SurteSwitch surteSwitch = OrderController.surteCallWS(branch, item, 'S',order)
-        surteSwitch = surteSu(item,surteSwitch)
+        SurteSwitch surteSwitch = OrderController.surteCallWS(branch, item, 'S', order)
+        surteSwitch = surteSu(item, surteSwitch)
 
         if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
-             String surte = surteSwitch?.surte
+            String surte = surteSwitch?.surte
 
             if (item.stock > 0) {
                 order = OrderController.addItemToOrder(order, item, surte)
@@ -703,7 +703,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         if (armOrder?.udf2.equals('')) {
                             ArmRxDialog armazon = new ArmRxDialog(this, order, armazonString)
                             armazon.show()
-                           order = armazon.order
+                            order = armazon.order
                         }
                         flujoImprimir(artCount)
                         source.enabled = true
@@ -723,17 +723,15 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         }
     }
 
-    private void controlItem(Item item){
-
-
+    private void controlItem(Item item) {
 
 
         Branch branch = Session.get(SessionItem.BRANCH) as Branch
-        OrderController.insertaAcuseAPAR(order,branch,item)
+        OrderController.insertaAcuseAPAR(order, branch, item)
 
 
         String indexDioptra = item?.indexDiotra
-        println('Index Dioptra del Articulo : ' +item?.indexDiotra)
+        println('Index Dioptra del Articulo : ' + item?.indexDiotra)
         if (!indexDioptra.equals(null)) {
             Dioptra nuevoDioptra = OrderController.generaDioptra(item?.indexDiotra)
             println('Nuevo Objeto Dioptra :' + nuevoDioptra)
@@ -745,6 +743,12 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             order?.dioptra = OrderController.codigoDioptra(antDioptra)
         }
         println('Codigo Dioptra :' + antDioptra)
+
+        if (item?.name.trim().equals('MONTAJE')) {
+            User u = Session.get(SessionItem.USER) as User
+            CapturaSuyoDialog capturaSuyoDialog = new CapturaSuyoDialog(order, u,true)
+            capturaSuyoDialog.show()
+        }
 
 
 
@@ -842,18 +846,40 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         //   cSaldo = true
         // }
         OrderController.creaJb(newOrder?.ticket.trim(), cSaldo)
-        OrderController.validaEntrega(newOrder?.bill.trim(),newOrder?.branch?.id.toString(), true)
+        OrderController.validaEntrega(newOrder?.bill.trim(), newOrder?.branch?.id.toString(), true)
 
         if (StringUtils.isNotBlank(newOrder?.id)) {
+
+            Boolean montaje = false
+            List<OrderItem> items = newOrder?.items
+            Iterator iterator = items.iterator()
+            while (iterator.hasNext()) {
+                Item item = iterator.next().item
+                if (item?.name.trim().equals('MONTAJE')) {
+                    montaje = true
+                }
+            }
+            if (montaje == true) {
+                Boolean registroTmp = OrderController.revisaTmpservicios(newOrder?.id)
+                User u = Session.get(SessionItem.USER) as User
+                if (registroTmp == false) {
+                    CapturaSuyoDialog capturaSuyoDialog = new CapturaSuyoDialog(order, u,false)
+                    capturaSuyoDialog.show()
+                }
+
+                OrderController.printSuyo(newOrder,u)
+            }
+
 
 
             OrderController.printOrder(newOrder.id)
             if (ticketRx == true) {
                 OrderController.printRx(newOrder.id, false)
                 OrderController.fieldRX(newOrder.id)
-
-
             }
+
+
+
             reviewForTransfers(newOrder.id)
 
             // Flujo despues de imprimir nota de venta
@@ -1073,12 +1099,12 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
                         try {
                             OrderController.saveRxOrder(order?.id, rec.id)
-                           /*
-                            if (armOrder?.udf2.equals('')) {
-                                ArmRxDialog armazon = new ArmRxDialog(this, order?.id, armazonString)
-                                armazon.show()
-                            }
-                             */
+                            /*
+                             if (armOrder?.udf2.equals('')) {
+                                 ArmRxDialog armazon = new ArmRxDialog(this, order?.id, armazonString)
+                                 armazon.show()
+                             }
+                              */
                             flujoContinuar()
                         } catch (ex) {
                             flujoContinuar()
