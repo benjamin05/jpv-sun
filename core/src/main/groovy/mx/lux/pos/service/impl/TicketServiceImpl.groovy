@@ -1723,8 +1723,8 @@ class TicketServiceImpl implements TicketService {
         mnx: formatter.format( apertura.efvoPesos ),
         usd: formatter.format( apertura.efvoDolares ),
         observaciones: apertura.observaciones,
-        monedasDetUsd: formatter.format( monedaDetUsd.tipoCambio ),
-        monedasDetEur: formatter.format( monedaDetEur.tipoCambio ),
+        monedasDetUsd: formatter.format( monedaDetUsd != null ? monedaDetUsd?.tipoCambio : BigDecimal.ZERO ),
+        monedasDetEur: formatter.format( monedaDetEur != null ? monedaDetEur?.tipoCambio : BigDecimal.ZERO ),
         gerente: gerente.nombreCompleto,
         fechaImpresion: dft.format( new Date() )
     ]

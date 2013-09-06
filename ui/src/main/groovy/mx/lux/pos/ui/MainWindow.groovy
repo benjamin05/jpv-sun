@@ -95,7 +95,7 @@ class MainWindow extends JFrame implements KeyListener {
     private JMenuItem kardexMenuItem
     private JMenuItem salesTodayMenuItem
     private JMenuItem salesByPeriodMenuItem
-    private JMenuItem entregaMenuItem
+  private JMenuItem changePasswordMenuItem
     private JMenuItem nationalClientMenuItem
     private PromotionService promotionService
 
@@ -411,7 +411,7 @@ class MainWindow extends JFrame implements KeyListener {
                                 boolean userLoggedIn = Session.contains( SessionItem.USER )
                                 sessionMenuItem.visible = userLoggedIn
                                 newSalesDayMenuItem.visible = userLoggedIn
-                                entregaMenuItem.visible = userLoggedIn
+                                changePasswordMenuItem.visible = userLoggedIn
                             }
                     ) {
                         entregaMenuItem = menuItem(text: 'Entrega',
@@ -420,7 +420,13 @@ class MainWindow extends JFrame implements KeyListener {
                                     entrega()
                                 }
                         )
-
+                        changePasswordMenuItem = menuItem( text: 'Cambio de Password',
+                                visible: true,
+                                actionPerformed: {
+                                    //ChangePasswordDialog dialog = new ChangePasswordDialog()
+                                    //dialog.show()
+                                }
+                        )
                         newSalesDayMenuItem = menuItem( text: 'Registrar Efectivo Caja',
                                 visible: true,
                                 actionPerformed: {
