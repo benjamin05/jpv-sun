@@ -48,7 +48,7 @@ class DiscountCouponDialog extends JDialog {
   private FocusListener trgDiscPercentLeave
   private FocusListener trgCorporateKeyLeave
 
-    DescuentoClave descuentoClave
+  DescuentoClave descuentoClave
   ICorporateKeyVerifier verifier
   Double orderTotal = 0
   Double maximumDiscount = 0

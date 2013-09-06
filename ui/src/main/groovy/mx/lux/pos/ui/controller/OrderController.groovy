@@ -834,10 +834,11 @@ class OrderController {
     }
 
 
-    static void validaEntrega(String idFactura, String idSucursal, Boolean entregaInstante) {
+    static Boolean validaEntrega(String idFactura, String idSucursal, Boolean entregaInstante) {
         String ticket = idSucursal + '-' + idFactura
-        println(ticket)
+        Boolean registro = true
         NotaVenta notaVenta = notaVentaService.obtenerNotaVentaPorTicket(ticket)
+        if(notaVenta != null){
         Order order = Order.toOrder(notaVenta)
         List<DetalleNotaVenta> detalleVenta = detalleNotaVentaService.listarDetallesNotaVentaPorIdFactura(notaVenta?.id)
         Boolean entregaBo = true
@@ -929,7 +930,10 @@ class OrderController {
                 JOptionPane.showMessageDialog(null, "La nota tiene saldo pendiente por cubrir. No se puede entregar trabajo")
             }
         }
-
+    }else{
+            registro = false
+        }
+        return registro
     }
 
     static void creaJb(String idFactura, Boolean cSaldo) {
