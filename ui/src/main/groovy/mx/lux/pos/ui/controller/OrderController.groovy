@@ -1057,7 +1057,7 @@ class OrderController {
 
     }
 
-    static DescuentoClave descuentoClavexId(Integer idDescuentoClave) {
+    static DescuentoClave descuentoClavexId(String idDescuentoClave) {
         DescuentoClave descuentoClave = descuentoClaveRepository.findOne(idDescuentoClave)
         return descuentoClave
     }
@@ -1313,9 +1313,11 @@ class OrderController {
         servicios?.condicion = condiciones
         servicios?.dejo = dejo
         servicios?.instruccion = instrucciones
-
         servicios?.servicio = serv
         tmpServiciosRepository.saveAndFlush(servicios)
+        NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(order?.id)
+        notaVenta?.observacionesNv = condiciones
+        notaVentaService.saveOrder(notaVenta)
     }
 
     static void printSuyo(Order order, User user) {

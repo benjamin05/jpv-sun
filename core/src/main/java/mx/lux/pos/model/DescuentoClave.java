@@ -12,7 +12,7 @@ public class DescuentoClave implements Serializable {
 
     @Id
     @Column( name = "clave_descuento" )
-    private Integer clave_descuento;
+    private String clave_descuento;
 
     @Column( name = "porcenaje_descuento")
     private Double porcenaje_descuento;
@@ -20,12 +20,17 @@ public class DescuentoClave implements Serializable {
     @Column( name = "descripcion_descuento")
     private String descripcion_descuento;
 
+    @Column( name = "tipo")
+    private String tipo;
 
-    public Integer getClave_descuento() {
+    @Column( name = "vigente")
+    private Boolean vigente;
+
+    public String getClave_descuento() {
         return clave_descuento;
     }
 
-    public void setClave_descuento(Integer clave_descuento) {
+    public void setClave_descuento(String clave_descuento) {
         this.clave_descuento = clave_descuento;
     }
 
@@ -43,5 +48,21 @@ public class DescuentoClave implements Serializable {
 
     public void setDescripcion_descuento(String descripcion_descuento) {
         this.descripcion_descuento = descripcion_descuento;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public Boolean getVigente() {
+        return vigente;
+    }
+
+    public void setVigente(Boolean vigente) {
+        this.vigente = vigente;
     }
 }
