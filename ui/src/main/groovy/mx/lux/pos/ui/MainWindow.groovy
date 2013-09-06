@@ -9,6 +9,7 @@ import mx.lux.pos.ui.model.SessionItem
 import mx.lux.pos.ui.model.User
 import mx.lux.pos.ui.resources.ServiceManager
 import mx.lux.pos.ui.view.action.ExitAction
+import mx.lux.pos.ui.view.dialog.ChangePasswordDialog
 import mx.lux.pos.ui.view.dialog.CustomerSearchDialog
 import mx.lux.pos.ui.view.dialog.EntregaTrabajoDialog
 import mx.lux.pos.ui.view.dialog.PartClassDialog
@@ -95,7 +96,8 @@ class MainWindow extends JFrame implements KeyListener {
     private JMenuItem kardexMenuItem
     private JMenuItem salesTodayMenuItem
     private JMenuItem salesByPeriodMenuItem
-  private JMenuItem changePasswordMenuItem
+    private JMenuItem entregaMenuItem
+    private JMenuItem changePasswordMenuItem
     private JMenuItem nationalClientMenuItem
     private PromotionService promotionService
 
@@ -411,6 +413,7 @@ class MainWindow extends JFrame implements KeyListener {
                                 boolean userLoggedIn = Session.contains( SessionItem.USER )
                                 sessionMenuItem.visible = userLoggedIn
                                 newSalesDayMenuItem.visible = userLoggedIn
+                                entregaMenuItem.visible = userLoggedIn
                                 changePasswordMenuItem.visible = userLoggedIn
                             }
                     ) {
@@ -423,8 +426,8 @@ class MainWindow extends JFrame implements KeyListener {
                         changePasswordMenuItem = menuItem( text: 'Cambio de Password',
                                 visible: true,
                                 actionPerformed: {
-                                    //ChangePasswordDialog dialog = new ChangePasswordDialog()
-                                    //dialog.show()
+                                    ChangePasswordDialog dialog = new ChangePasswordDialog()
+                                    dialog.show()
                                 }
                         )
                         newSalesDayMenuItem = menuItem( text: 'Registrar Efectivo Caja',

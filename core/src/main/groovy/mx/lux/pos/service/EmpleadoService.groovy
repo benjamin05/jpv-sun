@@ -6,4 +6,5 @@ interface EmpleadoService {
 
   Empleado obtenerEmpleado( String id )
 
+  void actualizarPass( empleado )
 }
