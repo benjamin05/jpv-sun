@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 import org.springframework.data.querydsl.QueryDslPredicateExecutor
 
-interface DescuentoClaveRepository extends JpaRepository<DescuentoClave, Integer>, QueryDslPredicateExecutor<DescuentoClave> {
+interface DescuentoClaveRepository extends JpaRepository<DescuentoClave, String>, QueryDslPredicateExecutor<DescuentoClave> {
 
 
 

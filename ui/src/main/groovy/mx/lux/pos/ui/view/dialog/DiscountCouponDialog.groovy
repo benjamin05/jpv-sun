@@ -22,12 +22,14 @@ class DiscountCouponDialog extends JDialog {
 
   private static final String TXT_AMOUNT_LABEL = "Monto"
   private static final String TXT_CORPORATE_KEY_LABEL = "Clave Descuento"
-  private static final String TXT_PERCENT_LABEL = "%Descuento"
+  private static final String TXT_PERCENT_LABEL = "% Descuento"
   private static final String TXT_BUTTON_CANCEL = "Cancelar"
   private static final String TXT_BUTTON_OK = "Aplicar"
   private static final String TXT_WARNING_MAX_AMOUNT = "Límite de descuento en tienda: %.1f%% (%,.2f)"
   private static final String TXT_VERIFY_PASS = ""
   private static final String TXT_VERIFY_FAILED = "Clave incorrecta"
+  private static  JLabel porceLabel = new JLabel()
+  private static  JTextField porceText = new JTextField()
 
   private static final Double ZERO_TOLERANCE = 0.001
 
@@ -93,11 +95,11 @@ class DiscountCouponDialog extends JDialog {
               )
           }
 
-          label( text: TXT_PERCENT_LABEL, font: bigLabel )
-        textField( txtDiscountPercent, 
+       porceLabel =   label( text: TXT_PERCENT_LABEL, font: bigLabel,visible: false )
+       porceText = textField( txtDiscountPercent,
             font: bigInput,
             horizontalAlignment: JTextField.LEFT,
-            actionPerformed: { onDiscountPercentLeave( ) }
+            actionPerformed: { onDiscountPercentLeave( ) }  ,visible: false
         )
         label( TXT_AMOUNT_LABEL, font: bigLabel )
         textField( txtDiscountAmount, 
@@ -166,15 +168,32 @@ class DiscountCouponDialog extends JDialog {
 
   protected void verifyCorporateKey( ) {
     if ( txtCorporateKey.getText( ).length( ) > 0 ) {
-          descuentoClave = OrderController.descuentoClavexId(txtCorporateKey.text.toInteger())
-
+          descuentoClave = OrderController.descuentoClavexId(txtCorporateKey.text)
+                   //aqui
 
         if (  descuentoClave != null ) {
+            if(descuentoClave?.vigente == true){
+
+                if(descuentoClave?.tipo.trim().equals('P')){
             txtDiscountPercent.setValue(descuentoClave?.porcenaje_descuento)
             txtDiscountAmount.setValue( txtDiscountPercent.getValue( ) * orderTotal / 100.0 )
+                    porceLabel.setVisible(true)
+                    porceText.setVisible(true)
+                }else if(descuentoClave?.tipo.trim().equals('M')){
+                    txtDiscountPercent.setValue(descuentoClave?.porcenaje_descuento)
+                    txtDiscountAmount.setValue(  descuentoClave?.porcenaje_descuento)
+                    porceLabel.setVisible(false)
+                    porceText.setVisible(false)
+                }
             lblStatus.text = TXT_VERIFY_PASS
         lblStatus.foreground = UI_Standards.NORMAL_FOREGROUND
         btnOk.setEnabled( true )
+
+            } else {
+                lblStatus.text = 'Descuento Inactivo'
+                lblStatus.foreground = UI_Standards.WARNING_FOREGROUND
+                btnOk.setEnabled( false )
+            }
       } else {
         lblStatus.text = TXT_VERIFY_FAILED
         lblStatus.foreground = UI_Standards.WARNING_FOREGROUND
