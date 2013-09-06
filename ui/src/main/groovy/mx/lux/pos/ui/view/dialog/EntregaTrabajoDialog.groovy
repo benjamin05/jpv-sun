@@ -60,7 +60,15 @@ class EntregaTrabajoDialog extends JDialog {
 
 
     private void doSave(){
-        OrderController.validaEntrega(factura.text,sucursal.text,false)
+       Boolean registro =  OrderController.validaEntrega(factura.text,sucursal.text,false)
+        if(registro == false){
+            sb.optionPane(
+                    message: 'No existe ticket',
+                    messageType: JOptionPane.ERROR_MESSAGE
+            ).createDialog(this, 'No se puede registrar la venta')
+                    .show()
+        }
+
         doCancel()
     }
 
