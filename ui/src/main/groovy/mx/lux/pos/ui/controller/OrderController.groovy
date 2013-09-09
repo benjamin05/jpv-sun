@@ -221,6 +221,7 @@ class OrderController {
 
     static void saveRxOrder(String idNotaVenta, Integer receta) {
         log.debug( "guardando receta ${receta}" )
+        println 'receta con error'+receta
         NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(idNotaVenta)
         notaVentaService.saveRx(notaVenta, receta)
     }

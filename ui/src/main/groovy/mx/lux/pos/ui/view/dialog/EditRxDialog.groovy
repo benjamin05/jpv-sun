@@ -29,7 +29,7 @@ class EditRxDialog extends JDialog {
     private Component component
 
 
-    private Rx receta
+    Rx receta
     private Receta rec
     private Integer idCliente
     private Integer idSucursal
@@ -601,9 +601,9 @@ class EditRxDialog extends JDialog {
     }
 
     void doCancel() {
-        //component.rec = rec
-        //this.setVisible(false)
-        this.dispose()
+        component.rec = rec
+        this.setVisible(false)
+        //this.dispose()
 
     }
 

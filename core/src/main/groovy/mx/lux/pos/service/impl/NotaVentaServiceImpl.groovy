@@ -336,13 +336,9 @@ class NotaVentaServiceImpl implements NotaVentaService {
 
     @Transactional
     void saveRx(NotaVenta rNotaVenta, Integer receta){
-
         if ( StringUtils.isNotBlank( rNotaVenta.id) ) {
             if ( notaVentaRepository.exists( rNotaVenta.id ) ) {
-
                 rNotaVenta.setReceta(receta)
-
-
              registrarNotaVenta( rNotaVenta )
             } else {
                 log.warn( "id no existe" )
