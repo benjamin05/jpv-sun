@@ -2,7 +2,10 @@ package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.controller.OrderController
+import mx.lux.pos.ui.model.Branch
 import mx.lux.pos.ui.model.Order
+import mx.lux.pos.ui.model.Session
+import mx.lux.pos.ui.model.SessionItem
 import net.miginfocom.swing.MigLayout
 
 import javax.swing.*
@@ -15,7 +18,7 @@ class EntregaTrabajoDialog extends JDialog {
     private def sb
 
     private Component component
-
+    private static Branch branch
     private static JTextField factura = new JTextField()
     private static JTextField sucursal = new JTextField()
 
@@ -23,6 +26,7 @@ class EntregaTrabajoDialog extends JDialog {
 
         sb = new SwingBuilder()
         component = parent
+        branch = Session.get(SessionItem.BRANCH) as Branch
         buildUI()
 
 
@@ -41,7 +45,7 @@ class EntregaTrabajoDialog extends JDialog {
                  panel(layout: new MigLayout("wrap 4","[]10[][][]","[]20[]")) {
 
                      label(text: 'Ticket: ')
-                     sucursal = textField(text:'12002',minimumSize: [70, 20])
+                     sucursal = textField(text:branch?.id.toString(),minimumSize: [70, 20])
                      label(text: '-')
                      factura = textField(minimumSize: [70, 20])
 
