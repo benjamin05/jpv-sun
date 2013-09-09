@@ -447,7 +447,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     if (results.size() == 1) {
                         item = results.first()
                         if( item.type.trim().equalsIgnoreCase(TAG_GENERICO_B) ){
-                          if( customer.id != 1 ){
+                          if( customer.id != CustomerController.findDefaultCustomer().id ){
                             validarVentaNegativa(item, customer)
                           } else {
                             optionPane(message: "Cliente invalido, dar de alta datos", optionType: JOptionPane.DEFAULT_OPTION)
@@ -463,7 +463,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         item = dialog.item
                         if (item?.id) {
                           if( item?.type.trim().equalsIgnoreCase(TAG_GENERICO_B) ){
-                            if(customer.id != 1){
+                            if(customer.id != CustomerController.findDefaultCustomer().id){
                               validarVentaNegativa(item, customer)
                             } else {
                               optionPane(message: "Cliente invalido, dar de alta datos", optionType: JOptionPane.DEFAULT_OPTION)
@@ -623,7 +623,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     if (AccessController.authorizerInSession) {
                         authorized = true
                     } else {
-                        AuthorizationDialog authDialog = new AuthorizationDialog(this, "Cancelaci\u00f3n requiere autorizaci\u00f3n")
+                        AuthorizationDialog authDialog = new AuthorizationDialog(this, " ")
                         authDialog.show()
                         authorized = authDialog.authorized
                     }
