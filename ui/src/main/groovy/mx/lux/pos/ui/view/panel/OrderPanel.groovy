@@ -1051,7 +1051,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         if (!dioptra.getLente().equals(null)) {
 
             Item i = OrderController.findArt(dio.trim())
-
+            println i?.id
+            println dio.trim()
             if (i?.id != null || dio.trim().equals('nullnullnullnullnullnull')) {
                 String tipoArt = null
                 int artCount = 0
