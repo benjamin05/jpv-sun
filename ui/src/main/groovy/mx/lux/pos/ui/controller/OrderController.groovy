@@ -220,12 +220,9 @@ class OrderController {
     }
 
     static void saveRxOrder(String idNotaVenta, Integer receta) {
-
+        log.debug( "guardando receta ${receta}" )
         NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(idNotaVenta)
-
-
         notaVentaService.saveRx(notaVenta, receta)
-
     }
 
     static Order saveFrame(String idNotaVenta, String opciones, String forma) {
