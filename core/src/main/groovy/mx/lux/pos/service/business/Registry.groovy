@@ -8,6 +8,8 @@ import java.text.NumberFormat
 
 class Registry {
 
+
+  private static final String TAG_TRANSACCION_VENTA = 'VENTA'
   static Parametro find( TipoParametro pParametro ) {
     Parametro p = RepositoryFactory.getRegistry().findOne( pParametro.getValue() )
     if ( p == null ) {
@@ -17,6 +19,17 @@ class Registry {
       RepositoryFactory.getRegistry().saveAndFlush( p )
     }
     return p
+  }
+
+  static AcusesTipo findUrl( TipoUrl pUrl ) {
+      AcusesTipo p = RepositoryFactory.getAcusesTipoRepository().findOne( pUrl.getValue() )
+      if ( p == null ) {
+          p = new AcusesTipo()
+          p.id_tipo = pUrl.getValue()
+          p.pagina = pUrl.getDefaultValue()
+          RepositoryFactory.getAcusesTipoRepository().saveAndFlush( p )
+      }
+      return p
   }
 
   static Integer asInteger( TipoParametro pParametro ) {
@@ -51,6 +64,11 @@ class Registry {
     Parametro p = find( pParametro )
     return StringUtils.trimToEmpty( p.valor )
   }
+
+  static String asUrlString( TipoUrl pUrl ) {
+      AcusesTipo p = findUrl( pUrl )
+      return StringUtils.trimToEmpty( p.pagina )
+    }
 
   static Boolean isFalse( TipoParametro pParametro ) {
     final String[] FALSE_VALUES = [ "no", "n", "false", "f", "off" ]
@@ -327,7 +345,7 @@ class Registry {
   }
 
   static String getURLSalesNotification( ) {
-    return asString( TipoParametro.URL_ACUSE_VENTA_DIA )
+    return asUrlString( TipoUrl.URL_ACUSE_VENTA_DIA )
   }
 
   static String getURLAdjustSalesNotification( ) {
@@ -353,7 +371,7 @@ class Registry {
   static String getURL( String pAckType ) {
     String url = ''
     String type = StringUtils.trimToEmpty( pAckType ).toUpperCase( )
-    if ( AckType.VENTA_DIA.equals(type) ) {
+    if ( TAG_TRANSACCION_VENTA.equals(type) ) {
       url = getURLSalesNotification()
     } else if ( AckType.MODIF_VENTA.equals(type) ) {
       url = getURLAdjustSalesNotification()

@@ -611,7 +611,7 @@ class TicketServiceImpl implements TicketService {
           cliente: notaVenta.cliente,
           empleado: empleado,
           sucursal: notaVenta.sucursal,
-          observaciones: notaVenta.observacionesNv,
+          observaciones: StringUtils.trimToEmpty(notaVenta.observacionesNv) != '' ? notaVenta.observacionesNv : '',
           fecha: DateFormatUtils.format( notaVenta.fechaHoraFactura, dateTextFormat, locale ),
           hora: new Date().format( TIME_FORMAT ),
           texto_venta_neta: textoVentaNeta.toUpperCase(),

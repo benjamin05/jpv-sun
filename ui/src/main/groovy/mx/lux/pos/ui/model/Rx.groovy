@@ -77,6 +77,13 @@ class Rx {
         return tipo
     }
 
+    String getOptNameFormatter(){
+      String name = ''
+        if(StringUtils.trimToEmpty(optometristName) != '' && StringUtils.trimToEmpty(idOpt) != ''){
+          name = '['+idOpt.trim()+']'+optometristName
+        }
+    }
+
     String getTipoEditRx(){
         String tipo = ''
         if( useGlasses.equalsIgnoreCase('l') ){
@@ -120,7 +127,7 @@ class Rx {
           idClient: receta.idCliente,
           rxDate: receta.fechaReceta,
           useGlasses: receta.sUsoAnteojos,
-          optometristName: receta?.empleado?.nombre,
+          optometristName: receta?.empleado?.nombre.trim()+' '+receta?.empleado?.apellidoPaterno.trim()+' '+receta?.empleado?.apellidoMaterno.trim(),
           idOpt: receta.idOptometrista,
           typeOpt: StringUtils.trimToEmpty(receta.tipoOpt),
           odEsfR: StringUtils.trimToEmpty(receta.odEsfR),

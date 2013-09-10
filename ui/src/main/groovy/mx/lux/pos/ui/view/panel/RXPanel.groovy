@@ -108,7 +108,7 @@ class RXPanel extends JPanel {
                 table( selectionMode: ListSelectionModel.SINGLE_SELECTION, mouseClicked: doClick, mousePressed: doPress ) {
                     rxModel = tableModel( list: lstRecetas ) {
                         closureColumn( header: 'Fecha', read: {Rx tmp -> tmp?.rxDate}, minWidth: 90, cellRenderer: new DateCellRenderer() )
-                        closureColumn( header: 'Optometrista', read: {Rx tmp -> tmp?.optometristName}, minWidth: 190 )
+                        closureColumn( header: 'Optometrista', read: {Rx tmp -> tmp?.optNameFormatter}, minWidth: 190 )
                         closureColumn( header: 'Factura', read: {Rx tmp -> StringUtils.trimToEmpty(tmp?.order?.bill)} )
                         closureColumn( header: 'Tipo', read: {Rx tmp -> tmp?.getTipo()}, minWidth: 90 )
                         closureColumn( header: 'Folio', read: {Rx tmp -> tmp?.folio} )
