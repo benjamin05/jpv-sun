@@ -414,7 +414,7 @@ class OrderController {
 
     static Dioptra validaDioptra(Dioptra dioptra, Dioptra nuevoDioptra) {
 
-        if (dioptra.getMaterial().toString().equals('@') || dioptra?.material == null || (dioptra.getMaterial().toString().equals('C') && !nuevoDioptra.getMaterial().toString().equals('@')) || (!dioptra.getMaterial().toString().trim().equals('C') && !nuevoDioptra.getMaterial().toString().trim().equals('@'))) {
+        if (dioptra.getMaterial().toString().equals('@') || dioptra?.material == null || (dioptra.getMaterial().toString().equals('C') && !nuevoDioptra.getMaterial().toString().equals('@')) /* || (!dioptra.getMaterial().toString().trim().equals('C') && !nuevoDioptra.getMaterial().toString().trim().equals('@')) */ ) {
             if (dioptra.getMaterial().toString().trim().equals(nuevoDioptra.getMaterial().toString().trim())) {
                 dioptra.setMaterial('C')
             } else {
@@ -428,28 +428,28 @@ class OrderController {
                 dioptra.setLente(nuevoDioptra.getLente())
             }
         }
-        if (dioptra.getTipo().toString().equals('@') || dioptra?.tipo == null || (dioptra.getTipo().toString().equals('N') && !nuevoDioptra.getTipo().toString().equals('@')) || (!dioptra.getTipo().toString().trim().equals('N') && !nuevoDioptra.getTipo().toString().trim().equals('@'))) {
+        if (dioptra.getTipo().toString().equals('@') || dioptra?.tipo == null || (dioptra.getTipo().toString().equals('N') && !nuevoDioptra.getTipo().toString().equals('@'))/* || (!dioptra.getTipo().toString().trim().equals('N') && !nuevoDioptra.getTipo().toString().trim().equals('@'))*/) {
             if (dioptra.getTipo().toString().trim().equals(nuevoDioptra.getTipo().toString().trim())) {
                 dioptra.setTipo('N')
             } else {
                 dioptra.setTipo(nuevoDioptra.getTipo())
             }
         }
-        if (dioptra.getEspecial().toString().equals('@@') || dioptra?.especial == null || (dioptra.getEspecial().toString().equals('BL') && !nuevoDioptra.getEspecial().toString().equals('@@')) || (!dioptra.getEspecial().toString().trim().equals('BL') && !nuevoDioptra.getEspecial().toString().trim().equals('@@'))) {
+        if (dioptra.getEspecial().toString().equals('@@') || dioptra?.especial == null || (dioptra.getEspecial().toString().equals('BL') && !nuevoDioptra.getEspecial().toString().equals('@@')) /* || (!dioptra.getEspecial().toString().trim().equals('BL') && !nuevoDioptra.getEspecial().toString().trim().equals('@@'))*/) {
             if (dioptra.getEspecial().toString().trim().equals(nuevoDioptra.getEspecial().toString().trim())) {
                 dioptra.setEspecial('BL')
             } else {
                 dioptra.setEspecial(nuevoDioptra.getEspecial())
             }
         }
-        if (dioptra.getTratamiento().toString().equals('@') || dioptra?.tratamiento == null || (dioptra.getTratamiento().toString().equals('B') && !nuevoDioptra.getTratamiento().toString().equals('@')) || (!dioptra.getTratamiento().toString().trim().equals('B') && !nuevoDioptra.getTratamiento().toString().trim().equals('@'))) {
+        if (dioptra.getTratamiento().toString().equals('@') || dioptra?.tratamiento == null || (dioptra.getTratamiento().toString().equals('B') && !nuevoDioptra.getTratamiento().toString().equals('@')) /* || (!dioptra.getTratamiento().toString().trim().equals('B') && !nuevoDioptra.getTratamiento().toString().trim().equals('@'))*/) {
             if (dioptra.getTratamiento().toString().trim().equals(nuevoDioptra.getTratamiento().toString().trim())) {
                 dioptra.setTratamiento('B')
             } else {
                 dioptra.setTratamiento(nuevoDioptra.getTratamiento())
             }
         }
-        if (dioptra.getColor().toString().trim().equals('@') || dioptra?.color == null || (dioptra.getColor().toString().trim().equals('B') && !nuevoDioptra.getColor().toString().trim().equals('@')) || (!dioptra.getColor().toString().trim().equals('B') && !nuevoDioptra.getColor().toString().trim().equals('@'))) {
+        if (dioptra.getColor().toString().trim().equals('@') || dioptra?.color == null || (dioptra.getColor().toString().trim().equals('B') && !nuevoDioptra.getColor().toString().trim().equals('@')) /* || (!dioptra.getColor().toString().trim().equals('B') && !nuevoDioptra.getColor().toString().trim().equals('@'))*/) {
 
             if (dioptra.getColor().toString().trim().equals(nuevoDioptra.getColor().toString().trim())) {
                 dioptra.setColor('B')
@@ -1123,13 +1123,16 @@ class OrderController {
             } catch (ex) {
                 index = 1
             }
+
             String condicion = resultado.substring(0, index)
             if (condicion.trim().equals('Si')) {
+
                 String contenido = resultado + '|' + item?.id + '|' + item?.color + '|' + 'facturacion'
                 Date date = new Date()
                 SimpleDateFormat formateador = new SimpleDateFormat("hhmmss")
                 String nombre = formateador.format(date)
                 generaAcuse(contenido, nombre)
+
                 surteSwitch.surte = 'P'
             } else if (condicion.trim().equals('No')) {
                 Integer question = JOptionPane.showConfirmDialog(new JDialog(), '¿Desea Continuar con la venta?', 'Almacen Central sin Existencias',
@@ -1153,11 +1156,12 @@ class OrderController {
         return surteSwitch
     }
 
-    static void insertaAcuseAPAR(Order order, Branch branch, Item item) {
+    static void insertaAcuseAPAR(Order order, Branch branch) {
 
         List<DetalleNotaVenta> listarDetallesNotaVentaPorIdFactura = detalleNotaVentaService.listarDetallesNotaVentaPorIdFactura(order?.id)
         String parte = ''
         int rx = 0
+        Item item =  new Item()
         Boolean insertarAcuse = false
         Iterator iterator = listarDetallesNotaVentaPorIdFactura.iterator();
         while (iterator.hasNext()) {
@@ -1180,12 +1184,14 @@ class OrderController {
 
             if (detalleNotaVenta?.surte.trim().equals('P') && detalleNotaVenta?.articulo?.idGenerico.trim().equals('A')) {
                 insertarAcuse = true
+                item = Item.toItem(detalleNotaVenta?.articulo)
             }
 
-            println('insertaAcuse: ' + detalleNotaVenta?.surte.trim())
-            println('insertaAcuse: ' + detalleNotaVenta?.articulo?.idGenerico.trim())
+
+
+
         }
-        println('insertaAcuse: ' + insertarAcuse)
+
         if (insertarAcuse) {
 
             String contenidoAPAR = "parteVal=" + parte
@@ -1194,7 +1200,7 @@ class OrderController {
             contenidoAPAR = contenidoAPAR + "|id_colVal=" + item?.color
             contenidoAPAR = contenidoAPAR + "|id_sucVal=" + branch?.id
             contenidoAPAR = contenidoAPAR + "|id_artVal=" + item?.name
-            contenidoAPAR = contenidoAPAR + "|id_acuseVal=" + (acuseRepository?.nextIdAcuse() + 1).toString() + '|'
+            contenidoAPAR = contenidoAPAR + "|id_acuseVal=" + (acuseRepository?.nextIdAcuse() +1).toString() + '|'
 
             Acuse acuseAPAR = new Acuse()
             acuseAPAR?.contenido = contenidoAPAR
@@ -1354,6 +1360,8 @@ class OrderController {
 
         ticketService.imprimeSuyo(order?.id, jbNotas)
     }
+
+
 
     static Boolean revisaTmpservicios(String idNotaVenta) {
         Boolean existe = false

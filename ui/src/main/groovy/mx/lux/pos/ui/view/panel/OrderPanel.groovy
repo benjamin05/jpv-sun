@@ -551,7 +551,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         return rec
     }
 
-    private SurteSwitch surteSu(Item item, SurteSwitch surteSwitch) {
+    private SurteSwitch surteSu(Item item,SurteSwitch surteSwitch) {
         if (surteSwitch?.surteSucursal == false) {
             if (item?.type?.trim().equals('A') && item?.stock > 0) {
                 surteSwitch?.surteSucursal = true
@@ -576,7 +576,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         Branch branch = Session.get(SessionItem.BRANCH) as Branch
 
         SurteSwitch surteSwitch = OrderController.surteCallWS(branch, item, 'S', order)
-        surteSwitch = surteSu(item, surteSwitch)
+        surteSwitch = surteSu(item,surteSwitch)
 
         if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
             String surte = surteSwitch?.surte
@@ -724,12 +724,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void controlItem(Item item) {
-
-
-        Branch branch = Session.get(SessionItem.BRANCH) as Branch
-        OrderController.insertaAcuseAPAR(order, branch, item)
-
-
         String indexDioptra = item?.indexDiotra
         println('Index Dioptra del Articulo : ' + item?.indexDiotra)
         if (!indexDioptra.equals(null)) {
@@ -840,6 +834,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
         Order newOrder = OrderController.placeOrder(order)
         CustomerController.saveOrderCountries(order.country)
+
+
         this.promotionDriver.requestPromotionSave(newOrder?.id)
         Boolean cSaldo = false
         // if(newOrder?.due > 0){
@@ -849,6 +845,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         OrderController.validaEntrega(newOrder?.bill.trim(), newOrder?.branch?.id.toString(), true)
 
         if (StringUtils.isNotBlank(newOrder?.id)) {
+
+            Branch branch = Session.get(SessionItem.BRANCH) as Branch
+
+            OrderController.insertaAcuseAPAR(newOrder, branch)
 
             Boolean montaje = false
             List<OrderItem> items = newOrder?.items
@@ -885,6 +885,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             // Flujo despues de imprimir nota de venta
 
             CustomerController.requestOrderByCustomer(this, customer)
+
 
             // Flujo despues de imprimir nota de venta
 
@@ -1023,6 +1024,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         dioptra = new Dioptra()
         antDioptra = new Dioptra()
         order?.dioptra = null
+
         doBindings()
         operationType.setSelectedItem(OperationType.DEFAULT)
     }

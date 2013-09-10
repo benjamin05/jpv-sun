@@ -13,6 +13,7 @@ public class SurteSwitch {
     private Boolean surteSucursal;
     private String surte;
 
+
     public String getSurte() {
         return surte;
     }
