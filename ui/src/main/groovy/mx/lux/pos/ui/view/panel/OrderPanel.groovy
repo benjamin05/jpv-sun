@@ -569,12 +569,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                 this.setOrder(order)
                 this.enableUI()
             }
-        } catch (ex) {
+        } catch (Exception ex) {
+            println ex
             rec = null
         }
-
-
-
         return rec
     }
 
