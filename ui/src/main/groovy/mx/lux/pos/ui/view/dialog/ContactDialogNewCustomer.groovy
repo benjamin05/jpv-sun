@@ -174,8 +174,8 @@ class ContactDialogNewCustomer extends JDialog {
     private def typeChanged = { ItemEvent ev ->
         if (ev.stateChange == ItemEvent.SELECTED) {
             String typeName = ev.item
-
-            if (typeName.trim() != 'CORREO') {
+            println(typeName.trim())
+            if (typeName.trim() != 'Correo') {
                 infoTipo.setVisible(true)
                 correo.setVisible(false)
                 arroba.setVisible(false)
