@@ -32,7 +32,6 @@ ${COL_DET_1}#ETIQUETA("ADICIONAL:")#SET_STYLE(${FUENTE_B} 0 0 0 0) ${infoCliente
 #SEPARACION()${LF}
 #ETIQUETA_VALOR("FACTURA:" "#altnull(${infoDejo.factura})")
 #ETIQUETA_VALOR("DEJO:" "#altnull(${infoDejo.dejo})")
-#ETIQUETA_VALOR("FECHA ENTREGA::" "#altnull(${infoDejo.fechaEntrega})")
 #ETIQUETA_VALOR("SERVICIO:" "#altnull(${infoDejo.servicio})")
 #ETIQUETA_VALOR("INSTRUCCIONES:" "#altnull(${infoDejo.instruccion})")
 ------------------------------------------

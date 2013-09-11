@@ -188,7 +188,7 @@ class EditRxDialog extends JDialog {
                     txtOdEsfera.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                            limpiar(txtOdEsfera)
+
                         }
 
                         @Override
@@ -202,7 +202,8 @@ class EditRxDialog extends JDialog {
                     txtOdCil.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                            limpiar(txtOdCil)
+
+
                         }
 
                         @Override
@@ -215,7 +216,7 @@ class EditRxDialog extends JDialog {
                     txtOdEje.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                            limpiar(txtOdEje)
+
                         }
 
                         @Override
@@ -228,7 +229,7 @@ class EditRxDialog extends JDialog {
                     txtOdAd.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                            limpiar(txtOdAd)
+
                         }
 
                         @Override
@@ -251,7 +252,7 @@ class EditRxDialog extends JDialog {
                     txtOdDm.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                            limpiar(txtOdDm)
+
                         }
 
                         @Override
@@ -263,7 +264,7 @@ class EditRxDialog extends JDialog {
                     txtOdPrisma.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                            limpiar(txtOdPrisma)
+
                         }
 
                         @Override
@@ -278,7 +279,7 @@ class EditRxDialog extends JDialog {
                     txtDICerca.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                            limpiar(txtDICerca)
+
                         }
 
                         @Override
@@ -291,7 +292,7 @@ class EditRxDialog extends JDialog {
                     txtDILejos.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                            limpiar(txtDILejos)
+
                         }
 
                         @Override
@@ -305,7 +306,7 @@ class EditRxDialog extends JDialog {
                     txtOiEsfera.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                            limpiar(txtOiEsfera)
+
                         }
 
                         @Override
@@ -318,7 +319,7 @@ class EditRxDialog extends JDialog {
                     txtOiCil.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                            limpiar(txtOiCil)
+
                         }
 
                         @Override
@@ -331,7 +332,7 @@ class EditRxDialog extends JDialog {
                     txtOiEje.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                            limpiar(txtOiEje)
+
                         }
 
                         @Override
@@ -344,7 +345,7 @@ class EditRxDialog extends JDialog {
                     txtOiAd.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                            limpiar(txtOiAd)
+
                         }
 
                         @Override
@@ -367,7 +368,7 @@ class EditRxDialog extends JDialog {
                     txtOiDm.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                            limpiar(txtOiDm)
+
                         }
 
                         @Override
@@ -379,7 +380,7 @@ class EditRxDialog extends JDialog {
                     txtOiPrisma.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                            limpiar(txtOiPrisma)
+
                         }
 
                         @Override
@@ -393,7 +394,7 @@ class EditRxDialog extends JDialog {
                     txtAltOblea.addFocusListener(new FocusListener() {
                         @Override
                         void focusGained(FocusEvent e) {
-                            limpiar(txtAltOblea)
+
                         }
 
                         @Override
@@ -522,7 +523,13 @@ class EditRxDialog extends JDialog {
                 txtField.text = ''
             }
         } else {
-            txtField.text = limpiarAux
+
+            if(format.equals('0')){
+                txtField.text = '0'
+            }else{
+                txtField.text = '0'+ format
+            }
+
         }
     }
 
