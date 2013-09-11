@@ -784,34 +784,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             }
         }
         if (validOrder) {
-            /*if (operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.WALKIN.value) ||
-                    operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.DOMESTIC.value)) {
-                //order.country = 'MEXICO'
-                saveOrder()
-            } else if (operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.FOREIGN.value)) {
-                String paisCliente = CustomerController.countryCustomer(order)
-                if (paisCliente.length() > 0) {
-                    //order.country = paisCliente
-                    saveOrder()
-                } else {
-                    CountryCustomerDialog dialog = new CountryCustomerDialog(MainWindow.instance)
-                    dialog.show()
-                    if (dialog.button == true) {
-                        order.country = dialog.pais
-                        saveOrder()
-                    }
-                }
-            } else if (operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.DEFAULT.value)) {
-                CountryCustomerDialog dialog = new CountryCustomerDialog(MainWindow.instance)
-                dialog.show()
-                if (dialog.button == true) {
-                    order.country = dialog.pais
-                    saveOrder()
-                }
-            } else if (operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.PAYING.value)) {*/
             doBindings()
             saveOrder()
-            //}
         }
 
     }
