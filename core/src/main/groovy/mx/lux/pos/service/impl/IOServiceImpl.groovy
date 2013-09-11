@@ -24,7 +24,7 @@ class IOServiceImpl implements IOService {
   private static final String MSG_PART_CLASS_FILE_LOAD = 'Importar Clasificacion de Articulos'
   private static final String MSG_PART_CLASS_FILE_LOADED = 'Clasif de Articulos  Registros:%,d  Actualizados: %,d'
 
-  private static final String TAG_ACK_SALES = AckType.VENTA_DIA
+  private static final String TAG_ACK_SALES = 'venta'
   private static final String TAG_ACK_ADJUST = AckType.MODIF_VENTA
 
   private static IOServiceImpl instance
