@@ -729,6 +729,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void controlItem(Item item) {
+        String indexDioptra = item?.indexDiotra
         println('Index Dioptra del Articulo : ' + item?.indexDiotra)
         if (!indexDioptra.equals(null)) {
             Dioptra nuevoDioptra = OrderController.generaDioptra(item?.indexDiotra)

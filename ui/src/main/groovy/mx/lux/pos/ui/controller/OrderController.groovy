@@ -1151,22 +1151,22 @@ class OrderController {
         while (iterator.hasNext()) {
             DetalleNotaVenta detalleNotaVenta = new DetalleNotaVenta()
             detalleNotaVenta = iterator.next()
-            if (detalleNotaVenta?.articulo?.idGenerico.trim().equals('B')) {
+            if (detalleNotaVenta?.articulo?.idGenerico?.trim().equals('B')) {
                 rx = 1
             }
-            if (detalleNotaVenta?.idTipoDetalle.trim().equals('VD') ||
-                    detalleNotaVenta?.idTipoDetalle.trim().equals('VI.') ||
-                    detalleNotaVenta?.idTipoDetalle.trim().equals('FT') ||
-                    detalleNotaVenta?.idTipoDetalle.trim().equals('LD') ||
-                    detalleNotaVenta?.idTipoDetalle.trim().equals('LI') ||
-                    detalleNotaVenta?.idTipoDetalle.trim().equals('CI') ||
-                    detalleNotaVenta?.idTipoDetalle.trim().equals('CD') ||
-                    detalleNotaVenta?.idTipoDetalle.trim().equals('REM')
+            if (detalleNotaVenta?.idTipoDetalle?.trim().equals('VD') ||
+                    detalleNotaVenta?.idTipoDetalle?.trim().equals('VI.') ||
+                    detalleNotaVenta?.idTipoDetalle?.trim().equals('FT') ||
+                    detalleNotaVenta?.idTipoDetalle?.trim().equals('LD') ||
+                    detalleNotaVenta?.idTipoDetalle?.trim().equals('LI') ||
+                    detalleNotaVenta?.idTipoDetalle?.trim().equals('CI') ||
+                    detalleNotaVenta?.idTipoDetalle?.trim().equals('CD') ||
+                    detalleNotaVenta?.idTipoDetalle?.trim().equals('REM')
             ) {
-                parte = parte + detalleNotaVenta?.idTipoDetalle.trim() + ','
+                parte = parte + detalleNotaVenta?.idTipoDetalle?.trim() + ','
             }
 
-            if (detalleNotaVenta?.surte.trim().equals('P') && detalleNotaVenta?.articulo?.idGenerico.trim().equals('A')) {
+            if (detalleNotaVenta?.surte?.trim().equals('P') && detalleNotaVenta?.articulo?.idGenerico?.trim().equals('A')) {
                 insertarAcuse = true
                 item = Item.toItem(detalleNotaVenta?.articulo)
             }
