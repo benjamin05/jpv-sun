@@ -2,6 +2,7 @@ package mx.lux.pos.ui.view.panel
 
 import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
+import mx.lux.pos.model.Receta
 import mx.lux.pos.ui.model.Branch
 import mx.lux.pos.ui.model.Session
 import mx.lux.pos.ui.model.SessionItem
@@ -50,6 +51,7 @@ class RXPanel extends JPanel {
     private JRadioButton rbProgresivo
     private JRadioButton rbIntermedio
     private JRadioButton rbBifocalInter
+    Receta rec = new Receta()
 
     private JTextField txtOdEsfera
     private JTextField txtOdCil

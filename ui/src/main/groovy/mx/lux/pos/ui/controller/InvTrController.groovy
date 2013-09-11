@@ -3,9 +3,11 @@ package mx.lux.pos.ui.controller
 import mx.lux.pos.model.Articulo
 import mx.lux.pos.model.InvTrRequest
 import mx.lux.pos.model.Shipment
+import mx.lux.pos.model.ShipmentLine
 import mx.lux.pos.model.Sucursal
 import mx.lux.pos.model.TransInv
 import mx.lux.pos.service.ArticuloService
+import mx.lux.pos.service.InventarioService
 import mx.lux.pos.service.SucursalService
 import mx.lux.pos.ui.model.InvTrViewMode
 import mx.lux.pos.ui.model.Session
@@ -69,13 +71,19 @@ class InvTrController {
     pView.notifyDocument( pDocument )
   }
 
-  protected void dispatchDocumentEmpty( InvTrView pView ) {
+  protected void dispatchDocumentEmpty( InvTrView pView, Boolean fileAlreadyProccessed, String articleNotFound ) {
     log.debug( "[Controller] Dispatch document unavailable" )
     InvTrController controller = this
     SwingUtilities.invokeLater( new Runnable() {
       public void run( ) {
         controller.dispatchViewModeQuery( pView )
-        pView.data.txtStatus = pView.panel.MSG_NO_DOCUMENT_AVAILABLE
+        if( fileAlreadyProccessed ){
+          pView.data.txtStatus = pView.panel.MSG_DOCUMENT_ALREADY_PROCCESED
+        } else if( articleNotFound != '' ){
+          pView.data.txtStatus = String.format( pView.panel.MSG_ARTICLE_NOT_FOUND, articleNotFound )
+        } else {
+          pView.data.txtStatus = pView.panel.MSG_NO_DOCUMENT_AVAILABLE
+        }
         pView.fireRefreshUI()
       }
     } )
@@ -303,7 +311,7 @@ class InvTrController {
       pView.data.inFile = new File( filename )
       log.debug ( String.format('Adjust File: %s', document.headerToString()) )
     } else {
-      dispatchDocumentEmpty( pView )
+      dispatchDocumentEmpty( pView, false, '' )
       log.debug ( 'No document' )
     }
 
@@ -371,10 +379,17 @@ class InvTrController {
       document = ServiceManager.getInventoryService().leerArchivoRemesa( dlgFile.getSelectedFile().absolutePath )
     }
     if ( document != null ) {
-      dispatchPartMasterUpdate( document )
-      dispatchDocument( pView, document )
+      InventarioService service = ServiceManager.inventoryService
+      List<TransInv> trList = service.listarTransaccionesPorTipoAndReferencia( InvTrViewMode.RECEIPT.trType.idTipoTrans,
+              document?.fullRef?.trim() )
+      if( trList.size() <= 0 ){
+          dispatchPartMasterUpdate( document )
+          dispatchDocument( pView, document )
+      } else {
+          dispatchDocumentEmpty( pView, true, '' )
+      }
     } else {
-      dispatchDocumentEmpty( pView )
+      dispatchDocumentEmpty( pView, false, '' )
     }
 
   }
@@ -387,16 +402,26 @@ class InvTrController {
       inboundDialog.activate()
       log.debug(inboundDialog.getTxtClave())
       if (inboundDialog.button) {
-          Boolean claveCargada = ServiceManager.inventoryService.transaccionCargada( inboundDialog.getTxtClave() )
+          Boolean claveNoCargada = ServiceManager.inventoryService.transaccionCargada( inboundDialog.getTxtClave() )
               pView.data.claveCodificada = inboundDialog.getTxtClave()
               Sucursal sucursal = ServiceManager.inventoryService.sucursalActual()
               log.debug("" + sucursal.id)
               document = ServiceManager.getInventoryService().obtieneArticuloEntrada(inboundDialog.getTxtClave(),sucursal.id, pView.data.viewMode.trType.idTipoTrans)
-               if ( document != null && !claveCargada ) {
+              Boolean articleExist = true
+              String articles = ''
+                if( document != null ){
+                    for(ShipmentLine line : document.lines ){
+                        if(line.partCode == null || line.partCode == ''){
+                            articleExist = false
+                            articles = articles+"["+line.sku.toString()+"]"+" "
+                        }
+                    }
+                }
+               if ( document != null && !claveNoCargada && articleExist ) {
                   dispatchPartMasterUpdate( document )
                   dispatchDocument( pView, document )
               } else {
-                  dispatchDocumentEmpty( pView )
+                   dispatchDocumentEmpty( pView, false, articles )
               }
       }
     }
@@ -471,6 +496,11 @@ class InvTrController {
   void requestViewModeChange( InvTrView pView ) {
     log.debug( String.format( "[Controller] View Mode change: <%s>", pView.panel.comboViewMode.selection ) )
     fireChangeViewMode( pView, pView.panel.comboViewMode.selection )
+  }
+
+  void requestPrintTransactions( Date fechaTicket ){
+    log.debug( "requestPrintTransactions" )
+    ServiceManager.ticketService.imprimeTransaccionesInventario( fechaTicket )
   }
 
 }
