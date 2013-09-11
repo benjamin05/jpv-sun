@@ -175,7 +175,7 @@ class IOServiceImpl implements IOService {
           CustomDateUtils.format( order.fechaHoraFactura ), order.ventaTotal ) )
       String strItemList = ''
       for ( DetalleNotaVenta det : order.detalles ) {
-        strItemList += String.format( "%d,%s~", det.idArticulo, det.articulo.codigoColor )
+        strItemList += String.format( "%s,%s~", det?.articulo?.articulo?.trim(), det?.articulo?.codigoColor?.trim() )
       }
       String strPaymentList = ''
       for ( Pago p : order.pagos ) {

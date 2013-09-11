@@ -15,7 +15,7 @@ class ShippingNoticeFile {
     PartCode, ColorCode, fld_1, QtyTrans, fld_2, Sku, BarCode, ColorDesc, SubType, Type, fld_3
   }
   private static enum DetFldAccesory     {
-      PartCode, ColorCode, fld_1, QtyTrans, fld_2, Sku,
+    PartCode, ColorCode, fld_1, QtyTrans, fld_2, Sku,
   }
   private static enum HdrFld {
     Ref, LnCount, Fam, FullRef, Code, fld_1
