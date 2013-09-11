@@ -46,7 +46,7 @@ import java.util.concurrent.TimeoutException
 @Component
 class OrderController {
 
-    private ExecutorService executor = Executors.newFixedThreadPool(1)
+
 
     private static final Double ZERO_TOLERANCE = 0.0005
 
@@ -1115,7 +1115,7 @@ class OrderController {
             AcusesTipo acusesTipo = acusesTipoRepository.findOne('AUT')
             String url = acusesTipo?.pagina + '?id_suc=' + branch?.id.toString().trim() + '&id_col=' + item?.color?.trim() + '&id_art=' + item?.name.toString().trim()
             println(url)
-            String resultado = callUrlMethod(url)
+            String resultado = callWS(url)
             println(resultado)
             int index
             try {
@@ -1262,7 +1262,8 @@ class OrderController {
 
 
 
-    String callWS(String url) {
+  static  String callWS(String url) {
+      ExecutorService executor = Executors.newFixedThreadPool(1)
         String respuesta = new String()
         int timeoutSecs = 1
         final Future<?> future = executor.submit(new Runnable() {
