@@ -78,7 +78,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private OperationType currentOperationType
     private Boolean uiEnabled
     private Receta rec
-    private Dioptra dioptra
+    private Dioptra dioptra = new Dioptra()
     private Dioptra antDioptra = new Dioptra()
     private static boolean ticketRx
     private String armazonString = null
@@ -286,9 +286,12 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
 
         if (order?.id != null) {
+           /*
+>>>>>>> origin/MasVision
             if (order?.dioptra != null) {
                 dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
             }
+            */
             //  println('antDioptra: ' +  OrderController.codigoDioptra(antDioptra))
             //  println('Dioptra: ' +  OrderController.codigoDioptra(dioptra))
             change.text = OrderController.requestEmployee(order?.id)
@@ -729,11 +732,18 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void controlItem(Item item) {
+
         String indexDioptra = item?.indexDiotra
         println('Index Dioptra del Articulo : ' + item?.indexDiotra)
-        if (!indexDioptra.equals(null)) {
+        if (!indexDioptra.equals(null) && item?.indexDiotra != null) {
             Dioptra nuevoDioptra = OrderController.generaDioptra(item?.indexDiotra)
             println('Nuevo Objeto Dioptra :' + nuevoDioptra)
+            println('Dioptra :' + dioptra?.material)
+            println('Dioptra :' + dioptra?.lente)
+            println('Dioptra :' + dioptra?.tratamiento)
+            println('Dioptra :' + dioptra?.color)
+            println('Dioptra :' + dioptra?.especial)
+            println('Dioptra :' + dioptra?.tipo)
             dioptra = OrderController.validaDioptra(dioptra, nuevoDioptra)
             println('Dioptra Generado :' + dioptra)
             antDioptra = OrderController.addDioptra(order, OrderController.codigoDioptra(dioptra))

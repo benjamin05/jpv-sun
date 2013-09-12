@@ -433,7 +433,7 @@ class EditRxDialog extends JDialog {
     }
 
     private void validacion(JTextField txtField, double max, double min, double interval, String format, String mask) {
-        if (txtField.text.trim().length() > 0 || txtField.text.trim() == '0') {
+        if (txtField.text.trim().length() > 0 && !txtField.text.trim().equals('0')) {
             double number
             String txt = txtField.text.trim()
             String signo = ''
@@ -522,14 +522,15 @@ class EditRxDialog extends JDialog {
             } else {
                 txtField.text = ''
             }
-        } else {
-
+        } else if (txtField.text.trim().length() > 0 && txtField.text.trim().equals('0')) {
             if(format.equals('0')){
                 txtField.text = '0'
             }else{
                 txtField.text = '0'+ format
             }
 
+        } else {
+            txtField.text = ''
         }
     }
 
