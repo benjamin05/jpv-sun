@@ -198,7 +198,11 @@ class ShowOrderPanel extends JPanel {
       sumaPagos = BigDecimal.ZERO
       for ( Payment payment : order.payments ) {
         println(payment?.amount)
+      try{
         sumaPagos = sumaPagos.add( payment.refundable )
+      }catch(e){
+          sumaPagos=sumaPagos
+      }
       }
       bean( returnButton, visible: bind {( 'T'.equalsIgnoreCase( order.status ) ) && ( sumaPagos.compareTo( montoCentavos ) > 0 ) } )
       bean( printReturnButton, visible: bind {( 'T'.equalsIgnoreCase( order.status ) ) && ( sumaPagos.compareTo( montoCentavos ) <= 0 )} )
@@ -297,12 +301,13 @@ class ShowOrderPanel extends JPanel {
 
             if(pagoN != null){
                 updatePagos()
-               /*
+
                 this.order.payments.add(Payment.toPaymment(pagoN))
                 paymentsModel.fireTableDataChanged()
-
+                this.order?.paid =  this.order?.paid + pagoN?.monto
+                this.order?.due = this.order?.due - pagoN?.monto
                 doBindings()
-                 */
+
                 if(pagoN.confirmado == true){
                     println('Order ID: ' + order?.id)
                     OrderController.printPaid(order?.id, pagoN?.id)
