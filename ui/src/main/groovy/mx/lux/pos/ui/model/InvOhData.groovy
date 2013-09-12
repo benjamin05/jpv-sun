@@ -1,9 +1,11 @@
 package mx.lux.pos.ui.model
 
 import mx.lux.pos.model.Articulo
+import mx.lux.pos.model.Precio
 import mx.lux.pos.model.Generico
 import mx.lux.pos.model.InvOhDet
 import mx.lux.pos.model.InvOhSummary
+import mx.lux.pos.ui.controller.ItemController
 import mx.lux.pos.ui.resources.ServiceManager
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
@@ -147,11 +149,12 @@ class InvOhData {
       if ( brand.length() > 0 ) {
         for ( Articulo part : dataset ) {
           if ( genre.equals( asId( part.idGenerico ) ) && brand.equals( asId( part.marca ) ) ) {
+            Precio price = ItemController.findPrice( part )
             InvOhDet det = new InvOhDet( )
             det.sku = part.id
             det.id = part.articulo
             det.qty = part.cantExistencia
-            det.price = part.precio
+            det.price = price != null ? price.precio : BigDecimal.ZERO
             summary.lines.add( det )
           }
         }

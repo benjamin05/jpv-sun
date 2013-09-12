@@ -467,12 +467,12 @@ class ReportController {
     }
     kardexReportDialog.setTitle( "Kardex Por Articulo" )
     kardexReportDialog.activate()
-    String strSku =kardexReportDialog.getSku()
+    String articulo =kardexReportDialog.getSku()
     Date reportForDateStart = kardexReportDialog.getSelectedDateStart()
     Date reportForDateEnd = kardexReportDialog.getSelectedDateEnd()
-    if( StringUtils.trimToEmpty(strSku) != '' && reportForDateStart != null && reportForDateEnd != null ){
-      Integer sku = NumberFormat.getInstance().parse( strSku )
-      reportService.obtenerReporteDeKardex( sku, reportForDateStart, reportForDateEnd )
+    if( StringUtils.trimToEmpty(articulo) != '' && reportForDateStart != null && reportForDateEnd != null ){
+      //Integer sku = NumberFormat.getInstance().parse( strSku )
+      reportService.obtenerReporteDeKardex( articulo, reportForDateStart, reportForDateEnd )
     }
   }
 

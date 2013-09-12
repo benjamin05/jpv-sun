@@ -1,6 +1,7 @@
 package mx.lux.pos.service
 
 import mx.lux.pos.model.Articulo
+import mx.lux.pos.model.Precio
 import mx.lux.pos.model.ArticuloSombra
 import mx.lux.pos.model.Generico
 
@@ -43,4 +44,6 @@ interface ArticuloService {
   Boolean generarArchivoInventario( )
 
   Articulo findbyName(String dioptra)
+
+  Precio findPriceByArticle( Articulo articulo )
 }

@@ -142,12 +142,12 @@ public class IngresoPorFactura {
         lstDetalles = modificacion.getNotaVenta().getDetalles();
     }
 
-    public void AcumulaMarca( Articulo articulo ) {
+    public void AcumulaMarca( Articulo articulo, Precio precio ) {
         idArticulo = articulo.getId();
         marca = articulo.getArticulo();
         this.color = articulo.getCodigoColor();
         descripcion = articulo.getDescripcion();
-        acumulaPago = articulo.getPrecio();
+        acumulaPago = precio.getPrecio();
         idGenerico = articulo.getIdGenerico();
         this.existencia = articulo.getCantExistencia();
     }

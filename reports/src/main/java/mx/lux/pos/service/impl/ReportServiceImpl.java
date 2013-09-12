@@ -1221,7 +1221,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    public String obtenerReporteDeKardex( Integer sku, Date fechaInicio, Date fechaFin ) {
+    public String obtenerReporteDeKardex( String article, Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteDeKardex" );
 
         File report = new File( System.getProperty( "java.io.tmpdir" ), "Kardex-Por-SKU.html" );
@@ -1231,10 +1231,15 @@ public class ReportServiceImpl implements ReportService {
         fechaFin = new Date( DateUtils.ceiling( fechaFin, Calendar.DAY_OF_MONTH ).getTime() - 1 );
 
         Sucursal sucursal = sucursalService.obtenSucursalActual();
-        List<KardexPorArticulo> lstKardexTmp = reportBusiness.obtenerKardex( sku, fechaInicio, fechaFin );
+        List<KardexPorArticulo> lstKardexTmp = reportBusiness.obtenerKardex( article, fechaInicio, fechaFin );
         Collections.reverse( lstKardexTmp );
         List<KardexPorArticulo> lstKardex = new ArrayList<KardexPorArticulo>();
-        Articulo articulo = articuloRepository.findOne( sku );
+        Articulo articulo = new Articulo();
+        QArticulo art = QArticulo.articulo1;
+        List<Articulo> articulos = (List<Articulo>) articuloRepository.findAll( art.articulo.trim().equalsIgnoreCase(article.trim()) );
+        if( articulos.size() == 1){
+            articulo = articulos.get(0);
+        }
         Integer exisInicial = 0;
         Integer exisActual = 0;
         for ( KardexPorArticulo kardex : lstKardexTmp ) {
@@ -1253,10 +1258,10 @@ public class ReportServiceImpl implements ReportService {
         parametros.put( "fechaInicio", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaInicio ) );
         parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaFin ) );
         parametros.put( "sucursal", sucursal.getNombre() );
-        parametros.put( "articuloSku", articulo.getId() );
-        parametros.put( "articuloArticulo", articulo.getArticulo() );
-        parametros.put( "articuloDescripcion", articulo.getDescripcion() );
-        parametros.put( "articuloPrecio", articulo.getPrecio() );
+        parametros.put( "articuloSku", articulo.getId() != null ? articulo.getId() : 0 );
+        parametros.put( "articuloArticulo", articulo.getArticulo() != null ? articulo.getArticulo() : "" );
+        parametros.put( "articuloDescripcion", articulo.getDescripcion() != null ? articulo.getDescripcion() : "" );
+        parametros.put( "articuloPrecio", articulo.getPrecio() != null ? articulo.getPrecio() : BigDecimal.ZERO);
         parametros.put( "lstKardex", lstKardex );
         parametros.put( "existenciaInicial", exisInicial );
         parametros.put( "existenciaActual", exisActual );

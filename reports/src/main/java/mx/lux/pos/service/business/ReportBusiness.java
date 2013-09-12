@@ -89,6 +89,9 @@ public class ReportBusiness {
     @Resource
     private OrdenPromDetRepository ordenPromDetRepository;
 
+    @Resource
+    private PrecioRepository precioRepository;
+
     private static final String TAG_CANCELADO = "T";
 
     public List<IngresoPorDia> obtenerIngresoporDia( Date fechaInicio, Date fechaFin ) {
@@ -834,8 +837,15 @@ public class ReportBusiness {
 
         for ( Articulo articulos : lstArticulo ) {
             String linea = articulos.getMarca();
+            Precio precio = new Precio();
+            precio.setPrecio( BigDecimal.ZERO );
+            QPrecio price = QPrecio.precio1;
+            List<Precio> precios = (List<Precio>) precioRepository.findAll(price.articulo.trim().eq(articulos.getArticulo()));
+            if(precios.size() == 1){
+              precio = precios.get(0);
+            }
             FacturasPorEmpleado facturas = FindOorCreate( lstArticulos, linea );
-            facturas.AcumulaMarcas( articulos.getMarca(), articulos );
+            facturas.AcumulaMarcas( articulos.getMarca(), articulos, precio );
             Collections.sort( facturas.getFacturasVendedor(), new Comparator<IngresoPorFactura>() {
                 @Override
                 public int compare(IngresoPorFactura o1, IngresoPorFactura o2) {
@@ -951,6 +961,11 @@ public class ReportBusiness {
 
         for ( Articulo articulos : lstArticulo ) {
             if ( articulos.getCantExistencia() > 0 || articulos.getCantExistencia() < 0 ) {
+                QPrecio price = QPrecio.precio1;
+                List <Precio> precio = (List<Precio>) precioRepository.findAll(price.articulo.trim().eq(articulos.getArticulo()));
+                if(precio.size() == 1){
+                  articulos.setPrecio( precio.get(0).getPrecio() );
+                }
                 if( articulos.getDescripcion().length() >= 55 ){
                     articulos.setDescripcion( articulos.getDescripcion().substring(0,50) );
                 }
@@ -1408,21 +1423,27 @@ public class ReportBusiness {
     }
 
 
-    public List<KardexPorArticulo> obtenerKardex( Integer sku, Date fechaInicio, Date fechaFin ){
+    public List<KardexPorArticulo> obtenerKardex( String article, Date fechaInicio, Date fechaFin ){
         QTransInv transInv = QTransInv.transInv;
         QTransInvDetalle transInvDet = QTransInvDetalle.transInvDetalle;
         List<TransInvDetalle> lstMovimientos = new ArrayList<TransInvDetalle>();
         List<TransInv> lstTransInvDate = ( List<TransInv> ) transInvRepository.findAll( transInv.fecha.between( fechaInicio, new Date() ), transInv.fechaMod.desc() );
         List<KardexPorArticulo> lstKardezSku = new ArrayList<KardexPorArticulo>();
+        Articulo articulo = new Articulo();
+        QArticulo art = QArticulo.articulo1;
+        List<Articulo> articulos = (List<Articulo>) articuloRepository.findAll( art.articulo.trim().equalsIgnoreCase(article.trim()) );
+        if( articulos.size() == 1){
+            articulo = articulos.get(0);
+        }
         for( TransInv movimiento : lstTransInvDate ){
             TransInvDetalle transInvSku = ( TransInvDetalle ) transInvDetalleRepository.findOne( transInvDet.idTipoTrans.eq(movimiento.getIdTipoTrans()).
-                    and( transInvDet.folio.eq( movimiento.getFolio() )).and( transInvDet.sku.eq( sku ) ) );
+                    and( transInvDet.folio.eq( movimiento.getFolio() )).and( transInvDet.sku.eq(articulo.getId() != null ? articulo.getId() : 0) ) );
             if( transInvSku != null ){
                 lstMovimientos.add( transInvSku );
             }
         }
-        Articulo articulo = articuloRepository.findOne( sku );
-        Integer exisActual = articulo.getCantExistencia();
+
+        Integer exisActual = articulo.getCantExistencia() != null ? articulo.getCantExistencia() : 0;
         Integer saldoInicio = 0;
         Integer saldoFin = 0;
         for( TransInvDetalle movimiento : lstMovimientos ){

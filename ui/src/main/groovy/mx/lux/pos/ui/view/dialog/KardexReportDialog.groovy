@@ -1,6 +1,7 @@
 package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
+import mx.lux.pos.ui.model.UpperCaseDocument
 import mx.lux.pos.ui.resources.UI_Standards
 import mx.lux.pos.ui.view.verifier.DateVerifier
 import net.miginfocom.swing.MigLayout
@@ -38,7 +39,7 @@ class KardexReportDialog extends JDialog {
         resizable: true,
         pack: true,
         modal: true,
-        preferredSize: [ 360, 230 ],
+        preferredSize: [ 360, 265 ],
         location: [ 200, 250 ],
     ) {
       panel() {
@@ -46,8 +47,8 @@ class KardexReportDialog extends JDialog {
         panel( constraints: BorderLayout.CENTER, layout: new MigLayout( "wrap 2", "20[][grow,fill]40", "20[]10[]" ) ) {
           label( text: "Seleccione el SKU y las fechas a consultar", constraints: "span 2" )
           label( text: " ", constraints: "span 2" )
-          label( text: 'SKU' )
-          txtSku = textField( )
+          label( text: 'Articulo:' )
+          txtSku = textField( document: new UpperCaseDocument() )
           label( text: "Fecha Inicio:" )
           txtDateStart = textField()
           label( text: "Fecha Fin:" )

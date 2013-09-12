@@ -2,6 +2,7 @@ package mx.lux.pos.ui.controller
 
 import groovy.util.logging.Slf4j
 import mx.lux.pos.model.Articulo
+import mx.lux.pos.model.Precio
 import mx.lux.pos.service.ArticuloService
 import mx.lux.pos.ui.model.Item
 import org.apache.commons.lang3.StringUtils
@@ -139,6 +140,12 @@ class ItemController {
       JOptionPane.showMessageDialog( new JDialog(), MSJ_ARCHIVO_NO_GENERADO, TXT_ARCHIVO_GENERADO, JOptionPane.INFORMATION_MESSAGE )
     }
 
+  }
+
+
+  static Precio findPrice( Articulo articulo ){
+     Precio precio = articuloService.findPriceByArticle( articulo )
+     return precio
   }
 
 
