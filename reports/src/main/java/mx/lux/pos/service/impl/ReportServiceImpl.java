@@ -106,6 +106,9 @@ public class ReportServiceImpl implements ReportService {
     @Resource
     private ArticuloRepository articuloRepository;
 
+    @Resource
+    private PrecioRepository precioRepository;
+
 
     @Override
     public String obtenerReporteCierreDiario( Date fecha ) {
@@ -1235,6 +1238,7 @@ public class ReportServiceImpl implements ReportService {
         Collections.reverse( lstKardexTmp );
         List<KardexPorArticulo> lstKardex = new ArrayList<KardexPorArticulo>();
         Articulo articulo = new Articulo();
+        BigDecimal precio = BigDecimal.ZERO;
         QArticulo art = QArticulo.articulo1;
         List<Articulo> articulos = (List<Articulo>) articuloRepository.findAll( art.articulo.trim().equalsIgnoreCase(article.trim()) );
         if( articulos.size() == 1){
@@ -1253,6 +1257,13 @@ public class ReportServiceImpl implements ReportService {
             exisActual = lstKardex.get( lstKardex.size() - 1 ).getSaldoFinal();
         }
 
+        if( articulo.getArticulo() != null ){
+          List<Precio> price = precioRepository.findByArticulo( articulo.getArticulo() );
+          if(price.size() == 1){
+            precio = price.get(0).getPrecio();
+          }
+        }
+
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
         parametros.put( "fechaInicio", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaInicio ) );
@@ -1261,7 +1272,7 @@ public class ReportServiceImpl implements ReportService {
         parametros.put( "articuloSku", articulo.getId() != null ? articulo.getId() : 0 );
         parametros.put( "articuloArticulo", articulo.getArticulo() != null ? articulo.getArticulo() : "" );
         parametros.put( "articuloDescripcion", articulo.getDescripcion() != null ? articulo.getDescripcion() : "" );
-        parametros.put( "articuloPrecio", articulo.getPrecio() != null ? articulo.getPrecio() : BigDecimal.ZERO);
+        parametros.put( "articuloPrecio", precio );
         parametros.put( "lstKardex", lstKardex );
         parametros.put( "existenciaInicial", exisInicial );
         parametros.put( "existenciaActual", exisActual );
