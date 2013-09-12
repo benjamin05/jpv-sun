@@ -56,8 +56,13 @@ class PaymentDialog extends JDialog {
   private Pago pagoN
   private ShowOrderPanel orderP
 
+    Pago getPagoN() {
+        return pagoN
+    }
 
-  private static final String DOLARES = 'USD Recibidos'
+
+
+    private static final String DOLARES = 'USD Recibidos'
 
   PaymentDialog(Component parent, Order order, final Payment payment, Component orderP){
       this.orderP = orderP
@@ -335,9 +340,6 @@ class PaymentDialog extends JDialog {
     source.enabled = false
     if ( isValid( order ) ) {
         pagoN = OrderController.addPaymentToOrder( order.id, tmpPayment )
-        try{
-        orderP.pagoN = pagoN
-        }catch(e){}
       dispose()
     } else {
       source.enabled = true

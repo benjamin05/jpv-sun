@@ -197,7 +197,12 @@ class ShowOrderPanel extends JPanel {
       bean( cancelButton, visible: bind {!'T'.equalsIgnoreCase( order.status )} )
       sumaPagos = BigDecimal.ZERO
       for ( Payment payment : order.payments ) {
+        println(payment?.amount)
+      try{
         sumaPagos = sumaPagos.add( payment.refundable )
+      }catch(e){
+          sumaPagos=sumaPagos
+      }
       }
       bean( returnButton, visible: bind {( 'T'.equalsIgnoreCase( order.status ) ) && ( sumaPagos.compareTo( montoCentavos ) > 0 ) } )
       bean( printReturnButton, visible: bind {( 'T'.equalsIgnoreCase( order.status ) ) && ( sumaPagos.compareTo( montoCentavos ) <= 0 )} )
@@ -290,17 +295,25 @@ class ShowOrderPanel extends JPanel {
         if((order?.total - order?.paid) > 0){
 
             updatePagos()
-             new PaymentDialog( pago, order, null,this ).show()
+            PaymentDialog paymentDialog = new PaymentDialog( pago, order, null,this )
+            paymentDialog.setVisible(true)
+            pagoN = paymentDialog.pagoN
 
-            updatePagos()
-            println('Order ID: ' + order?.id)
             if(pagoN != null){
+                updatePagos()
+
+                this.order.payments.add(Payment.toPaymment(pagoN))
+                paymentsModel.fireTableDataChanged()
+                this.order?.paid =  this.order?.paid + pagoN?.monto
+                this.order?.due = this.order?.due - pagoN?.monto
+                doBindings()
+
                 if(pagoN.confirmado == true){
                     println('Order ID: ' + order?.id)
                     OrderController.printPaid(order?.id, pagoN?.id)
                 }
             }
-            updateOrder( order?.id )
+
 
 
         }
@@ -332,6 +345,11 @@ class ShowOrderPanel extends JPanel {
             }
             ppButton?.setText('Imprimir')
         }
+
+       // updateOrder( order?.id )
+
+
+
     }
 
     private void updatePagos(){
@@ -354,13 +372,17 @@ class ShowOrderPanel extends JPanel {
 
     private void updateOrder( String pOrderId ) {
         //Order tmp = OrderController.getOrder( pOrderId )
-        //if ( tmp?.id ) {
-          //  order = tmp
-            navigatorPanel = new JPanel()
-            navigatorPanel.add( new OrderNavigatorPanel( order, {doBindings()} ) )
+       // if ( tmp?.id ) {
+        //    order = tmp
+           navigatorPanel = new JPanel()
+           navigatorPanel.add( new OrderNavigatorPanel( order, {doBindings()} ) )
 
-        //}
+
+
+       // }
     }
+
+
 
 }
 

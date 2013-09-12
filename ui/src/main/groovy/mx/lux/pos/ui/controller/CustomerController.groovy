@@ -300,13 +300,8 @@ class CustomerController {
     }
 
     static void requestOrderByCustomer (CustomerListener pListener, Customer customer){
-
-
         Order order = Order.toOrder( notaService.obtenerSiguienteNotaVenta(customer?.id) )
-
         if (order==null){
-
-
             Integer nueva = JOptionPane.showConfirmDialog(null,"Nueva Venta", "¿Desea abrir una nueva venta?", JOptionPane.YES_NO_OPTION);
             if(nueva == 0){
                 pListener.reset()
@@ -316,10 +311,8 @@ class CustomerController {
                 pListener.enableUI()
             }
             else{
-
                 pListener.reset( )
             }
-
         }else
         {
             pListener.reset()

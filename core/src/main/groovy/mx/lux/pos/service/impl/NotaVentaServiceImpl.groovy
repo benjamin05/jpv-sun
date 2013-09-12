@@ -504,9 +504,12 @@ class NotaVentaServiceImpl implements NotaVentaService {
     @Override
     @Transactional
   NotaVenta obtenerSiguienteNotaVenta( Integer pIdCustomer ) {
-
-
-    List<NotaVenta> orders = notaVentaRepository.findByIdCliente( pIdCustomer )
+    Date fechaStart = DateUtils.truncate( new Date(), Calendar.DAY_OF_MONTH )
+    Date fechaEnd = new Date( DateUtils.ceiling( new Date(), Calendar.DAY_OF_MONTH ).getTime() - 1 )
+    QNotaVenta nota = QNotaVenta.notaVenta
+    //List<NotaVenta> orders = notaVentaRepository.findByIdCliente( pIdCustomer )
+    List<NotaVenta> orders = notaVentaRepository.findAll(nota.idCliente.eq(pIdCustomer).
+            and(nota.fechaHoraFactura.between(fechaStart,fechaEnd)))
     NotaVenta order = null
     for (NotaVenta o : orders) {
       if ( o.detalles.size() > 0 && StringUtils.isBlank( o.factura )) {
@@ -517,7 +520,6 @@ class NotaVentaServiceImpl implements NotaVentaService {
     if (order == null) {
       ServiceFactory.customers.eliminarClienteProceso( pIdCustomer )
     }
-
     return order
   }
 
