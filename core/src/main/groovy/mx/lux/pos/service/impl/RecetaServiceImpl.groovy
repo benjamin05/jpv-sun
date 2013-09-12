@@ -112,7 +112,7 @@ class RecetaServiceImpl implements RecetaService {
         contenido = contenido+'|prisma_d_hVal='+ rx?.odPrismaH
         contenido = contenido+'|sucursalVal='+ notaVenta?.sucursal.id
         contenido = contenido+'|distancia_cVal='+rx?.diCercaR
-        contenido = contenido+'|archivoVal='+notaVenta?.sucursal?.id.toString()+ notaVenta?.factura + primerTicket.toString()
+        contenido = contenido+'|archivoVal='+notaVenta?.sucursal?.id.toString()+ notaVenta?.factura + 'RX'
         contenido = contenido+'|recetaVal='+notaVenta?.factura
         contenido = contenido+'|cilindro_dVal='+rx?.odCilR
         contenido = contenido+'|alturaVal='+ rx?.altOblR
@@ -122,7 +122,7 @@ class RecetaServiceImpl implements RecetaService {
         contenido = contenido+'|distancia_lVal='+ rx?.diLejosR
         contenido = contenido+'|tratamientosVal='+ trat
         contenido = contenido+'|observacionesVal='+ rx?.observacionesR+ ','+ notaVenta?.observacionesNv+',' + rx?.sUsoAnteojos
-        contenido = contenido+'|uso='+ rx?.sUsoAnteojos
+        contenido = contenido+',uso='+ rx?.sUsoAnteojos
         contenido = contenido+'|prisma_d_vVal='+ rx?.odPrismaV
         contenido = contenido+'|distancia_m_iVal='+  rx?.diOi
         contenido = contenido+'|distancia_m_dVal='+  rx?.diOd
@@ -173,7 +173,7 @@ class RecetaServiceImpl implements RecetaService {
         contenido2 = contenido2+'|'+  rx?.diOi
         contenido2 = contenido2+'|'+ rx?.altOblR
         contenido2 = contenido2+'|'+ trat
-        contenido2 = contenido2+'|'+ rx?.observacionesR+ ','+ notaVenta?.observacionesNv+',' + rx?.sUsoAnteojos
+        contenido2 = contenido2+'|'+ rx?.observacionesR+ ','+ notaVenta?.observacionesNv+',' + 'uso=' +rx?.sUsoAnteojos
         contenido2 = contenido2+'|P'
         contenido2 = contenido2+'|'+notaVenta?.udf3
         contenido2 = contenido2+'|'+artArmazon?.articulo?.articulo
