@@ -881,7 +881,10 @@ class OrderController {
                     FormaContacto formaContacto = contactoCliente.formaContactoSeleted
                     formaContacto?.rx = notaVenta?.factura
                     formaContacto?.fecha_mod = new Date()
-
+                    formaContacto?.id_cliente = notaVenta?.idCliente
+                    formaContacto?.id_sucursal = notaVenta?.idSucursal
+                    formaContacto?.observaciones =  contactoCliente.formaContactoSeleted?.observaciones
+                    formaContacto?.id_tipo_contacto = contactoCliente.formaContactoSeleted?.tipoContacto?.id_tipo_contacto
                     ContactController.saveFormaContacto(formaContacto)
 
 

@@ -201,6 +201,8 @@ class PromotionModel {
   Boolean setupOrderCouponDiscount(DescuentoClave descuentoClave, Double pDiscountPercent){
         Boolean Apl = false
 
+      println(descuentoClave)
+      println(pDiscountPercent)
        String id = 'P'
       this.orderDiscount =  PromotionDiscount.getCouponDiscountInstance(descuentoClave)  //aqui
 

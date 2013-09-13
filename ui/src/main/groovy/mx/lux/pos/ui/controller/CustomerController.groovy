@@ -242,9 +242,9 @@ class CustomerController {
 
          if( tipo == 0){
              cliente?.email = valor
-         } else if( tipo == 2) {
-             cliente?.telefonoTrabajo = valor
          } else if( tipo == 1) {
+             cliente?.telefonoTrabajo = valor
+         } else if( tipo == 2) {
               cliente?.telefonoCasa  = valor
          } else if( tipo == 3) {
               cliente?.telefonoAdicional = valor
