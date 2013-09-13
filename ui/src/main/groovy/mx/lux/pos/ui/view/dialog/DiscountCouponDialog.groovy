@@ -173,7 +173,6 @@ class DiscountCouponDialog extends JDialog {
 
         if (  descuentoClave != null ) {
             if(descuentoClave?.vigente == true){
-
                 if(descuentoClave?.tipo.trim().equals('P')){
             txtDiscountPercent.setValue(descuentoClave?.porcenaje_descuento)
             txtDiscountAmount.setValue( txtDiscountPercent.getValue( ) * orderTotal / 100.0 )

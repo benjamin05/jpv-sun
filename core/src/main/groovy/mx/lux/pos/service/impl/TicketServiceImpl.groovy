@@ -506,6 +506,7 @@ class TicketServiceImpl implements TicketService {
         ] as Map<String, Object>
 
         imprimeTicket( 'template/ticket-suyo.vm', items )
+        imprimeTicket( 'template/ticket-suyo.vm', items )
         } else {
             log.warn( 'no se imprime ticket venta, parametros invalidos' )
         }

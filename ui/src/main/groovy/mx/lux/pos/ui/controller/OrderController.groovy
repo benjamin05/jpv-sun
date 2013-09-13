@@ -897,7 +897,10 @@ class OrderController {
                     FormaContacto formaContacto = contactoCliente.formaContactoSeleted
                     formaContacto?.rx = notaVenta?.factura
                     formaContacto?.fecha_mod = new Date()
-
+                    formaContacto?.id_cliente = notaVenta?.idCliente
+                    formaContacto?.id_sucursal = notaVenta?.idSucursal
+                    formaContacto?.observaciones =  contactoCliente.formaContactoSeleted?.observaciones
+                    formaContacto?.id_tipo_contacto = contactoCliente.formaContactoSeleted?.tipoContacto?.id_tipo_contacto
                     ContactController.saveFormaContacto(formaContacto)
 
 
@@ -1265,7 +1268,7 @@ class OrderController {
   static  String callWS(String url) {
       ExecutorService executor = Executors.newFixedThreadPool(1)
         String respuesta = new String()
-        int timeoutSecs = 1
+        int timeoutSecs = 15
         final Future<?> future = executor.submit(new Runnable() {
 
             public void run() {
