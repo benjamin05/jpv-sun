@@ -1833,4 +1833,19 @@ public class ReportBusiness {
         return found;
     }
 
+
+
+    public List<VentasPorDia> obtenerVentasPorPeriodoMasVision( Date fechaInicio, Date fechaFin ){
+        List<VentasPorDia> lstVentas = new ArrayList<VentasPorDia>();
+        QNotaVenta nv = QNotaVenta.notaVenta;
+        List<NotaVenta> lstNotas = (List<NotaVenta>) notaVentaRepository.findAll(
+                nv.fechaHoraFactura.between(fechaInicio,fechaFin).and(nv.factura.isNotEmpty()).
+                        and(nv.sFactura.ne(TAG_CANCELADO)), nv.factura.asc() );
+
+        for( NotaVenta notas : lstNotas ){
+            VentasPorDia ventas = findorCreateFactura( lstVentas, notas.getFactura() );
+            ventas.acumulaVentasPorDiaMasVision( notas );
+        }
+        return lstVentas;
+    }
 }

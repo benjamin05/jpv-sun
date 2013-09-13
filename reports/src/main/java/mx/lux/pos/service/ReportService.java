@@ -74,4 +74,6 @@ public interface ReportService {
 
     public String obtenerReporteDeIngresosPorPeriodo( Date dateStart, Date dateEnd );
 
+    String obtenerReporteVentasMasVision( Date fechaInicio, Date fechaFin );
+
 }

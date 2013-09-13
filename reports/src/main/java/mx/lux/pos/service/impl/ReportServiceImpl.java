@@ -31,6 +31,7 @@ public class ReportServiceImpl implements ReportService {
     private static String INGRESOS_POR_VENDEDOR_RESUMIDO = "reports/Ingresos_Vendedor_Resumido.jrxml";
     private static String INGRESOS_POR_VENDEDOR_COMPLETO = "reports/Ingresos_Vendedor_Completo.jrxml";
     private static String VENTAS = "reports/Ventas.jrxml";
+    private static String VENTAS_MASVISION = "reports/Ventas_MasVision.jrxml";
     private static String VENTAS_COMPLETO = "reports/Ventas_Completo.jrxml";
     private static String VENTAS_POR_VENDEDOR_COMPLETO = "reports/Venta_Por_Vendedor_Completo.jrxml";
     private static String VENTAS_POR_VENDEDOR_RESUMIDO = "reports/Venta_Por_Vendedor_Resumido.jrxml";
@@ -1380,4 +1381,46 @@ public class ReportServiceImpl implements ReportService {
         return null;
     }
 
+
+
+    public String obtenerReporteVentasMasVision( Date fechaInicio, Date fechaFin ) {
+        log.info( "obtenerReporteVentasMasVision()" );
+
+        File report = new File( System.getProperty( "java.io.tmpdir" ), "Ventas-Completo.html" );
+        org.springframework.core.io.Resource template = new ClassPathResource( VENTAS_MASVISION );
+        log.info( "Ruta:{}", report.getAbsolutePath() );
+
+        fechaInicio = DateUtils.truncate( fechaInicio, Calendar.DAY_OF_MONTH );
+        fechaFin = new Date( DateUtils.ceiling( fechaFin, Calendar.DAY_OF_MONTH ).getTime() - 1 );
+        Sucursal sucursal = sucursalService.obtenSucursalActual();
+
+        Parametro ivaVigenteParam = parametroRepository.findOne( TipoParametro.IVA_VIGENTE.getValue() );
+        Impuesto iva = impuestoRepository.findOne( ivaVigenteParam.getValor() );
+        BigDecimal ivaTasa = new BigDecimal( iva.getTasa() ).divide( new BigDecimal( 100 ) );
+
+        List<VentasPorDia> lstVentas = reportBusiness.obtenerVentasPorPeriodoMasVision( fechaInicio, fechaFin );
+
+        BigDecimal totalVentas = BigDecimal.ZERO;
+        BigDecimal totalCupones = BigDecimal.ZERO;
+        BigDecimal totalVentaNeta = BigDecimal.ZERO;
+        for(VentasPorDia ventas : lstVentas){
+          totalVentas = totalVentas.add(ventas.getMontoTotal());
+          totalCupones = totalCupones.add(ventas.getMontoDescuento());
+          totalVentaNeta = totalVentaNeta.add(ventas.getMontoConDescuento());
+        }
+
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
+        parametros.put( "fechaInicio", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaInicio ) );
+        parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaFin ) );
+        parametros.put( "sucursal", sucursal.getNombre() );
+        parametros.put( "totalVentas", totalVentas );
+        parametros.put( "totalCupones", totalCupones );
+        parametros.put( "totalVentaNeta", totalVentaNeta );
+        parametros.put( "lstVentas", lstVentas );
+        String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
+        log.info( "reporte:{}", reporte );
+
+        return null;
+    }
 }

@@ -149,12 +149,12 @@ class NoSaleDialog extends JDialog {
                 txtOdEsfera.addFocusListener(new FocusListener() {
                     @Override
                     void focusGained(FocusEvent e) {
-                        limpiar(txtOdEsfera)
+                        //limpiar(txtOdEsfera)
                     }
 
                     @Override
                     void focusLost(FocusEvent e) {
-                        validacion(txtOdEsfera,35,-35,0.25,'.00','+')
+                        validacion(txtOdEsfera, 35, -35, 0.25, '.00', '+')
 
                     }
                 })
@@ -163,7 +163,7 @@ class NoSaleDialog extends JDialog {
                 txtOdCil.addFocusListener(new FocusListener() {
                     @Override
                     void focusGained(FocusEvent e) {
-                        limpiar(txtOdCil)
+                        //limpiar(txtOdCil)
                     }
 
                     @Override
@@ -176,7 +176,7 @@ class NoSaleDialog extends JDialog {
                 txtOdEje.addFocusListener(new FocusListener() {
                     @Override
                     void focusGained(FocusEvent e) {
-                        limpiar(txtOdEje)
+                        //limpiar(txtOdEje)
                     }
                     @Override
                     void focusLost(FocusEvent e) {
@@ -526,8 +526,8 @@ class NoSaleDialog extends JDialog {
   }
 
   private void limpiar(JTextField txtField){
-      limpiarAux = txtField.text
-      txtField.text = ''
+      /*limpiarAux = txtField.text
+      txtField.text = ''*/
   }
 
     private String signoMas(String numero){
@@ -543,47 +543,94 @@ class NoSaleDialog extends JDialog {
   }
 
     private void validacion(JTextField txtField, double max, double min, double interval, String format, String mask){
-        if (txtField.text.trim().length() > 0 || txtField.text.trim() == '0') {
+        if (txtField.text.trim().length() > 0 && !txtField.text.trim().equals('0')) {
             double number
             String txt = txtField.text.trim()
+            String signo = ''
+            if (txt.substring(0, 1) == '-') {
+                txt = txt.substring(1, txt.size())
+                signo = '-'
+            } else if (txt.substring(0, 1) == '+') {
+                txt = txt.substring(1, txt.size())
+                signo = '+'
+            }
+            if (txt.substring(0, 1) == '0') {
+                txt = txt.substring(1, txt.size())
+            }
+            try {
+                if (txt.substring(txt.size() - 2, txt.size() - 1).equals('.')) {
+                    txt = txt + '0'
+                }
+            } catch (e) { }
+            try {
+                if (txt.substring(txt.size() - 3, txt.size()).equals('.00')) {
+                    txt = txt.substring(0, txt.indexOf('.'))
+                } else if (txt.substring(txt.size() - 2, txt.size()).equals('.0')) {
+                    txt = txt.substring(0, txt.indexOf('.'))
+                }
+            } catch (e) { }
             txtField.text = ''
             Double multiplo = 0.0
             if (txt.length() > 0) {
                 number = Double.parseDouble(txt);
                 multiplo = number / interval;
                 multiplo = multiplo % 1
-                if (multiplo ==0 || multiplo.toString().equals('-0.0')) {
-                    if (number >= min && number <= max){
-                        if (format.equals('.00') &&  number.toString().substring(number.toString().indexOf('.'),number.toString().length()).equals('.0'))
-                        {
-                            txt=txt + '.00'
+                if (multiplo == 0 || multiplo.toString().equals('-0.0')) {
+                    if (number >= min && number <= max) {
+                        println('nimber: ' + number)
+                        println(number.toString().substring(number.toString().indexOf('.'), number.toString().size()))
+                        if (format.equals('.00') && number.toString().substring(number.toString().indexOf('.'), number.toString().size()).equals('.0')) {
+                            txt = txt + '.00'
+                        } else if (format.equals('.0') && number.toString().substring(number.toString().indexOf('.'), number.toString().size()).equals('.0')) {
+                            txt = txt + '.0'
                         }
-                        else if(format.equals('.0')&& number.toString().substring(number.toString().indexOf('.'),number.toString().length()).equals('.0'))
-                        {
-                            txt=txt + '.0'
-                        }
-                        println('val: '+txt)
-                        if(number>-1 && number<1 && number != 0){
+                        println('val: ' + txt)
+                        if (number > -1 && number < 1 && number != 0) {
                             txt = '0' + txt
                         }
-                        if(mask.equals('+')){
-                            txtField.text = signoMas(txt)
-                        }else if(mask.equals('-')){
-                            txtField.text = signoMenos(txt)
-                        }else{
-                            txtField.text = txt
+                        if (mask.equals('+')) {
+                            if (signo.equals('')) {
+                                txtField.text = '+' + txt
+                            } else if (signo.equals('-')) {
+                                txtField.text = signo + txt
+                            } else if (signo.equals('+')) {
+                                txtField.text = signo + txt
+                            }
+                        } else if (mask.equals('-')) {
+                            if (signo.equals('')) {
+                                txtField.text = '-' + txt
+                            } else if (signo.equals('-')) {
+                                txtField.text = signo + txt
+                            } else if (signo.equals('+')) {
+                                txtField.text = signo + txt
+                            }
+                        } else {
+                            if (signo.equals('')) {
+                                txtField.text = txt
+                            } else if (signo.equals('-')) {
+                                txtField.text = signo + txt
+                            } else if (signo.equals('+')) {
+                                txtField.text = signo + txt
+                            }
                         }
-                    }else{
+                    } else {
                         txtField.text = ''
                     }
                 } else {
                     txtField.text = ''
                 }
-            }else{
+            } else {
                 txtField.text = ''
             }
+        } else if (txtField.text.trim().length() > 0 && txtField.text.trim().equals('0')) {
+            if(format.equals('0')){
+                txtField.text = '0'
+            }else{
+                txtField.text = '0'+ format
+            }
+
         } else {
-            txtField.text = limpiarAux
+            txtField.text = ''
         }
     }
 

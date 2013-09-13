@@ -112,7 +112,8 @@ class ReportController {
     Date reportForDateEnd = twoDateDialog.getSelectedDateEnd()
     if ( reportForDateStart != null && reportForDateEnd != null && twoDateDialog.button ) {
       log.debug( "Imprime el reporte de Ventas Completo" )
-      reportService.obtenerReporteVentasCompleto( reportForDateStart, reportForDateEnd )
+      //reportService.obtenerReporteVentasCompleto( reportForDateStart, reportForDateEnd )
+        reportService.obtenerReporteVentasMasVision( reportForDateStart, reportForDateEnd )
     } else {
       log.debug( "Cancelar_continuar" )
     }
