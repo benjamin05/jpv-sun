@@ -180,8 +180,11 @@ class PromotionDriver implements TableModelListener, ICorporateKeyVerifier {
           Double discount = couponDiscount.getDiscountAmt() / view.order.total
 
           Boolean apl = false
+          println(couponDiscount.getDiscountAmt())
+          println(couponDiscount?.descuentoClave?.clave_descuento)
+          println(discount)
           apl = model.setupOrderCouponDiscount(couponDiscount?.descuentoClave,discount )
-           println('Aplicar Promocion: '+apl)
+
           PromotionCommit.writeOrder( model )
           if ( apl  ) {
 
