@@ -96,10 +96,6 @@ class ContactController {
         }
 
 
-
-        println(contactos.get(0).contacto)
-        println(contactos.get(0).tipoContacto.descripcion)
-
         return contactos
 
     }
