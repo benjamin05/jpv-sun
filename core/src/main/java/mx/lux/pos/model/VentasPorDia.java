@@ -198,6 +198,26 @@ public class VentasPorDia {
     }
 
 
+    public void acumulaCancelacionesPorDiaMasVision( Modificacion modificacion ){
+        for(DetalleNotaVenta det : modificacion.getNotaVenta().getDetalles()){
+            articulos = articulos + "," + det.getArticulo().getArticulo();
+        }
+        fecha = modificacion.getNotaVenta().getFechaHoraFactura();
+        montoTotal = (modificacion.getNotaVenta().getVentaTotal()).negate();
+        for(Pago pago : modificacion.getNotaVenta().getPagos()){
+            if(pago.geteTipoPago().getDescripcion().contains(TAG_CUPON)){
+                montoDescuento = montoDescuento.add(pago.getMonto()).negate();
+            }
+            tipoPago = tipoPago + "," + pago.getIdFPago();
+        }
+        montoConDescuento = montoTotal.subtract(montoDescuento);
+        fechaEntrega = modificacion.getNotaVenta().getFechaEntrega();
+
+        articulos = articulos.replaceFirst(",", "");
+        tipoPago = tipoPago.replaceFirst(",", "");
+    }
+
+
     public void acumulaNotasCreditoVentasPorDia( NotaVenta notaVenta, double iva ){
         BigDecimal importeTotal = BigDecimal.ZERO;
         Double importeTotalSinIva = 0.00;

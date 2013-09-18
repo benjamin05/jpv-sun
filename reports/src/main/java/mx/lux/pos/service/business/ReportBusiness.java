@@ -93,6 +93,7 @@ public class ReportBusiness {
     private PrecioRepository precioRepository;
 
     private static final String TAG_CANCELADO = "T";
+    private static final String TAG_TIPO_CANCELADO = "can";
 
     public List<IngresoPorDia> obtenerIngresoporDia( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerIngresoporDia()" );
@@ -1842,9 +1843,18 @@ public class ReportBusiness {
                 nv.fechaHoraFactura.between(fechaInicio,fechaFin).and(nv.factura.isNotEmpty()).
                         and(nv.sFactura.ne(TAG_CANCELADO)), nv.factura.asc() );
 
+        QModificacion modificacion = QModificacion.modificacion;
+        List<Modificacion> lstCanceladas = (List<Modificacion>) modificacionRepository.findAll(modificacion.tipo.eq(TAG_TIPO_CANCELADO).
+                and(modificacion.fecha.between(fechaInicio,fechaFin)).and(modificacion.notaVenta.fechaHoraFactura.notBetween(fechaInicio,fechaFin)));
+
         for( NotaVenta notas : lstNotas ){
             VentasPorDia ventas = findorCreateFactura( lstVentas, notas.getFactura() );
             ventas.acumulaVentasPorDiaMasVision( notas );
+        }
+
+        for( Modificacion mod : lstCanceladas){
+            VentasPorDia cancelaciones = findorCreateFactura( lstVentas, mod.getNotaVenta().getFactura() );
+            cancelaciones.acumulaCancelacionesPorDiaMasVision( mod );
         }
         return lstVentas;
     }

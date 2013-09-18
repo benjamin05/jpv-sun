@@ -251,7 +251,7 @@ class MainWindow extends JFrame implements KeyListener {
                                 }
                         )
                     }
-                    reportsMenu = menu( text: "Reportes", mnemonic: "R",
+                    reportsMenu = menu( text: "Reportes", mnemonic: "R", visible: false,
                             menuSelected: {
                                 boolean userLoggedIn = Session.contains( SessionItem.USER )
                                 cancellationReportMenuItem.visible = userLoggedIn

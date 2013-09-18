@@ -98,7 +98,9 @@
 				<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="5bae52e7-c0aa-4bf2-bf68-eae1c1eb7301" x="344" y="0" width="72" height="12"/>
+				<reportElement uuid="5bae52e7-c0aa-4bf2-bf68-eae1c1eb7301" x="344" y="0" width="72" height="12">
+					<printWhenExpression><![CDATA[$F{montoTotal}.signum() == 1]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
@@ -106,7 +108,7 @@
 			</textField>
 			<textField pattern="$#,##0.00" isBlankWhenNull="true">
 				<reportElement uuid="0a443597-c3bd-4629-96c9-c003ac6e9cd9" x="416" y="0" width="49" height="12">
-					<printWhenExpression><![CDATA[$F{montoDescuento}.compareTo( BigDecimal.ZERO ) > 0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[($F{montoDescuento}.compareTo( BigDecimal.ZERO ) > 0 || $F{montoDescuento}.compareTo( BigDecimal.ZERO ) < 0) && $F{montoDescuento}.signum() == 1]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="9"/>
@@ -114,7 +116,9 @@
 				<textFieldExpression><![CDATA[$F{montoDescuento}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00">
-				<reportElement uuid="5a5e8500-4e1c-4025-acbb-580a61ef9d9e" x="465" y="0" width="69" height="12"/>
+				<reportElement uuid="5a5e8500-4e1c-4025-acbb-580a61ef9d9e" x="465" y="0" width="69" height="12">
+					<printWhenExpression><![CDATA[$F{montoConDescuento}.signum() == 1]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
@@ -134,13 +138,40 @@
 			</textField>
 			<staticText>
 				<reportElement uuid="769b5f6c-8d53-4b87-b6e6-cc3a4b0ade09" x="416" y="0" width="49" height="12">
-					<printWhenExpression><![CDATA[$F{montoDescuento}.compareTo( BigDecimal.ZERO ) <= 0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$F{montoDescuento}.compareTo( BigDecimal.ZERO ) == 0]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center">
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<text><![CDATA[-]]></text>
 			</staticText>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="5bae52e7-c0aa-4bf2-bf68-eae1c1eb7301" x="344" y="0" width="72" height="12" forecolor="#FE011D">
+					<printWhenExpression><![CDATA[$F{montoTotal}.signum() == -1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{montoTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="0a443597-c3bd-4629-96c9-c003ac6e9cd9" x="416" y="0" width="49" height="12" forecolor="#FF0000">
+					<printWhenExpression><![CDATA[($F{montoDescuento}.compareTo( BigDecimal.ZERO ) > 0 || $F{montoDescuento}.compareTo( BigDecimal.ZERO ) < 0) && $F{montoDescuento}.signum() == -1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{montoDescuento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$#,##0.00">
+				<reportElement uuid="5a5e8500-4e1c-4025-acbb-580a61ef9d9e" x="465" y="0" width="69" height="12" forecolor="#FF0000">
+					<printWhenExpression><![CDATA[$F{montoConDescuento}.signum() == -1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{montoConDescuento}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

@@ -929,9 +929,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private void fireRequestQuote() {
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
         String dio = OrderController.codigoDioptra(dioptra)
-        if (dioptra.getLente() != null) {
+        //if (dioptra.getLente() != null) {
             Item i = OrderController.findArt(dio.trim())
-            if (i?.id != null) {
+            //if (i?.id != null) {
                 if (itemsModel.size() > 0) {
                     if (paymentsModel.size() == 0) {
                         OrderController.requestSaveAsQuote(order, customer)
@@ -946,14 +946,14 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         OrderController.notifyAlert(TXT_REQUEST_QUOTE, TXT_NO_ORDER_PRESENT)
                     }
                 }
-            } else {
+            /*} else {
                 sb.optionPane(message: "Codigo Dioptra Incorrecto", optionType: JOptionPane.DEFAULT_OPTION)
                         .createDialog(new JTextField(), "Error")
                         .show()
-            }
-        } else {
+            }*/
+        /*} else {
             flujoContinuar()
-        }
+        }*/
     }
 
     private void setCustomerInOrder() {

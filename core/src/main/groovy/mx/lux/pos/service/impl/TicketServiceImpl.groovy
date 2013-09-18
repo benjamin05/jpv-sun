@@ -58,6 +58,9 @@ class TicketServiceImpl implements TicketService {
   private MonedaExtranjeraService monedaExtranjeraService
 
   @Resource
+  private PrecioRepository precioRepository
+
+  @Resource
   private ParametroRepository parametroRepository
 
   @Resource
@@ -1798,9 +1801,14 @@ class TicketServiceImpl implements TicketService {
       def tkParts = [ ]
       for ( CotizaDet det : RepositoryFactory.quoteDetail.findByIdCotiza( quote.idCotiza ) ) {
         Articulo part = articuloRepository.findOne( det.sku )
+        List<Precio> precios = precioRepository.findByArticulo(part.articulo.trim())
+        Precio precio = new Precio()
+        if(precios.size() > 0){
+          precio = precios.first()
+        }
         String cantidad = ( det.cantidad != 1 ? String.format( '(%d@%,.2f)', det.cantidad, part.precio ) : '' )
-        String price = String.format( '$%,.2f', det.cantidad * part.precio )
-        totalAmt += ( det.cantidad * part.precio )
+        String price = String.format( '$%,.2f', det.cantidad * precio?.precio )
+        totalAmt += ( det.cantidad * precio.precio )
         def tkPart = [
             desc: String.format( '[%d] %s %s  %s', part.id, part.generico?.descripcion, part.marca, cantidad ),
             price: price
