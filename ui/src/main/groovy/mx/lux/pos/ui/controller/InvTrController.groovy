@@ -455,7 +455,7 @@ class InvTrController {
             || InvTrViewMode.RECEIPT.equals( viewMode ) || InvTrViewMode.OUTBOUND.equals( viewMode )
             || InvTrViewMode.INBOUND.equals( viewMode )) {
           dispatchPrintTransaction( viewMode.trType.idTipoTrans, trNbr )
-          if (InvTrViewMode.RECEIPT.equals( viewMode )) {
+          if (InvTrViewMode.RECEIPT.equals( viewMode ) && request.reference.endsWith('A')) {
                String resultado = confirmaEntrada(viewMode, pView)
           }
           if( ServiceManager.getInventoryService().isReceiptDuplicate() ){

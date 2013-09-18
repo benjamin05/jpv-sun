@@ -128,7 +128,7 @@ class OrderSearchDialog extends JDialog {
     source.enabled = false
     dateFrom.value = null
     dateTo.value = null
-    ticket.text = null
+    ticket.text = branch?.costCenter+'-'
     folio.text = null
     employee.text = null
     employeeName.text = null
