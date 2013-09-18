@@ -41,7 +41,8 @@ class InvTrController {
   private InvTrSelectorDialog dlgSelector
   private JFileChooser dlgFile
 
- // private static SucursalService sucursalService
+  private static final String TAG_REMESA = 'ENTRADA'
+  private static final String TAG_REMESA_LENTE = 'A'
 
   private InvTrController( ) { }
 
@@ -174,7 +175,9 @@ class InvTrController {
 
   protected String confirmaEntrada(InvTrViewMode viewMode, InvTrView pView){
       String url = Registry.getURLConfirmacion( viewMode.trType.idTipoTrans );
-      if ( StringUtils.trimToNull( url ) != null ) {
+      if(TAG_REMESA.equalsIgnoreCase(viewMode.trType.idTipoTrans.trim()) && pView?.data?.postReference.endsWith(TAG_REMESA_LENTE) ){
+          ServiceManager.getIoServices().logRemittanceNotification( viewMode.trType.idTipoTrans.trim(), viewMode.trType.ultimoFolio+1 )
+      } else if ( StringUtils.trimToNull( url ) != null ) {
         String variable = pView.data.claveCodificada + ">" + pView.data.postTrType.ultimoFolio
         url += String.format( '?arg=%s', URLEncoder.encode( String.format( '%s', variable ), 'UTF-8' ) )
         String response = url.toURL().text
@@ -452,7 +455,7 @@ class InvTrController {
             || InvTrViewMode.RECEIPT.equals( viewMode ) || InvTrViewMode.OUTBOUND.equals( viewMode )
             || InvTrViewMode.INBOUND.equals( viewMode )) {
           dispatchPrintTransaction( viewMode.trType.idTipoTrans, trNbr )
-          if (InvTrViewMode.INBOUND.equals( viewMode )) {
+          if (InvTrViewMode.RECEIPT.equals( viewMode )) {
                String resultado = confirmaEntrada(viewMode, pView)
           }
           if( ServiceManager.getInventoryService().isReceiptDuplicate() ){

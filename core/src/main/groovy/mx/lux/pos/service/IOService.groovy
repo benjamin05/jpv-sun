@@ -1,6 +1,7 @@
 package mx.lux.pos.service
 
 import mx.lux.pos.model.Acuse
+import mx.lux.pos.model.TransInv
 
 public interface IOService {
 
@@ -43,5 +44,7 @@ public interface IOService {
   void saveAcknowledgement(Acuse pAcknowledgement)
 
   void saveActualDate( String date )
+
+    void logRemittanceNotification( String idTipoTrans, Integer folio )
 
 }

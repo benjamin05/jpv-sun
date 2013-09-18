@@ -27,6 +27,7 @@ class IOServiceImpl implements IOService {
   private static final String MSG_PART_CLASS_FILE_LOADED = 'Clasif de Articulos  Registros:%,d  Actualizados: %,d'
 
   private static final String TAG_ACK_SALES = 'venta'
+  private static final String TAG_ACK_REMITTANCES = 'REM'
   private static final String TAG_ACK_ADJUST = AckType.MODIF_VENTA
 
   private static IOServiceImpl instance
@@ -262,5 +263,37 @@ class IOServiceImpl implements IOService {
       Parametro paramFecha = RepositoryFactory.registry.findOne(TipoParametro.FECHA_PRIMER_ARRANQUE.value)
       paramFecha.valor = date
       RepositoryFactory.registry.save( paramFecha )
+  }
+
+
+  @Transactional
+  void logRemittanceNotification( String idTipoTrans, Integer folio ) {
+      TransInvRepository transactionRep = RepositoryFactory.inventoryMaster
+      QTransInv trans = QTransInv.transInv
+      TransInv transInv = transactionRep.findOne(trans.idTipoTrans.eq(idTipoTrans).and(trans.folio.eq(folio)))
+      if ( transInv != null ) {
+          AcuseRepository acuses = RepositoryFactory.acknowledgements
+          Acuse acuse = new Acuse()
+          acuse.idTipo = TAG_ACK_REMITTANCES
+          try {
+              acuse = acuses.saveAndFlush( acuse )
+              logger.debug( String.format( 'Acuse: (%d) %s -> %s', acuse.id, acuse.idTipo, acuse.contenido ) )
+          } catch ( Exception e ) {
+              logger.error( e.getMessage() )
+          }
+          //acuse.contenido = String.format( 'ImporteVal=%s|', URLEncoder.encode( String.format( '%.2f', order.ventaNeta ), 'UTF-8' ) )
+          acuse.contenido = String.format( 'sistemaVal=%s|', 'A' )
+          acuse.contenido += String.format( 'id_sucVal=%s|', transInv.sucursal.toString().trim() )
+          acuse.contenido += String.format( 'horaVal=%s|', CustomDateUtils.format(transInv.fechaMod, 'HH:mm') )
+          acuse.contenido += String.format( 'doctoVal=%s|', String.format( '%s%s', 'I', transInv.referencia.endsWith('A') ? transInv.referencia.replace('A', '') : transInv.referencia ) )
+          acuse.contenido += String.format( 'id_acuseVal=%s|', String.format( '%d', acuse.id ) )
+          acuse.contenido += String.format( 'doctoVal=%s|', String.format( '%s', transInv.referencia.endsWith('A') ? transInv.referencia.replace('A', '') : transInv.referencia ) )
+          try {
+              acuse = acuses.saveAndFlush( acuse )
+              logger.debug( String.format( 'Acuse: (%d) %s -> %s', acuse.id, acuse.idTipo, acuse.contenido ) )
+          } catch ( Exception e ) {
+              logger.error( e.getMessage() )
+          }
+      }
   }
 }

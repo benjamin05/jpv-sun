@@ -251,37 +251,37 @@ class MainWindow extends JFrame implements KeyListener {
                                 }
                         )
                     }
-                    reportsMenu = menu( text: "Reportes", mnemonic: "R", visible: false,
+                    reportsMenu = menu( text: "Reportes", mnemonic: "R",
                             menuSelected: {
                                 boolean userLoggedIn = Session.contains( SessionItem.USER )
-                                cancellationReportMenuItem.visible = userLoggedIn
+                                /*cancellationReportMenuItem.visible = userLoggedIn
                                 dailyCloseReportMenuItem.visible = userLoggedIn
                                 incomePerBranchReportMenuItem.visible = userLoggedIn
-                                sellerRevenueReportMenuItem.visible = userLoggedIn
+                                sellerRevenueReportMenuItem.visible = userLoggedIn*/
                                 //undeliveredJobsReportMenuItem.visible = userLoggedIn
                                 salesReportMenuItem.visible = userLoggedIn
                                 //salesByLineReportMenuItem.visible = userLoggedIn
-                                salesBySellerReportMenuItem.visible = userLoggedIn
+                                /*salesBySellerReportMenuItem.visible = userLoggedIn
                                 salesByBrandReportMenuItem.visible = userLoggedIn
                                 salesBySellerByBrandMenuItem.visible = userLoggedIn
                                 stockbyBrandMenuItem.visible = userLoggedIn
-                                stockbyBrandColorMenuItem.visible = userLoggedIn
+                                stockbyBrandColorMenuItem.visible = userLoggedIn*/
                                 //jobControlMenuItem.visible = userLoggedIn
                                 //workSubmittedMenuItem.visible = userLoggedIn
-                                taxBillsMenuItem.visible = userLoggedIn
+                                /*taxBillsMenuItem.visible = userLoggedIn
                                 discountsMenuItem.visible = userLoggedIn
                                 promotionsMenuItem.visible = userLoggedIn
                                 promotionsListMenuItem.visible = userLoggedIn
-                                paymentsMenuItem.visible = userLoggedIn
+                                paymentsMenuItem.visible = userLoggedIn*/
                                 //quoteMenuItem.visible = userLoggedIn
-                                kardexMenuItem.visible = userLoggedIn
+                                /*kardexMenuItem.visible = userLoggedIn
                                 salesTodayMenuItem.visible = userLoggedIn
-                                salesByPeriodMenuItem.visible = userLoggedIn
+                                salesByPeriodMenuItem.visible = userLoggedIn*/
                                 //examsMenuItem.visible = userLoggedIn
                                 //optometristSalesMenuItem.visible = userLoggedIn
                             }
                     ) {
-                        cancellationReportMenuItem = menuItem( text: "Cancelaciones",
+                        /*cancellationReportMenuItem = menuItem( text: "Cancelaciones",
                                 visible: false,
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.Cancellations )
@@ -292,14 +292,14 @@ class MainWindow extends JFrame implements KeyListener {
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.DailyClose )
                                 }
-                        )
+                        )*/
                         /*jobControlMenuItem = menuItem( text: "Control de Trabajos",
                             visible: false,
                             actionPerformed: {
                               ReportController.fireReport( ReportController.Report.JobControl )
                             }
                         )*/
-                        quoteMenuItem = menuItem( text: "Cotizaciones",
+                        /*quoteMenuItem = menuItem( text: "Cotizaciones",
                                 visible: false,
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.Quote )
@@ -370,14 +370,14 @@ class MainWindow extends JFrame implements KeyListener {
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.Promotions )
                                 }
-                        )
+                        )*/
                         salesReportMenuItem = menuItem( text: "Ventas",
                                 visible: false,
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.Sales )
                                 }
                         )
-                        salesTodayMenuItem = menuItem( text: "Ventas del D\u00eda",
+                        /*salesTodayMenuItem = menuItem( text: "Ventas del D\u00eda",
                                 visible: false,
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.SalesToday )
@@ -406,7 +406,7 @@ class MainWindow extends JFrame implements KeyListener {
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.SalesbySellerbyBrand )
                                 }
-                        )
+                        )*/
                     }
                     toolsMenu = menu( text: 'Herramientas', mnemonic: 'H',
                             menuSelected: {

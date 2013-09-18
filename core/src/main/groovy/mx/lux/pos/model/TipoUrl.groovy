@@ -1,7 +1,8 @@
 package mx.lux.pos.model
 
 enum TipoUrl {
-  URL_ACUSE_VENTA_DIA( 'venta', '' )
+  URL_ACUSE_VENTA_DIA( 'venta', '' ),
+  URL_ACUSE_REMESA( 'REM', '' )
 
   final String value
   final String defaultValue

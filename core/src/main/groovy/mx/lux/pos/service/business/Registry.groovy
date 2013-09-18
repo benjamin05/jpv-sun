@@ -10,6 +10,7 @@ class Registry {
 
 
   private static final String TAG_TRANSACCION_VENTA = 'VENTA'
+  private static final String TAG_TRANSACCION_REMESA = 'REM'
   static Parametro find( TipoParametro pParametro ) {
     Parametro p = RepositoryFactory.getRegistry().findOne( pParametro.getValue() )
     if ( p == null ) {
@@ -357,7 +358,7 @@ class Registry {
   }
 
   static String getURLEntradaAlmacen( ) {
-    return asString( TipoParametro.URL_ENTRADA_ALMACEN )
+    return asUrlString( TipoUrl.URL_ACUSE_REMESA )
   }
 
   static String getURLConfirmaEntradaAlmacen() {
@@ -377,7 +378,7 @@ class Registry {
       url = getURLAdjustSalesNotification()
     }  else if ( AckType.SALIDA_ALMACEN.equals(type) ) {
         url = getURLSalidaAlmacen()
-    }  else if ( AckType.ENTRADA_ALMACEN.equals(type) ) {
+    }  else if ( TAG_TRANSACCION_REMESA.equals(type) ) {
         url = getURLEntradaAlmacen()
     }
     return url
