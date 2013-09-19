@@ -281,13 +281,15 @@ class IOServiceImpl implements IOService {
           } catch ( Exception e ) {
               logger.error( e.getMessage() )
           }
+          String referencia = transInv.referencia.substring(0,6)
+          println referencia
           //acuse.contenido = String.format( 'ImporteVal=%s|', URLEncoder.encode( String.format( '%.2f', order.ventaNeta ), 'UTF-8' ) )
           acuse.contenido = String.format( 'sistemaVal=%s|', 'A' )
           acuse.contenido += String.format( 'id_sucVal=%s|', transInv.sucursal.toString().trim() )
           acuse.contenido += String.format( 'horaVal=%s|', CustomDateUtils.format(transInv.fechaMod, 'HH:mm') )
-          acuse.contenido += String.format( 'doctoVal=%s|', String.format( '%s%s', 'I', transInv.referencia.endsWith('A') ? transInv.referencia.replace('A', '') : transInv.referencia ) )
+          acuse.contenido += String.format( 'doctoVal=%s|', String.format( '%s%s', 'I', referencia ) )
           acuse.contenido += String.format( 'id_acuseVal=%s|', String.format( '%d', acuse.id ) )
-          acuse.contenido += String.format( 'doctoVal=%s|', String.format( '%s', transInv.referencia.endsWith('A') ? transInv.referencia.replace('A', '') : transInv.referencia ) )
+          acuse.contenido += String.format( 'transaVal=%s|', String.format( '%s', referencia ) )
           try {
               acuse = acuses.saveAndFlush( acuse )
               logger.debug( String.format( 'Acuse: (%d) %s -> %s', acuse.id, acuse.idTipo, acuse.contenido ) )

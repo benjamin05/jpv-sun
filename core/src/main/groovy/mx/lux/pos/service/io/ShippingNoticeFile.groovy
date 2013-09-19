@@ -81,7 +81,7 @@ class ShippingNoticeFile {
     if ( tokens.size >= DetFld.values().size() ) {
       parsed = new ShipmentLine()
       parsed.partCode = tokens.entry( DetFld.PartCode.ordinal() )
-      parsed.colorCode = tokens.entry( DetFld.ColorCode.ordinal() )
+      parsed.colorCode = tokens.entry( DetFld.ColorCode.ordinal() ).trim().equalsIgnoreCase('0000') ? '' : tokens.entry( DetFld.ColorCode.ordinal() )
       parsed.qty = tokens.asInteger( DetFld.QtyTrans.ordinal() )
       parsed.sku = tokens.asInteger( DetFld.Sku.ordinal() )
       parsed.barcode = tokens.entry( DetFld.BarCode.ordinal() )
@@ -100,7 +100,7 @@ class ShippingNoticeFile {
       if ( tokens.size >= DetFldAccesory.values().size() ) {
           parsed = new ShipmentLine()
           parsed.partCode = tokens.entry( DetFld.PartCode.ordinal() )
-          parsed.colorCode = tokens.entry( DetFld.ColorCode.ordinal() )
+          parsed.colorCode = tokens.entry( DetFld.ColorCode.ordinal() ).trim().equalsIgnoreCase('0000') ? '' : tokens.entry( DetFld.ColorCode.ordinal() )
           parsed.qty = tokens.asInteger( DetFld.QtyTrans.ordinal() )
           parsed.sku = tokens.asInteger( DetFld.Sku.ordinal() )
           parsed.barcode = tokens.entry( DetFld.BarCode.ordinal() )

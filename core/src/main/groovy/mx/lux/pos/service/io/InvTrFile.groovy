@@ -90,7 +90,7 @@ class InvTrFile {
           //case HdrFld.TrType: hdr.add( pInvTr.idTipoTrans ); break
           //case HdrFld.TrNbr: hdr.addInteger( pInvTr.folio, "%08d" ); break
           //case HdrFld.TrDate: hdr.addDate( pInvTr.fecha, FMT_TR_DATE ); break
-            case HdrFld.Folio: hdr.addInteger( pInvTr.folio ); break
+            case HdrFld.Folio: hdr.addInteger( String.format( "%06d", pInvTr.folio ) ); break
             case HdrFld.LineNum: hdr.addInteger( pInvTr.trDet.size() ); break
           //case HdrFld.Remarks: hdr.add( pInvTr.observaciones ); break
           //case HdrFld.Ref: hdr.add( pInvTr.referencia ); break
