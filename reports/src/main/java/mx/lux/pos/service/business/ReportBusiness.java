@@ -1011,7 +1011,8 @@ public class ReportBusiness {
 
         BooleanBuilder builderPorEnv = new BooleanBuilder();
         if ( porEnviar ) {
-            builderPorEnv.and( trabajo.estado.equalsIgnoreCase( "PE" ).or( trabajo.estado.equalsIgnoreCase( "RPE" ).or( trabajo.estado.equalsIgnoreCase( "X1" ) ) ) );
+            builderPorEnv.and( trabajo.estado.equalsIgnoreCase( "PE" ).or( trabajo.estado.equalsIgnoreCase( "RPE" ) ).
+                    or( trabajo.estado.equalsIgnoreCase( "X1" ) ) );
         } else {
             builderPorEnv.and( trabajo.estado.isNotNull() ).and( trabajo.estado.isNotEmpty() );
         }

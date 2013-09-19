@@ -75,7 +75,7 @@ public class Trabajo implements Serializable {
     private String retAuto;
 
     @Column( name = "no_llamar" )
-    private boolean noLlamar;
+    private Boolean noLlamar;
 
     @Column( name = "tipo_venta" )
     private String tipoVenta;
@@ -88,7 +88,7 @@ public class Trabajo implements Serializable {
     private String idGrupo;
 
     @Column( name = "no_enviar" )
-    private boolean noEnviar;
+    private Boolean noEnviar;
 
     @Column( name = "externo" )
     private String externo;
@@ -109,7 +109,7 @@ public class Trabajo implements Serializable {
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "emp_atendio", insertable = false, updatable = false )
     private Empleado empleado;
-    
+
 
     public String getId() {
         return id;
@@ -183,7 +183,7 @@ public class Trabajo implements Serializable {
         return retAuto;
     }
 
-    public boolean isNoLlamar() {
+    public Boolean isNoLlamar() {
         return noLlamar;
     }
 
@@ -199,7 +199,7 @@ public class Trabajo implements Serializable {
         return idGrupo;
     }
 
-    public boolean isNoEnviar() {
+    public Boolean isNoEnviar() {
         return noEnviar;
     }
 
@@ -279,7 +279,7 @@ public class Trabajo implements Serializable {
         this.retAuto = retAuto;
     }
 
-    public void setNoLlamar( boolean noLlamar ) {
+    public void setNoLlamar( Boolean noLlamar ) {
         this.noLlamar = noLlamar;
     }
 
@@ -295,7 +295,7 @@ public class Trabajo implements Serializable {
         this.idGrupo = idGrupo;
     }
 
-    public void setNoEnviar( boolean noEnviar ) {
+    public void setNoEnviar( Boolean noEnviar ) {
         this.noEnviar = noEnviar;
     }
 
