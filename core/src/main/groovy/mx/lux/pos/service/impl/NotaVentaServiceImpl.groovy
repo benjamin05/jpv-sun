@@ -49,6 +49,9 @@ class NotaVentaServiceImpl implements NotaVentaService {
   @Resource
   private ParametroRepository parametroRepository
 
+  @Resource
+  private FacturasImpuestosRepository facturasImpuestosRepository
+
   @Override
   NotaVenta obtenerNotaVenta( String idNotaVenta ) {
     log.info( "obteniendo notaVenta: ${idNotaVenta}" )
@@ -539,5 +542,21 @@ class NotaVentaServiceImpl implements NotaVentaService {
             detalleNotaVentaRepository.flush()
         }
     }
+  }
+
+
+  @Override
+  @Transactional
+  void registraImpuestoPorFactura( NotaVenta notaVenta ){
+    Parametro parametro = parametroRepository.findOne( TipoParametro.IVA_VIGENTE.value )
+    FacturasImpuestos impuesto = new FacturasImpuestos()
+    impuesto.idFactura = notaVenta?.id
+    impuesto.idImpuesto = parametro.valor
+    impuesto.idSucursal = notaVenta.idSucursal
+    impuesto.fecha = new Date()
+
+    impuesto = facturasImpuestosRepository.save( impuesto )
+    log.debug( "guardando idImpuesto ${impuesto.idImpuesto} a factura: ${impuesto.idFactura}" )
+    facturasImpuestosRepository.flush()
   }
 }

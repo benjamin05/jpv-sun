@@ -328,6 +328,9 @@ class OrderController {
             if (detalle != null) {
                 nota = notaVentaService.registrarDetalleNotaVentaEnNotaVenta(orderId, detalle)
             }
+            if (nota != null ) {
+                notaVentaService.registraImpuestoPorFactura( nota )
+            }
             return Order.toOrder(nota)
         } else {
             log.warn("no se agrega articulo, parametros invalidos")
