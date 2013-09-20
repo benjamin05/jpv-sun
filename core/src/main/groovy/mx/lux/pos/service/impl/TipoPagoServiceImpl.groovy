@@ -55,10 +55,6 @@ class TipoPagoServiceImpl implements TipoPagoService {
           setTipoPago(4, pago, resultadosTmp)
       } else if(TAG_TIPO_PAGO_CUPON3.equalsIgnoreCase(pago.id.trim())){
           setTipoPago(5, pago, resultadosTmp)
-      } else if(TAG_TIPO_PAGO_TRANSFERENCIA.equalsIgnoreCase(pago.id.trim())){
-          setTipoPago(6, pago, resultadosTmp)
-      } else if(TAG_TIPO_PAGO_CHEQUE.equalsIgnoreCase(pago.id.trim())){
-          setTipoPago(7, pago, resultadosTmp)
       } else {
         resultadosTmp.add(pago)
       }
