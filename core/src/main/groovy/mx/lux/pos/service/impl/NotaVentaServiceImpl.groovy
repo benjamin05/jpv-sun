@@ -422,7 +422,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
       String employee = parametros.employee
       QNotaVenta qNotaVenta = QNotaVenta.notaVenta
       BooleanBuilder builder = new BooleanBuilder()
-      if(ticket.trim() != ''){
+      if(ticket.trim() != '' && !ticket.contains('-')){
         dateFrom = null
         dateTo = null
       }
