@@ -1145,8 +1145,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    public String obtenerReporteVentasporOptometrista( Date fechaInicio, Date fechaFin, boolean todoTipo, boolean referido, boolean rx,
-                                                       boolean lux, boolean todaVenta, boolean primera, boolean mayor, boolean resumen ) {
+    public String obtenerReporteVentasporOptometrista( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteVentasporOptometrista()" );
 
         File report = new File( System.getProperty( "java.io.tmpdir" ), "Ventas-Por-Optometrista-Completo.html" );
@@ -1157,8 +1156,7 @@ public class ReportServiceImpl implements ReportService {
         fechaFin = new Date( DateUtils.ceiling( fechaFin, Calendar.DAY_OF_MONTH ).getTime() - 1 );
 
         Sucursal sucursal = sucursalService.obtenSucursalActual();
-        List<IngresoPorVendedor> lstVentas = reportBusiness.obtenerVentasporOptometristaCompleto( fechaInicio, fechaFin,
-                todoTipo, referido, rx, lux, todaVenta, primera, mayor, resumen );
+        List<IngresoPorVendedor> lstVentas = reportBusiness.obtenerVentasporOptometristaCompleto( fechaInicio, fechaFin );
 
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
@@ -1186,8 +1184,7 @@ public class ReportServiceImpl implements ReportService {
         fechaFin = new Date( DateUtils.ceiling( fechaFin, Calendar.DAY_OF_MONTH ).getTime() - 1 );
 
         Sucursal sucursal = sucursalService.obtenSucursalActual();
-        List<IngresoPorVendedor> lstVentas = reportBusiness.obtenerVentasporOptometristaCompleto( fechaInicio, fechaFin,
-                todoTipo, referido, rx, lux, todaVenta, primera, mayor, resumen );
+        List<IngresoPorVendedor> lstVentas = reportBusiness.obtenerVentasporOptometristaCompleto( fechaInicio, fechaFin );
 
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );

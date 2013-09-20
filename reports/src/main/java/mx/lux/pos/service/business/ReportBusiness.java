@@ -66,6 +66,9 @@ public class ReportBusiness {
     private ParametroRepository parametroRepository;
 
     @Resource
+    private RecetaRepository recetaRepository;
+
+    @Resource
     private PagoRepository pagoRepository;
 
     @Resource
@@ -98,6 +101,7 @@ public class ReportBusiness {
     @Resource
     private PrecioRepository precioRepository;
 
+    private static final Integer TAG_PUESTO_OFTALMOLOGO = 3;
     private static final String TAG_CANCELADO = "T";
     private static final String TAG_TIPO_CANCELADO = "can";
 
@@ -1303,67 +1307,43 @@ public class ReportBusiness {
     }
 
 
-    public List<IngresoPorVendedor> obtenerVentasporOptometristaCompleto( Date fechaInicio, Date fechaFin, boolean todoTipo, boolean referido, boolean rx,
-                                                                          boolean lux, boolean todaVenta, boolean primera, boolean mayor, boolean resumen ) {
+    public List<IngresoPorVendedor> obtenerVentasporOptometristaCompleto( Date fechaInicio, Date fechaFin ) {
 
         Parametro ivaVigenteParam = parametroRepository.findOne( TipoParametro.IVA_VIGENTE.getValue() );
         Impuesto iva = impuestoRepository.findOne( ivaVigenteParam.getValor() );
         Double ivaTasa = iva.getTasa() / 100;
-
         List<IngresoPorVendedor> lstVentas = new ArrayList<IngresoPorVendedor>();
 
         QNotaVenta venta = QNotaVenta.notaVenta;
-
-        BooleanBuilder builderTodo = new BooleanBuilder();
-        if ( todoTipo ) {
-            builderTodo.and( venta.receta.isNotNull() );
-        } else {
-            builderTodo.and( venta.receta.isNotNull() );
-        }
-
-        BooleanBuilder builderReferido = new BooleanBuilder();
-        if ( referido ) {
-            builderReferido.and( venta.examen.tipoCli.equalsIgnoreCase( "R" ).and( venta.sFactura.ne( "T" ) ) );
-        } else {
-            builderReferido.and( venta.receta.isNotNull() );
-        }
-
-        BooleanBuilder builderRx = new BooleanBuilder();
-        if ( rx ) {
-            builderRx.and( venta.examen.tipoCli.equalsIgnoreCase( "X" ).and( venta.sFactura.ne( "T" ) ) );
-        } else {
-            builderRx.and( venta.receta.isNotNull() );
-        }
-
-        BooleanBuilder builderLux = new BooleanBuilder();
-        if ( lux ) {
-            builderLux.and( venta.tipoCli.equalsIgnoreCase( "N" ) );
-        } else {
-            builderLux.and( venta.receta.isNotNull() );
-        }
-
         List<NotaVenta> lstVenta = ( List<NotaVenta> ) notaVentaRepository.findAll( venta.fechaHoraFactura.between( fechaInicio, fechaFin ).
-                and( venta.receta.isNotNull() ).and( venta.factura.isNotEmpty() ).and( venta.factura.isNotNull() ).and( builderLux ).
-                and( builderRx ).and( builderReferido ).and( builderTodo ), venta.fechaHoraFactura.asc(), venta.idEmpleado.asc() );
-        log.info( "tamañoLista:{}", lstVenta.size() );
+                and( venta.sFactura.ne(TAG_CANCELADO) ).and( venta.receta.isNotNull() ).and( venta.factura.isNotEmpty() ).
+                and( venta.factura.isNotNull() ), venta.idEmpleado.asc() );
+        QModificacion modificacion = QModificacion.modificacion;
+        List<Modificacion> lstCancelaciones = (List<Modificacion>) modificacionRepository.findAll(modificacion.tipo.eq("can").
+                and(modificacion.fecha.notBetween(fechaInicio,fechaFin)).and(modificacion.notaVenta.receta.isNotNull()).
+                and(modificacion.notaVenta.factura.isNotNull()).and(modificacion.notaVenta.factura.isNotEmpty()));
+
 
         BigDecimal montoTotal = BigDecimal.ZERO;
         Integer totalFacturas = lstVenta.size();
         for ( NotaVenta ventas : lstVenta ) {
             montoTotal = montoTotal.add( ventas.getVentaNeta() );
             String idEmpleado = ventas.getIdEmpleado();
-            if ( todaVenta || resumen ) {
-                IngresoPorVendedor ingresos = FindorCreate( lstVentas, idEmpleado );
-                ingresos.AcumulaOptometrista( ventas, montoTotal, totalFacturas, ivaTasa );
+            Receta receta = recetaRepository.findOne( ventas.getReceta() );
+            if(receta.getIdOptometrista().toString().trim().equalsIgnoreCase(ventas.getIdEmpleado().trim())
+                    && ventas.getEmpleado().getIdPuesto() == TAG_PUESTO_OFTALMOLOGO ){
+              IngresoPorVendedor ingresos = FindorCreate( lstVentas, idEmpleado );
+              ingresos.AcumulaOptometrista( ventas, montoTotal, totalFacturas, ivaTasa );
             }
-            if ( primera ) {
-                IngresoPorVendedor ingresos = FindorCreatePrimera( lstVentas, idEmpleado );
-                ingresos.AcumulaOptometrista( ventas, montoTotal, totalFacturas, ivaTasa );
-            }
-            if ( mayor ) {
-                IngresoPorVendedor ingresos = FindorCreateMayor( lstVentas, idEmpleado );
-                ingresos.AcumulaOptometristaMayor( ventas, totalFacturas );
+        }
 
+        for ( Modificacion mod : lstCancelaciones ) {
+            String idEmpleado = mod.getNotaVenta().getIdEmpleado();
+            Receta receta = recetaRepository.findOne( mod.getNotaVenta().getReceta() );
+            if(receta.getIdOptometrista().toString().trim().equalsIgnoreCase(mod.getNotaVenta().getIdEmpleado().trim())
+                    && mod.getNotaVenta().getEmpleado().getIdPuesto() == TAG_PUESTO_OFTALMOLOGO ){
+                IngresoPorVendedor ingresos = FindorCreate( lstVentas, idEmpleado );
+                ingresos.AcumulaCanOptometrista( mod.getNotaVenta(), totalFacturas, ivaTasa );
             }
         }
 

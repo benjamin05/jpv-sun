@@ -427,29 +427,21 @@ class ReportController {
   }
 
   static void fireOptometristSalesReport( ) {
-    if ( twoDatesSelectionRadioFilterDialog == null ) {
-      twoDatesSelectionRadioFilterDialog = new TwoDatesSelectionRadioFilterDialog()
+    if ( twoDateDialog == null ) {
+        twoDateDialog = new TwoDatesSelectionDialog()
     }
-    twoDatesSelectionRadioFilterDialog.setTitle( "Reporte de Ventas por Optometrista" )
-    twoDatesSelectionRadioFilterDialog.activate()
-    Date reportForDateStart = twoDatesSelectionRadioFilterDialog.getSelectedDateStart()
-    Date reportForDateEnd = twoDatesSelectionRadioFilterDialog.getSelectedDateEnd()
-    boolean todoTipo = twoDatesSelectionRadioFilterDialog.getCbTodoTipo()
-    boolean referidos = twoDatesSelectionRadioFilterDialog.getCbReferidos()
-    boolean rx = twoDatesSelectionRadioFilterDialog.getCbRx()
-    boolean lux = twoDatesSelectionRadioFilterDialog.getCbLux()
-    boolean totalventas = twoDatesSelectionRadioFilterDialog.getCbTodoVentas()
-    boolean primera = twoDatesSelectionRadioFilterDialog.getCbPrimeras()
-    boolean mayor = twoDatesSelectionRadioFilterDialog.getCbMayor()
-    boolean resumen = twoDatesSelectionRadioFilterDialog.getCbResumen()
-    if ( reportForDateStart != null && reportForDateEnd != null && twoDatesSelectionRadioFilterDialog.button ) {
-      if ( resumen ) {
+      twoDateDialog.setTitle( "Reporte de Ventas por Optometrista" )
+      twoDateDialog.activate()
+    Date reportForDateStart = twoDateDialog.getSelectedDateStart()
+    Date reportForDateEnd = twoDateDialog.getSelectedDateEnd()
+    if ( reportForDateStart != null && reportForDateEnd != null && twoDateDialog.button ) {
+      /*if ( resumen ) {
         log.debug( "Imprime el reporte de Ventas por Optometrista Resumido" )
-        reportService.obtenerReporteVentasporOptometristaResumido( reportForDateStart, reportForDateEnd, todoTipo, referidos, rx, lux, totalventas, primera, mayor, resumen )
-      } else {
+        reportService.obtenerReporteVentasporOptometristaResumido( reportForDateStart, reportForDateEnd )
+      } else {*/
         log.debug( "Imprime el reporte de Ventas por Optometrista" )
-        reportService.obtenerReporteVentasporOptometrista( reportForDateStart, reportForDateEnd, todoTipo, referidos, rx, lux, totalventas, primera, mayor, resumen )
-      }
+        reportService.obtenerReporteVentasporOptometrista( reportForDateStart, reportForDateEnd )
+      //}
     } else {
       log.debug( "Cancelar_continuar" )
     }

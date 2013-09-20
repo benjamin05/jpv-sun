@@ -60,8 +60,7 @@ public interface ReportService {
 
     String obtenerReporteExamenesCompleto( Date fechaInicio, Date fechaFin );
 
-    String obtenerReporteVentasporOptometrista( Date fechaInicio, Date fechaFin, boolean todoTipo, boolean referido, boolean rx,
-                                                boolean lux, boolean todaVenta, boolean primera, boolean mayor, boolean resumen );
+    String obtenerReporteVentasporOptometrista( Date fechaInicio, Date fechaFin );
 
     String obtenerReporteVentasporOptometristaResumido( Date fechaInicio, Date fechaFin, boolean todoTipo, boolean referido, boolean rx,
                                                         boolean lux, boolean todaVenta, boolean primera, boolean mayor, boolean resumen );

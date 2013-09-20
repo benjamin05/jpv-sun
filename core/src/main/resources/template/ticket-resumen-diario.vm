@@ -25,7 +25,7 @@ SUCURSAL: ${nombre_sucursal} [${id_sucursal}] #ALINEAR_DERECHA()${COLUMNA_7} ${f
 #RESET_TEXTO()#FUENTE_B()#DO()${COLUMNA_1}Venta bruta${COLUMNA_4}${cantidad_ventas_brutas}#ALINEAR_DERECHA()${COLUMNA_5}${importe_ventas_brutas}
 ${COLUMNA_1}Descuentos${COLUMNA_4}${cantidad_modificaciones}${COLUMNA_5}${importe_modificaciones}
 ${COLUMNA_1}Cancelaciones${COLUMNA_4}${cantidad_cancelaciones}${COLUMNA_5}${importe_cancelaciones}
-${COLUMNA_1}IVA#DO()${COLUMNA_5}${iva_vigente}
+##${COLUMNA_1}IVA#DO()${COLUMNA_5}${iva_vigente}
 ${COLUMNA_1}Venta neta${COLUMNA_4}${cantidad_venta_neta}${COLUMNA_5}${importe_venta_neta}
 
 #NEGRITA()#DOBLE_ALTURA()#DOBLE_ANCHURA()#FUENTE_B()#DO()DESCUENTOS APLICADOS${LF}
@@ -42,13 +42,13 @@ ${COLUMNA_1}Pagos externos${COLUMNA_5}${importe_efectivo_externos}
 ${COLUMNA_1}Devoluciones${COLUMNA_5}${importe_efectivo_devoluciones}
 ${COLUMNA_1}Neto${COLUMNA_5}${importe_efectivo_neto}
 
-#if( $artSinExis )
+#*if( $artSinExis )
 #NEGRITA()#DOBLE_ALTURA()#DOBLE_ANCHURA()#FUENTE_B()#DO()EXISTENCIAS AL ${today}${LF}
 #RESET_TEXTO()#FUENTE_B()#DO()${COLUMNA_0}SKU${COLUMNA_1}Articulo${COLUMNA_5}    Precio${COLUMNA_7}  Exist.
 #foreach( $ase in $artSinExis )
 #RESET_TEXTO()#FUENTE_B()#DO()${COLUMNA_0}${ase.id}${COLUMNA_1}${ase.articulo}${COLUMNA_5}${ase.descripcion}${COLUMNA_7}    ${ase.cantExistencia}
 #end
-#end
+#end*#
 
 #if( $tipo_cambio_USD != '0.00' && $tipo_cambio_EUR != '0.00' )
 #NEGRITA()#DOBLE_ALTURA()#DOBLE_ANCHURA()#FUENTE_B()#DO()TIPO DE CAMBIO${LF}
@@ -57,12 +57,12 @@ ${COLUMNA_1}Neto${COLUMNA_5}${importe_efectivo_neto}
 #end
 
 #* DOLARES *#
-#if( $importe_dolares_recibido != '0' or $importe_dolares_devoluciones != '0' or $importe_dolares_pesos != '0' )
+#*if( $importe_dolares_recibido != '0' or $importe_dolares_devoluciones != '0' or $importe_dolares_pesos != '0' )
 #NEGRITA()#DOBLE_ALTURA()#DOBLE_ANCHURA()#FUENTE_B()#DO()DOLARES${LF}
 #RESET_TEXTO()#FUENTE_B()#DO()${COLUMNA_1}Cantidad recibida(USD)${COLUMNA_5}${importe_dolares_recibido}
 ${COLUMNA_1}Devoluciones${COLUMNA_5}${importe_dolares_devoluciones}
 ${COLUMNA_1}Importe en pesos(MXN)${COLUMNA_5}${importe_dolares_pesos}
-#end
+#end*#
 #* DEPOSITOS *#
 #if( $depositos )#NEGRITA()#DOBLE_ALTURA()#DOBLE_ANCHURA()#FUENTE_B()#DO()DEPOSITOS${LF}
 #foreach( $deposito in $depositos )#RESET_TEXTO()#FUENTE_B()#DO()${COLUMNA_1}Fecha: ${deposito.fechaCierre}${COLUMNA_5}${deposito.empleado.nombre}${COLUMNA_7}${deposito.tipoDeposito}

@@ -19,6 +19,11 @@ public class IngresoPorFactura {
     private BigDecimal montoPagoIVA;
     private BigDecimal montoPagoSinIVA;
     private BigDecimal montoDevolucion;
+
+    private BigDecimal montoDescuento;
+    private BigDecimal montoConDesc;
+    private BigDecimal montoSinDesc;
+
     private BigDecimal acumulaPago;
     private BigDecimal acumulaPagoIva;
     private BigDecimal acumulaDevolucion;
@@ -37,6 +42,7 @@ public class IngresoPorFactura {
     private Boolean mostrarArticulos;
     private String idGenerico;
     private Integer noFacturas;
+    private List<DetalleNotaVenta> lstArticulos;
     private static final String TAG_CANCELADO = "T";
 
     public IngresoPorFactura( String idFactura ) {
@@ -56,6 +62,10 @@ public class IngresoPorFactura {
         lstIdsArticulos = new ArrayList<String>();
         sumaMonto = BigDecimal.ZERO;
         mostrarArticulos = true;
+        lstArticulos = new ArrayList<DetalleNotaVenta>();
+        montoDescuento = BigDecimal.ZERO;
+        montoConDesc = BigDecimal.ZERO;
+        montoSinDesc = BigDecimal.ZERO;
     }
 
     public IngresoPorFactura( BigDecimal monto ) {
@@ -207,9 +217,35 @@ public class IngresoPorFactura {
     }
 
     public void AcumulaVentasOpto( NotaVenta venta ) {
+        for(DetalleNotaVenta det : venta.getDetalles()){
+          lstArticulos.add( det );
+        }
         fechaPago = venta.getFechaHoraFactura();
         idFactura = venta.getFactura();
-        montoPago = venta.getVentaNeta();
+        for(Pago pago : venta.getPagos()){
+          if(pago.getIdFPago().trim().startsWith("C")){
+            montoDescuento = montoDescuento.add( pago.getMonto() );
+          }
+          montoSinDesc = montoSinDesc.add( pago.getMonto() );
+        }
+        montoConDesc = montoSinDesc.subtract(montoDescuento);
+        paciente = venta.getCliente().getNombreCompleto();
+    }
+
+
+    public void AcumulaVentasCanOpto( NotaVenta venta ) {
+        for(DetalleNotaVenta det : venta.getDetalles()){
+            lstArticulos.add( det );
+        }
+        fechaPago = venta.getFechaHoraFactura();
+        idFactura = venta.getFactura();
+        for(Pago pago : venta.getPagos()){
+            if(pago.getIdFPago().trim().startsWith("C")){
+                montoDescuento = (montoDescuento.add( pago.getMonto() )).negate();
+            }
+            montoSinDesc = (montoSinDesc.add( pago.getMonto() )).negate();
+        }
+        montoConDesc = montoSinDesc.subtract(montoDescuento);
         paciente = venta.getCliente().getNombreCompleto();
     }
 
@@ -443,5 +479,37 @@ public class IngresoPorFactura {
 
     public void setNoFacturas(Integer noFacturas) {
         this.noFacturas = noFacturas;
+    }
+
+    public List<DetalleNotaVenta> getLstArticulos() {
+        return lstArticulos;
+    }
+
+    public void setLstArticulos(List<DetalleNotaVenta> lstArticulos) {
+        this.lstArticulos = lstArticulos;
+    }
+
+    public BigDecimal getMontoDescuento() {
+        return montoDescuento;
+    }
+
+    public void setMontoDescuento(BigDecimal montoDescuento) {
+        this.montoDescuento = montoDescuento;
+    }
+
+    public BigDecimal getMontoConDesc() {
+        return montoConDesc;
+    }
+
+    public void setMontoConDesc(BigDecimal montoConDesc) {
+        this.montoConDesc = montoConDesc;
+    }
+
+    public BigDecimal getMontoSinDesc() {
+        return montoSinDesc;
+    }
+
+    public void setMontoSinDesc(BigDecimal montoSinDesc) {
+        this.montoSinDesc = montoSinDesc;
     }
 }

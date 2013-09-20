@@ -101,6 +101,7 @@ class MainWindow extends JFrame implements KeyListener {
     private JMenuItem nationalClientMenuItem
     private JMenuItem jobControlMenuItem
     private JMenuItem workSubmittedMenuItem
+    private JMenuItem optometristSalesMenuItem
     private PromotionService promotionService
 
 
@@ -282,7 +283,7 @@ class MainWindow extends JFrame implements KeyListener {
                                 undeliveredJobsReportMenuItem.visible = userLoggedIn
                                 discountsMenuItem.visible = userLoggedIn
                                 //examsMenuItem.visible = userLoggedIn
-                                //optometristSalesMenuItem.visible = userLoggedIn
+                                optometristSalesMenuItem.visible = userLoggedIn
                             }
                     ) {
                         salesReportMenuItem = menuItem( text: "Ventas",
@@ -391,6 +392,12 @@ class MainWindow extends JFrame implements KeyListener {
                                 visible: false,
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.UndeliveredJobs )
+                                }
+                        )
+                        optometristSalesMenuItem = menuItem( text: "Ventas por Optometrista",
+                                visible: false,
+                                actionPerformed: {
+                                    ReportController.fireReport( ReportController.Report.OptometristSales )
                                 }
                         )
                         /*salesTodayMenuItem = menuItem( text: "Ventas del D\u00eda",
