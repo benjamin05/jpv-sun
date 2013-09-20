@@ -1075,7 +1075,7 @@ public class ReportServiceImpl implements ReportService {
         Sucursal sucursal = sucursalService.obtenSucursalActual();
 
         QCotizacion cotizacion = QCotizacion.cotizacion;
-        List<Cotizacion> lstCotizaciones = ( List<Cotizacion> ) cotizacionRepository.findAll( cotizacion.fechaMod.between( fechaInicio, fechaFin ) );
+        List<Cotizaciones> lstCotizaciones = ( List<Cotizaciones> ) reportBusiness.obtenerCotizaciones( fechaInicio, fechaFin );
 
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
