@@ -37,7 +37,7 @@ class TwoDatesSelectionAndKeyDialog extends JDialog {
         resizable: true,
         pack: true,
         modal: true,
-        preferredSize: [ 360, 250 ],
+        preferredSize: [ 360, 270 ],
         location: [ 200, 250 ],
     ) {
       panel() {

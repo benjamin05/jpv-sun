@@ -22,6 +22,8 @@ public class QDescuento extends EntityPathBase<Descuento> {
 
     public final StringPath clave = createString("clave");
 
+    public final QDescuentoClave descuentosClave;
+
     public final DateTimePath<java.util.Date> fecha = createDateTime("fecha", java.util.Date.class);
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
@@ -52,6 +54,7 @@ public class QDescuento extends EntityPathBase<Descuento> {
 
     public QDescuento(Class<? extends Descuento> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.descuentosClave = inits.isInitialized("descuentosClave") ? new QDescuentoClave(forProperty("descuentosClave")) : null;
         this.notaVenta = inits.isInitialized("notaVenta") ? new QNotaVenta(forProperty("notaVenta"), inits.get("notaVenta")) : null;
     }
 

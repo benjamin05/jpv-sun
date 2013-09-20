@@ -262,7 +262,7 @@ class MainWindow extends JFrame implements KeyListener {
                                 sellerRevenueReportMenuItem.visible = userLoggedIn
                                 undeliveredJobsReportMenuItem.visible = userLoggedIn
                                 salesReportMenuItem.visible = userLoggedIn
-                                salesByLineReportMenuItem.visible = userLoggedIn
+                                //salesByLineReportMenuItem.visible = userLoggedIn
                                 //salesBySellerReportMenuItem.visible = userLoggedIn
                                 //salesByBrandReportMenuItem.visible = userLoggedIn
                                 //salesBySellerByBrandMenuItem.visible = userLoggedIn
@@ -285,6 +285,12 @@ class MainWindow extends JFrame implements KeyListener {
                                 //optometristSalesMenuItem.visible = userLoggedIn
                             }
                     ) {
+                        salesReportMenuItem = menuItem( text: "Ventas",
+                                visible: false,
+                                actionPerformed: {
+                                    ReportController.fireReport( ReportController.Report.Sales )
+                                }
+                        )
                         cancellationReportMenuItem = menuItem( text: "Cancelaciones",
                                 visible: false,
                                 actionPerformed: {
@@ -387,25 +393,19 @@ class MainWindow extends JFrame implements KeyListener {
                                     ReportController.fireReport( ReportController.Report.UndeliveredJobs )
                                 }
                         )
-                        salesReportMenuItem = menuItem( text: "Ventas",
-                                visible: false,
-                                actionPerformed: {
-                                    ReportController.fireReport( ReportController.Report.Sales )
-                                }
-                        )
                         /*salesTodayMenuItem = menuItem( text: "Ventas del D\u00eda",
                                 visible: false,
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.SalesToday )
                                 }
-                        )*/
+                        )
                         salesByLineReportMenuItem = menuItem( text: "Ventas por L\u00ednea",
                                 visible: false,
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.SalesbyLine )
                                 }
                         )
-                        /*salesByBrandReportMenuItem = menuItem( text: "Ventas por Marca",
+                        salesByBrandReportMenuItem = menuItem( text: "Ventas por Marca",
                                 visible: false,
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.SalesbyBrand )
