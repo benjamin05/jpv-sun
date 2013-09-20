@@ -19,6 +19,7 @@ class ReportController {
   private static ReportService reportService
   private static DateSelectionDialog dateDialog
   private static TwoDatesSelectionDialog twoDateDialog
+  private static TwoDatesSelectionAndKeyDialog twoDateKeyDialog
   private static TwoDatesSelectionFilterDialog twoDateFilterDialog
   private static TwoDatesSelectionFilterLineDialog twoDatesSelectionFilterLineDialog
   private static TwoDatesSelectionFilterBrandDialog twoDatesSelectionFilterBrandDialog
@@ -336,16 +337,17 @@ class ReportController {
   }
 
   static void fireDiscountsReport( ) {
-    if ( twoDateDialog == null ) {
-      twoDateDialog = new TwoDatesSelectionDialog()
+    if ( twoDateKeyDialog == null ) {
+        twoDateKeyDialog = new TwoDatesSelectionAndKeyDialog()
     }
-    twoDateDialog.setTitle( "Descuentos" )
-    twoDateDialog.activate()
-    Date reportForDateStart = twoDateDialog.getSelectedDateStart()
-    Date reportForDateEnd = twoDateDialog.getSelectedDateEnd()
-    if ( reportForDateStart != null && reportForDateEnd != null && twoDateDialog.button ) {
+      twoDateKeyDialog.setTitle( "Descuentos" )
+      twoDateKeyDialog.activate()
+    Date reportForDateStart = twoDateKeyDialog.getSelectedDateStart()
+    Date reportForDateEnd = twoDateKeyDialog.getSelectedDateEnd()
+    String key = twoDateKeyDialog.getDiscountKey().trim()
+    if ( reportForDateStart != null && reportForDateEnd != null && twoDateKeyDialog.button ) {
       log.debug( "Imprime el reporte de Descuentos" )
-      reportService.obtenerReporteDescuentos( reportForDateStart, reportForDateEnd )
+      reportService.obtenerReporteDescuentosMasVision( reportForDateStart, reportForDateEnd, key )
     } else {
       log.debug( "Cancelar_continuar" )
     }

@@ -131,7 +131,7 @@ class MainWindow extends JFrame implements KeyListener {
                                 boolean userLoggedIn = Session.contains( SessionItem.USER )
                                 orderMenuItem.visible = userLoggedIn
                                 orderSearchMenuItem.visible = userLoggedIn
-                                //dailyCloseMenuItem.visible = userLoggedIn
+                                dailyCloseMenuItem.visible = userLoggedIn
                                 //priceListMenuItem.visible = userLoggedIn
                                 //invoiceMenuItem.visible = userLoggedIn
                                 nationalClientMenuItem.visible = userLoggedIn
@@ -160,7 +160,7 @@ class MainWindow extends JFrame implements KeyListener {
                                 visible: false,
                                 actionPerformed: { QuoteController.instance.requestQuote() }
                         )
-                        /*dailyCloseMenuItem = menuItem( text: 'Cierre diario',
+                        dailyCloseMenuItem = menuItem( text: 'Cierre diario',
                                 visible: false,
                                 actionPerformed: {
                                     dailyClosePanel = new DailyClosePanel()
@@ -168,7 +168,7 @@ class MainWindow extends JFrame implements KeyListener {
                                     mainPanel.layout.show( mainPanel, 'dailyClosePanel' )
                                 }
                         )
-                        priceListMenuItem = menuItem( text: 'Lista de Precios',
+                        /*priceListMenuItem = menuItem( text: 'Lista de Precios',
                                 visible: false,
                                 actionPerformed: {
                                     priceListPanel = new PriceListPanel().panel
@@ -272,7 +272,7 @@ class MainWindow extends JFrame implements KeyListener {
                                 workSubmittedMenuItem.visible = userLoggedIn
                                 taxBillsMenuItem.visible = userLoggedIn
                                 discountsMenuItem.visible = userLoggedIn
-                                promotionsMenuItem.visible = userLoggedIn
+                                //promotionsMenuItem.visible = userLoggedIn
                                 //promotionsListMenuItem.visible = userLoggedIn
                                 paymentsMenuItem.visible = userLoggedIn
                                 quoteMenuItem.visible = userLoggedIn
@@ -280,6 +280,7 @@ class MainWindow extends JFrame implements KeyListener {
                                 //salesTodayMenuItem.visible = userLoggedIn
                                 //salesByPeriodMenuItem.visible = userLoggedIn
                                 undeliveredJobsReportMenuItem.visible = userLoggedIn
+                                discountsMenuItem.visible = userLoggedIn
                                 //examsMenuItem.visible = userLoggedIn
                                 //optometristSalesMenuItem.visible = userLoggedIn
                             }
@@ -362,13 +363,13 @@ class MainWindow extends JFrame implements KeyListener {
                                     ReportController.fireReport( ReportController.Report.Payments )
                                 }
                         )
-                        promotionsMenuItem = menuItem( text: "Promociones en Ventas",
+                        /*promotionsMenuItem = menuItem( text: "Promociones en Ventas",
                                 visible: false,
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.PromotionsinSales )
                                 }
                         )
-                        /*promotionsListMenuItem = menuItem( text: "Promociones",
+                        promotionsListMenuItem = menuItem( text: "Promociones",
                                 visible: false,
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.Promotions )

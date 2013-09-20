@@ -1859,4 +1859,25 @@ public class ReportBusiness {
         }
         return lstVentas;
     }
+
+
+
+    public List<Descuento> obtenerDescuentosMasVision( Date fechaInicio, Date fechaFin, String key ) {
+        BooleanBuilder claveBuilder = new BooleanBuilder();
+        QDescuento descuento = QDescuento.descuento;
+        if( !key.trim().equalsIgnoreCase("") ){
+          claveBuilder.and( descuento.clave.eq(key) );
+        } else {
+          claveBuilder.and( descuento.idFactura.isNotNull() );
+        }
+        List<Descuento> lstDescuentos = ( List<Descuento> ) descuentoRepository.findAll( descuento.fecha.between( fechaInicio, fechaFin ).
+                and(claveBuilder) );
+        /*Integer noDesc = lstDescuento.size();
+        for ( Descuento descuentos : lstDescuento ) {
+            DescuentosPorTipo desc = FindOoorCreate( lstDescuentos, descuentos.getTipoClave() );
+            desc.AcumulaDescuentos( descuentos, noDesc );
+        }*/
+
+        return lstDescuentos;
+    }
 }

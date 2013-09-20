@@ -1423,4 +1423,38 @@ public class ReportServiceImpl implements ReportService {
 
         return null;
     }
+
+
+    public String obtenerReporteDescuentosMasVision( Date fechaInicio, Date fechaFin, String key ) {
+        log.info( "obtenerReporteDescuentos()" );
+
+        File report = new File( System.getProperty( "java.io.tmpdir" ), "Descuentos.html" );
+        org.springframework.core.io.Resource template = new ClassPathResource( DESCUENTOS );
+        log.info( "Ruta:{}", report.getAbsolutePath() );
+
+        fechaInicio = DateUtils.truncate( fechaInicio, Calendar.DAY_OF_MONTH );
+        fechaFin = new Date( DateUtils.ceiling( fechaFin, Calendar.DAY_OF_MONTH ).getTime() - 1 );
+
+        Sucursal sucursal = sucursalService.obtenSucursalActual();
+        List<Descuento> lstDescuentos = reportBusiness.obtenerDescuentosMasVision( fechaInicio, fechaFin, key );
+        Integer totalDesc = lstDescuentos.size();
+        BigDecimal importeTotalDesc = BigDecimal.ZERO;
+        for(Descuento desc : lstDescuentos){
+          importeTotalDesc = importeTotalDesc.add(desc.getNotaVenta().getMontoDescuento());
+        }
+
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
+        parametros.put( "fechaInicio", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaInicio ) );
+        parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaFin ) );
+        parametros.put( "sucursal", sucursal.getNombre() );
+        parametros.put( "lstDescuentos", lstDescuentos );
+        parametros.put( "totalDesc", totalDesc );
+        parametros.put( "importeTotalDesc", importeTotalDesc );
+
+        String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
+        log.info( "reporte:{}", reporte );
+
+        return null;
+    }
 }

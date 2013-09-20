@@ -47,6 +47,11 @@ public class Descuento implements Serializable {
     @JoinColumn( name = "id_factura", insertable = false, updatable = false )
     private NotaVenta notaVenta;
 
+    @ManyToOne
+    @NotFound( action = NotFoundAction.IGNORE )
+    @JoinColumn( name = "clave", insertable = false, updatable = false )
+    private DescuentoClave descuentosClave;
+
     // Internal Methods
     @PostLoad
     protected void onPostLoad() {
@@ -67,6 +72,21 @@ public class Descuento implements Serializable {
     protected void onPreUpdate() {
         fecha = new Date();
     }
+
+
+    public String descripcionDescuento( ) {
+        StringBuilder sb = new StringBuilder();
+        if( clave != null && clave.trim() != "" ){
+            sb.append( StringUtils.trimToEmpty( descuentosClave.getClave_descuento() ) );
+            sb.append( "[ " );
+            sb.append( StringUtils.trimToEmpty( descuentosClave.getDescripcion_descuento() ) );
+            sb.append( " ]" );
+        } else {
+            sb.append( "" );
+        }
+        return sb.toString().trim();
+    }
+
 
     public Integer getId() {
         return id;
@@ -138,5 +158,17 @@ public class Descuento implements Serializable {
 
     public void setNotaVenta( NotaVenta notaVenta ) {
         this.notaVenta = notaVenta;
+    }
+
+    public DescuentoClave getDescuentosClave() {
+        return descuentosClave;
+    }
+
+    public void setDescuentosClave(DescuentoClave descuentosClave) {
+        this.descuentosClave = descuentosClave;
+    }
+
+    public String getDescripcionDescuento() {
+        return descripcionDescuento();
     }
 }
