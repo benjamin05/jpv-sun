@@ -259,66 +259,6 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    public String obtenerReporteIngresosXVendedorResumido( Date fechaInicio, Date fechaFin ) {
-        log.info( "obtenerReporteIngresosXVendedorResumido()" );
-
-        if ( fechaInicio != null && fechaFin != null ) {
-            fechaInicio = DateUtils.truncate( fechaInicio, Calendar.DAY_OF_MONTH );
-            fechaFin = new Date( DateUtils.ceiling( fechaFin, Calendar.DAY_OF_MONTH ).getTime() - 1 );
-
-            File report = new File( System.getProperty( "java.io.tmpdir" ), "Ingresos-por-Vendedor-Resumido.html" );
-            org.springframework.core.io.Resource template = new ClassPathResource( INGRESOS_POR_VENDEDOR_RESUMIDO );
-            log.info( "Ruta:{}", report.getAbsolutePath() );
-
-            List<IngresoPorVendedor> lstIngresos = reportBusiness.obtenerIngresoporVendedor( fechaInicio, fechaFin );
-
-            Sucursal sucursal = sucursalService.obtenSucursalActual();
-
-            Map<String, Object> parametros = new HashMap<String, Object>();
-            parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
-            parametros.put( "fechaInicio", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaInicio ) );
-            parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaFin ) );
-            parametros.put( "sucursal", sucursal.getNombre() );
-            parametros.put( "lstIngresos", lstIngresos );
-
-            String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
-            log.info( "reporte:{}", reporte );
-            return reporte;
-        }
-        return null;
-
-    }
-
-
-    public String obtenerReporteIngresosXVendedorCompleto( Date fechaInicio, Date fechaFin ) {
-        log.info( "obtenerReporteIngresosXVendedorCompleto()" );
-
-        if ( fechaInicio != null && fechaFin != null ) {
-            fechaInicio = DateUtils.truncate( fechaInicio, Calendar.DAY_OF_MONTH );
-            fechaFin = new Date( DateUtils.ceiling( fechaFin, Calendar.DAY_OF_MONTH ).getTime() - 1 );
-
-            File report = new File( System.getProperty( "java.io.tmpdir" ), "Ingresos-por-Vendedor.html" );
-            org.springframework.core.io.Resource template = new ClassPathResource( INGRESOS_POR_VENDEDOR_COMPLETO );
-            log.info( "Ruta:{}", report.getAbsolutePath() );
-
-            List<IngresoPorVendedor> lstIngresos = reportBusiness.obtenerIngresoporVendedor( fechaInicio, fechaFin );
-            Sucursal sucursal = sucursalService.obtenSucursalActual();
-
-            Map<String, Object> parametros = new HashMap<String, Object>();
-            parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
-            parametros.put( "fechaInicio", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaInicio ) );
-            parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaFin ) );
-            parametros.put( "sucursal", sucursal.getNombre() );
-            parametros.put( "lstIngresos", lstIngresos );
-
-            String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
-            log.info( "reporte:{}", reporte );
-        }
-        return null;
-
-    }
-
-
     public String obtenerReporteVentas( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteVentas()" );
 
@@ -352,45 +292,6 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    public String obtenerReporteVentasporVendedorResumido( Date fechaInicio, Date fechaFin ) {
-        log.info( "obtenerReporteVentasporVendedorResumido()" );
-
-        if ( fechaInicio != null && fechaFin != null ) {
-            fechaInicio = DateUtils.truncate( fechaInicio, Calendar.DAY_OF_MONTH );
-            fechaFin = new Date( DateUtils.ceiling( fechaFin, Calendar.DAY_OF_MONTH ).getTime() - 1 );
-
-            File report = new File( System.getProperty( "java.io.tmpdir" ), "Ventas-por-Vendedor.html" );
-            org.springframework.core.io.Resource template = new ClassPathResource( VENTAS_POR_VENDEDOR_RESUMIDO );
-            log.info( "Ruta:{}", report.getAbsolutePath() );
-
-            List<IngresoPorVendedor> lstVentas = reportBusiness.obtenerVentasporVendedor( fechaInicio, fechaFin );
-            BigDecimal montoTotal = BigDecimal.ZERO;
-            Integer totalPiezas = 0;
-            Integer totalFacturas = 0;
-            for(IngresoPorVendedor ingreso : lstVentas){
-                montoTotal = montoTotal.add(ingreso.getTotalPagosIva());
-                totalPiezas = totalPiezas+ingreso.getPiezas();
-                totalFacturas = totalFacturas+ingreso.getNoFacturas().intValue();
-            }
-            Sucursal sucursal = sucursalService.obtenSucursalActual();
-
-            Map<String, Object> parametros = new HashMap<String, Object>();
-            parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
-            parametros.put( "fechaInicio", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaInicio ) );
-            parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaFin ) );
-            parametros.put( "sucursal", sucursal.getNombre() );
-            parametros.put( "lstVentas", lstVentas );
-            parametros.put( "montoTotal", montoTotal );
-            parametros.put( "totalPiezas", totalPiezas );
-            parametros.put( "totalFacturas", totalFacturas );
-
-            String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
-            log.info( "reporte:{}", reporte );
-        }
-        return null;
-
-    }
-
 
     public String obtenerReporteVentasporVendedorCompleto( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteVentasporVendedorCompleto()" );
@@ -403,11 +304,14 @@ public class ReportServiceImpl implements ReportService {
             org.springframework.core.io.Resource template = new ClassPathResource( VENTAS_POR_VENDEDOR_COMPLETO );
             log.info( "Ruta:{}", report.getAbsolutePath() );
 
-            List<IngresoPorVendedor> lstVentas = reportBusiness.obtenerVentasporVendedor( fechaInicio, fechaFin );
+
+
+           List<IngresoPorVendedor> lstVentas = reportBusiness.obtenerVentasporVendedor( fechaInicio, fechaFin );
+
+
             Sucursal sucursal = sucursalService.obtenSucursalActual();
 
             Map<String, Object> parametros = new HashMap<String, Object>();
-            parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
             parametros.put( "fechaInicio", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaInicio ) );
             parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaFin ) );
             parametros.put( "sucursal", sucursal.getNombre() );

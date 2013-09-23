@@ -52,8 +52,8 @@ class TwoDatesSelectionFilterDialog extends JDialog {
           txtDateStart = textField()
           label( text: "Fecha Fin:" )
           txtDateEnd = textField()
-          label( text: " " )
-          cbResume = checkBox( text: "Resumido", selected: true )
+          label( )
+         // cbResume = checkBox( text: "Resumido", selected: true )
 
         }
         panel( constraints: BorderLayout.PAGE_END ) {
@@ -98,7 +98,7 @@ class TwoDatesSelectionFilterDialog extends JDialog {
   }
 
   boolean getCbResume( ) {
-    return cbResume.selected
+    return false
   }
 
   /*boolean getButton( ) {

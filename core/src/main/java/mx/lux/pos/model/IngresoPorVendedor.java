@@ -21,7 +21,7 @@ public class IngresoPorVendedor {
     private BigDecimal noFacturas;
     private BigDecimal contador;
     private Integer facturas;
-    private Integer piezas;
+    private String articulos;
     private Boolean mostrarArticulos;
 
     double porcentaje = 100.0;
@@ -36,42 +36,33 @@ public class IngresoPorVendedor {
         contador = BigDecimal.valueOf( 0 );
         noFacturas = BigDecimal.valueOf( 0 );
         mostrarArticulos = true;
-        piezas = 0;
+        articulos = new String();
     }
 
-    public void AcumulaPago( String idFactura, BigDecimal monto, Double iva, Date FechaPago, Integer piezas ) {
+    public IngresoPorVendedor() {
+    }
+
+    public void AcumulaPago( String idFactura, BigDecimal monto, Date FechaPago ) {
         IngresoPorFactura ingreso = FindOrCreate( pagos, idFactura );
-        double ivaMonto = (iva/porcentaje);
-        noFacturas = noFacturas.add( new BigDecimal( 1 ) );
-        ingreso.AcumulaPago( new BigDecimal(monto.doubleValue()/( 1+ivaMonto )), FechaPago );
-        ingreso.AcumulaPagosinIva( monto, FechaPago, new BigDecimal(ivaMonto), piezas, noFacturas );
-        totalPagos = ( totalPagos.add( new BigDecimal(monto.doubleValue()/( 1+ivaMonto )) ) );
-        totalPagosIva = totalPagosIva.add( monto );
-        contador = contador.add( new BigDecimal( 1 ) );
-        this.piezas = this.piezas+piezas;
+
+        ingreso.AcumulaPago( new BigDecimal(monto.doubleValue()), FechaPago );
+
+        totalPagos = ( totalPagos.add( new BigDecimal(monto.doubleValue()) ) );
+
+
     }
 
 
-    public void AcumulaCancelaciones( String idFactura, BigDecimal monto, Double iva, Date FechaPago, Integer piezas ) {
+    public void AcumulaCancelaciones( String idFactura, BigDecimal monto, Date FechaPago ) {
         IngresoPorFactura ingreso = FindOrCreate( pagos, idFactura );
-        double ivaMonto = (iva/porcentaje);
-        ingreso.AcumulaCancelaciones( new BigDecimal(monto.doubleValue()/( 1+ivaMonto )), FechaPago );
-        ingreso.AcumulaCancelacionesSinIva( monto, FechaPago, new BigDecimal(ivaMonto), piezas );
-        totalPagosIva = totalPagosIva.subtract( monto );
-        contador = contador.subtract( new BigDecimal( 1 ) );
-        this.piezas = this.piezas-piezas;
+
+        ingreso.AcumulaCancelaciones(new BigDecimal(monto.doubleValue()), FechaPago);
+
+
+
+
     }
 
-    public void AcumulaNotasCredito( String idFactura, BigDecimal monto, Double iva, Date FechaPago, Boolean isNotaCredito ) {
-        IngresoPorFactura ingreso = FindOrCreate( pagos, idFactura );
-        double ivaMonto = (iva/porcentaje);
-        ingreso.AcumulaNotasCredito( new BigDecimal( monto.doubleValue() / ( 1 + ivaMonto ) ), FechaPago );
-        ingreso.AcumulaNotasCreditoSinIva( monto, FechaPago, new BigDecimal( ivaMonto ), isNotaCredito );
-        totalPagosIva = totalPagosIva.subtract( monto );
-        if( isNotaCredito ){
-            contador = contador.subtract( new BigDecimal( 1 ) );
-        }
-    }
 
     public void AcumulaDevolucion( String idFactura, BigDecimal monto, Double iva ) {
         IngresoPorFactura ingreso = FindOrCreate( devoluciones, idFactura );
@@ -277,14 +268,6 @@ public class IngresoPorVendedor {
 
     public void setPromedio(BigDecimal promedio) {
         this.promedio = promedio;
-    }
-
-    public Integer getPiezas() {
-        return piezas;
-    }
-
-    public void setPiezas(Integer piezas) {
-        this.piezas = piezas;
     }
 
     public double getPorcentaje() {

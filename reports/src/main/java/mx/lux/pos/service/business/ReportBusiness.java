@@ -153,40 +153,6 @@ public class ReportBusiness {
         return found;
     }
 
-    public List<IngresoPorVendedor> obtenerIngresoporVendedor( Date fechaInicio, Date fechaFin ) {
-        log.info( "obtenerIngresoporVendedor()" );
-
-        Parametro ivaVigenteParam = parametroRepository.findOne( TipoParametro.IVA_VIGENTE.getValue() );
-        Impuesto iva = impuestoRepository.findOne( ivaVigenteParam.getValor() );
-        Double ivaTasa = iva.getTasa();
-
-        List<IngresoPorVendedor> lstIngresos = new ArrayList<IngresoPorVendedor>();
-        List<Pago> lstpagos = pagoRepository.findByFechaBetweenOrderByFechaAsc( fechaInicio, fechaFin );
-
-        for ( Pago pago : lstpagos ) {
-            if ( isPagoValid( pago ) && pago.getNotaVenta().getFactura() != null &&
-                    !TAG_CANCELADO.equalsIgnoreCase(pago.getNotaVenta().getsFactura()) ) {
-                String idEmpleado = pago.getIdEmpleado();
-                IngresoPorVendedor ingreso = FindorCreate( lstIngresos, idEmpleado );
-                ingreso.AcumulaPago( pago.getNotaVenta().getFactura(), pago.getMonto(), ivaTasa, pago.getFecha(), 0 );
-            }
-        }
-
-        List<Devolucion> lstDevoluciones = devolucionRepository.findByFechaBetween( fechaInicio, fechaFin );
-        for ( Devolucion devolucion : lstDevoluciones ) {
-            Integer idPago = devolucion.getIdPago();
-            Pago pagos = pagoRepository.findOne( idPago );
-            String idEmpleado = pagos.getIdEmpleado();
-            IngresoPorVendedor devoluciones = FindorCreate( lstIngresos, idEmpleado );
-            devoluciones.AcumulaDevolucion( pagos.getNotaVenta().getFactura(), devolucion.getMonto(), ivaTasa );
-        }
-
-        for( IngresoPorVendedor ingreso : lstIngresos ){
-            ingreso.setTotalPagosIva( ingreso.getTotalPagosIva().divide(new BigDecimal(1+(ivaTasa/100)), 10, RoundingMode.HALF_EVEN) );
-        }
-        return lstIngresos;
-    }
-
     public IngresoPorVendedor FindorCreate( List<IngresoPorVendedor> lstIngresos, String idEmpleado ) {
         IngresoPorVendedor found = null;
         for ( IngresoPorVendedor ingresos : lstIngresos ) {
@@ -227,64 +193,76 @@ public class ReportBusiness {
     }
 
     public List<IngresoPorVendedor> obtenerVentasporVendedor( Date fechaInicio, Date fechaFin ) {
-        log.info( "obtenerVentasporVendedor()" );
-
-        Parametro ivaVigenteParam = parametroRepository.findOne( TipoParametro.IVA_VIGENTE.getValue() );
-        Impuesto iva = impuestoRepository.findOne( ivaVigenteParam.getValor() );
-        Double ivaTasa = iva.getTasa();
 
         List<IngresoPorVendedor> lstIngresos = new ArrayList<IngresoPorVendedor>();
+        List<String> empleados = notaVentaRepository.empleadosFechas(fechaInicio,fechaFin);
+
+        for(String empleado : empleados){
+
+
         QNotaVenta notaVenta = QNotaVenta.notaVenta;
         List<NotaVenta> lstVentas = ( List<NotaVenta> ) notaVentaRepository.findAll( notaVenta.factura.isNotEmpty().and( notaVenta.factura.isNotNull() ).
-                and( notaVenta.fechaHoraFactura.between( fechaInicio, fechaFin ) ).and( notaVenta.sFactura.ne( "T" ) ),
+                and( notaVenta.fechaHoraFactura.between( fechaInicio, fechaFin ) ).and(notaVenta.sFactura.ne("T")).and(notaVenta.idEmpleado.eq(empleado.trim())),
                 notaVenta.idEmpleado.asc(), notaVenta.fechaHoraFactura.asc() );
 
-        for ( NotaVenta venta : lstVentas ) {
-            if ( venta.getFactura() != null && ( !venta.getsFactura().equals( "E" ) || !venta.getsFactura().equals( "T" ) ) ) {
-                String idEmpleado = venta.getIdEmpleado();
-                Integer piezas = 0;
-                for(DetalleNotaVenta detalle : venta.getDetalles()){
-                    if( detalle.getPrecioUnitLista().compareTo(BigDecimal.ZERO) > 0 ){
-                        piezas = piezas+detalle.getCantidadFac().intValue();
-                    }
-                }
-                IngresoPorVendedor ingreso = FindorCreate( lstIngresos, idEmpleado );
-                ingreso.AcumulaPago( venta.getFactura(), venta.getVentaNeta(), ivaTasa, venta.getFechaHoraFactura(), piezas );
-            }
+        IngresoPorVendedor ingreso = agregaRegistros(lstVentas);
+
+
+        lstIngresos.add(ingreso);
+
         }
 
-        QModificacion modificacion = QModificacion.modificacion;
-        List<Modificacion> lstModificaciones = ( List<Modificacion> ) modificacionRepository.findAll(modificacion.fecha.between(fechaInicio,fechaFin).
-                and( modificacion.notaVenta.fechaHoraFactura.notBetween( fechaInicio, fechaFin ) ));
-        for ( Modificacion mod : lstModificaciones ) {
-            if( mod.getTipo().equalsIgnoreCase("can") ){
-                Integer piezas = 0;
-                for(DetalleNotaVenta detalle : mod.getNotaVenta().getDetalles()){
-                    if( detalle.getPrecioUnitLista().compareTo(BigDecimal.ZERO) > 0 ){
-                        piezas = piezas+detalle.getCantidadFac().intValue();
-                    }
-                }
-                String idEmpleado = mod.getNotaVenta().getIdEmpleado();
-                IngresoPorVendedor devoluciones = FindorCreate( lstIngresos, idEmpleado );
-                devoluciones.AcumulaCancelaciones( mod.getNotaVenta().getFactura(), mod.getNotaVenta().getVentaNeta(), ivaTasa, mod.getNotaVenta().getFechaHoraFactura(), piezas );
-            }
-        }
-
-        for( NotaVenta notaCredito : lstVentas ){
-            for(Pago pago : notaCredito.getPagos()){
-                if(pago.getIdFPago().equalsIgnoreCase("NOT") || pago.getIdFPago().equalsIgnoreCase("TR")){
-                    String idEmpleado = notaCredito.getIdEmpleado();
-                    Boolean isNotaCredito = false;
-                    if( pago.getIdFPago().equalsIgnoreCase("NOT") ){
-                        isNotaCredito = true;
-                    }
-                    IngresoPorVendedor devoluciones = FindorCreate( lstIngresos, idEmpleado );
-                    devoluciones.AcumulaNotasCredito( notaCredito.getFactura(), pago.getMonto(), ivaTasa, pago.getFecha(), isNotaCredito );
-                }
-            }
-        }
 
         return lstIngresos;
+    }
+
+    private IngresoPorVendedor agregaRegistros(List<NotaVenta> lstVentas){
+        List<IngresoPorFactura> ingresoPorFacturas = new ArrayList<IngresoPorFactura>();
+        NotaVenta nVenta = new NotaVenta();
+        for ( NotaVenta venta : lstVentas ) {
+            if ( venta.getFactura() != null ) {
+                String idEmpleado = venta.getIdEmpleado();
+                String articulos = new String();
+
+                for(DetalleNotaVenta detalle : venta.getDetalles()){
+
+                    if( detalle.getArticulo() != null){
+
+                        articulos =  detalle.getArticulo().getArticulo()  + ',' + articulos;
+                    }
+
+
+                }
+
+                IngresoPorFactura ingresoPorFactura = new IngresoPorFactura(venta.getFactura());
+                ingresoPorFactura.setTotal(venta.getVentaNeta().add(venta.getMontoDescuento()));
+                ingresoPorFactura.setFechaPago(venta.getFechaHoraFactura());
+                ingresoPorFactura.setDescripcion(articulos);
+                ingresoPorFactura.setSumaMonto(venta.getVentaTotal());
+                List<Descuento> descuentos =  descuentoRepository.findByIdFactura(venta.getId());
+                String  cupon = new String();
+                for(Descuento descuento : descuentos){
+                    cupon = descuento.getClave() + ' ' + cupon;
+                }
+
+                ingresoPorFactura.setColor(cupon);
+                ingresoPorFacturas.add(ingresoPorFactura);
+
+
+
+            }
+            nVenta=venta;
+        }
+
+
+
+
+        IngresoPorVendedor ingreso = new  IngresoPorVendedor();
+        ingreso.setIdEmpleado(nVenta.getIdEmpleado());
+        ingreso.setNombre(nVenta.getEmpleado().getNombreCompleto());
+        ingreso.setPagos(ingresoPorFacturas);
+
+        return ingreso;
     }
 
     public List<FacturasPorEmpleado> obtenerFacturasporVendedor( Date fechaInicio, Date fechaFin ) {

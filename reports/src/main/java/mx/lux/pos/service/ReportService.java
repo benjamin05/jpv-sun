@@ -8,13 +8,10 @@ public interface ReportService {
 
     String obtenerReporteIngresosXSucursal( Date fechaInicio, Date fechaFin );
 
-    String obtenerReporteIngresosXVendedorResumido( Date fechaInicio, Date fechaFin );
 
-    String obtenerReporteIngresosXVendedorCompleto( Date fechaInicio, Date fechaFin );
 
     String obtenerReporteVentas( Date fechaInicio, Date fechaFin );
 
-    String obtenerReporteVentasporVendedorResumido( Date fechaInicio, Date fechaFin );
 
     String obtenerReporteVentasporVendedorCompleto( Date fechaInicio, Date fechaFin );
 
