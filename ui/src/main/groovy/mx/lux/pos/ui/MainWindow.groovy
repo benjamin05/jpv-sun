@@ -351,13 +351,13 @@ class MainWindow extends JFrame implements KeyListener {
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.IncomePerBranch )
                                 }
-                        )*/
+                        )
                         sellerRevenueReportMenuItem = menuItem( text: "Ingresos por Vendedor",
                                 visible: false,
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.SellerRevenue )
                                 }
-                        )
+                        )*/
                         kardexMenuItem = menuItem( text: "Kardex por Articulo",
                                 visible: false,
                                 actionPerformed: {

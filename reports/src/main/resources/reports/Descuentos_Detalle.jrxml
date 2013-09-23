@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Descuentos_Detalle" language="groovy" pageWidth="756" pageHeight="792" columnWidth="756" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="00c3149b-0eb7-417b-ba15-b8763a200ea8">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="121"/>
+	<property name="ireport.x" value="3"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/home/opticalux/proyectos/jpv/reports/src/main/resources/reports/"]]></defaultValueExpression>
 	</parameter>
 	<field name="fecha" class="java.util.Date"/>
-	<field name="idFactura" class="java.lang.String"/>
+	<field name="notaVenta.factura" class="java.lang.String"/>
 	<field name="idEmpleado" class="java.lang.String"/>
 	<field name="notaVenta.detalles" class="java.util.Collection"/>
 	<field name="descripcionDescuento" class="java.lang.String"/>
@@ -94,7 +94,7 @@
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{idFactura}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{notaVenta.factura}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement uuid="d45f9df5-af9c-4ec3-b00c-04672102fb8e" x="128" y="0" width="58" height="12"/>
