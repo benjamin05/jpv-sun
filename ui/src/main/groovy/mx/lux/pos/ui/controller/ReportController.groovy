@@ -130,10 +130,6 @@ class ReportController {
     Date reportForDateEnd = twoDateFilterDialog.getSelectedDateEnd()
     boolean resumen = twoDateFilterDialog.getCbResume()
     if ( reportForDateStart != null && reportForDateEnd != null && twoDateFilterDialog.button ) {
-      if ( resumen == true ) {
-        log.debug( "Imprime el reporte de Ventas por Vendedor Resumido" )
-        reportService.obtenerReporteVentasporVendedorResumido( reportForDateStart, reportForDateEnd )
-      }
       if ( resumen == false ) {
         reportService.obtenerReporteVentasporVendedorCompleto( reportForDateStart, reportForDateEnd )
         log.debug( "Imprime el reporte de Ventas por Vendedor Completo" )

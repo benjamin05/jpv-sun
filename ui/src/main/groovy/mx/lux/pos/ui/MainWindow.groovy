@@ -260,11 +260,11 @@ class MainWindow extends JFrame implements KeyListener {
                                 cancellationReportMenuItem.visible = userLoggedIn
                                 dailyCloseReportMenuItem.visible = userLoggedIn
                                 //incomePerBranchReportMenuItem.visible = userLoggedIn
-                                sellerRevenueReportMenuItem.visible = userLoggedIn
+                                //sellerRevenueReportMenuItem.visible = userLoggedIn
                                 undeliveredJobsReportMenuItem.visible = userLoggedIn
                                 salesReportMenuItem.visible = userLoggedIn
                                 //salesByLineReportMenuItem.visible = userLoggedIn
-                                //salesBySellerReportMenuItem.visible = userLoggedIn
+                                salesBySellerReportMenuItem.visible = userLoggedIn
                                 //salesByBrandReportMenuItem.visible = userLoggedIn
                                 //salesBySellerByBrandMenuItem.visible = userLoggedIn
                                 stockbyBrandMenuItem.visible = userLoggedIn
@@ -417,14 +417,14 @@ class MainWindow extends JFrame implements KeyListener {
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.SalesbyBrand )
                                 }
-                        )
+                        )*/
                         salesBySellerReportMenuItem = menuItem( text: "Ventas por Vendedor",
                                 visible: false,
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.SalesbySeller )
                                 }
                         )
-                        salesBySellerByBrandMenuItem = menuItem( text: "Ventas por Vendedor por Marca",
+                        /*salesBySellerByBrandMenuItem = menuItem( text: "Ventas por Vendedor por Marca",
                                 visible: false,
                                 actionPerformed: {
                                     ReportController.fireReport( ReportController.Report.SalesbySellerbyBrand )
