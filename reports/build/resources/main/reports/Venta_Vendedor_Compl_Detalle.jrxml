@@ -9,35 +9,27 @@
 	<field name="idEmpleado" class="java.lang.String"/>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="pagos" class="java.util.List"/>
-	<field name="contador" class="java.math.BigDecimal"/>
-	<field name="noFacturas" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="61" splitType="Stretch">
+		<band height="60" splitType="Stretch">
 			<textField>
-				<reportElement uuid="bd40145a-b122-48d2-adb2-1f8b3ca84c96" x="218" y="13" width="73" height="14"/>
+				<reportElement uuid="bd40145a-b122-48d2-adb2-1f8b3ca84c96" x="21" y="13" width="104" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{idEmpleado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="78a43f27-81fe-4bbc-9895-ab7b99c5ca57" x="291" y="13" width="196" height="14"/>
+				<reportElement uuid="78a43f27-81fe-4bbc-9895-ab7b99c5ca57" x="125" y="13" width="474" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="c44d80ed-bdcf-4ccf-9ded-a87b37530829" x="218" y="39" width="238" height="22"/>
-				<subreportParameter name="contador">
-					<subreportParameterExpression><![CDATA[$F{contador}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="noFacturas">
-					<subreportParameterExpression><![CDATA[$F{noFacturas}]]></subreportParameterExpression>
-				</subreportParameter>
+				<reportElement uuid="c44d80ed-bdcf-4ccf-9ded-a87b37530829" x="21" y="26" width="578" height="22"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pagos})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["reports/Venta_vendedor_Compl_Facturas.jasper"]]></subreportExpression>
 			</subreport>

@@ -1,5 +1,7 @@
 package mx.lux.pos.model;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -41,9 +43,13 @@ public class IngresoPorFactura {
     private BigDecimal sumaMonto;
     private Boolean mostrarArticulos;
     private String idGenerico;
+    private String tipoCan;
+    private String factTransf;
     private Integer noFacturas;
     private List<DetalleNotaVenta> lstArticulos;
     private static final String TAG_CANCELADO = "T";
+    private static final String TAG_DEVUELTO = "d";
+    private static final String TAG_TRANSFERIDO = "t";
 
     public IngresoPorFactura( String idFactura ) {
         this.idFactura = idFactura;
@@ -66,6 +72,8 @@ public class IngresoPorFactura {
         montoDescuento = BigDecimal.ZERO;
         montoConDesc = BigDecimal.ZERO;
         montoSinDesc = BigDecimal.ZERO;
+        factTransf = "";
+        tipo = "";
     }
 
     public IngresoPorFactura( BigDecimal monto ) {
@@ -150,6 +158,19 @@ public class IngresoPorFactura {
         modId = modificacion.getId();
         idFactura = modificacion.getNotaVenta().getFactura();
         lstDetalles = modificacion.getNotaVenta().getDetalles();
+        for(Devolucion dev : modificacion.getDevolucion()){
+            if(dev.getTipo().trim().equalsIgnoreCase(TAG_DEVUELTO) && !tipo.contains("Devolucion") ){
+                tipo = tipo + ", Devolucion";
+            } else if(dev.getTipo().trim().equalsIgnoreCase(TAG_TRANSFERIDO) && !tipo.contains("Transferencia")){
+                tipo = tipo + ", Transferencia";
+            }
+
+            if(StringUtils.trimToEmpty(dev.getTransf()) != ""){
+                factTransf = factTransf + ", " + dev.getTransf().trim();
+            }
+        }
+        tipo = tipo.replaceFirst( ", ", "" );
+        factTransf = factTransf.replaceFirst( ", ", "" );
     }
 
     public void AcumulaMarca( Articulo articulo, Precio precio ) {
@@ -511,5 +532,21 @@ public class IngresoPorFactura {
 
     public void setMontoSinDesc(BigDecimal montoSinDesc) {
         this.montoSinDesc = montoSinDesc;
+    }
+
+    public String getTipoCan() {
+        return tipoCan;
+    }
+
+    public void setTipoCan(String tipoCan) {
+        this.tipoCan = tipoCan;
+    }
+
+    public String getFactTransf() {
+        return factTransf;
+    }
+
+    public void setFactTransf(String factTransf) {
+        this.factTransf = factTransf;
     }
 }
