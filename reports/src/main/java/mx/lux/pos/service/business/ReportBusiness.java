@@ -228,24 +228,36 @@ public class ReportBusiness {
 
                     if( detalle.getArticulo() != null){
 
-                        articulos =  detalle.getArticulo().getArticulo()  + ',' + articulos;
+                        articulos =  detalle.getArticulo().getArticulo()  + "," + articulos;
                     }
 
 
                 }
 
                 IngresoPorFactura ingresoPorFactura = new IngresoPorFactura(venta.getFactura());
-                ingresoPorFactura.setTotal(venta.getVentaNeta().add(venta.getMontoDescuento()));
+                ingresoPorFactura.setTotal(venta.getVentaNeta());
                 ingresoPorFactura.setFechaPago(venta.getFechaHoraFactura());
                 ingresoPorFactura.setDescripcion(articulos);
-                ingresoPorFactura.setSumaMonto(venta.getVentaTotal());
-                List<Descuento> descuentos =  descuentoRepository.findByIdFactura(venta.getId());
-                String  cupon = new String();
-                for(Descuento descuento : descuentos){
-                    cupon = descuento.getClave() + ' ' + cupon;
+
+                List<Pago> pagos = pagoRepository.findByIdFactura(venta.getId());
+                BigDecimal cupon = new BigDecimal(0);
+                for(Pago pago : pagos){
+                    if(pago.getIdFPago() != null){
+                        if(pago.getIdFPago().trim().equals("C1") ||pago.getIdFPago().trim().equals("C2") || pago.getIdFPago().trim().equals("C3") || pago.getIdFPago().trim().equals("C4") ){
+                            cupon = pago.getMonto();
+                        }
+                    }
+                   
                 }
 
-                ingresoPorFactura.setColor(cupon);
+                String cuponString = cupon.toString();
+
+                ingresoPorFactura.setSumaMonto(venta.getVentaTotal().subtract(cupon));
+
+
+
+                ingresoPorFactura.setColor(cuponString);
+
                 ingresoPorFacturas.add(ingresoPorFactura);
 
 
@@ -1758,7 +1770,7 @@ public class ReportBusiness {
         List<Pago> lstPagos = new ArrayList<Pago>();
         QDevolucion dev = QDevolucion.devolucion;
         List<Devolucion> lstDevoluciones = ( List<Devolucion> ) devolucionRepository.findAll( dev.fecha.between( fechaInicio, fechaFin ).
-                and( dev.tipo.eq( String.valueOf( 'd' ) ) ), dev.idPago.asc() );
+                and( dev.tipo.eq( String.valueOf( "d" ) ) ), dev.idPago.asc() );
         for( Devolucion devolucion : lstDevoluciones ){
             ResumenCierre ingreso = FindOrCreateCierreDiario( lstIngresos, fechaInicio );
             ingreso.acumulaDevolucionesPorDia( devolucion );

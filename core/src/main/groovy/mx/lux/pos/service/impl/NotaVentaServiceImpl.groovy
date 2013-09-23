@@ -431,7 +431,9 @@ class NotaVentaServiceImpl implements NotaVentaService {
         dateTo = new Date( dateTo.next().time - 1 )
         log.debug( "fecha inicio: ${dateFrom?.format( DATE_TIME_FORMAT )}" )
         log.debug( "fecha fin: ${dateTo?.format( DATE_TIME_FORMAT )}" )
-        builder.and( qNotaVenta.fechaHoraFactura.between( dateFrom, dateTo ) )
+          if(!StringUtils.isNotBlank( folio )){
+          builder.and( qNotaVenta.fechaHoraFactura.between( dateFrom, dateTo ) )
+      }
       }
       if ( StringUtils.isNotBlank( folio ) ) {
         log.debug( "folio: ${folio}" )

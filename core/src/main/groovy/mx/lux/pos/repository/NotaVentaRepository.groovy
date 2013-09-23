@@ -28,7 +28,7 @@ interface NotaVentaRepository extends JpaRepository<NotaVenta, String>, QueryDsl
   @Query( value = "DELETE FROM nota_venta WHERE id_factura = ?1", nativeQuery = true )
   void deleteByIdFactura( String pIdFactura )
 
-  @Query( value = "SELECT id_empleado FROM nota_venta where cast(fecha_hora_factura as date) between ?1 and ?2 group by id_empleado", nativeQuery = true )
+  @Query( value = "SELECT id_empleado FROM nota_venta where cast(fecha_hora_factura as date) between ?1 and ?2 group by id_empleado order by id_empleado asc", nativeQuery = true )
   List<String> empleadosFechas(Date inicio, Date fin)
 
   //@Query( featureId = "SELECT nv FROM nota_venta nv WHERE factura = ''", nativeQuery = true )
