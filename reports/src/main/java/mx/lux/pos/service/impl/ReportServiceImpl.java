@@ -32,6 +32,7 @@ public class ReportServiceImpl implements ReportService {
     private static String INGRESOS_POR_VENDEDOR_RESUMIDO = "reports/Ingresos_Vendedor_Resumido.jrxml";
     private static String INGRESOS_POR_VENDEDOR_COMPLETO = "reports/Ingresos_Vendedor_Completo.jrxml";
     private static String VENTAS = "reports/Ventas.jrxml";
+    private static String CUPONES = "reports/Cupones.jrxml";
     private static String VENTAS_MASVISION = "reports/Ventas_MasVision.jrxml";
     private static String VENTAS_COMPLETO = "reports/Ventas_Completo.jrxml";
     private static String VENTAS_POR_VENDEDOR_COMPLETO = "reports/Venta_Por_Vendedor_Completo.jrxml";
@@ -1372,5 +1373,35 @@ public class ReportServiceImpl implements ReportService {
         log.info( "reporte:{}", reporte );
 
         return null;
+    }
+
+
+    public String obtenerReporteDeCupones( Date dateStart, Date dateEnd ){
+      log.info( "obtenerReporteDeCupones()" );
+
+      File report = new File( System.getProperty( "java.io.tmpdir" ), "Cupones.html" );
+      org.springframework.core.io.Resource template = new ClassPathResource( CUPONES );
+      log.info( "Ruta:{}", report.getAbsolutePath() );
+
+      dateStart = DateUtils.truncate( dateStart, Calendar.DAY_OF_MONTH );
+      dateEnd = new Date( DateUtils.ceiling( dateEnd, Calendar.DAY_OF_MONTH ).getTime() - 1 );
+      Sucursal sucursal = sucursalService.obtenSucursalActual();
+
+      Parametro ivaVigenteParam = parametroRepository.findOne( TipoParametro.IVA_VIGENTE.getValue() );
+      Impuesto iva = impuestoRepository.findOne( ivaVigenteParam.getValor() );
+      BigDecimal ivaTasa = new BigDecimal( iva.getTasa() ).divide( new BigDecimal( 100 ) );
+
+      List<VentasPorDia> lstCupones = reportBusiness.obtenerVentasPorCupones( dateStart, dateEnd );
+
+      Map<String, Object> parametros = new HashMap<String, Object>();
+      parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
+      parametros.put( "fechaInicio", new SimpleDateFormat( "dd/MM/yyyy" ).format( dateStart ) );
+      parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( dateEnd ) );
+      parametros.put( "sucursal", sucursal.getNombre() );
+      parametros.put( "lstCupones", lstCupones );
+      String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
+      log.info( "reporte:{}", reporte );
+
+      return null;
     }
 }

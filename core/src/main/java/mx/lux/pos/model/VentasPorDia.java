@@ -34,6 +34,7 @@ public class VentasPorDia {
     private BigDecimal total;
     private Double montoSinIva;
     private String empleado;
+    private String descripcion;
     private Boolean esNotaCredito;
 
     private static final String TAG_CUPON = "CUPON";
@@ -254,6 +255,15 @@ public class VentasPorDia {
         montoSinIva = importeTotalSinIva*-1;
     }
 
+
+    public void acumulaCupones( Pago pago ){
+      descripcion = pago.geteTipoPago().getDescripcion();
+      montoTotal = montoTotal.add(pago.getMonto());
+      contadorArt = contadorArt+1;
+    }
+
+
+
     public Integer getContadorArt() {
         return contadorArt;
     }
@@ -444,5 +454,13 @@ public class VentasPorDia {
 
     public void setFechaEntrega(Date fechaEntrega) {
         this.fechaEntrega = fechaEntrega;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }

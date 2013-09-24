@@ -41,6 +41,7 @@ class ReportController {
     WorkSubmitted, TaxBills, Discounts, PromotionsinSales,
     Payments, Quote, Exams, OptometristSales,
     Promotions, Kardex, SalesToday, PaymentsbyPeriod,
+    Coupon
   }
 
   @Autowired
@@ -496,6 +497,21 @@ class ReportController {
     }
   }
 
+
+  static void coupons(){
+      log.debug( 'imprime el reporte de Cupones' )
+      if( twoDateDialog == null ){
+          twoDateDialog = new TwoDatesSelectionDialog()
+      }
+      twoDateDialog.setTitle( 'Cupones' )
+      twoDateDialog.activate()
+      Date dateStart = twoDateDialog.getSelectedDateStart()
+      Date dateEnd = twoDateDialog.getSelectedDateEnd()
+      if( dateStart != null && dateEnd != null ){
+          reportService.obtenerReporteDeCupones( dateStart, dateEnd )
+      }
+  }
+
   // Public Methods
   static void fireReport( Report pReport ) {
     switch ( pReport ) {
@@ -524,6 +540,7 @@ class ReportController {
       case Report.Kardex: kardexByDateAndSkuReport(); break;
       case Report.SalesToday: todaySales(); break;
       case Report.PaymentsbyPeriod: paymentsByPeriod(); break;
+      case Report.Coupon: coupons(); break;
     }
   }
 }

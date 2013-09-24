@@ -1908,4 +1908,23 @@ public class ReportBusiness {
 
         return lstCotizaciones;
     }
+
+
+  public List<VentasPorDia> obtenerVentasPorCupones( Date fechaInicio, Date fechaFin ){
+    log.debug( "obtenerVentasPorCupones" );
+
+    List<VentasPorDia> lstCupones = new ArrayList<VentasPorDia>();
+    QPago payment = QPago.pago;
+    List<Pago> lstPagos = (List<Pago>) pagoRepository.findAll( payment.fecha.between(fechaInicio,fechaFin).
+            and(payment.idFPago.startsWith("C")).and(payment.notaVenta.sFactura.ne(TAG_CANCELADO)));
+    for(Pago pago : lstPagos){
+      VentasPorDia venta = findorCreateFactura(lstCupones, pago.getIdFPago());
+      venta.acumulaCupones( pago );
+    }
+
+    return lstCupones;
+  }
+
+
+
 }

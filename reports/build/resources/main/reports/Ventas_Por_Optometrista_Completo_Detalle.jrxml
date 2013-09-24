@@ -18,30 +18,23 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="61" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="96321604-b275-4a0d-98b0-7acfffb001b6" x="0" y="21" width="100" height="14"/>
-				<textElement>
-					<font fontName="DejaVu Sans" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Optometrista]]></text>
-			</staticText>
+		<band height="88" splitType="Stretch">
 			<textField>
-				<reportElement uuid="93ce3f87-0faf-4316-ba42-f4769b83db9f" x="135" y="21" width="202" height="14"/>
+				<reportElement uuid="93ce3f87-0faf-4316-ba42-f4769b83db9f" x="36" y="15" width="202" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="bea09f65-2525-4c99-8d5e-6743366f1ef8" x="100" y="21" width="35" height="14"/>
+				<reportElement uuid="bea09f65-2525-4c99-8d5e-6743366f1ef8" x="1" y="15" width="35" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{idEmpleado}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="80d90e01-aadf-4401-986f-83065130e592" x="67" y="35" width="545" height="26"/>
+				<reportElement uuid="80d90e01-aadf-4401-986f-83065130e592" x="67" y="29" width="545" height="26"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pagos})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["reports/Ventas_Por_Optometrista_Completo_Lista.jasper"]]></subreportExpression>
 			</subreport>

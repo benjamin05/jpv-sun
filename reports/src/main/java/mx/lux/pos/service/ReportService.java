@@ -73,4 +73,6 @@ public interface ReportService {
     String obtenerReporteVentasMasVision( Date fechaInicio, Date fechaFin );
 
     public String obtenerReporteDescuentosMasVision( Date fechaInicio, Date fechaFin, String key );
+
+    public String obtenerReporteDeCupones( Date dateStart, Date dateEnd );
 }

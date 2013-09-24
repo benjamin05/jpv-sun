@@ -22,6 +22,8 @@ public class QModificacion extends EntityPathBase<Modificacion> {
 
     public final StringPath causa = createString("causa");
 
+    public final SetPath<Devolucion, QDevolucion> devolucion = this.<Devolucion, QDevolucion>createSet("devolucion", Devolucion.class, QDevolucion.class);
+
     public final QEmpleado empleado;
 
     public final DateTimePath<java.util.Date> fecha = createDateTime("fecha", java.util.Date.class);
