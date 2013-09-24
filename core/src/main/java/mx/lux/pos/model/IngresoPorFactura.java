@@ -168,7 +168,7 @@ public class IngresoPorFactura {
             }
 
             if(StringUtils.trimToEmpty(dev.getTransf()) != ""){
-                factTransf = factTransf + ", " + dev.getTransf().trim();
+                factTransf = factTransf + ", " + dev.getModificacion().getNotaVenta().getFactura().trim();
             }
         }
         tipo = tipo.replaceFirst( ", ", "" );

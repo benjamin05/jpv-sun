@@ -818,7 +818,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     List<Pago> pagos = pagoRepository.findBy_Fecha_IdFactura_DescripcionTerminal( fechaCierre, terminal, plan ) ?: [ ]
     List<Pago> selected = new ArrayList<Pago>()
     for ( Pago p : pagos ) {
-      if ( 'TCM'.equals( p.formaPago?.id ) || 'TCD'.equals( p.formaPago?.id ) || 'TDM'.equals( p.formaPago?.id )
+      if ( 'TC'.equals( p.formaPago?.id ) || 'TCD'.equals( p.formaPago?.id ) || 'TD'.equals( p.formaPago?.id )
           || 'TDD'.equals( p.formaPago?.id ) ) {
         if( !StringUtils.trimToEmpty(p.notaVenta.factura).isEmpty() ){
           selected.add( p )
