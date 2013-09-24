@@ -426,7 +426,8 @@ class TicketServiceImpl implements TicketService {
                   uso: usoLente,
                   tratamiento: trat,
                   material: notaVenta?.udf2,
-                  formaLente: notaVenta?.udf3
+                  formaLente: notaVenta?.udf3,
+                  surte: artArmazon?.surte
 
           ]
                 println('RecetaObservaciones: '+rx?.observacionesR)
@@ -542,7 +543,7 @@ class TicketServiceImpl implements TicketService {
         // BigDecimal precio = tmp?.precioUnitFinal?.multiply( tmp?.cantidadFac ) ?: 0
         BigDecimal precio = tmp?.precioUnitLista?.multiply( tmp?.cantidadFac ) ?: 0
         subtotal = subtotal.add( precio )
-        String descripcion = "[${tmp?.idArticulo}] ${tmp?.articulo?.descripcion}"
+        String descripcion = "[${tmp?.articulo?.articulo}] ${tmp?.articulo?.descripcion}"
         String descripcion1
         String descripcion2 = ""
         if ( descripcion.length() > 36 ) {
