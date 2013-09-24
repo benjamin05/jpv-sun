@@ -510,15 +510,16 @@ class OrderController {
         }
     }
 
-    static Order placeOrder(Order order) {
+    static Order placeOrder(Order order, String idEmpleado) {
         log.info("registrando orden id: ${order?.id}, cliente: ${order?.customer?.id}")
         if (StringUtils.isNotBlank(order?.id) && order?.customer?.id) {
             NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(order.id)
             if (StringUtils.isNotBlank(notaVenta?.id)) {
-                User user = Session.get(SessionItem.USER) as User
-                if (StringUtils.isBlank(notaVenta.idEmpleado)) {
-                    notaVenta.idEmpleado = user?.username
-                }
+
+              //  if (StringUtils.isBlank(notaVenta.idEmpleado)) {
+
+                    notaVenta.idEmpleado = idEmpleado
+              //  }
                 if (notaVenta.idCliente != null) {
                     notaVenta.idCliente = order.customer.id
                 }

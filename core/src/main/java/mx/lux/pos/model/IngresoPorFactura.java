@@ -154,7 +154,7 @@ public class IngresoPorFactura {
     }
 
     public void AcumulaFacturas( Modificacion modificacion ) {
-
+        montoPago = modificacion.getNotaVenta().getVentaNeta();
         fechaPago = modificacion.getNotaVenta().getFechaHoraFactura();
         fechaCancelacion = modificacion.getFecha();
         modId = modificacion.getId();

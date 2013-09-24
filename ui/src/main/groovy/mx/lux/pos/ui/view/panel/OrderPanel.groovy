@@ -605,6 +605,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
         SurteSwitch surteSwitch = OrderController.surteCallWS(branch, item, 'S', order)
         surteSwitch = surteSu(item, surteSwitch)
+        Boolean esInventariable = ItemController.esInventariable( item.id )
         if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
             String surte = surteSwitch?.surte
             if (item.stock > 0) {
@@ -614,28 +615,33 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     order.customer = customer
                 }
             } else {
-                SalesWithNoInventory onSalesWithNoInventory = OrderController.requestConfigSalesWithNoInventory()
-                order.customer = customer
-                if (SalesWithNoInventory.ALLOWED.equals(onSalesWithNoInventory)) {
-                    order = OrderController.addItemToOrder(order, item, surte)
-                    controlItem(item)
-                } else if (SalesWithNoInventory.REQUIRE_AUTHORIZATION.equals(onSalesWithNoInventory)) {
-                    boolean authorized
-                    if (AccessController.authorizerInSession) {
-                        authorized = true
-                    } else {
-                        AuthorizationDialog authDialog = new AuthorizationDialog(this, " ")
-                        authDialog.show()
-                        authorized = authDialog.authorized
-                    }
-                    if (authorized) {
+                if( esInventariable ){
+                    SalesWithNoInventory onSalesWithNoInventory = OrderController.requestConfigSalesWithNoInventory()
+                    order.customer = customer
+                    if (SalesWithNoInventory.ALLOWED.equals(onSalesWithNoInventory)) {
                         order = OrderController.addItemToOrder(order, item, surte)
                         controlItem(item)
+                    } else if (SalesWithNoInventory.REQUIRE_AUTHORIZATION.equals(onSalesWithNoInventory)) {
+                        boolean authorized
+                        if (AccessController.authorizerInSession) {
+                            authorized = true
+                        } else {
+                            AuthorizationDialog authDialog = new AuthorizationDialog(this, " ")
+                            authDialog.show()
+                            authorized = authDialog.authorized
+                        }
+                        if (authorized) {
+                            order = OrderController.addItemToOrder(order, item, surte)
+                            controlItem(item)
+                        }
+                    } else {
+                        sb.optionPane(message: MSJ_VENTA_NEGATIVA, messageType: JOptionPane.ERROR_MESSAGE,)
+                                .createDialog(this, TXT_VENTA_NEGATIVA_TITULO)
+                                .show()
                     }
                 } else {
-                    sb.optionPane(message: MSJ_VENTA_NEGATIVA, messageType: JOptionPane.ERROR_MESSAGE,)
-                            .createDialog(this, TXT_VENTA_NEGATIVA_TITULO)
-                            .show()
+                  order = OrderController.addItemToOrder(order, item, surte)
+                  controlItem(item)
                 }
             }
         }
@@ -800,7 +806,11 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void saveOrder() {
-        Order newOrder = OrderController.placeOrder(order)
+        User user = Session.get(SessionItem.USER) as User
+        CambiaVendedorDialog cambiaVendedor = new CambiaVendedorDialog(this,user?.username)
+        cambiaVendedor.show()
+
+        Order newOrder = OrderController.placeOrder(order, cambiaVendedor?.vendedor)
         //CustomerController.saveOrderCountries(order.country)
         this.promotionDriver.requestPromotionSave(newOrder?.id)
         Boolean cSaldo = false

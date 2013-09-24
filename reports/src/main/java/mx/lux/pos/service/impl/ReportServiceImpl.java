@@ -982,6 +982,14 @@ public class ReportServiceImpl implements ReportService {
 
         QCotizacion cotizacion = QCotizacion.cotizacion;
         List<Cotizaciones> lstCotizaciones = ( List<Cotizaciones> ) reportBusiness.obtenerCotizaciones( fechaInicio, fechaFin );
+        Integer totalCotizaciones = 0;
+        Integer totalCotizacionesConVenta = 0;
+        for( Cotizaciones cotiza : lstCotizaciones ){
+          if(StringUtils.trimToEmpty(cotiza.getFactura()).length() > 0){
+            totalCotizacionesConVenta = totalCotizacionesConVenta+1;
+          }
+          totalCotizaciones = totalCotizaciones+1;
+        }
 
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
@@ -989,6 +997,8 @@ public class ReportServiceImpl implements ReportService {
         parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaFin ) );
         parametros.put( "sucursal", sucursal.getNombre() );
         parametros.put( "lstCotizaciones", lstCotizaciones );
+        parametros.put( "totalCotizaciones", totalCotizaciones );
+        parametros.put( "totalCotizacionesConVenta", totalCotizacionesConVenta );
 
         String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
         log.info( "reporte:{}", reporte );
@@ -1038,6 +1048,7 @@ public class ReportServiceImpl implements ReportService {
         List<DescuentosPorTipo> lstExamenes = reportBusiness.obtenerExamenesporEmpleado( fechaInicio, fechaFin );
         Integer totalRxSinVenta = 0;
         Integer totalRxConVenta = 0;
+        Integer totalRx = 0;
         for(DescuentosPorTipo examen : lstExamenes){
           for(TipoDescuento examenDet : examen.getDescuentos()){
             examenDet.setFactura(examenDet.getFactura().replaceFirst(", ",""));
@@ -1046,6 +1057,7 @@ public class ReportServiceImpl implements ReportService {
             } else {
               totalRxSinVenta = totalRxSinVenta + 1;
             }
+              totalRx = totalRx+1;
           }
         }
 
@@ -1057,6 +1069,7 @@ public class ReportServiceImpl implements ReportService {
         parametros.put( "lstExamenes", lstExamenes );
         parametros.put( "totalRxConVenta", totalRxConVenta );
         parametros.put( "totalRxSinVenta", totalRxSinVenta );
+        parametros.put( "totalRx", totalRx );
 
         String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
         log.info( "reporte:{}", reporte );

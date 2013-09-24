@@ -148,5 +148,8 @@ class ItemController {
      return precio
   }
 
-
+  static Boolean esInventariable( Integer idArticulo ){
+    Boolean esInventariable = articuloService.esInventariable( idArticulo )
+    return esInventariable
+  }
 }

@@ -52,7 +52,7 @@
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Teléfono]]></text>
+				<text><![CDATA[Contacto]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="eaab8ffb-840a-4549-b5b1-8548e04507f2" x="507" y="0" width="93" height="14"/>
