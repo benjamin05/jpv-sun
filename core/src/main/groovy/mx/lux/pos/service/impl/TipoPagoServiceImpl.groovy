@@ -25,7 +25,7 @@ class TipoPagoServiceImpl implements TipoPagoService {
   private static final String TAG_TIPO_PAGO_CUPON1 = 'C1'
   private static final String TAG_TIPO_PAGO_CUPON2 = 'C2'
   private static final String TAG_TIPO_PAGO_CUPON3 = 'C3'
-  private static final String TAG_TIPO_PAGO_CHEQUE = 'CH'
+  private static final String TAG_TIPO_PAGO_CUPON4 = 'C4'
   private static final String TAG_TIPO_PAGO_TRANSFERENCIA = 'TR'
 
   @Resource
@@ -55,7 +55,9 @@ class TipoPagoServiceImpl implements TipoPagoService {
           setTipoPago(4, pago, resultadosTmp)
       } else if(TAG_TIPO_PAGO_CUPON3.equalsIgnoreCase(pago.id.trim())){
           setTipoPago(5, pago, resultadosTmp)
-      } else {
+      } else if(TAG_TIPO_PAGO_CUPON4.equalsIgnoreCase(pago.id.trim())){
+            setTipoPago(6, pago, resultadosTmp)
+      }else {
         resultadosTmp.add(pago)
       }
     }

@@ -1251,15 +1251,18 @@ public class ReportBusiness {
     public List<DescuentosPorTipo> obtenerExamenesporEmpleado( Date fechaInicio, Date fechaFin ) {
 
         List<DescuentosPorTipo> lstExamenes = new ArrayList<DescuentosPorTipo>();
-        QExamen examen = QExamen.examen;
-        List<Examen> lstExamen = ( List<Examen> ) examenRepository.findAll( examen.fechaAlta.between( fechaInicio, fechaFin ) );
-        Integer total = lstExamen.size();
-        for ( Examen examenes : lstExamen ) {
-            String idEmpleado = examenes.getIdAtendio();
-            DescuentosPorTipo desc = EncontraroCrear( lstExamenes, idEmpleado );
-            desc.AcumulaEmpleados( examenes, total );
+        QReceta rx = QReceta.receta;
+        List<Receta> lstRecetas = (List<Receta>)recetaRepository.findAll( rx.fechaReceta.between(fechaInicio,fechaFin),
+                rx.idCliente.asc(), rx.fechaReceta.asc() );
+        Integer total = lstRecetas.size();
+        for ( Receta receta : lstRecetas ) {
+            Examen examen = examenRepository.findOne( receta.getExamen() );
+            if( examen != null ){
+              String idEmpleado = receta.getIdOptometrista();
+              DescuentosPorTipo desc = EncontraroCrear( lstExamenes, idEmpleado );
+              desc.AcumulaEmpleados( examen, total, receta );
+            }
         }
-
 
         return lstExamenes;
     }
@@ -1298,7 +1301,8 @@ public class ReportBusiness {
                 and( venta.factura.isNotNull() ), venta.idEmpleado.asc() );
         QModificacion modificacion = QModificacion.modificacion;
         List<Modificacion> lstCancelaciones = (List<Modificacion>) modificacionRepository.findAll(modificacion.tipo.eq("can").
-                and(modificacion.fecha.notBetween(fechaInicio,fechaFin)).and(modificacion.notaVenta.receta.isNotNull()).
+                and(modificacion.fecha.between(fechaInicio, fechaFin)).and(modificacion.notaVenta.fechaHoraFactura.notBetween(fechaInicio, fechaFin)).
+                and(modificacion.notaVenta.receta.isNotNull()).
                 and(modificacion.notaVenta.factura.isNotNull()).and(modificacion.notaVenta.factura.isNotEmpty()));
 
 
@@ -1308,8 +1312,7 @@ public class ReportBusiness {
             montoTotal = montoTotal.add( ventas.getVentaNeta() );
             String idEmpleado = ventas.getIdEmpleado();
             Receta receta = recetaRepository.findOne( ventas.getReceta() );
-            if(receta.getIdOptometrista().toString().trim().equalsIgnoreCase(ventas.getIdEmpleado().trim())
-                    && ventas.getEmpleado().getIdPuesto() == TAG_PUESTO_OFTALMOLOGO ){
+            if(receta.getIdOptometrista().toString().trim().equalsIgnoreCase(ventas.getIdEmpleado().trim())){
               IngresoPorVendedor ingresos = FindorCreate( lstVentas, idEmpleado );
               ingresos.AcumulaOptometrista( ventas, montoTotal, totalFacturas, ivaTasa );
             }
@@ -1318,8 +1321,7 @@ public class ReportBusiness {
         for ( Modificacion mod : lstCancelaciones ) {
             String idEmpleado = mod.getNotaVenta().getIdEmpleado();
             Receta receta = recetaRepository.findOne( mod.getNotaVenta().getReceta() );
-            if(receta.getIdOptometrista().toString().trim().equalsIgnoreCase(mod.getNotaVenta().getIdEmpleado().trim())
-                    && mod.getNotaVenta().getEmpleado().getIdPuesto() == TAG_PUESTO_OFTALMOLOGO ){
+            if(receta.getIdOptometrista().toString().trim().equalsIgnoreCase(mod.getNotaVenta().getIdEmpleado().trim())){
                 IngresoPorVendedor ingresos = FindorCreate( lstVentas, idEmpleado );
                 ingresos.AcumulaCanOptometrista( mod.getNotaVenta(), totalFacturas, ivaTasa );
             }

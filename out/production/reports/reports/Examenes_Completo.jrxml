@@ -15,6 +15,8 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/home/opticalux/proyectos/jpv/reports/src/main/resources/reports/"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="totalRxConVenta" class="java.lang.String"/>
+	<parameter name="totalRxSinVenta" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -92,13 +94,41 @@
 		</band>
 	</title>
 	<detail>
-		<band height="51" splitType="Stretch">
+		<band height="89" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="4d102d55-a27c-4404-b9aa-47dab9a486ad" x="0" y="12" width="572" height="39"/>
+				<reportElement uuid="4d102d55-a27c-4404-b9aa-47dab9a486ad" x="0" y="49" width="572" height="39"/>
 				<subreportParameter name="SUBREPORT_DIR"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{lstExamenes})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["reports/Examenes_Completo_Detalle.jasper"]]></subreportExpression>
 			</subreport>
+			<staticText>
+				<reportElement uuid="a375ee89-5602-4ac5-a192-d2615b45360c" x="10" y="10" width="157" height="20"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Examenes Con Venta:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="4ed23a9a-b7f4-44ce-8bc3-e1eca08ab84f" x="170" y="10" width="100" height="20"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totalRxConVenta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c4d2f976-5a0e-4cb9-9669-3e80413c9cd3" x="270" y="10" width="158" height="20"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Examenes Sin Venta:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="92876446-f6c5-4bb4-80c1-998bf6ce6a58" x="432" y="10" width="100" height="20"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totalRxSinVenta}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

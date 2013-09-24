@@ -10,55 +10,32 @@
 	<field name="nombreEmpleado" class="java.lang.String"/>
 	<field name="descuentos" class="java.util.List"/>
 	<field name="total" class="java.lang.Integer"/>
+	<field name="rxConVenta" class="java.lang.Integer"/>
+	<field name="rxSinVenta" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="63" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="85d46486-ddb9-4511-98ac-000474b6f964" x="0" y="0" width="56" height="14"/>
-				<textElement>
-					<font fontName="DejaVu Sans" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Empleado:]]></text>
-			</staticText>
+		<band height="73" splitType="Stretch">
 			<textField>
-				<reportElement uuid="1c4673cc-fcab-428d-8bbe-6e6ed15a6018" x="56" y="0" width="41" height="14"/>
+				<reportElement uuid="1c4673cc-fcab-428d-8bbe-6e6ed15a6018" x="0" y="0" width="41" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{idEmpleado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="32368d7c-7eea-4b14-9648-95a592057d4f" x="97" y="0" width="166" height="14"/>
+				<reportElement uuid="32368d7c-7eea-4b14-9648-95a592057d4f" x="41" y="0" width="166" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombreEmpleado}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="55c91b65-2bce-41b5-a0a5-e810a0de60d5" x="97" y="14" width="515" height="39"/>
+				<reportElement uuid="55c91b65-2bce-41b5-a0a5-e810a0de60d5" x="41" y="14" width="571" height="39"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{descuentos})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["reports/Examenes_Completo_Lista.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
-	<summary>
-		<band height="50">
-			<staticText>
-				<reportElement uuid="000052ae-c111-4be2-89ff-1d0f5e473d42" x="0" y="0" width="97" height="14"/>
-				<textElement>
-					<font fontName="DejaVu Sans" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Total:]]></text>
-			</staticText>
-			<textField isBlankWhenNull="false">
-				<reportElement uuid="c098067a-1a9d-4a3e-8ada-502ea49cd044" x="97" y="0" width="100" height="14"/>
-				<textElement>
-					<font fontName="DejaVu Sans" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
-			</textField>
-		</band>
-	</summary>
 </jasperReport>

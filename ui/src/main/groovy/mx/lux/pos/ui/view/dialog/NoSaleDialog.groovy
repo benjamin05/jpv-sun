@@ -408,6 +408,7 @@ class NoSaleDialog extends JDialog {
         receta.setAltOblR(txtAltOblea.text)
 
         receta.setObservacionesR(txtObservaciones.text)
+        receta.setUdf6(cbRazon.getSelectedItem().toString())
         //  receta.setOdPrismaV(cbOdUbic.selectedItem.toString() ?: '')
         // receta.setOiPrismaV(cbOiUbic.selectedItem.toString() ?: '')
         receta.setIdOpt(txtEmpleado.text)
@@ -561,14 +562,21 @@ class NoSaleDialog extends JDialog {
                 if (txt.substring(txt.size() - 2, txt.size() - 1).equals('.')) {
                     txt = txt + '0'
                 }
-            } catch (e) { }
+            } catch (e) {
+
+            }
             try {
+
                 if (txt.substring(txt.size() - 3, txt.size()).equals('.00')) {
                     txt = txt.substring(0, txt.indexOf('.'))
                 } else if (txt.substring(txt.size() - 2, txt.size()).equals('.0')) {
                     txt = txt.substring(0, txt.indexOf('.'))
                 }
-            } catch (e) { }
+            } catch (e) {
+
+            }
+            println(signo)
+            println(txt)
             txtField.text = ''
             Double multiplo = 0.0
             if (txt.length() > 0) {
@@ -576,6 +584,7 @@ class NoSaleDialog extends JDialog {
                 multiplo = number / interval;
                 multiplo = multiplo % 1
                 if (multiplo == 0 || multiplo.toString().equals('-0.0')) {
+
                     if (number >= min && number <= max) {
                         println('nimber: ' + number)
                         println(number.toString().substring(number.toString().indexOf('.'), number.toString().size()))
@@ -613,6 +622,8 @@ class NoSaleDialog extends JDialog {
                                 txtField.text = signo + txt
                             }
                         }
+
+
                     } else {
                         txtField.text = ''
                     }

@@ -47,6 +47,7 @@ public class IngresoPorFactura {
     private String factTransf;
     private Integer noFacturas;
     private List<DetalleNotaVenta> lstArticulos;
+    private String articulos;
     private static final String TAG_CANCELADO = "T";
     private static final String TAG_DEVUELTO = "d";
     private static final String TAG_TRANSFERIDO = "t";
@@ -74,6 +75,7 @@ public class IngresoPorFactura {
         montoSinDesc = BigDecimal.ZERO;
         factTransf = "";
         tipo = "";
+        articulos = "";
     }
 
     public IngresoPorFactura( BigDecimal monto ) {
@@ -239,8 +241,10 @@ public class IngresoPorFactura {
 
     public void AcumulaVentasOpto( NotaVenta venta ) {
         for(DetalleNotaVenta det : venta.getDetalles()){
-          lstArticulos.add( det );
+          //lstArticulos.add( det );
+          articulos =  articulos + ", " + det.getArticulo().getArticulo().trim();
         }
+        articulos = articulos.replaceFirst( ", ", "" );
         fechaPago = venta.getFechaHoraFactura();
         idFactura = venta.getFactura();
         for(Pago pago : venta.getPagos()){
@@ -548,5 +552,13 @@ public class IngresoPorFactura {
 
     public void setFactTransf(String factTransf) {
         this.factTransf = factTransf;
+    }
+
+    public String getArticulos() {
+        return articulos;
+    }
+
+    public void setArticulos(String articulos) {
+        this.articulos = articulos;
     }
 }

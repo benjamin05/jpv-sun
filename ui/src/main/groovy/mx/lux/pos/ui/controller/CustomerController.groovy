@@ -453,7 +453,7 @@ class CustomerController {
             rec.setMaterial_arm( '' )
             rec.setTratamientos( '' )
             rec.setUdf5( '' )
-            rec.setUdf6( '' )
+            rec.setUdf6( receta.udf6 != null ? receta.udf6 : "" )
             rec.setIdRxOri( '' )
             rec.setIdOptometrista( receta.idOpt )
             rec.setFolio( receta.folio )

@@ -14,6 +14,7 @@
 	<field name="montoSinDesc" class="java.math.BigDecimal"/>
 	<field name="montoDescuento" class="java.math.BigDecimal"/>
 	<field name="montoConDesc" class="java.math.BigDecimal"/>
+	<field name="articulos" class="java.lang.String"/>
 	<variable name="idFactura_1" class="java.lang.Integer" calculation="Count">
 		<variableExpression><![CDATA[$F{idFactura}]]></variableExpression>
 	</variable>
@@ -29,7 +30,7 @@
 	<title>
 		<band height="14" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="a044f29a-484f-4534-8e44-7c139337ecb9" x="298" y="0" width="86" height="14"/>
+				<reportElement uuid="a044f29a-484f-4534-8e44-7c139337ecb9" x="313" y="0" width="86" height="14"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
@@ -50,21 +51,21 @@
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="616d1297-2609-4c77-b3b5-05367f7b931c" x="141" y="0" width="157" height="14"/>
+				<reportElement uuid="616d1297-2609-4c77-b3b5-05367f7b931c" x="141" y="0" width="172" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Articulos]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b31a75d2-28c5-4253-8775-42ef548331c0" x="387" y="0" width="100" height="14"/>
+				<reportElement uuid="b31a75d2-28c5-4253-8775-42ef548331c0" x="402" y="0" width="100" height="14"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Monto Cupon]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8a24a58e-e227-438f-8c78-c0f9fa1409b7" x="487" y="0" width="100" height="14"/>
+				<reportElement uuid="8a24a58e-e227-438f-8c78-c0f9fa1409b7" x="502" y="0" width="100" height="14"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
@@ -90,13 +91,8 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fechaPago}]]></textFieldExpression>
 			</textField>
-			<subreport>
-				<reportElement uuid="5e15f0ad-3c3a-488d-8c63-35fd4906fe4c" x="141" y="0" width="157" height="14"/>
-				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{lstArticulos})]]></dataSourceExpression>
-				<subreportExpression><![CDATA["reports/Descuentos_Articulos.jasper"]]></subreportExpression>
-			</subreport>
 			<textField pattern="$#,##0.00">
-				<reportElement uuid="360a8741-14c8-4eeb-805a-34952b3b6ed1" x="298" y="0" width="89" height="14">
+				<reportElement uuid="360a8741-14c8-4eeb-805a-34952b3b6ed1" x="313" y="0" width="89" height="14">
 					<printWhenExpression><![CDATA[$F{montoSinDesc}.signum() == 1]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -105,7 +101,7 @@
 				<textFieldExpression><![CDATA[$F{montoSinDesc}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00">
-				<reportElement uuid="8a42a9d6-270b-41cb-a624-a8ebc698b051" x="387" y="0" width="100" height="14">
+				<reportElement uuid="8a42a9d6-270b-41cb-a624-a8ebc698b051" x="402" y="0" width="100" height="14">
 					<printWhenExpression><![CDATA[$F{montoSinDesc}.signum() == 1]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -114,7 +110,7 @@
 				<textFieldExpression><![CDATA[$F{montoDescuento}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="990cfeb9-fd7a-437e-827f-306a37523639" x="487" y="0" width="100" height="14">
+				<reportElement uuid="990cfeb9-fd7a-437e-827f-306a37523639" x="502" y="0" width="100" height="14">
 					<printWhenExpression><![CDATA[$F{montoSinDesc}.signum() == 1]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -123,7 +119,7 @@
 				<textFieldExpression><![CDATA[$F{montoConDesc}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00">
-				<reportElement uuid="360a8741-14c8-4eeb-805a-34952b3b6ed1" x="298" y="0" width="89" height="14" forecolor="#FF0000">
+				<reportElement uuid="360a8741-14c8-4eeb-805a-34952b3b6ed1" x="313" y="0" width="89" height="14" forecolor="#FF0000">
 					<printWhenExpression><![CDATA[$F{montoSinDesc}.signum() == -1]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -132,7 +128,7 @@
 				<textFieldExpression><![CDATA[$F{montoSinDesc}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00">
-				<reportElement uuid="8a42a9d6-270b-41cb-a624-a8ebc698b051" x="387" y="0" width="100" height="14" forecolor="#FF0000">
+				<reportElement uuid="8a42a9d6-270b-41cb-a624-a8ebc698b051" x="402" y="0" width="100" height="14" forecolor="#FF0000">
 					<printWhenExpression><![CDATA[$F{montoSinDesc}.signum() == -1]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right">
@@ -141,13 +137,20 @@
 				<textFieldExpression><![CDATA[$F{montoDescuento}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="990cfeb9-fd7a-437e-827f-306a37523639" x="487" y="0" width="100" height="14" forecolor="#FF0000">
+				<reportElement uuid="990cfeb9-fd7a-437e-827f-306a37523639" x="502" y="0" width="100" height="14" forecolor="#FF0000">
 					<printWhenExpression><![CDATA[$F{montoSinDesc}.signum() == -1]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{montoConDesc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b689675a-5002-4a86-a6e6-e950e2477f7f" x="141" y="0" width="172" height="14"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{articulos}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

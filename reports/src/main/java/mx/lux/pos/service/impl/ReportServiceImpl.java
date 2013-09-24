@@ -6,6 +6,7 @@ import mx.lux.pos.service.ReportService;
 import mx.lux.pos.service.SucursalService;
 import mx.lux.pos.service.business.Registry;
 import mx.lux.pos.service.business.ReportBusiness;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1034,6 +1035,18 @@ public class ReportServiceImpl implements ReportService {
 
         Sucursal sucursal = sucursalService.obtenSucursalActual();
         List<DescuentosPorTipo> lstExamenes = reportBusiness.obtenerExamenesporEmpleado( fechaInicio, fechaFin );
+        Integer totalRxSinVenta = 0;
+        Integer totalRxConVenta = 0;
+        for(DescuentosPorTipo examen : lstExamenes){
+          for(TipoDescuento examenDet : examen.getDescuentos()){
+            examenDet.setFactura(examenDet.getFactura().replaceFirst(", ",""));
+            if( StringUtils.trimToEmpty(examenDet.getFactura()).length() > 0 ){
+              totalRxConVenta = totalRxConVenta + 1;
+            } else {
+              totalRxSinVenta = totalRxSinVenta + 1;
+            }
+          }
+        }
 
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
@@ -1041,6 +1054,8 @@ public class ReportServiceImpl implements ReportService {
         parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaFin ) );
         parametros.put( "sucursal", sucursal.getNombre() );
         parametros.put( "lstExamenes", lstExamenes );
+        parametros.put( "totalRxConVenta", totalRxConVenta );
+        parametros.put( "totalRxSinVenta", totalRxSinVenta );
 
         String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
         log.info( "reporte:{}", reporte );

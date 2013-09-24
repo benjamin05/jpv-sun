@@ -42,31 +42,31 @@
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Venta]]></text>
+				<text><![CDATA[Importe]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="28227afe-52eb-43c1-82d1-ff276d87284f" x="416" y="0" width="49" height="12"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Cupon]]></text>
+				<text><![CDATA[Cupon   ]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="3d66e27c-a6c4-4866-912a-a30b76dd89de" x="465" y="0" width="69" height="12"/>
+				<reportElement uuid="3d66e27c-a6c4-4866-912a-a30b76dd89de" x="465" y="0" width="75" height="12"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Venta Neta]]></text>
+				<text><![CDATA[Importe Neto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="d5396581-c3b6-4875-b31a-5eb4e47dd11e" x="536" y="0" width="85" height="12"/>
+				<reportElement uuid="d5396581-c3b6-4875-b31a-5eb4e47dd11e" x="542" y="0" width="85" height="12"/>
 				<textElement textAlignment="Center">
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Forma Pago]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="a4d136b2-3804-4f8a-9530-e17e90604957" x="621" y="0" width="82" height="12"/>
+				<reportElement uuid="a4d136b2-3804-4f8a-9530-e17e90604957" x="627" y="0" width="82" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
@@ -125,12 +125,12 @@
 				<textFieldExpression><![CDATA[$F{montoConDescuento}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="a87da4bf-7d88-4593-95fe-e7de25a7d692" x="536" y="0" width="85" height="12"/>
+				<reportElement uuid="a87da4bf-7d88-4593-95fe-e7de25a7d692" x="542" y="0" width="85" height="12"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{tipoPago}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement uuid="a94952f4-d854-41d0-8c42-b0ec9f518596" x="621" y="0" width="82" height="12"/>
+				<reportElement uuid="a94952f4-d854-41d0-8c42-b0ec9f518596" x="627" y="0" width="82" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
@@ -164,7 +164,7 @@
 				<textFieldExpression><![CDATA[$F{montoDescuento}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00">
-				<reportElement uuid="5a5e8500-4e1c-4025-acbb-580a61ef9d9e" x="465" y="0" width="69" height="12" forecolor="#FF0000">
+				<reportElement uuid="5a5e8500-4e1c-4025-acbb-580a61ef9d9e" x="465" y="0" width="75" height="12" forecolor="#FF0000">
 					<printWhenExpression><![CDATA[$F{montoConDescuento}.signum() == -1]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Right">

@@ -1,5 +1,7 @@
 package mx.lux.pos.model;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -23,10 +25,21 @@ public class TipoDescuento {
     private String f4;
     private String f5;
     private String paciente;
+    private Integer idCliente;
+    private Integer rxConVenta;
+    private Integer rxSinVenta;
     private final String DOLARES_RECIBIDOS = "USD Recibidos";
 
     public TipoDescuento(String idFactura) {
         factura = idFactura;
+    }
+
+    public TipoDescuento(Integer idCliente, Date fecha) {
+        this.fecha = fecha;
+        this.idCliente = idCliente;
+        factura = "";
+        rxConVenta = 0;
+        rxSinVenta = 0;
     }
 
     public void AcumulaDescuento(Descuento descuentos) {
@@ -60,9 +73,19 @@ public class TipoDescuento {
         idBancoEmi = banco.getDescripcion();
     }
 
-    public void AcumulaExamenes(Examen examen) {
+    public void AcumulaExamenes(Examen examen, Receta receta) {
         fecha = examen.getFechaAlta();
         paciente = examen.getCliente().getNombreCompleto();
+        if( receta.getNotaVenta() != null && receta.getNotaVenta().getFactura().length() > 0 ){
+          factura = factura + ", " + StringUtils.trimToEmpty(receta.getNotaVenta() != null ? receta.getNotaVenta().getFactura() : "");
+        }
+        /*if( factura.trim().length() < 9 ){
+          if( receta.getNotaVenta() != null && StringUtils.trimToEmpty(receta.getNotaVenta().getFactura()).length() > 0 ){
+              rxConVenta = rxConVenta+1;
+          } else {
+              rxSinVenta = rxSinVenta+1;
+          }
+        }*/
     }
 
     public String getFactura() {
@@ -207,5 +230,28 @@ public class TipoDescuento {
 
     public void setPaciente(String paciente) {
         this.paciente = paciente;
+    }
+
+    public Integer getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Integer idCliente) {
+        this.idCliente = idCliente;
+    }
+    public Integer getRxConVenta() {
+        return rxConVenta;
+    }
+
+    public void setRxConVenta(Integer rxConVenta) {
+        this.rxConVenta = rxConVenta;
+    }
+
+    public Integer getRxSinVenta() {
+        return rxSinVenta;
+    }
+
+    public void setRxSinVenta(Integer rxSinVenta) {
+        this.rxSinVenta = rxSinVenta;
     }
 }

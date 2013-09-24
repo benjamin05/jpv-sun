@@ -1,11 +1,14 @@
 package mx.lux.pos.model;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class DescuentosPorTipo {
@@ -18,6 +21,8 @@ public class DescuentosPorTipo {
     private List<TipoDescuento> descuentos;
     private Integer total;
     private BigDecimal importeDolares;
+    private Integer rxConVenta;
+    private Integer rxSinVenta;
 
     public DescuentosPorTipo(String tipoDesc) {
         tipo = tipoDesc;
@@ -26,6 +31,8 @@ public class DescuentosPorTipo {
         total = 0;
         idEmpleado = tipoDesc;
         importeDolares = BigDecimal.ZERO;
+        rxConVenta = 0;
+        rxSinVenta = 0;
     }
 
     public void AcumulaDescuentos(Descuento descuento, Integer contador) {
@@ -56,10 +63,15 @@ public class DescuentosPorTipo {
         descu.AcumulaBanco(banco);
     }
 
-    public void AcumulaEmpleados(Examen examen, Integer contador) {
-        total = contador;
-        TipoDescuento descu = FindOrCreate(descuentos, examen.getId().toString().trim());
-        descu.AcumulaExamenes(examen);
+    public void AcumulaEmpleados(Examen examen, Integer contador, Receta receta) {
+        /*if( receta.getNotaVenta() != null && StringUtils.trimToEmpty(receta.getNotaVenta().getFactura()).length() > 0 ){
+            rxConVenta = rxConVenta+1;
+        } else {
+            rxSinVenta = rxSinVenta+1;
+        }*/
+        Date fecha = DateUtils.truncate(receta.getFechaReceta(), Calendar.DAY_OF_MONTH);
+        TipoDescuento descu = FindOrCreateDate(descuentos, receta.getIdCliente(), fecha );
+        descu.AcumulaExamenes(examen, receta);
     }
 
     public String getTipo() {
@@ -90,6 +102,23 @@ public class DescuentosPorTipo {
         }
         if (found == null) {
             found = new TipoDescuento(idFactura);
+            lstDescuentos.add(found);
+        }
+        return found;
+    }
+
+
+    protected TipoDescuento FindOrCreateDate( List<TipoDescuento> lstDescuentos, Integer idCliente, Date fecha ) {
+        TipoDescuento found = null;
+
+        for (TipoDescuento desc : lstDescuentos) {
+            if (desc.getIdCliente().compareTo(idCliente) == 0 ) {
+                found = desc;
+                break;
+            }
+        }
+        if (found == null) {
+            found = new TipoDescuento(idCliente, fecha);
             lstDescuentos.add(found);
         }
         return found;
@@ -141,5 +170,21 @@ public class DescuentosPorTipo {
 
     public void setImporteDolares(BigDecimal importeDolares) {
         this.importeDolares = importeDolares;
+    }
+
+    public Integer getRxConVenta() {
+        return rxConVenta;
+    }
+
+    public void setRxConVenta(Integer rxConVenta) {
+        this.rxConVenta = rxConVenta;
+    }
+
+    public Integer getRxSinVenta() {
+        return rxSinVenta;
+    }
+
+    public void setRxSinVenta(Integer rxSinVenta) {
+        this.rxSinVenta = rxSinVenta;
     }
 }

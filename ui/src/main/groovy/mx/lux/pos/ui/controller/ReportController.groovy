@@ -40,7 +40,7 @@ class ReportController {
     StockbyBrand, StockbyBrandColor, JobControl,
     WorkSubmitted, TaxBills, Discounts, PromotionsinSales,
     Payments, Quote, Exams, OptometristSales,
-    Promotions, Kardex, SalesToday, PaymentsbyPeriod
+    Promotions, Kardex, SalesToday, PaymentsbyPeriod,
   }
 
   @Autowired
