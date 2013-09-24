@@ -64,11 +64,6 @@ public class DescuentosPorTipo {
     }
 
     public void AcumulaEmpleados(Examen examen, Integer contador, Receta receta) {
-        /*if( receta.getNotaVenta() != null && StringUtils.trimToEmpty(receta.getNotaVenta().getFactura()).length() > 0 ){
-            rxConVenta = rxConVenta+1;
-        } else {
-            rxSinVenta = rxSinVenta+1;
-        }*/
         Date fecha = DateUtils.truncate(receta.getFechaReceta(), Calendar.DAY_OF_MONTH);
         TipoDescuento descu = FindOrCreateDate(descuentos, receta.getIdCliente(), fecha );
         descu.AcumulaExamenes(examen, receta);

@@ -61,27 +61,27 @@
 				<textFieldExpression><![CDATA[$F{idFactura}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="a22175a0-3140-4f94-98bd-afbc462aa02a" stretchType="RelativeToBandHeight" x="288" y="0" width="115" height="12"/>
+				<reportElement uuid="a22175a0-3140-4f94-98bd-afbc462aa02a" stretchType="RelativeToBandHeight" x="288" y="0" width="80" height="12"/>
 				<subreportParameter name="SUBREPORT_DIR"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{lstDetalles})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["reports/Cancelaciones_Completo_Articulos.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
-				<reportElement uuid="f054e120-4f6e-4671-b13c-04e1261cb04e" x="499" y="0" width="113" height="12"/>
+				<reportElement uuid="f054e120-4f6e-4671-b13c-04e1261cb04e" x="474" y="0" width="108" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="aef0cefc-aa73-4fa8-9a94-ea2056c9d493" x="612" y="0" width="107" height="12"/>
+				<reportElement uuid="aef0cefc-aa73-4fa8-9a94-ea2056c9d493" x="582" y="0" width="107" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{factTransf}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00">
-				<reportElement uuid="ee4eb2c4-59bf-45bc-b8ad-a24097add283" x="403" y="0" width="96" height="12"/>
+				<reportElement uuid="ee4eb2c4-59bf-45bc-b8ad-a24097add283" x="373" y="0" width="80" height="12"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>

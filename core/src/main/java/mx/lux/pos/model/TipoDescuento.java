@@ -77,15 +77,8 @@ public class TipoDescuento {
         fecha = examen.getFechaAlta();
         paciente = examen.getCliente().getNombreCompleto();
         if( receta.getNotaVenta() != null && receta.getNotaVenta().getFactura().length() > 0 ){
-          factura = factura + ", " + StringUtils.trimToEmpty(receta.getNotaVenta() != null ? receta.getNotaVenta().getFactura() : "");
+          factura = factura + ", " + receta.getNotaVenta().getFactura();
         }
-        /*if( factura.trim().length() < 9 ){
-          if( receta.getNotaVenta() != null && StringUtils.trimToEmpty(receta.getNotaVenta().getFactura()).length() > 0 ){
-              rxConVenta = rxConVenta+1;
-          } else {
-              rxSinVenta = rxSinVenta+1;
-          }
-        }*/
     }
 
     public String getFactura() {

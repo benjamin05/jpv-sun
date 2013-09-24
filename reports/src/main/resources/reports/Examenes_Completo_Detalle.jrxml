@@ -16,7 +16,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
-		<band height="73" splitType="Stretch">
+		<band height="83" splitType="Stretch">
 			<textField>
 				<reportElement uuid="1c4673cc-fcab-428d-8bbe-6e6ed15a6018" x="0" y="0" width="41" height="14"/>
 				<textElement>
@@ -36,6 +36,34 @@
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{descuentos})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["reports/Examenes_Completo_Lista.jasper"]]></subreportExpression>
 			</subreport>
+			<textField>
+				<reportElement uuid="ecaa987a-4ee7-4c28-92dc-f5c626f61f95" positionType="Float" x="164" y="58" width="59" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rxConVenta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="cc7dc969-620f-4eb6-b451-72e1f7214c97" positionType="Float" x="41" y="58" width="123" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Examenes con Venta:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4a28b539-1cde-457d-b6fc-453a2f6c1243" positionType="Float" x="223" y="58" width="111" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Examenes sin Venta:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="ad1d5126-260b-45bd-9d84-c588f86a5693" positionType="Float" x="337" y="58" width="100" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rxSinVenta}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

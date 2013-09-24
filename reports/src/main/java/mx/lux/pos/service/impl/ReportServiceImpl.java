@@ -1050,15 +1050,21 @@ public class ReportServiceImpl implements ReportService {
         Integer totalRxConVenta = 0;
         Integer totalRx = 0;
         for(DescuentosPorTipo examen : lstExamenes){
+          Integer rxXOptSin = 0;
+          Integer rxXOptCon = 0;
           for(TipoDescuento examenDet : examen.getDescuentos()){
             examenDet.setFactura(examenDet.getFactura().replaceFirst(", ",""));
             if( StringUtils.trimToEmpty(examenDet.getFactura()).length() > 0 ){
               totalRxConVenta = totalRxConVenta + 1;
+              rxXOptCon = rxXOptCon+1;
             } else {
               totalRxSinVenta = totalRxSinVenta + 1;
+              rxXOptSin = rxXOptSin+1;
             }
               totalRx = totalRx+1;
           }
+          examen.setRxConVenta( rxXOptCon );
+          examen.setRxSinVenta( rxXOptSin );
         }
 
         Map<String, Object> parametros = new HashMap<String, Object>();
