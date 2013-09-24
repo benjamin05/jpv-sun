@@ -121,6 +121,8 @@ class NotaVentaServiceImpl implements NotaVentaService {
         notaVenta.ventaNeta = total
         notaVenta.ventaTotal = total
         notaVenta.sumaPagos = pagado
+
+
         try {
           notaVenta = notaVentaRepository.save( notaVenta )
           log.info( "notaVenta registrada id: ${notaVenta?.id}" )

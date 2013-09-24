@@ -840,7 +840,12 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
     private void saveOrder() {
 
-        Order newOrder = OrderController.placeOrder(order)
+
+        User user = Session.get(SessionItem.USER) as User
+        CambiaVendedorDialog cambiaVendedor = new CambiaVendedorDialog(this,user?.username)
+        cambiaVendedor.show()
+
+        Order newOrder = OrderController.placeOrder(order, cambiaVendedor?.vendedor)
         CustomerController.saveOrderCountries(order.country)
 
 
