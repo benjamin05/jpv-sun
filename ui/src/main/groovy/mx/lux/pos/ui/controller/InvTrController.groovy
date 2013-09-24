@@ -461,6 +461,21 @@ class InvTrController {
         request.remarks = request.remarks.replaceAll("[^a-zA-Z0-9]+"," ");
       Integer trNbr = ServiceManager.getInventoryService().solicitarTransaccion( request )
       if ( trNbr != null ) {
+        if(request.trType.equalsIgnoreCase(TAG_REMESA)){
+          String receivedPath = Registry.processedFilesPath
+          String[] filename = pView.controller.dlgFile.selectedFile.path.split("/")
+          String[] filePathTmp = pView.controller.dlgFile.selectedFile.path.split("/")
+          String filePath = ''
+          for(int i=0;i < filePathTmp.length-1;i++){
+            filePath = filePath+'/'+filePathTmp[i]
+          }
+          filePath = filePath.replaceFirst("/","")
+          def file = new File( filePath, filename.last() )
+          log.debug( "archivo de carga: ${filename.last()} en: ${filePath} - ${file?.exists()}" )
+          def newFile = new File( receivedPath, filename.last() )
+          def moved = file.renameTo( newFile )
+          log.debug( "renombrando archivo a: ${newFile.path} - ${moved}" )
+        }
         if ( pView.data.inFile != null ) {
           try {
             File moved = new File( SettingsController.instance.processedPath, pView.data.inFile.name )
