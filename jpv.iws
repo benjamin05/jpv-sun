@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85a3f2a7-5fe4-477a-b715-aab86b5598d8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/CambiaVendedorDialog.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jpv.iws" afterPath="$PROJECT_DIR$/jpv.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/resources/template/ticket-rx.vm" afterPath="$PROJECT_DIR$/core/src/main/resources/template/ticket-rx.vm" />
     </list>
     <ignored path="jpv.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -144,7 +140,7 @@
     <file path="/IngresoPorVendedor.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1379713109268" ignored="false" />
     <file path="/ReporteVentasVendedor.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1379712484263" ignored="false" />
     <file path="/NotaVentaRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1379949211947" ignored="false" />
-    <file path="/ticket-rx.vm" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1379972063600" ignored="false" />
+    <file path="/ticket-rx.vm" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380049566755" ignored="false" />
     <file path="/CambiaVendedorDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380030918722" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -230,81 +226,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ReportBusiness.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/reports/src/main/java/mx/lux/pos/service/business/ReportBusiness.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="257" column="44" selection-start="9203" selection-end="9203" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2744#2759#0" expanded="true" />
-                <element signature="e#6765#6785#0" expanded="true" />
-                <element signature="e#7666#7685#0" expanded="true" />
-                <element signature="e#9807#9828#0" expanded="true" />
-                <element signature="e#15078#15099#0" expanded="true" />
-                <element signature="e#18727#18748#0" expanded="true" />
-                <element signature="e#20247#20265#0" expanded="true" />
-                <element signature="e#20347#20645#0" expanded="true" />
-                <element signature="e#20626#20627#0" expanded="true" />
-                <element signature="e#21443#21461#0" expanded="true" />
-                <element signature="e#21543#21841#0" expanded="true" />
-                <element signature="e#21822#21823#0" expanded="true" />
-                <element signature="e#22487#22715#0" expanded="true" />
-                <element signature="e#22704#22705#0" expanded="true" />
-                <element signature="e#26588#26608#0" expanded="true" />
-                <element signature="e#34063#34314#0" expanded="true" />
-                <element signature="e#34299#34300#0" expanded="true" />
-                <element signature="e#35743#35753#0" expanded="true" />
-                <element signature="e#37728#37749#0" expanded="true" />
-                <element signature="e#37803#37813#0" expanded="true" />
-                <element signature="e#38682#38925#0" expanded="true" />
-                <element signature="e#38910#38911#0" expanded="true" />
-                <element signature="e#40294#40315#0" expanded="true" />
-                <element signature="e#40369#40379#0" expanded="true" />
-                <element signature="e#41299#41542#0" expanded="true" />
-                <element signature="e#41527#41528#0" expanded="true" />
-                <element signature="e#43004#43014#0" expanded="true" />
-                <element signature="e#43824#43834#0" expanded="true" />
-                <element signature="e#44335#44537#0" expanded="true" />
-                <element signature="e#44526#44527#0" expanded="true" />
-                <element signature="e#46965#46981#0" expanded="true" />
-                <element signature="e#48833#48849#0" expanded="true" />
-                <element signature="e#50553#50568#0" expanded="true" />
-                <element signature="e#51540#51559#0" expanded="true" />
-                <element signature="e#52738#52757#0" expanded="true" />
-                <element signature="e#54749#55002#0" expanded="true" />
-                <element signature="e#54983#54984#0" expanded="true" />
-                <element signature="e#55251#55504#0" expanded="true" />
-                <element signature="e#55485#55486#0" expanded="true" />
-                <element signature="e#56216#56235#0" expanded="true" />
-                <element signature="e#58044#58064#0" expanded="true" />
-                <element signature="e#62209#62220#0" expanded="true" />
-                <element signature="e#62979#62996#0" expanded="true" />
-                <element signature="e#63227#63246#0" expanded="true" />
-                <element signature="e#66465#66479#0" expanded="true" />
-                <element signature="e#67311#67325#0" expanded="true" />
-                <element signature="e#67868#67882#0" expanded="true" />
-                <element signature="e#68727#68741#0" expanded="true" />
-                <element signature="e#69979#69997#0" expanded="true" />
-                <element signature="e#70071#70371#0" expanded="true" />
-                <element signature="e#70356#70357#0" expanded="true" />
-                <element signature="e#72862#72877#0" expanded="true" />
-                <element signature="e#73285#73291#0" expanded="true" />
-                <element signature="e#73720#73734#0" expanded="true" />
-                <element signature="e#74784#74798#0" expanded="true" />
-                <element signature="e#76060#76074#0" expanded="true" />
-                <element signature="e#76136#76150#0" expanded="true" />
-                <element signature="e#77866#77888#0" expanded="true" />
-                <element signature="e#80862#80877#0" expanded="true" />
-                <element signature="e#81321#81327#0" expanded="true" />
-                <element signature="e#81775#81790#0" expanded="true" />
-                <element signature="e#81837#81843#0" expanded="true" />
-                <element signature="e#82369#82561#0" expanded="true" />
-                <element signature="e#82550#82551#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="OrderPanel.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy">
           <provider selected="true" editor-type-id="text-editor">
@@ -361,10 +282,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CambiaVendedorDialog.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="CambiaVendedorDialog.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/CambiaVendedorDialog.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="29" selection-start="1121" selection-end="1121" vertical-scroll-proportion="0.2936803">
+            <state line="19" column="0" selection-start="368" selection-end="462" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ticket-rx.vm" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/src/main/resources/template/ticket-rx.vm">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="60" column="47" selection-start="5004" selection-end="5004" vertical-scroll-proportion="0.578125">
               <folding />
             </state>
           </provider>
@@ -554,13 +484,13 @@
         <option value="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/IngresoPorVendedor.java" />
         <option value="$PROJECT_DIR$/reports/src/main/java/mx/lux/pos/service/impl/ReportServiceImpl.java" />
         <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy" />
-        <option value="$PROJECT_DIR$/core/src/main/resources/template/ticket-rx.vm" />
         <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/NotaVentaRepository.groovy" />
         <option value="$PROJECT_DIR$/reports/src/main/java/mx/lux/pos/service/business/ReportBusiness.java" />
         <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy" />
         <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" />
         <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy" />
         <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/CambiaVendedorDialog.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/resources/template/ticket-rx.vm" />
       </list>
     </option>
   </component>
@@ -864,6 +794,62 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="template" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1352,13 +1338,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/resources/template/ticket-rx.vm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="149" selection-start="3878" selection-end="3878" vertical-scroll-proportion="-3.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/reports/src/main/java/mx/lux/pos/service/impl/ReportServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="308" column="70" selection-start="15749" selection-end="15749" vertical-scroll-proportion="0.0">
@@ -1520,7 +1499,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/CambiaVendedorDialog.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="29" selection-start="1121" selection-end="1121" vertical-scroll-proportion="0.2936803">
+        <state line="19" column="0" selection-start="368" selection-end="462" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/resources/template/ticket-rx.vm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="47" selection-start="5004" selection-end="5004" vertical-scroll-proportion="0.578125">
           <folding />
         </state>
       </provider>
