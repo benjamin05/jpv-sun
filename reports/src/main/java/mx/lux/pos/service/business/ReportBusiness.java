@@ -198,7 +198,8 @@ public class ReportBusiness {
         List<String> empleados = notaVentaRepository.empleadosFechas(fechaInicio,fechaFin);
 
         for(String empleado : empleados){
-
+         Empleado emp = empleadoRepository.findById(empleado);
+            if(emp.getIdPuesto() == 1 || emp.getIdPuesto() == 5){
 
         QNotaVenta notaVenta = QNotaVenta.notaVenta;
         List<NotaVenta> lstVentas = ( List<NotaVenta> ) notaVentaRepository.findAll( notaVenta.factura.isNotEmpty().and( notaVenta.factura.isNotNull() ).
@@ -209,7 +210,7 @@ public class ReportBusiness {
 
 
         lstIngresos.add(ingreso);
-
+            }
         }
 
 
