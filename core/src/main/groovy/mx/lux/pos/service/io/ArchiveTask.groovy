@@ -12,7 +12,7 @@ class ArchiveTask {
 
   private static final String FILE_ARCHIVE_DEFAULT = 'soi.%s'
   private static final String FMT_DATE_TIME = 'yyyy-MM-dd-HH-mm'
-  private static final String EXT_ZIP = '.MAEM.tar'
+  private static final String EXT_ZIP = '.MAEM'
   private static final String SO_WINDOWS = 'Windows'
 
   private Logger logger = LoggerFactory.getLogger( this.getClass() )
@@ -61,6 +61,7 @@ class ArchiveTask {
 
       try {
         cmd.execute()
+        //Process p = Runtime.getRuntime().exec(cmd);
       } catch ( Exception e ) {
         logger.error( e.getMessage(), e )
       }
@@ -92,3 +93,4 @@ class ArchiveTask {
   }
 
 }
+//

@@ -761,10 +761,10 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
   }
 
 
-  private void generarFicheroZR( Date fechaCierre, Sucursal sucursal, String ubicacion ) {
-      String nombreFichero = "2.${ sucursal.id }.${ CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ) }.ZR"
+  private void generarFicheroZE( Date fechaCierre, Sucursal sucursal, String ubicacion ) {
+      String nombreFichero = "2.${ sucursal.id }.${ CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ) }.ZE"
 
-      log.info( "Generando fichero ZR ${ nombreFichero }" )
+      log.info( "Generando fichero ZE ${ nombreFichero }" )
       QNotaVenta nota = QNotaVenta.notaVenta
       List<NotaVenta> notasVentas = notaVentaRepository.findAll(nota.fechaEntrega.eq(fechaCierre))
       def entregadas = notasVentas.collect { entregada ->
@@ -778,7 +778,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
               fecha_ahora: CustomDateUtils.format( new Date(), 'dd/MM/yyyy' ),
               numero_registros: notasVentas.size(),
               notas: entregadas ]
-      generarFichero( ubicacion, nombreFichero, 'fichero-ZR', datos )
+      generarFichero( ubicacion, nombreFichero, 'fichero-ZE', datos )
   }
 
 
