@@ -65,6 +65,11 @@ public class Modificacion implements Serializable {
     @JoinColumn( name = "empleado", updatable = false, insertable = false )
     private Empleado empleado;
 
+    @ManyToOne
+    @NotFound( action = NotFoundAction.IGNORE )
+    @JoinColumn( name = "causa", referencedColumnName = "descrip_causa_mc", updatable = false, insertable = false )
+    private CausaCancelacion causaCancelacion;
+
     @OneToMany( fetch = FetchType.EAGER )
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "id_mod", referencedColumnName = "id_mod",updatable = false, insertable = false )
@@ -186,5 +191,13 @@ public class Modificacion implements Serializable {
 
     public void setDevolucion(Set<Devolucion> devolucion) {
         this.devolucion = devolucion;
+    }
+
+    public CausaCancelacion getCausaCancelacion() {
+        return causaCancelacion;
+    }
+
+    public void setCausaCancelacion(CausaCancelacion causaCancelacion) {
+        this.causaCancelacion = causaCancelacion;
     }
 }
