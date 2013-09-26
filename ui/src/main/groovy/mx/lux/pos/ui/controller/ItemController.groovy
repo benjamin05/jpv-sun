@@ -69,10 +69,10 @@ class ItemController {
   static List<Articulo> findPartsByQuery( final String query, Boolean incluyePrecio ) {
     List<Articulo> items = [ ]
     if ( StringUtils.isNotBlank( query ) ) {
-      if ( query.integer ) {
+      /*if ( query.integer ) {
         log.debug( "busqueda por articulo exacto ${query}" )
         items.add( articuloService.obtenerArticulo( query.toInteger(), incluyePrecio ) )
-      } else {
+      } else {*/
         def anyMatch = '*'
         def colorMatch = ','
         def typeMatch = '+'
@@ -100,7 +100,7 @@ class ItemController {
           log.debug( "busqueda con tipo: ${type}" )
           items = items.findAll { it?.idGenerico?.equalsIgnoreCase( type ) }
         }
-      }
+      //}
     }
     return items
   }

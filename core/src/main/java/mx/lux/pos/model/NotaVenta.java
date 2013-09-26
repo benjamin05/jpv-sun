@@ -166,6 +166,7 @@ public class NotaVenta implements Serializable {
     @Column( name = "poliza" )
     private BigDecimal poliza;
 
+    @Column( name = "codigo_lente" )
     private String codigo_lente;
 
     @OneToMany( fetch = FetchType.EAGER )

@@ -472,6 +472,9 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
         }
         descuentoSunI = montoDescuento+montoOrdenPromDet
         porcentajeDescSunI = (descuentoSunI*100)/(descuentoSunI+Double.parseDouble( String.format("%.2f",nv.ventaTotal) ))
+
+        String codigoDioptra = nv?.codigo_lente != null ? nv?.codigo_lente : ""
+        String idOpt = nv?.receta != null ? nv?.examen.idOftalmologo.toString() : ''
       [
           factura: StringUtils.defaultIfBlank( nv.factura, '' ),
           id_factura: StringUtils.defaultIfBlank( nv.id, '' ),
@@ -491,7 +494,9 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
           id_clasif_cli: StringUtils.defaultIfBlank( clasifCliente?.idClasifCliente?.toString(), '' ),
           fecha_entrega: nv.fechaEntrega != null ? CustomDateUtils.format( nv.fechaEntrega, 'dd-MM-yyyy' ) : '',
           hora_entrega: nv.horaEntrega != null ? CustomDateUtils.format( nv.horaEntrega, 'HH:mm:ss' ) : '',
-          pais: paisCliente
+          pais: paisCliente,
+          codigoDioptra: codigoDioptra.trim(),
+          idOpto: idOpt != null ? idOpt : 0
       ]
     }
     def datos = [ sucursal: sucursal,
