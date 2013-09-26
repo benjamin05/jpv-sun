@@ -311,7 +311,6 @@ public class ReportBusiness {
             FacturasPorEmpleado factura = FindOrCreate( lstFacturas, IdEmpleado );
             factura.AcumulaVentas();
         }
-
         return lstFacturas;
     }
 

@@ -51,13 +51,9 @@ class ItemController {
 
   static List<Item> findItemsByQuery( final String query ) {
     log.debug( "buscando de articulos con query: $query" )
-
-
       if ( StringUtils.isNotBlank( query ) ) {
-
       List<Articulo> items = findPartsByQuery( query )
       if (items.size() > 0) {
-
         log.debug( "Items:: ${items.first()?.dump()} " )
         return items?.collect { Item.toItem( it ) }
       }
@@ -74,7 +70,7 @@ class ItemController {
     List<Articulo> items = [ ]
     if ( StringUtils.isNotBlank( query ) ) {
       if ( query.integer ) {
-        log.debug( "busqueda por id exacto ${query}" )
+        log.debug( "busqueda por articulo exacto ${query}" )
         items.add( articuloService.obtenerArticulo( query.toInteger(), incluyePrecio ) )
       } else {
         def anyMatch = '*'
@@ -96,7 +92,8 @@ class ItemController {
         if ( query.contains( colorMatch ) ) {
           String color = query.find( /\,(\w+)/ ) { m, c -> return c }
           log.debug( "busqueda con color: ${color}" )
-          items = items.findAll { it?.codigoColor?.equalsIgnoreCase( color ) }
+          items = items.findAll { it?.codigoColor?.equalsIgnoreCase( color ) ||
+                  it?.idCb?.equalsIgnoreCase( color )}
         }
         if ( query.contains( typeMatch ) ) {
           String type = query.find( /\+(\w+)/ ) { m, t -> return t }

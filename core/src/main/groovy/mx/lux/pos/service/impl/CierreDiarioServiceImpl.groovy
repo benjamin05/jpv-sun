@@ -30,9 +30,10 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
 
   private static final String TIME_FORMAT = 'HH:mm:ss'
   private static final String DATE_FORMAT = 'dd-MM-yyyy'
+  private static final String DATE_FORMAT_MAS_VISION = 'ddMM'
   private static final String DATE_TIME_FORMAT = 'dd-MM-yyyy HH:mm:ss'
   private static final String PAIS_DEFAULT = 'MEXICO'
-  private static final String FMT_ARCHIVE_FILENAME = '%d.%s'
+  private static final String FMT_ARCHIVE_FILENAME = '%d%s'
   private static final String FMT_FILE_PATTERN = '*%s.*'
   private static final Double VALOR_CERO = 0.005
   private static final String TAG_TIPO_PAGO_EFECTIVO = 'EF'
@@ -1366,18 +1367,19 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
   }
 
   void archivarCierre( Date pForDate, Boolean pDeleteAfter ) {
-    String strDate = CustomDateUtils.format( DateUtils.truncate( pForDate, Calendar.DATE), DATE_FORMAT)
+    String strDate = CustomDateUtils.format( DateUtils.truncate( pForDate, Calendar.DATE), DATE_FORMAT_MAS_VISION)
+    String strDateTmp = CustomDateUtils.format( DateUtils.truncate( pForDate, Calendar.DATE), DATE_FORMAT)
     log.debug (String.format( 'CierreDiarioService.archivarCierre( %s )', strDate) )
     ArchiveTask task = new ArchiveTask(  )
     task.baseDir = Registry.dailyClosePath
     task.archiveFile = String.format( FMT_ARCHIVE_FILENAME, Registry.currentSite, strDate )
-    task.filePattern = String.format( FMT_FILE_PATTERN, strDate )
+    task.filePattern = String.format( FMT_FILE_PATTERN, strDateTmp )
     task.run()
     sleep 20000
     if ( pDeleteAfter ) {
       long nFiles = 0
       new File( Registry.dailyClosePath ).eachFile( ) { File f ->
-        if ( f.getName().contains( strDate ) ) {
+        if ( f.getName().contains( strDateTmp ) ) {
           f.delete()
           nFiles ++
         }

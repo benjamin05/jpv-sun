@@ -435,16 +435,22 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private def doItemSearch() {
         Receta rec = new Receta()
         String input = itemSearch.text
+        String article = input
         Boolean newOrder = false
         if (order?.id != null) {
             newOrder = StringUtils.isBlank(order.id)
         }
         if (StringUtils.isNotBlank(input)) {
             sb.doOutside {
-                List<Item> results = ItemController.findItemsByQuery(input)
-                if ((results.size() == 0) && (input.length() > 6)) {
-                    results = ItemController.findItemsByQuery(input.substring(0, 6))
+                if( input.contains(/$/) ){
+                  String[] inputTmp = input.split(/\$/)
+                  if( input.trim().contains(/$$/) ) {
+                      article = inputTmp[0]
+                  } else {
+                      article = inputTmp[0] + ',' + inputTmp[1].substring(0,3)
+                  }
                 }
+                List<Item> results = ItemController.findItemsByQuery(article)
                 if (results?.any()) {
                     Item item = new Item()
                     if (results.size() == 1) {
@@ -479,8 +485,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         }
                     }
                 } else {
-                    optionPane(message: "No se encontraron resultados para: ${input}", optionType: JOptionPane.DEFAULT_OPTION)
-                            .createDialog(new JTextField(), "B\u00fasqueda: ${input}")
+                    optionPane(message: "No se encontraron resultados para: ${article}", optionType: JOptionPane.DEFAULT_OPTION)
+                            .createDialog(new JTextField(), "B\u00fasqueda: ${article}")
                             .show()
                 }
                 if (newOrder && (StringUtils.trimToNull(order?.id) != null) && (StringUtils.trimToNull(customer?.id) != null)) {

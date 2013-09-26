@@ -37,7 +37,7 @@
 				<text><![CDATA[Fecha Cancelacion]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="8adba80b-7522-480d-9a4c-04a3d48ca8ca" x="469" y="0" width="113" height="14"/>
+				<reportElement uuid="8adba80b-7522-480d-9a4c-04a3d48ca8ca" x="469" y="0" width="80" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
@@ -58,21 +58,21 @@
 				<text><![CDATA[Vendedor]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="e1390337-80d4-498a-9832-802a6e386985" x="671" y="0" width="113" height="14"/>
+				<reportElement uuid="e1390337-80d4-498a-9832-802a6e386985" x="642" y="0" width="113" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Tipo]]></text>
+				<text><![CDATA[   Tipo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4035e3f7-5893-49f2-b215-5f61cb6c2aab" x="784" y="0" width="145" height="14"/>
+				<reportElement uuid="4035e3f7-5893-49f2-b215-5f61cb6c2aab" x="755" y="0" width="145" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Factura Transf.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="708876e0-9eb2-4088-ad69-42cbd7fe2cb0" x="582" y="0" width="85" height="14"/>
+				<reportElement uuid="708876e0-9eb2-4088-ad69-42cbd7fe2cb0" x="553" y="0" width="85" height="14"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>

@@ -38,6 +38,8 @@ public class QDevolucion extends EntityPathBase<Devolucion> {
 
     public final NumberPath<java.math.BigDecimal> monto = createNumber("monto", java.math.BigDecimal.class);
 
+    public final QNotaVenta notaVenta;
+
     public final QPago pago;
 
     public final StringPath referencia = createString("referencia");
@@ -62,6 +64,7 @@ public class QDevolucion extends EntityPathBase<Devolucion> {
         super(type, metadata, inits);
         this.formaPago = inits.isInitialized("formaPago") ? new QFormaPago(forProperty("formaPago")) : null;
         this.modificacion = inits.isInitialized("modificacion") ? new QModificacion(forProperty("modificacion"), inits.get("modificacion")) : null;
+        this.notaVenta = inits.isInitialized("notaVenta") ? new QNotaVenta(forProperty("notaVenta"), inits.get("notaVenta")) : null;
         this.pago = inits.isInitialized("pago") ? new QPago(forProperty("pago"), inits.get("pago")) : null;
     }
 
