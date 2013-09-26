@@ -14,6 +14,9 @@ class ShippingNoticeFile {
   private static enum DetFld {
     PartCode, ColorCode, fld_1, QtyTrans, fld_2, Sku, BarCode, ColorDesc, SubType, Type, fld_3
   }
+  private static enum DetFldAccesory     {
+    PartCode, ColorCode, fld_1, QtyTrans, fld_2, Sku,
+  }
   private static enum HdrFld {
     Ref, LnCount, Fam, FullRef, Code, fld_1
   }
@@ -21,6 +24,7 @@ class ShippingNoticeFile {
   private static final String MSG_ERROR_READING_FILE = "[Reader] ERROR reading from file: <%s>"
   private static final DELIMITER = "|"
   private static final ANOTHER_DELIMITER = ">"
+  private static final String TAG_ACCESORIOS = 'E'
 
   private Logger log = LoggerFactory.getLogger( this.getClass() )
 
@@ -77,7 +81,7 @@ class ShippingNoticeFile {
     if ( tokens.size >= DetFld.values().size() ) {
       parsed = new ShipmentLine()
       parsed.partCode = tokens.entry( DetFld.PartCode.ordinal() )
-      parsed.colorCode = tokens.entry( DetFld.ColorCode.ordinal() )
+      parsed.colorCode = tokens.entry( DetFld.ColorCode.ordinal() ).trim().equalsIgnoreCase('0000') ? '' : tokens.entry( DetFld.ColorCode.ordinal() )
       parsed.qty = tokens.asInteger( DetFld.QtyTrans.ordinal() )
       parsed.sku = tokens.asInteger( DetFld.Sku.ordinal() )
       parsed.barcode = tokens.entry( DetFld.BarCode.ordinal() )
@@ -86,6 +90,25 @@ class ShippingNoticeFile {
       parsed.type = tokens.entry( DetFld.Type.ordinal() )
     }
     return parsed
+  }
+
+
+  protected ShipmentLine parseDetailAccessory( String pDetailLine ) {
+      Shipment shipment = null
+      ShipmentLine parsed = null
+      StringList tokens = new StringList( pDetailLine, DELIMITER )
+      if ( tokens.size >= DetFldAccesory.values().size() ) {
+          parsed = new ShipmentLine()
+          parsed.partCode = tokens.entry( DetFld.PartCode.ordinal() )
+          parsed.colorCode = tokens.entry( DetFld.ColorCode.ordinal() ).trim().equalsIgnoreCase('0000') ? '' : tokens.entry( DetFld.ColorCode.ordinal() )
+          parsed.qty = tokens.asInteger( DetFld.QtyTrans.ordinal() )
+          parsed.sku = tokens.asInteger( DetFld.Sku.ordinal() )
+          parsed.barcode = tokens.entry( DetFld.BarCode.ordinal() )
+          parsed.colorDesc = tokens.entry( DetFld.ColorDesc.ordinal() )
+          parsed.brand = tokens.entry( DetFld.SubType.ordinal() )
+          parsed.type = tokens.entry( DetFld.Type.ordinal() )
+      }
+      return parsed
   }
 
   protected Shipment parseHeader( String pHeaderLine ) {
@@ -108,9 +131,13 @@ class ShippingNoticeFile {
   Shipment read( String pFilename ) {
     Shipment shipment = null
     File inFile = new File( pFilename )
+    Boolean isAccessory = false
 
     if ( inFile.exists() ) {
       try {
+        if(pFilename.endsWith(TAG_ACCESORIOS)){
+          isAccessory = true
+        }
         Integer iLine = 0
         inFile.eachLine() {
           iLine++
@@ -118,7 +145,12 @@ class ShippingNoticeFile {
             shipment = parseHeader( it )
           } else {
             if ( shipment != null ) {
-              ShipmentLine line = parseDetail( it )
+              ShipmentLine line
+              if(isAccessory){
+                line = parseDetailAccessory( it )
+              } else {
+                line = parseDetail( it )
+              }
               if ( line != null ) {
                 shipment.lines.add( line )
               }

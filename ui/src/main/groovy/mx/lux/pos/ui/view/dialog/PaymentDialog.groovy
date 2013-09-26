@@ -25,6 +25,7 @@ import mx.lux.pos.ui.view.panel.OrderPanel
 class PaymentDialog extends JDialog {
 
   private static Double ZERO_TOLERANCE = 0.005
+  private static final String TAG_FORMA_PAGO_EFECTIVO = 'EFECTIVO'
 
   private SwingBuilder sb
   private Payment tmpPayment
@@ -43,7 +44,7 @@ class PaymentDialog extends JDialog {
   private JTextField dollarsReceived
   private JTextField code
   private JComboBox paymentType
-  private JTextField issuer
+  private JComboBox issuer
   private JComboBox terminal
   private JComboBox plan
   private PaymentType defaultPaymentType
@@ -138,9 +139,10 @@ class PaymentDialog extends JDialog {
       )
 
       issuerLabel = label( visible: false, constraints: 'hidemode 3' )
-      issuer = textField( visible: false,
+      issuer = comboBox( visible: false,
           enabled: fieldsEnabled,
-          document: new UpperCaseDocument(),
+          items: issuingBanks*.name,
+          itemStateChanged: issuerChanged,
           //inputVerifier: new NotEmptyVerifier(),
           constraints: 'hidemode 3'
       )
@@ -185,7 +187,7 @@ class PaymentDialog extends JDialog {
       bean( paymentType, selectedItem: bind( source: tmpPayment, sourceProperty: 'paymentType', mutual: true ) )
       bean( medium, text: bind( source: tmpPayment, sourceProperty: 'paymentReference', mutual: true ) )
       bean( code, text: bind( source: tmpPayment, sourceProperty: 'codeReference', mutual: true ) )
-      bean( issuer, text: bind( source: tmpPayment, sourceProperty: 'issuerBankId', mutual: true ) )
+      bean( issuer, selectedItem: bind( source: tmpPayment, sourceProperty: 'issuerBankId', mutual: true ) )
       bean( terminal, selectedItem: bind( source: tmpPayment, sourceProperty: 'terminal', mutual: true ) )
       bean( plan, selectedItem: bind( source: tmpPayment, sourceProperty: 'plan', mutual: true ) )
       bean( dollarsReceived, text: bind( source: tmpPayment, sourceProperty: 'planId', mutual: true ) )
@@ -272,7 +274,7 @@ class PaymentDialog extends JDialog {
     issuerLabel.visible = false
     issuerLabel.text = null
     issuer.visible = false
-    issuer.text = null
+    issuer.selectedIndex = -1
     terminalLabel.visible = false
     terminalLabel.text = null
     terminal.visible = false
@@ -287,7 +289,7 @@ class PaymentDialog extends JDialog {
     dollarsReceived.text = null
   }
 
-/*private def issuerChanged = { ItemEvent ev ->
+  private def issuerChanged = { ItemEvent ev ->
     if ( ev.stateChange == ItemEvent.SELECTED ) {
       Bank bank = issuingBanks.find { Bank tmp ->
         tmp?.name?.equalsIgnoreCase( ev.item as String )
@@ -296,7 +298,7 @@ class PaymentDialog extends JDialog {
     } else {
       tmpPayment.issuerBankId = null
     }
-  }*/
+  }
 
   private def terminalChanged = { ItemEvent ev ->
     if ( ev.stateChange == ItemEvent.SELECTED ) {
@@ -363,7 +365,7 @@ class PaymentDialog extends JDialog {
           valid &= true
         }
       } else {
-          if( paymentType.selectedItem.equals('MN EFECTIVO') ){
+          if( paymentType.selectedItem.equals(TAG_FORMA_PAGO_EFECTIVO) ){
               amount.text = order.due.toString()
               BigDecimal cambio = tmpPayment.amount.subtract(order.due)
               new ChangeDialog( cambio, tmpPayment.amount, order.due ).show()
@@ -387,12 +389,12 @@ class PaymentDialog extends JDialog {
     }
     valid &= medium.visible ? ( notEmptyVerifier.verify( medium ) ) : true
     valid &= code.visible ? ( notEmptyVerifier.verify( code ) && ( code.text?.length() < 32 ) ) : true
-    valid &= issuer.visible ? notEmptyVerifier.verify( issuer ) : true
+    valid &= issuer.visible ? isSelectedVerifier.verify( issuer ) : true
     valid &= terminal.visible ? isSelectedVerifier.verify( terminal ) : true
     valid &= plan.visible ? isSelectedVerifier.verify( plan ) : true
     valid &= amount.visible ? notEmptyVerifier.verify( amount ) : true
     valid &= paymentType.visible ? isSelectedVerifier.verify( paymentType ) : true
-    valid &= issuer.visible ? notEmptyVerifier.verify( issuer ) : true
+    //valid &= issuer.visible ? notEmptyVerifier.verify( issuer ) : true
     valid &= terminal.visible ? isSelectedVerifier.verify( terminal ) : true
     valid &= dollarsReceived.visible ? notEmptyVerifier.verify( dollarsReceived ) : true
     if ( !valid ) {

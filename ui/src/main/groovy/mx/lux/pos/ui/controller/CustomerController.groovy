@@ -2,7 +2,7 @@ package mx.lux.pos.ui.controller
 
 import groovy.util.logging.Slf4j
 
-import mx.lux.pos.model.Cliente
+import mx.lux.pos.model.Receta
 import mx.lux.pos.model.ClienteProceso
 import mx.lux.pos.model.Estado
 import mx.lux.pos.ui.view.dialog.CustomerActiveSelectionDialog
@@ -20,6 +20,7 @@ import mx.lux.pos.ui.view.dialog.SingleCustomerDialog
 import mx.lux.pos.ui.view.dialog.CustomerBrowserDialog
 
 import javax.swing.JOptionPane
+import java.text.NumberFormat
 
 @Slf4j
 @Component
@@ -138,9 +139,7 @@ class CustomerController {
     }
 
     static ClienteProceso addClienteProceso (Customer tmpCustomer){
-
         Branch branch = Session.get(SessionItem.BRANCH) as Branch
-
         ClienteProceso clientePro = new ClienteProceso()
         String IdSync = '1'
         String IdMod = '0'
@@ -148,12 +147,9 @@ class CustomerController {
         clientePro.setEtapa(ClienteProcesoEtapa.PAYMENT.toString())
         clientePro.setIdSync(IdSync)
         clientePro.setFechaMod(new Date())
-
         clientePro.setIdMod(IdMod)
         clientePro.setIdSucursal(branch?.id)
-
         clienteService.agregarClienteProceso(clientePro)
-
     }
 
     static Customer addCustomer( Customer customer ) {
@@ -288,41 +284,24 @@ class CustomerController {
         dialog.customerList = clientes
         dialog.activate()
 
-
-
         if ( dialog.customerSelected != null ) {
             Customer c = Customer.toCustomer( dialog.customerSelected.cliente )
-
-
             pListener.reset()
-
-
             pListener.disableUI()
             pListener.operationTypeSelected = OperationType.PENDING
             pListener.setCustomer( c )
             pListener.enableUI()
-
         } else if ( dialog.isNewRequested() ) {
-
             requestNewCustomer( pListener )
-
         } else {
             pListener.operationTypeSelected = OperationType.DEFAULT
-
         }
-
         dialog.dispose()
-
     }
 
     static void requestOrderByCustomer (CustomerListener pListener, Customer customer){
-
-
         Order order = Order.toOrder( notaService.obtenerSiguienteNotaVenta(customer?.id) )
-
         if (order==null){
-
-
             Integer nueva = JOptionPane.showConfirmDialog(null,"Nueva Venta", "¿Desea abrir una nueva venta?", JOptionPane.YES_NO_OPTION);
             if(nueva == 0){
                 pListener.reset()
@@ -332,10 +311,8 @@ class CustomerController {
                 pListener.enableUI()
             }
             else{
-
                 pListener.reset( )
             }
-
         }else
         {
             pListener.reset()
@@ -476,7 +453,7 @@ class CustomerController {
             rec.setMaterial_arm( '' )
             rec.setTratamientos( '' )
             rec.setUdf5( '' )
-            rec.setUdf6( '' )
+            rec.setUdf6( receta.udf6 != null ? receta.udf6 : "" )
             rec.setIdRxOri( '' )
             rec.setIdOptometrista( receta.idOpt )
             rec.setFolio( receta.folio )
@@ -616,5 +593,23 @@ class CustomerController {
         results.collect {
             it.descripcion
         }
+    }
+
+    static List<Rx> findRxByCustomer( Integer idCliente ){
+        log.debug( String.format('obteniendo recetas del cliente %s', idCliente) )
+        Cliente
+        List<Receta> results = recetaService.recetaCliente( idCliente )
+        results.collect { Rx.toRx(it) }
+    }
+
+    static ClienteProceso findProccesClient( Integer idCliente ){
+        log.debug( 'findProccesClient()' )
+        //Integer id = NumberFormat.getInstance().parse( idCliente ).intValue()
+        ClienteProceso cliente = clienteService.obtieneClienteProceso( idCliente )
+    }
+
+    static void deletedClienteProceso (Integer idCliente){
+        log.debug( 'deletedClienteProceso' )
+        clienteService.eliminarClienteProceso( idCliente )
     }
 }

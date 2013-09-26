@@ -19,6 +19,7 @@ class ReportController {
   private static ReportService reportService
   private static DateSelectionDialog dateDialog
   private static TwoDatesSelectionDialog twoDateDialog
+  private static TwoDatesSelectionAndKeyDialog twoDateKeyDialog
   private static TwoDatesSelectionFilterDialog twoDateFilterDialog
   private static TwoDatesSelectionFilterLineDialog twoDatesSelectionFilterLineDialog
   private static TwoDatesSelectionFilterBrandDialog twoDatesSelectionFilterBrandDialog
@@ -39,7 +40,8 @@ class ReportController {
     StockbyBrand, StockbyBrandColor, JobControl,
     WorkSubmitted, TaxBills, Discounts, PromotionsinSales,
     Payments, Quote, Exams, OptometristSales,
-    Promotions, Kardex, SalesToday, PaymentsbyPeriod
+    Promotions, Kardex, SalesToday, PaymentsbyPeriod,
+    Coupon
   }
 
   @Autowired
@@ -112,7 +114,8 @@ class ReportController {
     Date reportForDateEnd = twoDateDialog.getSelectedDateEnd()
     if ( reportForDateStart != null && reportForDateEnd != null && twoDateDialog.button ) {
       log.debug( "Imprime el reporte de Ventas Completo" )
-      reportService.obtenerReporteVentasCompleto( reportForDateStart, reportForDateEnd )
+      //reportService.obtenerReporteVentasCompleto( reportForDateStart, reportForDateEnd )
+        reportService.obtenerReporteVentasMasVision( reportForDateStart, reportForDateEnd )
     } else {
       log.debug( "Cancelar_continuar" )
     }
@@ -331,16 +334,17 @@ class ReportController {
   }
 
   static void fireDiscountsReport( ) {
-    if ( twoDateDialog == null ) {
-      twoDateDialog = new TwoDatesSelectionDialog()
+    if ( twoDateKeyDialog == null ) {
+        twoDateKeyDialog = new TwoDatesSelectionAndKeyDialog()
     }
-    twoDateDialog.setTitle( "Descuentos" )
-    twoDateDialog.activate()
-    Date reportForDateStart = twoDateDialog.getSelectedDateStart()
-    Date reportForDateEnd = twoDateDialog.getSelectedDateEnd()
-    if ( reportForDateStart != null && reportForDateEnd != null && twoDateDialog.button ) {
+      twoDateKeyDialog.setTitle( "Descuentos" )
+      twoDateKeyDialog.activate()
+    Date reportForDateStart = twoDateKeyDialog.getSelectedDateStart()
+    Date reportForDateEnd = twoDateKeyDialog.getSelectedDateEnd()
+    String key = twoDateKeyDialog.getDiscountKey().trim()
+    if ( reportForDateStart != null && reportForDateEnd != null && twoDateKeyDialog.button ) {
       log.debug( "Imprime el reporte de Descuentos" )
-      reportService.obtenerReporteDescuentos( reportForDateStart, reportForDateEnd )
+      reportService.obtenerReporteDescuentosMasVision( reportForDateStart, reportForDateEnd, key )
     } else {
       log.debug( "Cancelar_continuar" )
     }
@@ -420,29 +424,21 @@ class ReportController {
   }
 
   static void fireOptometristSalesReport( ) {
-    if ( twoDatesSelectionRadioFilterDialog == null ) {
-      twoDatesSelectionRadioFilterDialog = new TwoDatesSelectionRadioFilterDialog()
+    if ( twoDateDialog == null ) {
+        twoDateDialog = new TwoDatesSelectionDialog()
     }
-    twoDatesSelectionRadioFilterDialog.setTitle( "Reporte de Ventas por Optometrista" )
-    twoDatesSelectionRadioFilterDialog.activate()
-    Date reportForDateStart = twoDatesSelectionRadioFilterDialog.getSelectedDateStart()
-    Date reportForDateEnd = twoDatesSelectionRadioFilterDialog.getSelectedDateEnd()
-    boolean todoTipo = twoDatesSelectionRadioFilterDialog.getCbTodoTipo()
-    boolean referidos = twoDatesSelectionRadioFilterDialog.getCbReferidos()
-    boolean rx = twoDatesSelectionRadioFilterDialog.getCbRx()
-    boolean lux = twoDatesSelectionRadioFilterDialog.getCbLux()
-    boolean totalventas = twoDatesSelectionRadioFilterDialog.getCbTodoVentas()
-    boolean primera = twoDatesSelectionRadioFilterDialog.getCbPrimeras()
-    boolean mayor = twoDatesSelectionRadioFilterDialog.getCbMayor()
-    boolean resumen = twoDatesSelectionRadioFilterDialog.getCbResumen()
-    if ( reportForDateStart != null && reportForDateEnd != null && twoDatesSelectionRadioFilterDialog.button ) {
-      if ( resumen ) {
+      twoDateDialog.setTitle( "Reporte de Ventas por Optometrista" )
+      twoDateDialog.activate()
+    Date reportForDateStart = twoDateDialog.getSelectedDateStart()
+    Date reportForDateEnd = twoDateDialog.getSelectedDateEnd()
+    if ( reportForDateStart != null && reportForDateEnd != null && twoDateDialog.button ) {
+      /*if ( resumen ) {
         log.debug( "Imprime el reporte de Ventas por Optometrista Resumido" )
-        reportService.obtenerReporteVentasporOptometristaResumido( reportForDateStart, reportForDateEnd, todoTipo, referidos, rx, lux, totalventas, primera, mayor, resumen )
-      } else {
+        reportService.obtenerReporteVentasporOptometristaResumido( reportForDateStart, reportForDateEnd )
+      } else {*/
         log.debug( "Imprime el reporte de Ventas por Optometrista" )
-        reportService.obtenerReporteVentasporOptometrista( reportForDateStart, reportForDateEnd, todoTipo, referidos, rx, lux, totalventas, primera, mayor, resumen )
-      }
+        reportService.obtenerReporteVentasporOptometrista( reportForDateStart, reportForDateEnd )
+      //}
     } else {
       log.debug( "Cancelar_continuar" )
     }
@@ -463,12 +459,12 @@ class ReportController {
     }
     kardexReportDialog.setTitle( "Kardex Por Articulo" )
     kardexReportDialog.activate()
-    String strSku =kardexReportDialog.getSku()
+    String articulo =kardexReportDialog.getSku()
     Date reportForDateStart = kardexReportDialog.getSelectedDateStart()
     Date reportForDateEnd = kardexReportDialog.getSelectedDateEnd()
-    if( StringUtils.trimToEmpty(strSku) != '' && reportForDateStart != null && reportForDateEnd != null ){
-      Integer sku = NumberFormat.getInstance().parse( strSku )
-      reportService.obtenerReporteDeKardex( sku, reportForDateStart, reportForDateEnd )
+    if( StringUtils.trimToEmpty(articulo) != '' && reportForDateStart != null && reportForDateEnd != null ){
+      //Integer sku = NumberFormat.getInstance().parse( strSku )
+      reportService.obtenerReporteDeKardex( articulo, reportForDateStart, reportForDateEnd )
     }
   }
 
@@ -501,6 +497,21 @@ class ReportController {
     }
   }
 
+
+  static void coupons(){
+      log.debug( 'imprime el reporte de Cupones' )
+      if( twoDateDialog == null ){
+          twoDateDialog = new TwoDatesSelectionDialog()
+      }
+      twoDateDialog.setTitle( 'Cupones' )
+      twoDateDialog.activate()
+      Date dateStart = twoDateDialog.getSelectedDateStart()
+      Date dateEnd = twoDateDialog.getSelectedDateEnd()
+      if( dateStart != null && dateEnd != null ){
+          reportService.obtenerReporteDeCupones( dateStart, dateEnd )
+      }
+  }
+
   // Public Methods
   static void fireReport( Report pReport ) {
     switch ( pReport ) {
@@ -529,6 +540,7 @@ class ReportController {
       case Report.Kardex: kardexByDateAndSkuReport(); break;
       case Report.SalesToday: todaySales(); break;
       case Report.PaymentsbyPeriod: paymentsByPeriod(); break;
+      case Report.Coupon: coupons(); break;
     }
   }
 }

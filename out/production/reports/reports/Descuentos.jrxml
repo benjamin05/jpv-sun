@@ -16,6 +16,7 @@
 	</parameter>
 	<parameter name="lstDescuentos" class="java.util.List"/>
 	<parameter name="totalDesc" class="java.lang.Integer"/>
+	<parameter name="importeTotalDesc" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -93,13 +94,41 @@
 		</band>
 	</title>
 	<detail>
-		<band height="62" splitType="Stretch">
+		<band height="113" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="ec5ca6da-a7ec-4f5f-85af-f4608cb8946a" x="0" y="18" width="572" height="44"/>
+				<reportElement uuid="ec5ca6da-a7ec-4f5f-85af-f4608cb8946a" x="0" y="69" width="572" height="44"/>
 				<subreportParameter name="SUBREPORT_DIR"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{lstDescuentos})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["reports/Descuentos_Detalle.jasper"]]></subreportExpression>
 			</subreport>
+			<staticText>
+				<reportElement uuid="c5b2bd55-693c-4213-8aeb-89565c2000bf" x="24" y="26" width="170" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Importe Total de Descuentos:]]></text>
+			</staticText>
+			<textField pattern="$#,##0.00">
+				<reportElement uuid="2c2865cc-820c-4fc9-81c8-73d4ccbaa4ee" x="194" y="26" width="107" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{importeTotalDesc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c38f0795-12da-48a7-932f-31e85f97e352" x="303" y="26" width="150" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad de Descuentos:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="76bb4f59-5d3a-4c20-90d7-de3512e3c870" x="453" y="26" width="92" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{totalDesc}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

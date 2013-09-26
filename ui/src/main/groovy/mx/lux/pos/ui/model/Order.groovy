@@ -19,6 +19,7 @@ class Order {
   String comments
   String status
   Date date
+  Date deliveryDate
   Branch branch
   Customer customer
   String employee
@@ -34,6 +35,9 @@ class Order {
   String udf3
   Date fechaEntrega
   String empEntrega
+
+  Integer rx
+
 
   private Double usdRate
 
@@ -69,6 +73,7 @@ class Order {
           id: notaVenta.id,
           bill: notaVenta.factura,
           date: notaVenta.fechaHoraFactura,
+          deliveryDate: notaVenta.fechaEntrega,
           comments: notaVenta.observacionesNv,
           status: notaVenta.sFactura,
           branch: Branch.toBranch( notaVenta.sucursal ),
@@ -82,8 +87,12 @@ class Order {
           dioptra: notaVenta.codigo_lente,
           udf2: notaVenta.udf2,
           udf3: notaVenta.udf3,
+
           fechaEntrega: notaVenta.fechaEntrega,
-          empEntrega: notaVenta.empEntrego
+          empEntrega: notaVenta.empEntrego,
+
+          rx: notaVenta.receta
+
       )
       order.deals = new ArrayList<IPromotion>()
       if ( notaVenta.ordenPromDet != null ) {

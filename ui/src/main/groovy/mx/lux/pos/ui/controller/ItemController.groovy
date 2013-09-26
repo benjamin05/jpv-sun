@@ -2,6 +2,7 @@ package mx.lux.pos.ui.controller
 
 import groovy.util.logging.Slf4j
 import mx.lux.pos.model.Articulo
+import mx.lux.pos.model.Precio
 import mx.lux.pos.service.ArticuloService
 import mx.lux.pos.ui.model.Item
 import org.apache.commons.lang3.StringUtils
@@ -50,13 +51,9 @@ class ItemController {
 
   static List<Item> findItemsByQuery( final String query ) {
     log.debug( "buscando de articulos con query: $query" )
-
-
       if ( StringUtils.isNotBlank( query ) ) {
-
       List<Articulo> items = findPartsByQuery( query )
       if (items.size() > 0) {
-
         log.debug( "Items:: ${items.first()?.dump()} " )
         return items?.collect { Item.toItem( it ) }
       }
@@ -72,10 +69,10 @@ class ItemController {
   static List<Articulo> findPartsByQuery( final String query, Boolean incluyePrecio ) {
     List<Articulo> items = [ ]
     if ( StringUtils.isNotBlank( query ) ) {
-      if ( query.integer ) {
-        log.debug( "busqueda por id exacto ${query}" )
+      /*if ( query.integer ) {
+        log.debug( "busqueda por articulo exacto ${query}" )
         items.add( articuloService.obtenerArticulo( query.toInteger(), incluyePrecio ) )
-      } else {
+      } else {*/
         def anyMatch = '*'
         def colorMatch = ','
         def typeMatch = '+'
@@ -95,14 +92,15 @@ class ItemController {
         if ( query.contains( colorMatch ) ) {
           String color = query.find( /\,(\w+)/ ) { m, c -> return c }
           log.debug( "busqueda con color: ${color}" )
-          items = items.findAll { it?.codigoColor?.equalsIgnoreCase( color ) }
+          items = items.findAll { it?.codigoColor?.equalsIgnoreCase( color ) ||
+                  it?.idCb?.equalsIgnoreCase( color )}
         }
         if ( query.contains( typeMatch ) ) {
           String type = query.find( /\+(\w+)/ ) { m, t -> return t }
           log.debug( "busqueda con tipo: ${type}" )
           items = items.findAll { it?.idGenerico?.equalsIgnoreCase( type ) }
         }
-      }
+      //}
     }
     return items
   }
@@ -142,4 +140,13 @@ class ItemController {
   }
 
 
+  static Precio findPrice( Articulo articulo ){
+     Precio precio = articuloService.findPriceByArticle( articulo )
+     return precio
+  }
+
+  static Boolean esInventariable( Integer idArticulo ){
+    Boolean esInventariable = articuloService.esInventariable( idArticulo )
+    return esInventariable
+  }
 }

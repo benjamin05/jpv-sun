@@ -74,20 +74,20 @@ class Item {
       if ( detalleNotaVenta?.id ) {
         Articulo articulo = detalleNotaVenta.articulo
         Item item = new Item(
-            id: articulo.id,
-            price: detalleNotaVenta.precioUnitFinal,
-            listPrice: detalleNotaVenta.precioUnitLista,
-            name: articulo.articulo,
-            color: articulo.codigoColor,
-            colorDesc: articulo.descripcionColor,
-            reference: articulo.descripcion,
-            type: articulo.idGenerico,
-            genericType: articulo.idGenTipo,
-            genericSubType: articulo.idGenSubtipo,
-            lensDesign: articulo.idDisenoLente,
-            operation: articulo.operacion,
-            priceType: articulo.tipoPrecio,
-            location: articulo.ubicacion
+            id: articulo?.id,
+            price: detalleNotaVenta?.precioUnitFinal,
+            listPrice: detalleNotaVenta?.precioUnitLista,
+            name: articulo?.articulo,
+            color: articulo?.codigoColor,
+            colorDesc: articulo?.descripcionColor,
+            reference: articulo?.descripcion,
+            type: articulo?.idGenerico,
+            genericType: articulo?.idGenTipo,
+            genericSubType: articulo?.idGenSubtipo,
+            lensDesign: articulo?.idDisenoLente,
+            operation: articulo?.operacion,
+            priceType: articulo?.tipoPrecio,
+            location: articulo?.ubicacion
         )
         return item
       }

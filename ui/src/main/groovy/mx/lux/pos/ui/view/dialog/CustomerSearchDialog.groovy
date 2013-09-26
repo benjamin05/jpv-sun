@@ -123,6 +123,7 @@ class CustomerSearchDialog extends JDialog {
     if ( SwingUtilities.isLeftMouseButton( ev ) ) {
       if ( ev.clickCount == 2 ) {
         customer = ev.source.selectedElement
+        canceled = false
         dispose()
       }
     }
@@ -134,6 +135,7 @@ class CustomerSearchDialog extends JDialog {
       sb.popupMenu {
         menuItem( 'Editar',
             actionPerformed: {
+              canceled = true
               dispose()
               openCustomerDialog( customer, true )
             }
@@ -143,7 +145,7 @@ class CustomerSearchDialog extends JDialog {
   }
 
   public def doNewCustomer = {
-
+    canceled = true
     dispose()
     customer = new Customer()
     openCustomerDialog( customer, false )
@@ -162,7 +164,14 @@ class CustomerSearchDialog extends JDialog {
     } else {
       NewCustomerAndRxDialog dialog = new NewCustomerAndRxDialog( this, customer, editar )
       dialog.show()
-      this.customer = dialog.customer
+      if( dialog.canceled ){
+        this.customer = dialog.customer
+        canceled = false
+      }
     }
+  }
+
+  boolean getCanceled ( ){
+      return canceled
   }
 }

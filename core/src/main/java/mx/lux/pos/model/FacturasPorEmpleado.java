@@ -47,11 +47,11 @@ public class FacturasPorEmpleado {
         factura.AcumulaFacturas( modificacion );
     }
 
-    public void AcumulaMarcas( String brand, Articulo articulo ) {
+    public void AcumulaMarcas( String brand, Articulo articulo, Precio precio ) {
         marca = brand;
         cantidad = cantidad + articulo.getCantExistencia();
         IngresoPorFactura article = FindOrCreate( facturasVendedor, articulo.getId().toString() );
-        article.AcumulaMarca( articulo );
+        article.AcumulaMarca( articulo, precio );
     }
 
     public void AcumulaMarcasResumido( String brand, Articulo articulo ) {

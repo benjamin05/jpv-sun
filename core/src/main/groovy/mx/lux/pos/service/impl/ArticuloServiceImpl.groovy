@@ -298,4 +298,16 @@ class ArticuloServiceImpl implements ArticuloService {
   }
 
 
+  Precio findPriceByArticle( Articulo articulo ){
+    List<Precio> precios = precioRepository.findByArticulo( articulo.articulo )
+    Precio precio = new Precio()
+    if(precios.size() > 0){
+      precio = precios.first()
+    } else {
+      precio = null
+    }
+    return precio
+  }
+
+
 }

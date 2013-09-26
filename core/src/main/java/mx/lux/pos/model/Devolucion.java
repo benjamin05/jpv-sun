@@ -66,6 +66,11 @@ public class Devolucion implements Serializable {
     @JoinColumn( name = "id_forma_pago", updatable = false, insertable = false )
     private FormaPago formaPago;
 
+    @ManyToOne
+    @NotFound( action = NotFoundAction.IGNORE )
+    @JoinColumn( name = "transf", referencedColumnName = "id_factura", updatable = false, insertable = false )
+    private NotaVenta notaVenta;
+
     @PrePersist
     private void onPrePersist() {
         fecha = new Date();
@@ -185,5 +190,13 @@ public class Devolucion implements Serializable {
 
     public void setFormaPago( FormaPago formaPago ) {
         this.formaPago = formaPago;
+    }
+
+    public NotaVenta getNotaVenta() {
+        return notaVenta;
+    }
+
+    public void setNotaVenta(NotaVenta notaVenta) {
+        this.notaVenta = notaVenta;
     }
 }

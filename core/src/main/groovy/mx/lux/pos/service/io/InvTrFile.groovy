@@ -14,11 +14,15 @@ class InvTrFile {
   private static enum DetFld {
     Site, TrType, TrNbr, LineNum, Sku, MovType, Qty
   }
+  private static enum DetFldIssue {
+      Sku, Color, ModSend, Qty, Remarks, MovType
+  }
   private static enum HdrFld {
-    Site, TrType, TrNbr, TrDate, SiteTo, Ref, LineNum, Remarks
+    Site, TrType, TrNbr, TrDate, SiteTo, Ref, Folio, LineNum, Remarks
   }
   private static final String DELIMITER = "|"
   private static final String FMT_TR_DATE = "dd/MM/yyyy"
+  private static final String TAG_TRANS_SALIDA = "SALIDA"
 
   private Logger logger = LoggerFactory.getLogger( this.getClass() )
   private String delimiter
@@ -48,15 +52,29 @@ class InvTrFile {
 
   protected String formatDetail( TransInv pInvTr, Integer pLineNum, TransInvDetalle pTrDet ) {
     StringList det = new StringList()
-    for ( DetFld fld : DetFld.values() ) {
-      switch ( fld ) {
-        case DetFld.Site: det.add( String.format( "%04d", pInvTr.sucursal ) ); break
-        case DetFld.TrType: det.add( pInvTr.idTipoTrans ); break
-        case DetFld.TrNbr: det.addInteger( pInvTr.folio, "%08d" ); break
-        case DetFld.LineNum: det.addInteger( pLineNum ); break
-        case DetFld.Sku: det.addInteger( pTrDet.sku ); break
-        case DetFld.MovType: det.add( pTrDet.tipoMov ); break
-        case DetFld.Qty: det.addInteger( pTrDet.cantidad ); break
+    if(pInvTr.idTipoTrans.trim().equalsIgnoreCase(TAG_TRANS_SALIDA)){
+      Articulo articulo = ServiceFactory.partMaster.obtenerArticulo( pTrDet.sku )
+      for ( DetFldIssue fld : DetFldIssue.values() ) {
+          switch ( fld ) {
+              case DetFldIssue.Color: det.add( articulo.codigoColor.trim() != '' ? articulo.codigoColor : '0000' ); break
+              case DetFldIssue.Remarks: det.add( pInvTr.observaciones.trim() != '' ? pInvTr.observaciones : '' ); break
+              case DetFldIssue.ModSend: det.add( 'ENTERO' ); break
+              case DetFldIssue.Sku: det.add( articulo.articulo ); break
+              case DetFldIssue.MovType: det.add( pTrDet.tipoMov ); break
+              case DetFldIssue.Qty: det.addInteger( pTrDet.cantidad ); break
+          }
+      }
+    } else {
+      for ( DetFld fld : DetFld.values() ) {
+          switch ( fld ) {
+              case DetFld.Site: det.add( String.format( "%04d", pInvTr.sucursal ) ); break
+              case DetFld.TrType: det.add( pInvTr.idTipoTrans ); break
+              case DetFld.TrNbr: det.addInteger( pInvTr.folio, "%08d" ); break
+              case DetFld.LineNum: det.addInteger( pLineNum ); break
+              case DetFld.Sku: det.addInteger( pTrDet.sku ); break
+              case DetFld.MovType: det.add( pTrDet.tipoMov ); break
+              case DetFld.Qty: det.addInteger( pTrDet.cantidad ); break
+          }
       }
     }
     det.add( "" )
@@ -65,22 +83,44 @@ class InvTrFile {
 
   protected String formatHeader( TransInv pInvTr ) {
     StringList hdr = new StringList()
-    for ( HdrFld fld : HdrFld.values() ) {
-      switch ( fld ) {
-        case HdrFld.Site: hdr.add( String.format( "%04d", pInvTr.sucursal ) ); break
-        case HdrFld.TrType: hdr.add( pInvTr.idTipoTrans ); break
-        case HdrFld.TrNbr: hdr.addInteger( pInvTr.folio, "%08d" ); break
-        case HdrFld.TrDate: hdr.addDate( pInvTr.fecha, FMT_TR_DATE ); break
-        case HdrFld.LineNum: hdr.addInteger( pInvTr.trDet.size() ); break
-        case HdrFld.Remarks: hdr.add( pInvTr.observaciones ); break
-        case HdrFld.Ref: hdr.add( pInvTr.referencia ); break
-        case HdrFld.SiteTo:
+    if(pInvTr.idTipoTrans.trim().equalsIgnoreCase(TAG_TRANS_SALIDA)){
+      for ( HdrFld fld : HdrFld.values() ) {
+          switch ( fld ) {
+          //case HdrFld.Site: hdr.add( String.format( "%04d", pInvTr.sucursal ) ); break
+          //case HdrFld.TrType: hdr.add( pInvTr.idTipoTrans ); break
+          //case HdrFld.TrNbr: hdr.addInteger( pInvTr.folio, "%08d" ); break
+          //case HdrFld.TrDate: hdr.addDate( pInvTr.fecha, FMT_TR_DATE ); break
+            case HdrFld.Folio: hdr.add( String.format( "%06d", pInvTr.folio ) ); break
+            case HdrFld.LineNum: hdr.addInteger( pInvTr.trDet.size() ); break
+          //case HdrFld.Remarks: hdr.add( pInvTr.observaciones ); break
+          //case HdrFld.Ref: hdr.add( pInvTr.referencia ); break
+          //case HdrFld.SiteTo:
+          /*if ( pInvTr.sucursalDestino != null ) {
+            hdr.add( String.format( "%04d", pInvTr.sucursalDestino ) )
+          } else {
+            hdr.add( " " )
+          }
+          break*/
+          }
+      }
+    } else {
+      for ( HdrFld fld : HdrFld.values() ) {
+          switch ( fld ) {
+          case HdrFld.Site: hdr.add( String.format( "%04d", pInvTr.sucursal ) ); break
+          case HdrFld.TrType: hdr.add( pInvTr.idTipoTrans ); break
+          case HdrFld.TrNbr: hdr.addInteger( pInvTr.folio, "%08d" ); break
+          case HdrFld.TrDate: hdr.addDate( pInvTr.fecha, FMT_TR_DATE ); break
+          case HdrFld.LineNum: hdr.addInteger( pInvTr.trDet.size() ); break
+          case HdrFld.Remarks: hdr.add( pInvTr.observaciones ); break
+          case HdrFld.Ref: hdr.add( pInvTr.referencia ); break
+          case HdrFld.SiteTo:
           if ( pInvTr.sucursalDestino != null ) {
             hdr.add( String.format( "%04d", pInvTr.sucursalDestino ) )
           } else {
             hdr.add( " " )
           }
           break
+          }
       }
     }
     hdr.add( "" )
@@ -95,14 +135,15 @@ class InvTrFile {
   }
 
   protected File getInvTrFile( TransInv pInvTr ) {
-    String filename = String.format( "%s.%d.%04d.%s.inv", pInvTr.idTipoTrans, pInvTr.folio, pInvTr.sucursal,
-        CustomDateUtils.format( pInvTr.fecha, "dd-MM-yyyy" ) )
+    String filename = String.format( "%s.%d.%s.DA.%06d", 2.toString(), pInvTr.sucursal, CustomDateUtils.format( pInvTr.fecha, "dd-MM-yyyy" ),
+            pInvTr.folio,
+         )
     String absolutePath = String.format( "%s%s%s", this.location, File.separator, filename )
     return new File( absolutePath )
   }
 
   protected String getLocation( ) {
-    return ResourceManager.getLocation( TipoParametro.RUTA_INVENTARIO ).absolutePath
+    return ResourceManager.getLocation( TipoParametro.RUTA_POR_ENVIAR ).absolutePath
   }
 
   TransInv parse( List<String> pInputLines ) {

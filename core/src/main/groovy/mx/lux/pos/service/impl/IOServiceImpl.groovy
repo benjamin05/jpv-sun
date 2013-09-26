@@ -17,6 +17,8 @@ import mx.lux.pos.repository.*
 import mx.lux.pos.service.business.*
 import org.apache.commons.lang3.StringUtils
 
+import java.text.DateFormat
+
 @Service
 @Transactional( readOnly = true )
 class IOServiceImpl implements IOService {
@@ -24,7 +26,8 @@ class IOServiceImpl implements IOService {
   private static final String MSG_PART_CLASS_FILE_LOAD = 'Importar Clasificacion de Articulos'
   private static final String MSG_PART_CLASS_FILE_LOADED = 'Clasif de Articulos  Registros:%,d  Actualizados: %,d'
 
-  private static final String TAG_ACK_SALES = AckType.VENTA_DIA
+  private static final String TAG_ACK_SALES = 'venta'
+  private static final String TAG_ACK_REMITTANCES = 'REM'
   private static final String TAG_ACK_ADJUST = AckType.MODIF_VENTA
 
   private static IOServiceImpl instance
@@ -173,11 +176,11 @@ class IOServiceImpl implements IOService {
           CustomDateUtils.format( order.fechaHoraFactura ), order.ventaTotal ) )
       String strItemList = ''
       for ( DetalleNotaVenta det : order.detalles ) {
-        strItemList += String.format( "%d|", det.idArticulo )
+        strItemList += String.format( "%s,%s~", det?.articulo?.articulo?.trim(), det?.articulo?.codigoColor?.trim() )
       }
       String strPaymentList = ''
       for ( Pago p : order.pagos ) {
-        strPaymentList += StringUtils.trimToEmpty( p.idFPago ) + ',' + String.format( '%.2f', p.monto ) + '|'
+        strPaymentList += StringUtils.trimToEmpty( p.idFPago ) + ',' + String.format( '%.2f', p.monto ) + '~'
       }
       AcuseRepository acuses = RepositoryFactory.acknowledgements
       Acuse acuse = new Acuse()
@@ -188,15 +191,16 @@ class IOServiceImpl implements IOService {
       } catch ( Exception e ) {
         logger.error( e.getMessage() )
       }
-      acuse.contenido = String.format( 'id_acuse=%s', URLEncoder.encode( String.format( '%d', acuse.id ), 'UTF-8' ) )
-      acuse.contenido += String.format( '&id_suc=%s', URLEncoder.encode( String.format( '%d', order.idSucursal ), 'UTF-8' ) )
-      acuse.contenido += String.format( '&no_soi=%s', URLEncoder.encode( order.id, 'UTF-8' ) )
-      acuse.contenido += String.format( '&id_factura=%s', URLEncoder.encode( order.factura, 'UTF-8' ) )
-      acuse.contenido += String.format( '&fecha=%s', URLEncoder.encode( CustomDateUtils.format( order.fechaHoraFactura, 'ddMMyyyy' ), 'UTF-8' ) )
-      acuse.contenido += String.format( '&Importe=%s', URLEncoder.encode( String.format( '%.2f', order.ventaNeta ), 'UTF-8' ) )
-      acuse.contenido += String.format( '&articulos=%s', URLEncoder.encode( strItemList, 'UTF-8' ) )
-      acuse.contenido += String.format( '&pagos=%s', URLEncoder.encode( strPaymentList, 'UTF-8' ) )
-      acuse.contenido += String.format( '&id_cliente=%s', URLEncoder.encode( String.format( '%d', order.idCliente ), 'UTF-8' ) )
+      //acuse.contenido = String.format( 'ImporteVal=%s|', URLEncoder.encode( String.format( '%.2f', order.ventaNeta ), 'UTF-8' ) )
+      acuse.contenido = String.format( 'ImporteVal=%s|', String.format( '%.2f', order.ventaNeta ) )
+      acuse.contenido += String.format( 'articulosVal=%s|', strItemList )
+      acuse.contenido += String.format( 'fechaVal=%s|', CustomDateUtils.format(order.fechaHoraFactura, 'ddMMyyyy') )
+      acuse.contenido += String.format( 'id_acuseVal=%s|', String.format( '%d', acuse.id ) )
+      acuse.contenido += String.format( 'id_clienteVal=%s|', String.format( '%d', order.idCliente ) )
+      acuse.contenido += String.format( 'id_facturaVal=%s|', order.factura.trim() )
+      acuse.contenido += String.format( 'id_sucVal=%s|', String.format( '%d', order.idSucursal ) )
+      acuse.contenido += String.format( 'no_soiVal=%s|', order.id.trim() )
+      acuse.contenido += String.format( 'pagosVal=%s|', strPaymentList )
       acuse.fechaCarga = new Date()
       try {
         acuse = acuses.saveAndFlush( acuse )
@@ -253,4 +257,45 @@ class IOServiceImpl implements IOService {
     RepositoryFactory.acknowledgements.saveAndFlush( pAcknowledgement )
   }
 
+
+  @Transactional
+  void saveActualDate( String date ) {
+      Parametro paramFecha = RepositoryFactory.registry.findOne(TipoParametro.FECHA_PRIMER_ARRANQUE.value)
+      paramFecha.valor = date
+      RepositoryFactory.registry.save( paramFecha )
+  }
+
+
+  @Transactional
+  void logRemittanceNotification( String idTipoTrans, Integer folio ) {
+      TransInvRepository transactionRep = RepositoryFactory.inventoryMaster
+      QTransInv trans = QTransInv.transInv
+      TransInv transInv = transactionRep.findOne(trans.idTipoTrans.eq(idTipoTrans).and(trans.folio.eq(folio)))
+      if ( transInv != null ) {
+          AcuseRepository acuses = RepositoryFactory.acknowledgements
+          Acuse acuse = new Acuse()
+          acuse.idTipo = TAG_ACK_REMITTANCES
+          try {
+              acuse = acuses.saveAndFlush( acuse )
+              logger.debug( String.format( 'Acuse: (%d) %s -> %s', acuse.id, acuse.idTipo, acuse.contenido ) )
+          } catch ( Exception e ) {
+              logger.error( e.getMessage() )
+          }
+          String referencia = transInv.referencia.substring(0,6)
+          println referencia
+          //acuse.contenido = String.format( 'ImporteVal=%s|', URLEncoder.encode( String.format( '%.2f', order.ventaNeta ), 'UTF-8' ) )
+          acuse.contenido = String.format( 'sistemaVal=%s|', 'A' )
+          acuse.contenido += String.format( 'id_sucVal=%s|', transInv.sucursal.toString().trim() )
+          acuse.contenido += String.format( 'horaVal=%s|', CustomDateUtils.format(transInv.fechaMod, 'HH:mm') )
+          acuse.contenido += String.format( 'doctoVal=%s|', String.format( '%s%s', 'I', referencia ) )
+          acuse.contenido += String.format( 'id_acuseVal=%s|', String.format( '%d', acuse.id ) )
+          acuse.contenido += String.format( 'transaVal=%s|', String.format( '%s', referencia ) )
+          try {
+              acuse = acuses.saveAndFlush( acuse )
+              logger.debug( String.format( 'Acuse: (%d) %s -> %s', acuse.id, acuse.idTipo, acuse.contenido ) )
+          } catch ( Exception e ) {
+              logger.error( e.getMessage() )
+          }
+      }
+  }
 }

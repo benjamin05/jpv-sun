@@ -87,5 +87,13 @@ class IOController {
         Map<String, Object> importSummary = ServiceManager.ioServices.loadPartClassFile( pFile )
     }
 
+
+    void updateInitialDate(String date){
+        ServiceManager.ioServices.saveActualDate( date )
+    }
+
+    void deletCustomerProcess( ){
+        ServiceManager.customerService.eliminarTodoClienteProceso()
+    }
 }
 

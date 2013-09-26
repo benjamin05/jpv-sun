@@ -42,6 +42,12 @@ public class ReportBusiness {
     private BancoEmisorRepository bancoEmisorRepository;
 
     @Resource
+    private ClienteRepository clienteRepository;
+
+    @Resource
+    private CotizacionRepository cotizacionRepository;
+
+    @Resource
     private DescuentoRepository descuentoRepository;
 
     @Resource
@@ -58,6 +64,9 @@ public class ReportBusiness {
 
     @Resource
     private ParametroRepository parametroRepository;
+
+    @Resource
+    private RecetaRepository recetaRepository;
 
     @Resource
     private PagoRepository pagoRepository;
@@ -89,7 +98,12 @@ public class ReportBusiness {
     @Resource
     private OrdenPromDetRepository ordenPromDetRepository;
 
+    @Resource
+    private PrecioRepository precioRepository;
+
+    private static final Integer TAG_PUESTO_OFTALMOLOGO = 3;
     private static final String TAG_CANCELADO = "T";
+    private static final String TAG_TIPO_CANCELADO = "can";
 
     public List<IngresoPorDia> obtenerIngresoporDia( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerIngresoporDia()" );
@@ -295,7 +309,7 @@ public class ReportBusiness {
         List<Modificacion> lstModificaciones = (List<Modificacion>) modificacionRepository.findAll( mod.fecha.between(fechaInicio, fechaFin),
                 mod.idEmpleado.asc(), mod.fecha.asc() );
         for ( Modificacion modificacion : lstModificaciones ) {
-            String IdEmpleado = modificacion.getIdEmpleado();
+            String IdEmpleado = modificacion.getNotaVenta().getIdEmpleado();
             FacturasPorEmpleado factura = FindOrCreate( lstFacturas, IdEmpleado );
             factura.AcumulaCancelaciones( modificacion );
         }
@@ -307,7 +321,6 @@ public class ReportBusiness {
             FacturasPorEmpleado factura = FindOrCreate( lstFacturas, IdEmpleado );
             factura.AcumulaVentas();
         }
-
         return lstFacturas;
     }
 
@@ -835,8 +848,15 @@ public class ReportBusiness {
 
         for ( Articulo articulos : lstArticulo ) {
             String linea = articulos.getMarca();
+            Precio precio = new Precio();
+            precio.setPrecio( BigDecimal.ZERO );
+            QPrecio price = QPrecio.precio1;
+            List<Precio> precios = (List<Precio>) precioRepository.findAll(price.articulo.trim().eq(articulos.getArticulo()));
+            if(precios.size() == 1){
+              precio = precios.get(0);
+            }
             FacturasPorEmpleado facturas = FindOorCreate( lstArticulos, linea );
-            facturas.AcumulaMarcas( articulos.getMarca(), articulos );
+            facturas.AcumulaMarcas( articulos.getMarca(), articulos, precio );
             Collections.sort( facturas.getFacturasVendedor(), new Comparator<IngresoPorFactura>() {
                 @Override
                 public int compare(IngresoPorFactura o1, IngresoPorFactura o2) {
@@ -952,6 +972,11 @@ public class ReportBusiness {
 
         for ( Articulo articulos : lstArticulo ) {
             if ( articulos.getCantExistencia() > 0 || articulos.getCantExistencia() < 0 ) {
+                QPrecio price = QPrecio.precio1;
+                List <Precio> precio = (List<Precio>) precioRepository.findAll(price.articulo.trim().eq(articulos.getArticulo()));
+                if(precio.size() == 1){
+                  articulos.setPrecio( precio.get(0).getPrecio() );
+                }
                 if( articulos.getDescripcion().length() >= 55 ){
                     articulos.setDescripcion( articulos.getDescripcion().substring(0,50) );
                 }
@@ -996,7 +1021,8 @@ public class ReportBusiness {
 
         BooleanBuilder builderPorEnv = new BooleanBuilder();
         if ( porEnviar ) {
-            builderPorEnv.and( trabajo.estado.equalsIgnoreCase( "PE" ).or( trabajo.estado.equalsIgnoreCase( "RPE" ).or( trabajo.estado.equalsIgnoreCase( "X1" ) ) ) );
+            builderPorEnv.and( trabajo.estado.equalsIgnoreCase( "PE" ).or( trabajo.estado.equalsIgnoreCase( "RPE" ) ).
+                    or( trabajo.estado.equalsIgnoreCase( "X1" ) ) );
         } else {
             builderPorEnv.and( trabajo.estado.isNotNull() ).and( trabajo.estado.isNotEmpty() );
         }
@@ -1247,15 +1273,18 @@ public class ReportBusiness {
     public List<DescuentosPorTipo> obtenerExamenesporEmpleado( Date fechaInicio, Date fechaFin ) {
 
         List<DescuentosPorTipo> lstExamenes = new ArrayList<DescuentosPorTipo>();
-        QExamen examen = QExamen.examen;
-        List<Examen> lstExamen = ( List<Examen> ) examenRepository.findAll( examen.fechaAlta.between( fechaInicio, fechaFin ) );
-        Integer total = lstExamen.size();
-        for ( Examen examenes : lstExamen ) {
-            String idEmpleado = examenes.getIdAtendio();
-            DescuentosPorTipo desc = EncontraroCrear( lstExamenes, idEmpleado );
-            desc.AcumulaEmpleados( examenes, total );
+        QReceta rx = QReceta.receta;
+        List<Receta> lstRecetas = (List<Receta>)recetaRepository.findAll( rx.fechaReceta.between(fechaInicio,fechaFin),
+                rx.idCliente.asc(), rx.fechaReceta.asc() );
+        Integer total = lstRecetas.size();
+        for ( Receta receta : lstRecetas ) {
+            Examen examen = examenRepository.findOne( receta.getExamen() );
+            if( examen != null ){
+              String idEmpleado = receta.getIdOptometrista();
+              DescuentosPorTipo desc = EncontraroCrear( lstExamenes, idEmpleado );
+              desc.AcumulaEmpleados( examen, total, receta );
+            }
         }
-
 
         return lstExamenes;
     }
@@ -1281,67 +1310,42 @@ public class ReportBusiness {
     }
 
 
-    public List<IngresoPorVendedor> obtenerVentasporOptometristaCompleto( Date fechaInicio, Date fechaFin, boolean todoTipo, boolean referido, boolean rx,
-                                                                          boolean lux, boolean todaVenta, boolean primera, boolean mayor, boolean resumen ) {
+    public List<IngresoPorVendedor> obtenerVentasporOptometristaCompleto( Date fechaInicio, Date fechaFin ) {
 
         Parametro ivaVigenteParam = parametroRepository.findOne( TipoParametro.IVA_VIGENTE.getValue() );
         Impuesto iva = impuestoRepository.findOne( ivaVigenteParam.getValor() );
         Double ivaTasa = iva.getTasa() / 100;
-
         List<IngresoPorVendedor> lstVentas = new ArrayList<IngresoPorVendedor>();
 
         QNotaVenta venta = QNotaVenta.notaVenta;
-
-        BooleanBuilder builderTodo = new BooleanBuilder();
-        if ( todoTipo ) {
-            builderTodo.and( venta.receta.isNotNull() );
-        } else {
-            builderTodo.and( venta.receta.isNotNull() );
-        }
-
-        BooleanBuilder builderReferido = new BooleanBuilder();
-        if ( referido ) {
-            builderReferido.and( venta.examen.tipoCli.equalsIgnoreCase( "R" ).and( venta.sFactura.ne( "T" ) ) );
-        } else {
-            builderReferido.and( venta.receta.isNotNull() );
-        }
-
-        BooleanBuilder builderRx = new BooleanBuilder();
-        if ( rx ) {
-            builderRx.and( venta.examen.tipoCli.equalsIgnoreCase( "X" ).and( venta.sFactura.ne( "T" ) ) );
-        } else {
-            builderRx.and( venta.receta.isNotNull() );
-        }
-
-        BooleanBuilder builderLux = new BooleanBuilder();
-        if ( lux ) {
-            builderLux.and( venta.tipoCli.equalsIgnoreCase( "N" ) );
-        } else {
-            builderLux.and( venta.receta.isNotNull() );
-        }
-
         List<NotaVenta> lstVenta = ( List<NotaVenta> ) notaVentaRepository.findAll( venta.fechaHoraFactura.between( fechaInicio, fechaFin ).
-                and( venta.receta.isNotNull() ).and( venta.factura.isNotEmpty() ).and( venta.factura.isNotNull() ).and( builderLux ).
-                and( builderRx ).and( builderReferido ).and( builderTodo ), venta.fechaHoraFactura.asc(), venta.idEmpleado.asc() );
-        log.info( "tamañoLista:{}", lstVenta.size() );
+                and( venta.sFactura.ne(TAG_CANCELADO) ).and( venta.receta.isNotNull() ).and( venta.factura.isNotEmpty() ).
+                and( venta.factura.isNotNull() ), venta.idEmpleado.asc() );
+        QModificacion modificacion = QModificacion.modificacion;
+        List<Modificacion> lstCancelaciones = (List<Modificacion>) modificacionRepository.findAll(modificacion.tipo.eq("can").
+                and(modificacion.fecha.between(fechaInicio, fechaFin)).and(modificacion.notaVenta.fechaHoraFactura.notBetween(fechaInicio, fechaFin)).
+                and(modificacion.notaVenta.receta.isNotNull()).
+                and(modificacion.notaVenta.factura.isNotNull()).and(modificacion.notaVenta.factura.isNotEmpty()));
+
 
         BigDecimal montoTotal = BigDecimal.ZERO;
         Integer totalFacturas = lstVenta.size();
         for ( NotaVenta ventas : lstVenta ) {
             montoTotal = montoTotal.add( ventas.getVentaNeta() );
             String idEmpleado = ventas.getIdEmpleado();
-            if ( todaVenta || resumen ) {
-                IngresoPorVendedor ingresos = FindorCreate( lstVentas, idEmpleado );
-                ingresos.AcumulaOptometrista( ventas, montoTotal, totalFacturas, ivaTasa );
+            Receta receta = recetaRepository.findOne( ventas.getReceta() );
+            if(receta.getIdOptometrista().toString().trim().equalsIgnoreCase(ventas.getIdEmpleado().trim())){
+              IngresoPorVendedor ingresos = FindorCreate( lstVentas, idEmpleado );
+              ingresos.AcumulaOptometrista( ventas, montoTotal, totalFacturas, ivaTasa );
             }
-            if ( primera ) {
-                IngresoPorVendedor ingresos = FindorCreatePrimera( lstVentas, idEmpleado );
-                ingresos.AcumulaOptometrista( ventas, montoTotal, totalFacturas, ivaTasa );
-            }
-            if ( mayor ) {
-                IngresoPorVendedor ingresos = FindorCreateMayor( lstVentas, idEmpleado );
-                ingresos.AcumulaOptometristaMayor( ventas, totalFacturas );
+        }
 
+        for ( Modificacion mod : lstCancelaciones ) {
+            String idEmpleado = mod.getNotaVenta().getIdEmpleado();
+            Receta receta = recetaRepository.findOne( mod.getNotaVenta().getReceta() );
+            if(receta.getIdOptometrista().toString().trim().equalsIgnoreCase(mod.getNotaVenta().getIdEmpleado().trim())){
+                IngresoPorVendedor ingresos = FindorCreate( lstVentas, idEmpleado );
+                ingresos.AcumulaCanOptometrista( mod.getNotaVenta(), totalFacturas, ivaTasa );
             }
         }
 
@@ -1409,21 +1413,27 @@ public class ReportBusiness {
     }
 
 
-    public List<KardexPorArticulo> obtenerKardex( Integer sku, Date fechaInicio, Date fechaFin ){
+    public List<KardexPorArticulo> obtenerKardex( String article, Date fechaInicio, Date fechaFin ){
         QTransInv transInv = QTransInv.transInv;
         QTransInvDetalle transInvDet = QTransInvDetalle.transInvDetalle;
         List<TransInvDetalle> lstMovimientos = new ArrayList<TransInvDetalle>();
         List<TransInv> lstTransInvDate = ( List<TransInv> ) transInvRepository.findAll( transInv.fecha.between( fechaInicio, new Date() ), transInv.fechaMod.desc() );
         List<KardexPorArticulo> lstKardezSku = new ArrayList<KardexPorArticulo>();
+        Articulo articulo = new Articulo();
+        QArticulo art = QArticulo.articulo1;
+        List<Articulo> articulos = (List<Articulo>) articuloRepository.findAll( art.articulo.trim().equalsIgnoreCase(article.trim()) );
+        if( articulos.size() == 1){
+            articulo = articulos.get(0);
+        }
         for( TransInv movimiento : lstTransInvDate ){
             TransInvDetalle transInvSku = ( TransInvDetalle ) transInvDetalleRepository.findOne( transInvDet.idTipoTrans.eq(movimiento.getIdTipoTrans()).
-                    and( transInvDet.folio.eq( movimiento.getFolio() )).and( transInvDet.sku.eq( sku ) ) );
+                    and( transInvDet.folio.eq( movimiento.getFolio() )).and( transInvDet.sku.eq(articulo.getId() != null ? articulo.getId() : 0) ) );
             if( transInvSku != null ){
                 lstMovimientos.add( transInvSku );
             }
         }
-        Articulo articulo = articuloRepository.findOne( sku );
-        Integer exisActual = articulo.getCantExistencia();
+
+        Integer exisActual = articulo.getCantExistencia() != null ? articulo.getCantExistencia() : 0;
         Integer saldoInicio = 0;
         Integer saldoFin = 0;
         for( TransInvDetalle movimiento : lstMovimientos ){
@@ -1812,5 +1822,119 @@ public class ReportBusiness {
         }
         return found;
     }
+
+
+
+    public List<VentasPorDia> obtenerVentasPorPeriodoMasVision( Date fechaInicio, Date fechaFin ){
+        List<VentasPorDia> lstVentas = new ArrayList<VentasPorDia>();
+        QNotaVenta nv = QNotaVenta.notaVenta;
+        List<NotaVenta> lstNotas = (List<NotaVenta>) notaVentaRepository.findAll(
+                nv.fechaHoraFactura.between(fechaInicio,fechaFin).and(nv.factura.isNotEmpty()).
+                        and(nv.sFactura.ne(TAG_CANCELADO)), nv.factura.asc() );
+
+        QModificacion modificacion = QModificacion.modificacion;
+        List<Modificacion> lstCanceladas = (List<Modificacion>) modificacionRepository.findAll(modificacion.tipo.eq(TAG_TIPO_CANCELADO).
+                and(modificacion.fecha.between(fechaInicio,fechaFin)).and(modificacion.notaVenta.fechaHoraFactura.notBetween(fechaInicio,fechaFin)));
+
+        for( NotaVenta notas : lstNotas ){
+            VentasPorDia ventas = findorCreateFactura( lstVentas, notas.getFactura() );
+            ventas.acumulaVentasPorDiaMasVision( notas );
+        }
+
+        for( Modificacion mod : lstCanceladas){
+            VentasPorDia cancelaciones = findorCreateFactura( lstVentas, mod.getNotaVenta().getFactura() );
+            cancelaciones.acumulaCancelacionesPorDiaMasVision( mod );
+        }
+        return lstVentas;
+    }
+
+
+
+    public List<Descuento> obtenerDescuentosMasVision( Date fechaInicio, Date fechaFin, String key ) {
+        BooleanBuilder claveBuilder = new BooleanBuilder();
+        QDescuento descuento = QDescuento.descuento;
+        if( !key.trim().equalsIgnoreCase("") ){
+          claveBuilder.and( descuento.clave.eq(key) );
+        } else {
+          claveBuilder.and( descuento.idFactura.isNotNull() );
+        }
+        List<Descuento> lstDescuentos = ( List<Descuento> ) descuentoRepository.findAll( descuento.fecha.between( fechaInicio, fechaFin ).
+                and(claveBuilder) );
+        /*Integer noDesc = lstDescuento.size();
+        for ( Descuento descuentos : lstDescuento ) {
+            DescuentosPorTipo desc = FindOoorCreate( lstDescuentos, descuentos.getTipoClave() );
+            desc.AcumulaDescuentos( descuentos, noDesc );
+        }*/
+
+        return lstDescuentos;
+    }
+
+
+    public List<Cotizaciones> obtenerCotizaciones( Date fechaInicio, Date fechaFin ) {
+        List<Cotizaciones> lstCotizaciones = new ArrayList<Cotizaciones>();
+        QCotizacion cotiza = QCotizacion.cotizacion;
+        List<Cotizacion> cotizaciones = (List<Cotizacion>) cotizacionRepository.findAll( cotiza.fechaMod.between(fechaInicio,fechaFin) );
+
+        for(Cotizacion cot : cotizaciones){
+          List<Articulo> lstArticulos = new ArrayList<Articulo>();
+          BigDecimal montoArticulos = BigDecimal.ZERO;
+          Cliente cliente = clienteRepository.findOne( cot.getIdCliente() );
+          NotaVenta nota = notaVentaRepository.findOne( cot.getIdFactura() != null ? cot.getIdFactura() : "" );
+          Cotizaciones cotizacion = new Cotizaciones();
+          cotizacion.setFechaMod( cot.getFechaMod() );
+          cotizacion.setIdEmpleado(cot.getIdEmpleado());
+          cotizacion.setIdCotizacion( cot.getIdCotiza().toString() );
+          cotizacion.setCliente( cliente.getNombreCompleto() );
+          if( !cot.getTel().trim().equalsIgnoreCase("") ){
+            cotizacion.setContacto( cot.getTel() );
+          } else{
+            if(cliente != null && !cliente.getTelefonoCasa().trim().equalsIgnoreCase("")){
+                cotizacion.setContacto( cliente.getTelefonoCasa().trim() );
+            } else if(cliente != null && !cliente.getTelefonoAdicional().trim().equalsIgnoreCase("")){
+                cotizacion.setContacto( cliente.getTelefonoAdicional().trim() );
+            } else if(cliente != null && !cliente.getEmail().trim().equalsIgnoreCase("")){
+                cotizacion.setContacto( cliente.getEmail().trim() );
+            }
+          }
+          for(CotizaDet cotizaDet: cot.getCotizaDet()){
+            Articulo articulo = articuloRepository.findOne( cotizaDet.getSku() );
+            if(articulo != null){
+              lstArticulos.add( articulo );
+              List<Precio> precios = precioRepository.findByArticulo( articulo.getArticulo() );
+              if(precios.size() > 0){
+                montoArticulos = montoArticulos.add( precios.get(0).getPrecio() );
+              }
+            }
+          }
+          cotizacion.setLstArticulos( lstArticulos );
+          cotizacion.setImporteTotal( montoArticulos );
+          if( nota != null ){
+            cotizacion.setFactura( nota.getFactura() );
+          }
+          cotizacion.setFechaVenta( cot.getFechaVenta() );
+
+          lstCotizaciones.add( cotizacion );
+        }
+
+        return lstCotizaciones;
+    }
+
+
+  public List<VentasPorDia> obtenerVentasPorCupones( Date fechaInicio, Date fechaFin ){
+    log.debug( "obtenerVentasPorCupones" );
+
+    List<VentasPorDia> lstCupones = new ArrayList<VentasPorDia>();
+    QPago payment = QPago.pago;
+    List<Pago> lstPagos = (List<Pago>) pagoRepository.findAll( payment.fecha.between(fechaInicio,fechaFin).
+            and(payment.idFPago.startsWith("C")).and(payment.notaVenta.sFactura.ne(TAG_CANCELADO)));
+    for(Pago pago : lstPagos){
+      VentasPorDia venta = findorCreateFactura(lstCupones, pago.getIdFPago());
+      venta.acumulaCupones( pago );
+    }
+
+    return lstCupones;
+  }
+
+
 
 }

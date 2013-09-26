@@ -26,6 +26,8 @@ public class IngresoPorVendedor {
 
     double porcentaje = 100.0;
 
+    private static final String TAG_CUPON = "C";
+
     public IngresoPorVendedor( String idVendedor ) {
         idEmpleado = idVendedor;
         pagos = new ArrayList<IngresoPorFactura>();
@@ -110,13 +112,28 @@ public class IngresoPorVendedor {
     public void AcumulaOptometrista( NotaVenta venta, BigDecimal total,
                                      Integer noFacturas1, Double iva ) {
         facturas = noFacturas1;
-        totalPagos = total;
+        //totalPagos = total;
+        for(Pago pago : venta.getPagos()){
+            if(!pago.getIdFPago().trim().startsWith(TAG_CUPON)){
+                totalPagos = totalPagos.add( pago.getMonto() );
+            }
+        }
         IngresoPorFactura ingreso = FindOrCreate( pagos, venta.getFactura() );
         ingreso.AcumulaVentasOpto( venta );
-        totalPagos = totalPagos.add( venta.getVentaNeta() );
         totalPagosIva = totalPagos.subtract( totalPagos.multiply( new BigDecimal(
                 iva ) ) );
         contador = contador.add( new BigDecimal( 1 ) );
+    }
+
+    public void AcumulaCanOptometrista( NotaVenta venta,
+                                     Integer noFacturas1, Double iva ) {
+        for(Pago pago : venta.getPagos()){
+            if(!pago.getIdFPago().trim().startsWith(TAG_CUPON)){
+                totalPagos = totalPagos.subtract( pago.getMonto() );
+            }
+        }
+        IngresoPorFactura ingreso = FindOrCreate( pagos, venta.getFactura() );
+        ingreso.AcumulaVentasCanOpto( venta );
     }
 
     public void AcumulaOptometristaMayor( NotaVenta venta, Integer factura ) {

@@ -53,7 +53,7 @@ class ArticuloSombra {
   }
 
   void setCodigoColor( String pValue ) {
-    codigoColor = StringUtils.trimToNull( pValue )
+    codigoColor = StringUtils.trimToEmpty( pValue )
   }
 
   void setDescripcionColor( String pValue ) {

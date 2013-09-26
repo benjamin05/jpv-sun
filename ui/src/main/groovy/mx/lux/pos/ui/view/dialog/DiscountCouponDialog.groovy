@@ -173,12 +173,12 @@ class DiscountCouponDialog extends JDialog {
 
         if (  descuentoClave != null ) {
             if(descuentoClave?.vigente == true){
-                if(descuentoClave?.tipo.trim().equals('P')){
+                if(descuentoClave?.tipo != null && descuentoClave?.tipo.trim().equals('P')){
             txtDiscountPercent.setValue(descuentoClave?.porcenaje_descuento)
             txtDiscountAmount.setValue( txtDiscountPercent.getValue( ) * orderTotal / 100.0 )
                     porceLabel.setVisible(true)
                     porceText.setVisible(true)
-                }else if(descuentoClave?.tipo.trim().equals('M')){
+                }else if(descuentoClave?.tipo != null && descuentoClave?.tipo.trim().equals('M')){
                     txtDiscountPercent.setValue(descuentoClave?.porcenaje_descuento)
                     txtDiscountAmount.setValue(  descuentoClave?.porcenaje_descuento)
                     porceLabel.setVisible(false)

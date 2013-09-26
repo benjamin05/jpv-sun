@@ -43,10 +43,12 @@ class ShowOrderPanel extends JPanel {
   private DefaultTableModel dealsModel
   private JLabel folio
   private JLabel bill
+
     private JLabel status
-    private JLabel statusE
+
     private JLabel fechaE
     private JLabel empIDE
+
 
 
   private JLabel date

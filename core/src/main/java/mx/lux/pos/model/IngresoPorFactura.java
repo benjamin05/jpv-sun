@@ -1,5 +1,7 @@
 package mx.lux.pos.model;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -19,6 +21,11 @@ public class IngresoPorFactura {
     private BigDecimal montoPagoIVA;
     private BigDecimal montoPagoSinIVA;
     private BigDecimal montoDevolucion;
+
+    private BigDecimal montoDescuento;
+    private BigDecimal montoConDesc;
+    private BigDecimal montoSinDesc;
+
     private BigDecimal acumulaPago;
     private BigDecimal acumulaPagoIva;
     private BigDecimal acumulaDevolucion;
@@ -36,8 +43,14 @@ public class IngresoPorFactura {
     private BigDecimal sumaMonto;
     private Boolean mostrarArticulos;
     private String idGenerico;
+    private String tipoCan;
+    private String factTransf;
     private Integer noFacturas;
+    private List<DetalleNotaVenta> lstArticulos;
+    private String articulos;
     private static final String TAG_CANCELADO = "T";
+    private static final String TAG_DEVUELTO = "d";
+    private static final String TAG_TRANSFERIDO = "t";
 
     public IngresoPorFactura( String idFactura ) {
         this.idFactura = idFactura;
@@ -56,6 +69,13 @@ public class IngresoPorFactura {
         lstIdsArticulos = new ArrayList<String>();
         sumaMonto = BigDecimal.ZERO;
         mostrarArticulos = true;
+        lstArticulos = new ArrayList<DetalleNotaVenta>();
+        montoDescuento = BigDecimal.ZERO;
+        montoConDesc = BigDecimal.ZERO;
+        montoSinDesc = BigDecimal.ZERO;
+        factTransf = "";
+        tipo = "";
+        articulos = "";
     }
 
     public IngresoPorFactura( BigDecimal monto ) {
@@ -134,20 +154,33 @@ public class IngresoPorFactura {
     }
 
     public void AcumulaFacturas( Modificacion modificacion ) {
-
+        montoPago = modificacion.getNotaVenta().getVentaNeta();
         fechaPago = modificacion.getNotaVenta().getFechaHoraFactura();
         fechaCancelacion = modificacion.getFecha();
         modId = modificacion.getId();
         idFactura = modificacion.getNotaVenta().getFactura();
         lstDetalles = modificacion.getNotaVenta().getDetalles();
+        for(Devolucion dev : modificacion.getDevolucion()){
+            if(dev.getTipo().trim().equalsIgnoreCase(TAG_DEVUELTO) && !tipo.contains("Devolucion") ){
+                tipo = tipo + ", Devolucion";
+            } else if(dev.getTipo().trim().equalsIgnoreCase(TAG_TRANSFERIDO) && !tipo.contains("Transferencia")){
+                tipo = tipo + ", Transferencia";
+            }
+
+            if(StringUtils.trimToEmpty(dev.getTransf()) != "" && dev.getNotaVenta() != null){
+                factTransf = factTransf + ", " + dev.getNotaVenta().getFactura().trim();
+            }
+        }
+        tipo = tipo.replaceFirst( ", ", "" );
+        factTransf = factTransf.replaceFirst( ", ", "" );
     }
 
-    public void AcumulaMarca( Articulo articulo ) {
+    public void AcumulaMarca( Articulo articulo, Precio precio ) {
         idArticulo = articulo.getId();
         marca = articulo.getArticulo();
         this.color = articulo.getCodigoColor();
         descripcion = articulo.getDescripcion();
-        acumulaPago = articulo.getPrecio();
+        acumulaPago = precio.getPrecio();
         idGenerico = articulo.getIdGenerico();
         this.existencia = articulo.getCantExistencia();
     }
@@ -207,9 +240,37 @@ public class IngresoPorFactura {
     }
 
     public void AcumulaVentasOpto( NotaVenta venta ) {
+        for(DetalleNotaVenta det : venta.getDetalles()){
+          //lstArticulos.add( det );
+          articulos =  articulos + ", " + det.getArticulo().getArticulo().trim();
+        }
+        articulos = articulos.replaceFirst( ", ", "" );
         fechaPago = venta.getFechaHoraFactura();
         idFactura = venta.getFactura();
-        montoPago = venta.getVentaNeta();
+        for(Pago pago : venta.getPagos()){
+          if(pago.getIdFPago().trim().startsWith("C")){
+            montoDescuento = montoDescuento.add( pago.getMonto() );
+          }
+          montoSinDesc = montoSinDesc.add( pago.getMonto() );
+        }
+        montoConDesc = montoSinDesc.subtract(montoDescuento);
+        paciente = venta.getCliente().getNombreCompleto();
+    }
+
+
+    public void AcumulaVentasCanOpto( NotaVenta venta ) {
+        for(DetalleNotaVenta det : venta.getDetalles()){
+            lstArticulos.add( det );
+        }
+        fechaPago = venta.getFechaHoraFactura();
+        idFactura = venta.getFactura();
+        for(Pago pago : venta.getPagos()){
+            if(pago.getIdFPago().trim().startsWith("C")){
+                montoDescuento = (montoDescuento.add( pago.getMonto() )).negate();
+            }
+            montoSinDesc = (montoSinDesc.add( pago.getMonto() )).negate();
+        }
+        montoConDesc = montoSinDesc.subtract(montoDescuento);
         paciente = venta.getCliente().getNombreCompleto();
     }
 
@@ -443,5 +504,61 @@ public class IngresoPorFactura {
 
     public void setNoFacturas(Integer noFacturas) {
         this.noFacturas = noFacturas;
+    }
+
+    public List<DetalleNotaVenta> getLstArticulos() {
+        return lstArticulos;
+    }
+
+    public void setLstArticulos(List<DetalleNotaVenta> lstArticulos) {
+        this.lstArticulos = lstArticulos;
+    }
+
+    public BigDecimal getMontoDescuento() {
+        return montoDescuento;
+    }
+
+    public void setMontoDescuento(BigDecimal montoDescuento) {
+        this.montoDescuento = montoDescuento;
+    }
+
+    public BigDecimal getMontoConDesc() {
+        return montoConDesc;
+    }
+
+    public void setMontoConDesc(BigDecimal montoConDesc) {
+        this.montoConDesc = montoConDesc;
+    }
+
+    public BigDecimal getMontoSinDesc() {
+        return montoSinDesc;
+    }
+
+    public void setMontoSinDesc(BigDecimal montoSinDesc) {
+        this.montoSinDesc = montoSinDesc;
+    }
+
+    public String getTipoCan() {
+        return tipoCan;
+    }
+
+    public void setTipoCan(String tipoCan) {
+        this.tipoCan = tipoCan;
+    }
+
+    public String getFactTransf() {
+        return factTransf;
+    }
+
+    public void setFactTransf(String factTransf) {
+        this.factTransf = factTransf;
+    }
+
+    public String getArticulos() {
+        return articulos;
+    }
+
+    public void setArticulos(String articulos) {
+        this.articulos = articulos;
     }
 }

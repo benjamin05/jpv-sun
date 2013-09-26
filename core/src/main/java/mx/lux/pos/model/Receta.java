@@ -149,6 +149,11 @@ public class Receta implements Serializable {
     @JoinColumn( name = "id_optometrista", insertable = false, updatable = false )
     private Empleado empleado;
 
+    @ManyToOne
+    @NotFound( action = NotFoundAction.IGNORE )
+    @JoinColumn( name = "id_receta", referencedColumnName = "receta", insertable = false, updatable = false )
+    private NotaVenta notaVenta;
+
 
     public Integer getId() {
         return id;
@@ -485,5 +490,13 @@ public class Receta implements Serializable {
 
     public void setEmpleado( Empleado empleado ) {
         this.empleado = empleado;
+    }
+
+    public NotaVenta getNotaVenta() {
+        return notaVenta;
+    }
+
+    public void setNotaVenta(NotaVenta notaVenta) {
+        this.notaVenta = notaVenta;
     }
 }

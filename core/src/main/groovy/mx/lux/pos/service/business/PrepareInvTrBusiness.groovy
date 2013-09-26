@@ -19,6 +19,7 @@ class PrepareInvTrBusiness {
   private static InventarioService inventory
   private static SucursalService sites
   private static ParametroRepository parameters
+  private static final String TAG_SURTE_SUCURSAL = 'S'
 
   static PrepareInvTrBusiness instance
 
@@ -129,7 +130,7 @@ class PrepareInvTrBusiness {
     request.reference = pNotaVenta.id
 
     for ( DetalleNotaVenta det in pNotaVenta.detalles ) {
-      if ( parts.validarArticulo( det.idArticulo ) ) {
+      if ( parts.validarArticulo( det.idArticulo ) && det?.surte?.trim().equals(TAG_SURTE_SUCURSAL) ) {
         request.skuList.add( new InvTrDetRequest( det.idArticulo, det.cantidadFac.intValue() ) )
       }
     }

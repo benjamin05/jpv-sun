@@ -41,4 +41,8 @@ interface NotaVentaService {
     void saveProDate(NotaVenta rNotaVenta, Date fechaPrometida)
 
     NotaVenta saveFrame(String idNotaVenta, String opciones, String forma)
+
+  void validaSurtePorGenericoInventariable( NotaVenta notaVenta )
+
+  void registraImpuestoPorFactura( NotaVenta notaVenta )
 }

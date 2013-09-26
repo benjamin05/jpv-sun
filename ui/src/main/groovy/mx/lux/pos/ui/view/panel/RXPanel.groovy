@@ -2,15 +2,18 @@ package mx.lux.pos.ui.view.panel
 
 import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
+import mx.lux.pos.model.Receta
 import mx.lux.pos.ui.model.Branch
 import mx.lux.pos.ui.model.Session
 import mx.lux.pos.ui.model.SessionItem
+import mx.lux.pos.ui.view.dialog.NoSaleDialog
 import mx.lux.pos.ui.view.panel.RXPanel
 import mx.lux.pos.ui.model.Rx
 import mx.lux.pos.ui.controller.CustomerController
 import mx.lux.pos.ui.view.dialog.EditRxDialog
 import mx.lux.pos.ui.view.renderer.DateCellRenderer
 import net.miginfocom.swing.MigLayout
+import org.apache.commons.lang.StringUtils
 
 import javax.swing.BorderFactory
 import javax.swing.ButtonGroup
@@ -48,6 +51,7 @@ class RXPanel extends JPanel {
     private JRadioButton rbProgresivo
     private JRadioButton rbIntermedio
     private JRadioButton rbBifocalInter
+    Receta rec = new Receta()
 
     private JTextField txtOdEsfera
     private JTextField txtOdCil
@@ -81,6 +85,7 @@ class RXPanel extends JPanel {
     private List<Rx> lstRecetas
     private Rx receta
     private Integer idCliente
+    private Integer idSucursal
 
 
     private final String EDITAR = 'Editar Receta'
@@ -94,6 +99,7 @@ class RXPanel extends JPanel {
         lstRecetas = [ ] as ObservableList
         lstRecetas.addAll( CustomerController.findAllPrescriptions( idCliente ) )
         this.idCliente = idCliente
+        this.idSucursal = CustomerController.findCurrentSucursal()
         buildUI()
     }
 
@@ -104,7 +110,8 @@ class RXPanel extends JPanel {
                 table( selectionMode: ListSelectionModel.SINGLE_SELECTION, mouseClicked: doClick, mousePressed: doPress ) {
                     rxModel = tableModel( list: lstRecetas ) {
                         closureColumn( header: 'Fecha', read: {Rx tmp -> tmp?.rxDate}, minWidth: 90, cellRenderer: new DateCellRenderer() )
-                        closureColumn( header: 'Optometrista', read: {Rx tmp -> tmp?.optometristName}, minWidth: 190 )
+                        closureColumn( header: 'Optometrista', read: {Rx tmp -> tmp?.optNameFormatter}, minWidth: 190 )
+                        closureColumn( header: 'Factura', read: {Rx tmp -> StringUtils.trimToEmpty(tmp?.order?.bill)} )
                         closureColumn( header: 'Tipo', read: {Rx tmp -> tmp?.getTipo()}, minWidth: 90 )
                         closureColumn( header: 'Folio', read: {Rx tmp -> tmp?.folio} )
                     } as DefaultTableModel
@@ -121,45 +128,48 @@ class RXPanel extends JPanel {
             panel( minimumSize: [ 660, 150 ] as Dimension,
                     border: titledBorder( "Rx" ),
                     constraints: BorderLayout.CENTER,
-                    layout: new MigLayout( 'fill,wrap 11',
-                            '[][fill,grow][fill,grow][fill,grow][fill,grow][fill,grow][fill,grow][fill,grow][fill,grow]30[fill][fill,grow]' )
+                    layout: new MigLayout( 'fill,wrap 8',
+                            '[][fill,grow][fill,grow][fill,grow][fill,grow][fill,grow]30[fill][fill,grow]' )
             ) {
                 label()
                 label( text: 'Esfera', horizontalAlignment: JTextField.CENTER )
                 label( text: 'Cil.', toolTipText: 'Cilindro', horizontalAlignment: JTextField.CENTER )
                 label( text: 'Eje', horizontalAlignment: JTextField.CENTER )
                 label( text: 'Ad.', toolTipText: 'Adición', horizontalAlignment: JTextField.CENTER )
-                label( text: 'A.V.', toolTipText: 'Agudeza Visual', horizontalAlignment: JTextField.CENTER )
+                label( text: 'A.V.', toolTipText: 'Agudeza Visual', horizontalAlignment: JTextField.CENTER, visible: false, constraints: 'hidemode 3' )
                 label( text: 'D.M.', toolTipText: 'Distancia Monocular', horizontalAlignment: JTextField.CENTER )
-                label( text: 'Prisma', horizontalAlignment: JTextField.CENTER )
-                label( text: 'Ubic.', toolTipText: 'Ubicación', horizontalAlignment: JTextField.CENTER )
-                label( text: 'D.I. Lejos', toolTipText: 'Distancia Interpupilar Lejos' )
-                txtDILejos = textField(
-                        editable: false,
-                        minimumSize: [ 20, 20 ] as Dimension,
-                        toolTipText: 'Distancia Interpupilar Lejos',
-                        horizontalAlignment: JTextField.RIGHT
-                )
+                label( text: '' )
+                label( text: '' )
+                label( text: 'Prisma', horizontalAlignment: JTextField.CENTER, visible: false, constraints: 'hidemode 3' )
+                label( text: 'Ubic.', toolTipText: 'Ubicación', horizontalAlignment: JTextField.CENTER, visible: false, constraints: 'hidemode 3' )
+
 
                 label( text: 'O.D.', toolTipText: 'Ojo Derecho' )
                 txtOdEsfera = textField( editable: false, horizontalAlignment: JTextField.RIGHT )
                 txtOdCil = textField( editable: false, toolTipText: 'Cilindro', horizontalAlignment: JTextField.RIGHT )
                 txtOdEje = textField( editable: false, horizontalAlignment: JTextField.RIGHT )
                 txtOdAd = textField( editable: false, toolTipText: 'Adición', horizontalAlignment: JTextField.RIGHT )
-                txtOdAv = textField( editable: false, toolTipText: 'Agudeza Visual', horizontalAlignment: JTextField.LEFT )
+                txtOdAv = textField( editable: false, toolTipText: 'Agudeza Visual', horizontalAlignment: JTextField.LEFT, visible: false, constraints: 'hidemode 3' )
                 txtOdDm = textField(
                         editable: false,
                         toolTipText: 'Distancia Monocular',
                         horizontalAlignment: JTextField.RIGHT
                 )
-                txtOdPrisma = textField( editable: false, horizontalAlignment: JTextField.RIGHT )
-                txtOdUbic = textField( editable: false, toolTipText: 'Ubicación', horizontalAlignment: JTextField.LEFT )
-                label( text: 'D.I. Cerca', toolTipText: 'Distancia Interpupilar Cerca' )
+                label( text: 'D.I. Binocular', toolTipText: 'Distancia Interpupilar Lejos' )
+                txtDILejos = textField(
+                        editable: false,
+                        minimumSize: [ 20, 20 ] as Dimension,
+                        toolTipText: 'Distancia Interpupilar Lejos',
+                        horizontalAlignment: JTextField.RIGHT
+                )
+                txtOdPrisma = textField( editable: false, horizontalAlignment: JTextField.RIGHT, visible: false, constraints: 'hidemode 3' )
+                txtOdUbic = textField( editable: false, toolTipText: 'Ubicación', horizontalAlignment: JTextField.LEFT, visible: false, constraints: 'hidemode 3' )
+                label( text: 'D.I. Cerca', toolTipText: 'Distancia Interpupilar Cerca', visible: false, constraints: 'hidemode 3' )
                 txtDICerca = textField(
                         editable: false,
                         minimumSize: [ 20, 20 ] as Dimension,
                         toolTipText: 'Distancia Interpupilar Cerca',
-                        horizontalAlignment: JTextField.RIGHT
+                        horizontalAlignment: JTextField.RIGHT, visible: false, constraints: 'hidemode 3'
                 )
 
                 label( text: 'O.I.', toolTipText: 'Ojo Izquierdo' )
@@ -167,15 +177,15 @@ class RXPanel extends JPanel {
                 txtOiCil = textField( editable: false, toolTipText: 'Cilindro', horizontalAlignment: JTextField.RIGHT )
                 txtOiEje = textField( editable: false, horizontalAlignment: JTextField.RIGHT )
                 txtOiAd = textField( editable: false, toolTipText: 'Adición', horizontalAlignment: JTextField.RIGHT )
-                txtOiAv = textField( editable: false, toolTipText: 'Agudeza Visual', horizontalAlignment: JTextField.LEFT )
+                txtOiAv = textField( editable: false, toolTipText: 'Agudeza Visual', horizontalAlignment: JTextField.LEFT, visible: false, constraints: 'hidemode 3' )
                 txtOiDm = textField(
                         editable: false,
                         toolTipText: 'Distancia Monocular',
                         horizontalAlignment: JTextField.RIGHT
                 )
-                txtOiPrisma = textField( editable: false, horizontalAlignment: JTextField.RIGHT )
-                txtOiUbic = textField( editable: false, toolTipText: 'Ubicación', horizontalAlignment: JTextField.LEFT )
-                label( text: 'Alt. Oblea', toolTipText: 'Altura Oblea' )
+                txtOiPrisma = textField( editable: false, horizontalAlignment: JTextField.RIGHT, visible: false, constraints: 'hidemode 3' )
+                txtOiUbic = textField( editable: false, toolTipText: 'Ubicación', horizontalAlignment: JTextField.LEFT, visible: false, constraints: 'hidemode 3' )
+                label( text: 'Alt. Seg.', toolTipText: 'Altura Oblea' )
                 txtAltOblea = textField(
                         editable: false,
                         minimumSize: [ 20, 20 ] as Dimension,
@@ -230,7 +240,7 @@ class RXPanel extends JPanel {
         if ( SwingUtilities.isLeftMouseButton( ev ) && ev.source.selectedElement != null ) {
             Rx selection = ev.source.selectedElement as Rx
             receta = selection
-            println "Receta ${receta.id} seleccionada"
+            //println "Receta ${receta.id} seleccionada"
             doBindings()
         }
     }
@@ -240,9 +250,9 @@ class RXPanel extends JPanel {
             Rx selection = ev.source.selectedElement as Rx
             if ( selection.id ) {
                 sb.popupMenu {
-                    menuItem( text: 'Editar',
+                    menuItem( text: 'Editar', visible: selection?.order?.deliveryDate == null,
                             actionPerformed: {
-                                EditRxDialog editRx = new EditRxDialog( this, selection, selection.idClient, selection.idStore, EDITAR )
+                                EditRxDialog editRx = new EditRxDialog( this, selection, selection.idClient, selection.idStore, selection.clientName, selection.tipoEditRx )
                                 editRx.show()
                                 lstRecetas.clear()
                                 lstRecetas.addAll( CustomerController.findAllPrescriptions( idCliente ) )
@@ -252,8 +262,9 @@ class RXPanel extends JPanel {
                     )
                     menuItem( text: 'Nueva Receta',
                             actionPerformed: {
-                                EditRxDialog editRx = new EditRxDialog( this, new Rx(), selection.idClient, selection.idStore, NUEVA )
-                                editRx.show()
+                                NoSaleDialog newRx = new NoSaleDialog( this, selection.idClient, selection.idStore, false)
+                                //EditRxDialog editRx = new EditRxDialog( this, new Rx(), selection.idClient, selection.idStore, selection.clientName, NUEVA )
+                                newRx.show()
                                 lstRecetas.clear()
                                 lstRecetas.addAll( CustomerController.findAllPrescriptions( idCliente ) )
                                 doBindings()
@@ -273,11 +284,11 @@ class RXPanel extends JPanel {
                         actionPerformed: {
                              //Para pruebas con el popup
                             Branch branch = Session.get( SessionItem.BRANCH ) as Branch
-                            idCliente = 1
+                            //idCliente = 1
                             //Para pruebas con el popup
 
-                            EditRxDialog editRx = new EditRxDialog( this, new Rx(), idCliente, branch?.id, NUEVA )
-                            editRx.show()
+                            NoSaleDialog newRx = new NoSaleDialog( this, idCliente, idSucursal, false)
+                            newRx.show()
                             lstRecetas.clear()
                             lstRecetas.addAll( CustomerController.findAllPrescriptions( idCliente ) )
                             doBindings()

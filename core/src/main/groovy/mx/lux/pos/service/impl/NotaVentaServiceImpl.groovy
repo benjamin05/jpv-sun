@@ -24,6 +24,9 @@ import mx.lux.pos.repository.*
 class NotaVentaServiceImpl implements NotaVentaService {
 
   private static final String DATE_TIME_FORMAT = 'dd-MM-yyyy HH:mm:ss'
+  private static final String TAG_SURTE_SUCURSAL = 'S'
+  private static final String TAG_GENERICOS_INVENTARIABLES = 'A,E'
+  private static final String TAG_TIPO_NOTA_VENTA = 'F'
 
   @Resource
   private NotaVentaRepository notaVentaRepository
@@ -46,6 +49,9 @@ class NotaVentaServiceImpl implements NotaVentaService {
   @Resource
   private ParametroRepository parametroRepository
 
+  @Resource
+  private FacturasImpuestosRepository facturasImpuestosRepository
+
   @Override
   NotaVenta obtenerNotaVenta( String idNotaVenta ) {
     log.info( "obteniendo notaVenta: ${idNotaVenta}" )
@@ -62,17 +68,11 @@ class NotaVentaServiceImpl implements NotaVentaService {
 
   @Override
   @Transactional
-  NotaVenta abrirNotaVenta(String clienteID,String empleadoID ) {
+  NotaVenta abrirNotaVenta(String clienteID, String empleadoID ) {
     log.info( 'abriendo nueva notaVenta' )
-
-
-
     Parametro parametro = new Parametro()
       parametro.setValor(clienteID)
-
-
       //Cambiar el parametro por clienteID
-
 
     NotaVenta notaVenta = new NotaVenta(
         id: notaVentaRepository.getNotaVentaSequence(),
@@ -98,15 +98,14 @@ class NotaVentaServiceImpl implements NotaVentaService {
     if ( StringUtils.isNotBlank( notaVenta?.id ) ) {
       String idNotaVenta = notaVenta.id
       if ( notaVentaRepository.exists( idNotaVenta ) ) {
-
         notaVenta.idSucursal = sucursalRepository.getCurrentSucursalId()
         BigDecimal total = BigDecimal.ZERO
         List<DetalleNotaVenta> detalles = detalleNotaVentaRepository.findByIdFactura( idNotaVenta )
         detalles?.each { DetalleNotaVenta detalleNotaVenta ->
-          BigDecimal precio = detalleNotaVenta?.precioUnitFinal ?: 0
-          Integer cantidad = detalleNotaVenta?.cantidadFac ?: 0
-          BigDecimal subtotal = precio.multiply( cantidad )
-          total = total.add( subtotal )
+            BigDecimal precio = detalleNotaVenta?.precioUnitFinal ?: 0
+            Integer cantidad = detalleNotaVenta?.cantidadFac ?: 0
+            BigDecimal subtotal = precio.multiply( cantidad )
+            total = total.add( subtotal )
         }
 
         BigDecimal pagado = BigDecimal.ZERO
@@ -121,8 +120,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
         notaVenta.ventaNeta = total
         notaVenta.ventaTotal = total
         notaVenta.sumaPagos = pagado
-
-
+        notaVenta.tipoNotaVenta = TAG_TIPO_NOTA_VENTA
         try {
           notaVenta = notaVentaRepository.save( notaVenta )
           log.info( "notaVenta registrada id: ${notaVenta?.id}" )
@@ -310,15 +308,14 @@ class NotaVentaServiceImpl implements NotaVentaService {
                 println('Acabado: '+ forma)
                 rNotaVenta?.setUdf2(opciones)
                 rNotaVenta?.setUdf3(forma)
-
-        rNotaVenta =  notaVentaRepository.saveAndFlush( rNotaVenta )
-        println('Material: ' + rNotaVenta?.udf2)
-        println('Acabado: '+ rNotaVenta?.udf3)
-
-            return rNotaVenta
-
-
-
+        try{
+          println rNotaVenta.dump()
+          rNotaVenta =  notaVentaRepository.save( rNotaVenta )
+          notaVentaRepository.flush()
+        } catch ( Exception e ){
+            println e
+        }
+        return rNotaVenta
     }
 
 
@@ -342,13 +339,9 @@ class NotaVentaServiceImpl implements NotaVentaService {
 
     @Transactional
     void saveRx(NotaVenta rNotaVenta, Integer receta){
-
         if ( StringUtils.isNotBlank( rNotaVenta.id) ) {
             if ( notaVentaRepository.exists( rNotaVenta.id ) ) {
-
                 rNotaVenta.setReceta(receta)
-
-
              registrarNotaVenta( rNotaVenta )
             } else {
                 log.warn( "id no existe" )
@@ -429,6 +422,13 @@ class NotaVentaServiceImpl implements NotaVentaService {
       String employee = parametros.employee
       QNotaVenta qNotaVenta = QNotaVenta.notaVenta
       BooleanBuilder builder = new BooleanBuilder()
+      if(ticket.trim() != ''){
+        String[] ticketValid = ticket.split('-')
+        if(ticketValid.length > 1){
+          dateFrom = null
+          dateTo = null
+        }
+      }
       if ( dateFrom && dateTo ) {
         dateTo = new Date( dateTo.next().time - 1 )
         log.debug( "fecha inicio: ${dateFrom?.format( DATE_TIME_FORMAT )}" )
@@ -516,9 +516,12 @@ class NotaVentaServiceImpl implements NotaVentaService {
     @Override
     @Transactional
   NotaVenta obtenerSiguienteNotaVenta( Integer pIdCustomer ) {
-
-
-    List<NotaVenta> orders = notaVentaRepository.findByIdCliente( pIdCustomer )
+    Date fechaStart = DateUtils.truncate( new Date(), Calendar.DAY_OF_MONTH )
+    Date fechaEnd = new Date( DateUtils.ceiling( new Date(), Calendar.DAY_OF_MONTH ).getTime() - 1 )
+    QNotaVenta nota = QNotaVenta.notaVenta
+    //List<NotaVenta> orders = notaVentaRepository.findByIdCliente( pIdCustomer )
+    List<NotaVenta> orders = notaVentaRepository.findAll(nota.idCliente.eq(pIdCustomer).
+            and(nota.fechaHoraFactura.between(fechaStart,fechaEnd)))
     NotaVenta order = null
     for (NotaVenta o : orders) {
       if ( o.detalles.size() > 0 && StringUtils.isBlank( o.factura )) {
@@ -529,9 +532,36 @@ class NotaVentaServiceImpl implements NotaVentaService {
     if (order == null) {
       ServiceFactory.customers.eliminarClienteProceso( pIdCustomer )
     }
-
     return order
   }
 
 
+  @Override
+  @Transactional
+  void validaSurtePorGenericoInventariable( NotaVenta notaVenta ){
+    List<DetalleNotaVenta> detalles = detalleNotaVentaRepository.findByIdFactura( notaVenta.id )
+    for(DetalleNotaVenta det : detalles){
+        if(!TAG_GENERICOS_INVENTARIABLES.contains(det.articulo.idGenerico)){
+            det.surte = ' '
+            detalleNotaVentaRepository.save( det )
+            detalleNotaVentaRepository.flush()
+        }
+    }
+  }
+
+
+  @Override
+  @Transactional
+  void registraImpuestoPorFactura( NotaVenta notaVenta ){
+    Parametro parametro = parametroRepository.findOne( TipoParametro.IVA_VIGENTE.value )
+    FacturasImpuestos impuesto = new FacturasImpuestos()
+    impuesto.idFactura = notaVenta?.id
+    impuesto.idImpuesto = parametro.valor
+    impuesto.idSucursal = notaVenta.idSucursal
+    impuesto.fecha = new Date()
+
+    impuesto = facturasImpuestosRepository.save( impuesto )
+    log.debug( "guardando idImpuesto ${impuesto.idImpuesto} a factura: ${impuesto.idFactura}" )
+    facturasImpuestosRepository.flush()
+  }
 }

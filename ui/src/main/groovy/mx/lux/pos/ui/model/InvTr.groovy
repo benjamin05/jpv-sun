@@ -239,9 +239,7 @@ class InvTr {
       postTrType = viewMode.getTrType()
     } else if ( viewMode.equals( InvTrViewMode.QUERY ) ) {
       postTrType = null
-      if ( qryDataset == null ) {
         initDataset()
-      }
     }
     else if ( viewMode.equals( InvTrViewMode.OUTBOUND ) ) {
         postTrType = viewMode.getTrType()

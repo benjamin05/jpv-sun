@@ -3,9 +3,11 @@ package mx.lux.pos.ui.controller
 import mx.lux.pos.model.Articulo
 import mx.lux.pos.model.InvTrRequest
 import mx.lux.pos.model.Shipment
+import mx.lux.pos.model.ShipmentLine
 import mx.lux.pos.model.Sucursal
 import mx.lux.pos.model.TransInv
 import mx.lux.pos.service.ArticuloService
+import mx.lux.pos.service.InventarioService
 import mx.lux.pos.service.SucursalService
 import mx.lux.pos.ui.model.InvTrViewMode
 import mx.lux.pos.ui.model.Session
@@ -24,6 +26,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import javax.annotation.Resource
+import javax.swing.JDialog
 import javax.swing.JFileChooser
 import javax.swing.JOptionPane
 import javax.swing.SwingUtilities
@@ -39,7 +42,8 @@ class InvTrController {
   private InvTrSelectorDialog dlgSelector
   private JFileChooser dlgFile
 
- // private static SucursalService sucursalService
+  private static final String TAG_REMESA = 'ENTRADA'
+  private static final String TAG_REMESA_LENTE = 'A'
 
   private InvTrController( ) { }
 
@@ -69,13 +73,19 @@ class InvTrController {
     pView.notifyDocument( pDocument )
   }
 
-  protected void dispatchDocumentEmpty( InvTrView pView ) {
+  protected void dispatchDocumentEmpty( InvTrView pView, Boolean fileAlreadyProccessed, String articleNotFound ) {
     log.debug( "[Controller] Dispatch document unavailable" )
     InvTrController controller = this
     SwingUtilities.invokeLater( new Runnable() {
       public void run( ) {
         controller.dispatchViewModeQuery( pView )
-        pView.data.txtStatus = pView.panel.MSG_NO_DOCUMENT_AVAILABLE
+        if( fileAlreadyProccessed ){
+          pView.data.txtStatus = pView.panel.MSG_DOCUMENT_ALREADY_PROCCESED
+        } else if( articleNotFound != '' ){
+          pView.data.txtStatus = String.format( pView.panel.MSG_ARTICLE_NOT_FOUND, articleNotFound )
+        } else {
+          pView.data.txtStatus = pView.panel.MSG_NO_DOCUMENT_AVAILABLE
+        }
         pView.fireRefreshUI()
       }
     } )
@@ -166,7 +176,9 @@ class InvTrController {
 
   protected String confirmaEntrada(InvTrViewMode viewMode, InvTrView pView){
       String url = Registry.getURLConfirmacion( viewMode.trType.idTipoTrans );
-      if ( StringUtils.trimToNull( url ) != null ) {
+      if(TAG_REMESA.equalsIgnoreCase(viewMode.trType.idTipoTrans.trim()) && pView?.data?.postReference.endsWith(TAG_REMESA_LENTE) ){
+          ServiceManager.getIoServices().logRemittanceNotification( viewMode.trType.idTipoTrans.trim(), viewMode.trType.ultimoFolio+1 )
+      } else if ( StringUtils.trimToNull( url ) != null ) {
         String variable = pView.data.claveCodificada + ">" + pView.data.postTrType.ultimoFolio
         url += String.format( '?arg=%s', URLEncoder.encode( String.format( '%s', variable ), 'UTF-8' ) )
         String response = url.toURL().text
@@ -303,7 +315,7 @@ class InvTrController {
       pView.data.inFile = new File( filename )
       log.debug ( String.format('Adjust File: %s', document.headerToString()) )
     } else {
-      dispatchDocumentEmpty( pView )
+      dispatchDocumentEmpty( pView, false, '' )
       log.debug ( 'No document' )
     }
 
@@ -334,12 +346,26 @@ class InvTrController {
       log.debug( String.format( "[Controller] Request Part with seed <%s>", part[0] ) )
     String seed = part[0]
     List<Articulo> partList = ItemController.findPartsByQuery( seed, false )
+    if(seed.startsWith('00')){
+      seed = seed.replaceFirst("^0*", "")
+    }
     if ( ( partList.size() == 0 ) && ( seed.length() > 6 ) ) {
       partList = ItemController.findPartsByQuery( seed.substring( 0, 6 ), false )
     }
     if ( partList?.any() ) {
-      if ( partList.size() == 1 ) {
-        dispatchPartsSelected( pView, partList )
+      if ( partList.size() == 1 )  {
+        if( partList.first().cantExistencia <= 0 && pView.data.viewMode.trType.tipoMov.trim().equalsIgnoreCase('S') ){
+          Integer question =JOptionPane.showConfirmDialog( new JDialog(), pView.panel.MSG_NO_STOCK, pView.panel.TXT_NO_STOCK,
+                  JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE )
+          if( question == 0){
+            dispatchPartsSelected( pView, partList )
+          } else {
+            pView.panel.stock = false
+          }
+        } else {
+          dispatchPartsSelected( pView, partList )
+        }
+
       } else {
         if ( dlgPartSelection == null ) {
           dlgPartSelection = new PartSelectionDialog( pView.panel )
@@ -352,8 +378,18 @@ class InvTrController {
         dlgPartSelection.activate()
         List<Articulo> selection = dlgPartSelection.getSelection()
         if ( selection != null ) {
-          log.debug( String.format( "[Controller] %d Selected, (%d) %s", selection.size(), selection[ 0 ].id, selection[ 0 ].descripcion ) )
-          dispatchPartsSelected( pView, selection )
+          if( selection.first().cantExistencia <= 0 && pView.data.viewMode.trType.tipoMov.trim().equalsIgnoreCase('S') ){
+              Integer question =JOptionPane.showConfirmDialog( new JDialog(), pView.panel.MSG_NO_STOCK, pView.panel.TXT_NO_STOCK,
+                      JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE )
+              if( question == 0){
+                  dispatchPartsSelected( pView, selection )
+              } else {
+                pView.panel.stock = false
+              }
+          } else {
+            log.debug( String.format( "[Controller] %d Selected, (%d) %s", selection.size(), selection[ 0 ].id, selection[ 0 ].descripcion ) )
+            dispatchPartsSelected( pView, selection )
+          }
         }
       }
     } else {
@@ -371,10 +407,17 @@ class InvTrController {
       document = ServiceManager.getInventoryService().leerArchivoRemesa( dlgFile.getSelectedFile().absolutePath )
     }
     if ( document != null ) {
-      dispatchPartMasterUpdate( document )
-      dispatchDocument( pView, document )
+      InventarioService service = ServiceManager.inventoryService
+      List<TransInv> trList = service.listarTransaccionesPorTipoAndReferencia( InvTrViewMode.RECEIPT.trType.idTipoTrans,
+              document?.fullRef?.trim() )
+      if( trList.size() <= 0 ){
+          dispatchPartMasterUpdate( document )
+          dispatchDocument( pView, document )
+      } else {
+          dispatchDocumentEmpty( pView, true, '' )
+      }
     } else {
-      dispatchDocumentEmpty( pView )
+      dispatchDocumentEmpty( pView, false, '' )
     }
 
   }
@@ -387,16 +430,26 @@ class InvTrController {
       inboundDialog.activate()
       log.debug(inboundDialog.getTxtClave())
       if (inboundDialog.button) {
-          Boolean claveCargada = ServiceManager.inventoryService.transaccionCargada( inboundDialog.getTxtClave() )
+          Boolean claveNoCargada = ServiceManager.inventoryService.transaccionCargada( inboundDialog.getTxtClave() )
               pView.data.claveCodificada = inboundDialog.getTxtClave()
               Sucursal sucursal = ServiceManager.inventoryService.sucursalActual()
               log.debug("" + sucursal.id)
               document = ServiceManager.getInventoryService().obtieneArticuloEntrada(inboundDialog.getTxtClave(),sucursal.id, pView.data.viewMode.trType.idTipoTrans)
-               if ( document != null && !claveCargada ) {
+              Boolean articleExist = true
+              String articles = ''
+                if( document != null ){
+                    for(ShipmentLine line : document.lines ){
+                        if(line.partCode == null || line.partCode == ''){
+                            articleExist = false
+                            articles = articles+"["+line.sku.toString()+"]"+" "
+                        }
+                    }
+                }
+               if ( document != null && !claveNoCargada && articleExist ) {
                   dispatchPartMasterUpdate( document )
                   dispatchDocument( pView, document )
               } else {
-                  dispatchDocumentEmpty( pView )
+                   dispatchDocumentEmpty( pView, false, articles )
               }
       }
     }
@@ -408,6 +461,21 @@ class InvTrController {
         request.remarks = request.remarks.replaceAll("[^a-zA-Z0-9]+"," ");
       Integer trNbr = ServiceManager.getInventoryService().solicitarTransaccion( request )
       if ( trNbr != null ) {
+        if(request.trType.equalsIgnoreCase(TAG_REMESA)){
+          String receivedPath = Registry.processedFilesPath
+          String[] filename = pView.controller.dlgFile.selectedFile.path.split("/")
+          String[] filePathTmp = pView.controller.dlgFile.selectedFile.path.split("/")
+          String filePath = ''
+          for(int i=0;i < filePathTmp.length-1;i++){
+            filePath = filePath+'/'+filePathTmp[i]
+          }
+          filePath = filePath.replaceFirst("/","")
+          def file = new File( filePath, filename.last() )
+          log.debug( "archivo de carga: ${filename.last()} en: ${filePath} - ${file?.exists()}" )
+          def newFile = new File( receivedPath, filename.last() )
+          def moved = file.renameTo( newFile )
+          log.debug( "renombrando archivo a: ${newFile.path} - ${moved}" )
+        }
         if ( pView.data.inFile != null ) {
           try {
             File moved = new File( SettingsController.instance.processedPath, pView.data.inFile.name )
@@ -427,7 +495,7 @@ class InvTrController {
             || InvTrViewMode.RECEIPT.equals( viewMode ) || InvTrViewMode.OUTBOUND.equals( viewMode )
             || InvTrViewMode.INBOUND.equals( viewMode )) {
           dispatchPrintTransaction( viewMode.trType.idTipoTrans, trNbr )
-          if (InvTrViewMode.INBOUND.equals( viewMode )) {
+          if (InvTrViewMode.RECEIPT.equals( viewMode ) && request.reference.endsWith('A')) {
                String resultado = confirmaEntrada(viewMode, pView)
           }
           if( ServiceManager.getInventoryService().isReceiptDuplicate() ){
@@ -471,6 +539,11 @@ class InvTrController {
   void requestViewModeChange( InvTrView pView ) {
     log.debug( String.format( "[Controller] View Mode change: <%s>", pView.panel.comboViewMode.selection ) )
     fireChangeViewMode( pView, pView.panel.comboViewMode.selection )
+  }
+
+  void requestPrintTransactions( Date fechaTicket ){
+    log.debug( "requestPrintTransactions" )
+    ServiceManager.ticketService.imprimeTransaccionesInventario( fechaTicket )
   }
 
 }

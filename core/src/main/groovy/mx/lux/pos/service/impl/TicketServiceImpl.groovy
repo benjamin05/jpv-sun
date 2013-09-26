@@ -58,6 +58,9 @@ class TicketServiceImpl implements TicketService {
   private MonedaExtranjeraService monedaExtranjeraService
 
   @Resource
+  private PrecioRepository precioRepository
+
+  @Resource
   private ParametroRepository parametroRepository
 
   @Resource
@@ -311,7 +314,7 @@ class TicketServiceImpl implements TicketService {
           String fechaImpresion = fecha.format(fechaA)
 
           Receta rx = recetaRepository.findById(notaVenta?.receta)
-          Date fechaS = rx?.fechaReceta
+          Date fechaS = rx?.fechaReceta != null ? rx?.fechaReceta : new Date()
           fecha = new SimpleDateFormat("dd-MM-yy")
           String fechaSolicitada = fecha.format(fechaS)
 
@@ -323,7 +326,10 @@ class TicketServiceImpl implements TicketService {
           String fechaPrometida = fecha.format(fechaP)
 
           Empleado opto = empleadoRepository.findById(rx?.idOptometrista)
-          String optometrista = opto?.nombreCompleto + ' [' + opto?.id.trim() + ']'
+          String optometrista = ''
+          if( opto != null ){
+            optometrista = opto != null ? opto?.nombreCompleto : '' + ' [' + opto != null ? opto?.id.trim() : '' + ']'
+          }
 
           def infoGeneral = [
                 sucursal: notaVenta?.sucursal?.nombre + ' ['+ notaVenta?.sucursal?.id +']',
@@ -379,7 +385,7 @@ class TicketServiceImpl implements TicketService {
                      }
                  }
 
-                  String usoLente = rx?.sUsoAnteojos.trim()
+                  String usoLente = rx != null ? rx?.sUsoAnteojos.trim() : ''
                   switch (usoLente) {
                     case 'i': usoLente = 'INTERMEDIO'
                         break
@@ -593,6 +599,7 @@ class TicketServiceImpl implements TicketService {
       String textoVentaNeta = ( "${textFormatter.format( ventaNeta.intValue() )} PESOS "+ "${ventaNeta.remainder( 1 ).unscaledValue()}/100 M.N." )
 
       AddressAdapter companyAddress = Registry.companyAddress
+      BigDecimal saldo = notaVenta.ventaNeta.subtract(notaVenta.sumaPagos)
 
         def items = [
           nombre_ticket: 'ticket-venta',
@@ -605,9 +612,11 @@ class TicketServiceImpl implements TicketService {
           detalles: detalles,
           pagos: pagos,
           articulos: totalArticulos,
+          saldo: String.format( '%.2f', saldo.compareTo(BigDecimal.ZERO) > 0 ? saldo : BigDecimal.ZERO ),
           cliente: notaVenta.cliente,
           empleado: empleado,
           sucursal: notaVenta.sucursal,
+          observaciones: StringUtils.trimToEmpty(notaVenta.observacionesNv) != '' ? notaVenta.observacionesNv : '',
           fecha: DateFormatUtils.format( notaVenta.fechaHoraFactura, dateTextFormat, locale ),
           hora: new Date().format( TIME_FORMAT ),
           texto_venta_neta: textoVentaNeta.toUpperCase(),
@@ -1007,21 +1016,21 @@ class TicketServiceImpl implements TicketService {
 
       def datos = [ nombre_ticket: 'ticket-resumen-diario',
           fecha_cierre: MyDateUtils.format( fechaCierre, 'yyyy-MM-dd' ),
-          hora_cierre: cierreDiario.horaCierre != null ? MyDateUtils.format( new Date(), 'HH:mm:ss' ) : '',
+          hora_cierre: cierreDiario.horaCierre != null ? String.format('%s %s', MyDateUtils.format( fechaCierre, 'dd-MM-yyyy' ), MyDateUtils.format( cierreDiario.horaCierre, 'HH:mm:ss' ) ): '',
           empleado: empleado.nombreCompleto(),
           id_sucursal: empleado.sucursal.id,
           nombre_sucursal: empleado.sucursal.nombre,
           estado_cierre_diario: cierreDiario.estado,
           cantidad_ventas_brutas: cierreDiario.cantidadVentas == 0 ? '-' : cierreDiario.cantidadVentas,
-          importe_ventas_brutas: cierreDiario.ventaBruta.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( ventaBruta ) ),
+          importe_ventas_brutas: cierreDiario.ventaBruta.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( cierreDiario.ventaBruta ) ),
           cantidad_modificaciones: cierreDiario.cantidadModificaciones == 0 ? '-' : cierreDiario.cantidadModificaciones,
-          importe_modificaciones: cierreDiario.modificaciones.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( descuento ) ),
+          importe_modificaciones: cierreDiario.modificaciones.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( cierreDiario.modificaciones ) ),
           cantidad_modificaciones_netas: cantDesc == 0 ? '-' : cantDesc,
           importe_modificaciones_netas: desc.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( desc ) ),
           cantidad_cancelaciones: cierreDiario.cantidadCancelaciones == 0 ? '-' : cierreDiario.cantidadCancelaciones,
           cantidad_venta_neta: cantidadVentaNeta == 0 ? '-' : cantidadVentaNeta,
-          importe_cancelaciones: cierreDiario.cancelaciones.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( cancelaciones ) ),
-          importe_venta_neta: cierreDiario.ventaNeta.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( ventaNeta ) ),
+          importe_cancelaciones: cierreDiario.cancelaciones.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( cierreDiario.cancelaciones ) ),
+          importe_venta_neta: cierreDiario.ventaNeta.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( cierreDiario.ventaNeta ) ),
           importe_ingresos_brutos: cierreDiario.ingresoBruto.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( cierreDiario.ingresoBruto) ),
           importe_devoluciones: cierreDiario.devoluciones.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( cierreDiario.devoluciones ) ),
           importe_ingresos_netos: cierreDiario.ingresoNeto.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( cierreDiario.ingresoNeto ) ),
@@ -1032,11 +1041,11 @@ class TicketServiceImpl implements TicketService {
           importe_dolares_recibido: dolaresPesos.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( dolaresPesos.multiply( new BigDecimal( 1.00 ) ) ) ),
           importe_dolares_devoluciones: cierreDiario.dolaresDevoluciones.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : formatter.format( cierreDiario.dolaresDevoluciones ),
           importe_dolares_pesos: cierreDiario.dolaresRecibidos.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( cierreDiario.dolaresRecibidos ) ),
-          iva_vigente: montoTotalIva.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( montoTotalIva ) ),
-          artSinExis: lstArticulos.size() > 0 ? lstArticulos : null,
+          //iva_vigente: montoTotalIva.compareTo(BigDecimal.ZERO) == 0 ? String.format('%10s', '-') : String.format('%10s', formatter.format( montoTotalIva ) ),
+          artSinExis: null,
           today: MyDateUtils.format( new Date(), 'dd-MM-yyyy' ),
-          tipo_cambio_USD: String.format( '%.2f', tipoCambioUsd.tipoCambio ),
-          tipo_cambio_EUR: String.format( '%.2f', tipoCambioEur.tipoCambio ),
+          tipo_cambio_USD: String.format( '%.2f', tipoCambioUsd?.tipoCambio != null ? tipoCambioUsd?.tipoCambio : BigDecimal.ZERO ),
+          tipo_cambio_EUR: String.format( '%.2f', tipoCambioEur?.tipoCambio != null ? tipoCambioEur?.tipoCambio : BigDecimal.ZERO ),
           depositos: depositos.size() > 0 ? depositos : null,
           faltanteMN: diferenciaEfectivoMN < 0 ? String.format('%10s', formatter.format( diferenciaEfectivoMN ) ) : null,
           sobranteMN: diferenciaEfectivoMN > 0 ? String.format('%10s', formatter.format( diferenciaEfectivoMN ) ) : null,
@@ -1719,8 +1728,8 @@ class TicketServiceImpl implements TicketService {
         mnx: formatter.format( apertura.efvoPesos ),
         usd: formatter.format( apertura.efvoDolares ),
         observaciones: apertura.observaciones,
-        monedasDetUsd: formatter.format( monedaDetUsd.tipoCambio ),
-        monedasDetEur: formatter.format( monedaDetEur.tipoCambio ),
+        monedasDetUsd: formatter.format( monedaDetUsd != null ? monedaDetUsd?.tipoCambio : BigDecimal.ZERO ),
+        monedasDetEur: formatter.format( monedaDetEur != null ? monedaDetEur?.tipoCambio : BigDecimal.ZERO ),
         gerente: gerente.nombreCompleto,
         fechaImpresion: dft.format( new Date() )
     ]
@@ -1793,9 +1802,14 @@ class TicketServiceImpl implements TicketService {
       def tkParts = [ ]
       for ( CotizaDet det : RepositoryFactory.quoteDetail.findByIdCotiza( quote.idCotiza ) ) {
         Articulo part = articuloRepository.findOne( det.sku )
+        List<Precio> precios = precioRepository.findByArticulo(part.articulo.trim())
+        Precio precio = new Precio()
+        if(precios.size() > 0){
+          precio = precios.first()
+        }
         String cantidad = ( det.cantidad != 1 ? String.format( '(%d@%,.2f)', det.cantidad, part.precio ) : '' )
-        String price = String.format( '$%,.2f', det.cantidad * part.precio )
-        totalAmt += ( det.cantidad * part.precio )
+        String price = String.format( '$%,.2f', det.cantidad * precio?.precio )
+        totalAmt += ( det.cantidad * precio.precio )
         def tkPart = [
             desc: String.format( '[%d] %s %s  %s', part.id, part.generico?.descripcion, part.marca, cantidad ),
             price: price

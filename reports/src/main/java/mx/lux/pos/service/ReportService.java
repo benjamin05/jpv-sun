@@ -57,18 +57,22 @@ public interface ReportService {
 
     String obtenerReporteExamenesCompleto( Date fechaInicio, Date fechaFin );
 
-    String obtenerReporteVentasporOptometrista( Date fechaInicio, Date fechaFin, boolean todoTipo, boolean referido, boolean rx,
-                                                boolean lux, boolean todaVenta, boolean primera, boolean mayor, boolean resumen );
+    String obtenerReporteVentasporOptometrista( Date fechaInicio, Date fechaFin );
 
     String obtenerReporteVentasporOptometristaResumido( Date fechaInicio, Date fechaFin, boolean todoTipo, boolean referido, boolean rx,
                                                         boolean lux, boolean todaVenta, boolean primera, boolean mayor, boolean resumen );
 
     String obtenerReportePromociones( Date fechaImpresion );
 
-    String obtenerReporteDeKardex( Integer sku, Date fechaInicio, Date fechaFin );
+    String obtenerReporteDeKardex( String articulo, Date fechaInicio, Date fechaFin );
 
     public String obtenerReporteDeVentasDelDiaActual( Date fechaVentas, Boolean artPrecioMayorCero );
 
     public String obtenerReporteDeIngresosPorPeriodo( Date dateStart, Date dateEnd );
 
+    String obtenerReporteVentasMasVision( Date fechaInicio, Date fechaFin );
+
+    public String obtenerReporteDescuentosMasVision( Date fechaInicio, Date fechaFin, String key );
+
+    public String obtenerReporteDeCupones( Date dateStart, Date dateEnd );
 }

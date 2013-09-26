@@ -1,6 +1,10 @@
 package mx.lux.pos.ui.view
 
 import groovy.swing.SwingBuilder
+import mx.lux.pos.ui.view.dialog.NoSaleDialog
+import mx.lux.pos.ui.model.Customer
+import mx.lux.pos.ui.model.Rx
+
 import javax.swing.JPanel
 import javax.swing.JFrame
 
@@ -11,10 +15,13 @@ import mx.lux.pos.ui.controller.OpenSalesController
 import org.springframework.context.ApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext
 
+import java.awt.event.MouseEvent
+
 class OpenDayDialogSample extends JFrame {
 
     private SwingBuilder sb = new SwingBuilder()
     private JPanel mainPanel
+    private NoSaleDialog salesDialog
 
     OpenDayDialogSample() {
         buildUI()
@@ -52,11 +59,25 @@ class OpenDayDialogSample extends JFrame {
                                     preferredSize: UI_Standards.BUTTON_SIZE,
                                     actionPerformed: { OpenSalesController.instance.requestNewDay() }
                             )
+                            button(text: "Pantalla",
+                                    preferredSize: UI_Standards.BUTTON_SIZE,
+                                    actionPerformed: { onDialog() }
+                            )
                         }
                     }
                 }
             }
         }
+    }
+
+
+    protected void onDialog( ) {
+        Customer customer = new Customer()
+        customer.id = 1810
+        customer.name = 'Pruebas de Sistemas'
+        Rx receta = new Rx()
+        salesDialog = new NoSaleDialog( this, customer.id, 03  )
+        salesDialog.activate()
     }
 
     // UI Response

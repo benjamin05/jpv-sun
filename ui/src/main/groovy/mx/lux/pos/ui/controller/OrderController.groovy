@@ -12,6 +12,7 @@ import mx.lux.pos.repository.JbServiciosRepository
 import mx.lux.pos.repository.ParametroRepository
 import mx.lux.pos.repository.PrecioRepository
 import mx.lux.pos.repository.TmpServiciosRepository
+import mx.lux.pos.service.business.Registry
 import mx.lux.pos.ui.MainWindow
 import mx.lux.pos.ui.resources.ServiceManager
 import mx.lux.pos.ui.view.dialog.ContactClientDialog
@@ -219,12 +220,10 @@ class OrderController {
     }
 
     static void saveRxOrder(String idNotaVenta, Integer receta) {
-
+        log.debug( "guardando receta ${receta}" )
+        println 'receta con error'+receta
         NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(idNotaVenta)
-
-
         notaVentaService.saveRx(notaVenta, receta)
-
     }
 
     static Order saveFrame(String idNotaVenta, String opciones, String forma) {
@@ -235,18 +234,12 @@ class OrderController {
     }
 
     static Dioptra addDioptra(Order order, String dioptra) {
-
-
         NotaVenta nota = notaVentaService.obtenerNotaVenta(order.id)
         nota.setCodigo_lente(dioptra)
         nota = notaVentaService.registrarNotaVenta(nota)
-
-
         Dioptra diop = generaDioptra(preDioptra(nota.codigo_lente))
-
         println('Codigo Lente: ' + nota.codigo_lente)
         return diop
-
     }
 
     static String preDioptra(String dioString) {
@@ -267,25 +260,19 @@ class OrderController {
     }
 
     static Dioptra generaDioptra(String dioString) {
-
-
         Dioptra nuevoDioptra = new Dioptra()
         if (dioString == null) {
-
         } else {
             ArrayList<String> caract = new ArrayList<String>()
             String s = dioString
             StringTokenizer st = new StringTokenizer(s.trim(), ",")
             Iterator its = st.iterator()
-
             while (its.hasNext()) {
                 caract.add(its.next().toString())
             }
             nuevoDioptra = new Dioptra(caract.get(0).toString(), caract.get(1).toString(), caract.get(2).toString(), caract.get(3).toString(), caract.get(4).toString(), caract.get(5).toString())
         }
-
         return nuevoDioptra
-
     }
 
     static Order addItemToOrder(Order order, Item item, String surte) {
@@ -341,6 +328,9 @@ class OrderController {
             if (detalle != null) {
                 nota = notaVentaService.registrarDetalleNotaVentaEnNotaVenta(orderId, detalle)
             }
+            if (nota != null ) {
+                notaVentaService.registraImpuestoPorFactura( nota )
+            }
             return Order.toOrder(nota)
         } else {
             log.warn("no se agrega articulo, parametros invalidos")
@@ -373,7 +363,6 @@ class OrderController {
 
 
     static String codigoDioptra(Dioptra codDioptra) {
-
         String codigo
         if (!codDioptra.equals(null)) {
             codigo = codDioptra.material + codDioptra.lente + codDioptra.tipo + codDioptra.especial + codDioptra.tratamiento + codDioptra.color
@@ -536,7 +525,7 @@ class OrderController {
                 }
                 notaVenta.observacionesNv = order.comments
                 //notaVenta.empEntrego = user?.username
-                notaVenta.udf2 = order.country.toUpperCase()
+                //notaVenta.udf2 = order.country.toUpperCase()
                 notaVenta = notaVentaService.cerrarNotaVenta(notaVenta)
                 if (inventarioService.solicitarTransaccionVenta(notaVenta)) {
                     log.debug("transaccion de inventario correcta")
@@ -702,10 +691,8 @@ class OrderController {
     }
 
     static void requestSaveAsQuote(Order pOrder, Customer pCustomer) {
-
         Integer pQuoteId = ServiceManager.quote.copyFromOrder(pOrder.id, pCustomer.id,
                 ((User) Session.get(SessionItem.USER)).username)
-
         if (pQuoteId != null) {
             ticketService.imprimeCotizacion(pQuoteId)
             notaVentaService.eliminarNotaVenta(pOrder.id)
@@ -900,7 +887,7 @@ class OrderController {
                     formaContacto?.fecha_mod = new Date()
                     formaContacto?.id_cliente = notaVenta?.idCliente
                     formaContacto?.id_sucursal = notaVenta?.idSucursal
-                    formaContacto?.observaciones =  contactoCliente.formaContactoSeleted?.observaciones
+                    formaContacto?.observaciones =  contactoCliente.formaContactoSeleted?.observaciones != '' ? contactoCliente.formaContactoSeleted?.observaciones : ' '
                     formaContacto?.id_tipo_contacto = contactoCliente.formaContactoSeleted?.tipoContacto?.id_tipo_contacto
                     ContactController.saveFormaContacto(formaContacto)
 
@@ -974,8 +961,8 @@ class OrderController {
                 }
 
             }
-
-            if (detalle?.surte.trim().equals('P')) {
+            String surt = StringUtils.trimToEmpty(detalle?.surte) != '' ? detalle?.surte.trim() : ''
+            if (surt.equals('P')) {
                 creaJB = true
             }
 
@@ -1171,22 +1158,22 @@ class OrderController {
         while (iterator.hasNext()) {
             DetalleNotaVenta detalleNotaVenta = new DetalleNotaVenta()
             detalleNotaVenta = iterator.next()
-            if (detalleNotaVenta?.articulo?.idGenerico.trim().equals('B')) {
+            if (detalleNotaVenta?.articulo?.idGenerico?.trim().equals('B')) {
                 rx = 1
             }
-            if (detalleNotaVenta?.idTipoDetalle.trim().equals('VD') ||
-                    detalleNotaVenta?.idTipoDetalle.trim().equals('VI.') ||
-                    detalleNotaVenta?.idTipoDetalle.trim().equals('FT') ||
-                    detalleNotaVenta?.idTipoDetalle.trim().equals('LD') ||
-                    detalleNotaVenta?.idTipoDetalle.trim().equals('LI') ||
-                    detalleNotaVenta?.idTipoDetalle.trim().equals('CI') ||
-                    detalleNotaVenta?.idTipoDetalle.trim().equals('CD') ||
-                    detalleNotaVenta?.idTipoDetalle.trim().equals('REM')
+            if (detalleNotaVenta?.idTipoDetalle?.trim().equals('VD') ||
+                    detalleNotaVenta?.idTipoDetalle?.trim().equals('VI.') ||
+                    detalleNotaVenta?.idTipoDetalle?.trim().equals('FT') ||
+                    detalleNotaVenta?.idTipoDetalle?.trim().equals('LD') ||
+                    detalleNotaVenta?.idTipoDetalle?.trim().equals('LI') ||
+                    detalleNotaVenta?.idTipoDetalle?.trim().equals('CI') ||
+                    detalleNotaVenta?.idTipoDetalle?.trim().equals('CD') ||
+                    detalleNotaVenta?.idTipoDetalle?.trim().equals('REM')
             ) {
-                parte = parte + detalleNotaVenta?.idTipoDetalle.trim() + ','
+                parte = parte + detalleNotaVenta?.idTipoDetalle?.trim() + ','
             }
 
-            if (detalleNotaVenta?.surte.trim().equals('P') && detalleNotaVenta?.articulo?.idGenerico.trim().equals('A')) {
+            if (detalleNotaVenta?.surte?.trim().equals('P') && detalleNotaVenta?.articulo?.idGenerico?.trim().equals('A')) {
                 insertarAcuse = true
                 item = Item.toItem(detalleNotaVenta?.articulo)
             }
@@ -1321,6 +1308,17 @@ class OrderController {
         return armazonString
     }
 
+    static validaSurtePorGenerico( Order order ){
+        NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(order.id)
+        notaVentaService.validaSurtePorGenericoInventariable( notaVenta )
+    }
+
+
+    static String obtieneTiposClientesActivos( ){
+        return Registry.activeCustomers
+    }
+
+
     static void saveSuyo(Order order, User user, String dejo, String instrucciones, String condiciones, String serv) {
         TmpServicios servicios = new TmpServicios()
         servicios?.id_factura = order?.id
@@ -1331,20 +1329,15 @@ class OrderController {
         servicios?.condicion = condiciones
         servicios?.dejo = dejo
         servicios?.instruccion = instrucciones
-
         servicios?.servicio = serv
         tmpServiciosRepository.saveAndFlush(servicios)
         NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(order?.id)
         notaVenta?.observacionesNv = condiciones
         notaVentaService.saveOrder(notaVenta)
-
     }
 
     static void printSuyo(Order order, User user) {
-
-
         TmpServicios servicios = tmpServiciosRepository.findOne( tmpServiciosRepository.tmpExiste(order?.id))
-
         JbNotas jbNotas = new JbNotas()
         jbNotas?.id_nota = order?.bill.toInteger()
         jbNotas?.id_cliente = order?.customer?.id
@@ -1386,7 +1379,6 @@ class OrderController {
             list.add(iterator.next().servicio)
         }
         return list
-
     }
 
 }

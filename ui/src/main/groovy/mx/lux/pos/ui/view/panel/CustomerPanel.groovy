@@ -162,14 +162,15 @@ class CustomerPanel extends JPanel {
                 label('Nombre')
                 firstName = textField(document: new UpperCaseDocument()/*, inputVerifier: new NotEmptyVerifier()*/)
 
-                label('F. Nacimiento')
-                dob = spinner(model: spinnerDateModel())
+                label( 'Apellido Paterno' )
+                fathersName = textField( document: new UpperCaseDocument()/*, inputVerifier: new NotEmptyVerifier()*/ )
 
-                label('Apellido Paterno')
-                fathersName = textField(document: new UpperCaseDocument()/*, inputVerifier: new NotEmptyVerifier()*/)
+                label( 'Apellido Materno' )
+                mothersName = textField( document: new UpperCaseDocument() )
 
-                label('Apellido Materno')
-                mothersName = textField(document: new UpperCaseDocument())
+                label( 'F. Nacimiento' )
+                dob = spinner( model: spinnerDateModel() )
+
             }
 
             panel(border: titledBorder('Dirección'), layout: new MigLayout('wrap 3', '[][fill,grow][]')) {
@@ -220,11 +221,6 @@ class CustomerPanel extends JPanel {
 
 
             }
-
-
-
-
-
 
 
 
@@ -342,13 +338,11 @@ class CustomerPanel extends JPanel {
             Customer tmpCustomer = new Customer()
             if (edit == false) {
                 tmpCustomer = CustomerController.addCustomer(this.customer)
-
                 CustomerController.addClienteProceso(tmpCustomer)        //Se agrega registro en la tabla cliente_proceso
             } else {
                 tmpCustomer = customer
             }
             if (tmpCustomer?.id) {
-
                 customer = tmpCustomer
                 CustomerController.saveContact(customer,0,'')
                 for(int b=1;b<=3;b++){
@@ -460,9 +454,12 @@ class CustomerPanel extends JPanel {
         gender.selectedItem = GenderType.MALE
         primary.text = null
         stateField.selectedItem = defaultState
-        homePhone.text = null
-        email.text = null
-        domain.selectedItem = null
+        //homePhone.text = null
+        //email.text = null
+        //domain.selectedItem = null
+        city.selectedItem = null
+        locationField.selectedItem = null
+        zipcode.selectedItem = null
     }
 
     private def titleChanged = { ItemEvent ev ->

@@ -30,11 +30,13 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
 
   private static final String TIME_FORMAT = 'HH:mm:ss'
   private static final String DATE_FORMAT = 'dd-MM-yyyy'
+  private static final String DATE_FORMAT_MAS_VISION = 'ddMM'
   private static final String DATE_TIME_FORMAT = 'dd-MM-yyyy HH:mm:ss'
   private static final String PAIS_DEFAULT = 'MEXICO'
-  private static final String FMT_ARCHIVE_FILENAME = '%d.%s'
+  private static final String FMT_ARCHIVE_FILENAME = '%d%s'
   private static final String FMT_FILE_PATTERN = '*%s.*'
   private static final Double VALOR_CERO = 0.005
+  private static final String TAG_TIPO_PAGO_EFECTIVO = 'EF'
 
   @Resource
   private ClienteRepository clienteRepository
@@ -184,7 +186,8 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
       generarFicheroZM( fechaCierre, sucursal, ubicacion.valor )
       generarFicheroZS( fechaCierre, sucursal, ubicacion.valor )
       generarFicheroZV( fechaCierre, sucursal, ubicacion.valor )
-      generarFicheroCLI( fechaCierre, sucursal, ubicacion.valor )
+      generarFicheroZT( fechaCierre, sucursal, ubicacion.valor )
+      //generarFicheroCLI( fechaCierre, sucursal, ubicacion.valor )
       generarFicheroff( fechaCierre, sucursal, ubicacion.valor )
       generarFicheroZZ( fechaCierre, sucursal, ubicacion.valor )
 
@@ -213,7 +216,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
       generarFicheroZM( fechaCierre, sucursal, ubicacion.valor )
       generarFicheroZS( fechaCierre, sucursal, ubicacion.valor )
       generarFicheroZV( fechaCierre, sucursal, ubicacion.valor )
-      generarFicheroCLI( fechaCierre, sucursal, ubicacion.valor )
+      //generarFicheroCLI( fechaCierre, sucursal, ubicacion.valor )
       generarFicheroff( fechaCierre, sucursal, ubicacion.valor )
       generarFicheroZZ( fechaCierre, sucursal, ubicacion.valor )
       InventorySearch.generateInFile( fechaCierre, fechaCierre )
@@ -295,6 +298,12 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     List<DetalleNotaVenta> detallesTmp = new ArrayList<DetalleNotaVenta>()
     notasVenta.each { notaVenta -> detallesTmp.addAll( notaVenta.detalles ) }
     log.debug( "Se han encontrado ${detallesTmp.size()} Detalles Notas Venta" )
+    Collections.sort(detallesTmp, new Comparator<DetalleNotaVenta>() {
+        @Override
+        int compare(DetalleNotaVenta o1, DetalleNotaVenta o2) {
+            return o1.id.compareTo(o2.id)
+        }
+    })
     def detalles = detallesTmp.collect { detalleNotaVenta ->
       BigDecimal precio = obtenerPrecioArticulo( detalleNotaVenta?.articulo?.articulo,
           detalleNotaVenta?.articulo?.id )
@@ -375,6 +384,12 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     log.info( "Generando fichero ZO ${ nombreFichero }" )
     log.debug( "Para el dia ${CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy HH:mm' )}" )
     List<NotaVenta> notasVentaTmp = obtenerListaporFechaCierre( fechaCierre )
+    Collections.sort(notasVentaTmp, new Comparator<NotaVenta>() {
+        @Override
+        int compare(NotaVenta o1, NotaVenta o2) {
+            return o1.id.compareTo(o2.id)
+        }
+    })
     def notasVenta = notasVentaTmp.collect { nv ->
       BigDecimal descuento = BigDecimal.ZERO
       log.info( "Generando fichero ZO ${ nombreFichero }" )
@@ -470,6 +485,9 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
         }
         descuentoSunI = montoDescuento+montoOrdenPromDet
         porcentajeDescSunI = (descuentoSunI*100)/(descuentoSunI+Double.parseDouble( String.format("%.2f",nv.ventaTotal) ))
+
+        String codigoDioptra = nv?.codigo_lente != null ? nv?.codigo_lente : ""
+        String idOpt = nv?.examen != null ? nv?.examen.idAtendio.toString() : ''
       [
           factura: StringUtils.defaultIfBlank( nv.factura, '' ),
           id_factura: StringUtils.defaultIfBlank( nv.id, '' ),
@@ -489,7 +507,9 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
           id_clasif_cli: StringUtils.defaultIfBlank( clasifCliente?.idClasifCliente?.toString(), '' ),
           fecha_entrega: nv.fechaEntrega != null ? CustomDateUtils.format( nv.fechaEntrega, 'dd-MM-yyyy' ) : '',
           hora_entrega: nv.horaEntrega != null ? CustomDateUtils.format( nv.horaEntrega, 'HH:mm:ss' ) : '',
-          pais: paisCliente
+          pais: paisCliente,
+          codigoDioptra: codigoDioptra.trim(),
+          idOpto: idOpt != null ? idOpt : ""
       ]
     }
     def datos = [ sucursal: sucursal,
@@ -516,7 +536,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     log.debug( "Se han encontrado ${pagosTmp.size()} pagos" )
     pagosTmp = pagosTmp.findAll { pago ->
       List<EntregadoExterno> ees = entregadoExternoRepository.findByIdFactura( pago.notaVenta?.id )
-      pago.tipoPago != null && pago.tipoPago != 'l' && ees.size() == 0
+      pago.tipoPago != null && ees.size() == 0
     }
     log.debug( "Hay ${pagosTmp.size()} pagos despues de filtrar" )
     def pagos = pagosTmp.collect { pago ->
@@ -540,7 +560,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
       }
       [
           id_factura: pago.notaVenta.id,
-          tipo_pago: pago.tipoPago == 'a' ? 'A' : '',
+          tipo_pago: pago.tipoPago == 'a' ? 'A' : 'S',
           id_f_pago: StringUtils.defaultIfBlank( pago.idFPago?.trim(), '' ),
           monto: pago.monto != null ? pago.monto.toPlainString() : '',
           soi_origen: StringUtils.defaultIfBlank( soiOrigen?.trim(), '' ),
@@ -650,7 +670,8 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
           tipo_descuento: tipoDescuento,
           clave: mod.tipo == 'imp' ? descuentoTmp.clave : '',
           convenio: mod.tipo == 'imp' ? mod.notaVenta.idConvenio : '',
-          factura: mod.notaVenta.factura
+          factura: mod.notaVenta.factura,
+          id_causa: mod?.causaCancelacion != null ? mod?.causaCancelacion?.id.toString() : ""
       ]
     }
     def datos = [
@@ -716,6 +737,48 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
         numero_registros: facturas.size(),
         facturas: facturas ]
     generarFichero( ubicacion, nombreFichero, 'fichero-ff', datos )
+  }
+
+
+  private void generarFicheroZT( Date fechaCierre, Sucursal sucursal, String ubicacion ) {
+      String nombreFichero = "2.${ sucursal.id }.${ CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ) }.ZT"
+
+      log.info( "Generando fichero ZT ${ nombreFichero }" )
+      QNotaVenta nota = QNotaVenta.notaVenta
+      List<NotaVenta> notasVentas = notaVentaRepository.findAll(nota.fechaEntrega.eq(fechaCierre))
+      def entregadas = notasVentas.collect { entregada ->
+          [
+            id_factura: entregada.id,
+            fecha_entrega: CustomDateUtils.format( entregada.fechaEntrega, 'dd-MM-yyyy' ),
+            hora_entrega: CustomDateUtils.format( entregada.horaEntrega, 'HH:mm:ss' )
+          ]
+      }
+      def datos = [ sucursal: sucursal,
+              fecha_ahora: CustomDateUtils.format( new Date(), 'dd/MM/yyyy' ),
+              numero_registros: notasVentas.size(),
+              notas: entregadas ]
+      generarFichero( ubicacion, nombreFichero, 'fichero-ZT', datos )
+  }
+
+
+  private void generarFicheroZR( Date fechaCierre, Sucursal sucursal, String ubicacion ) {
+      String nombreFichero = "2.${ sucursal.id }.${ CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ) }.ZR"
+
+      log.info( "Generando fichero ZR ${ nombreFichero }" )
+      QNotaVenta nota = QNotaVenta.notaVenta
+      List<NotaVenta> notasVentas = notaVentaRepository.findAll(nota.fechaEntrega.eq(fechaCierre))
+      def entregadas = notasVentas.collect { entregada ->
+          [
+                  id_factura: entregada.id,
+                  fecha_entrega: CustomDateUtils.format( entregada.fechaEntrega, 'dd-MM-yyyy' ),
+                  hora_entrega: CustomDateUtils.format( entregada.horaEntrega, 'HH:mm:ss' )
+          ]
+      }
+      def datos = [ sucursal: sucursal,
+              fecha_ahora: CustomDateUtils.format( new Date(), 'dd/MM/yyyy' ),
+              numero_registros: notasVentas.size(),
+              notas: entregadas ]
+      generarFichero( ubicacion, nombreFichero, 'fichero-ZR', datos )
   }
 
 
@@ -817,7 +880,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     List<Pago> pagos = pagoRepository.findBy_Fecha_IdFactura_DescripcionTerminal( fechaCierre, terminal, plan ) ?: [ ]
     List<Pago> selected = new ArrayList<Pago>()
     for ( Pago p : pagos ) {
-      if ( 'TCM'.equals( p.formaPago?.id ) || 'TCD'.equals( p.formaPago?.id ) || 'TDM'.equals( p.formaPago?.id )
+      if ( 'TC'.equals( p.formaPago?.id ) || 'TCD'.equals( p.formaPago?.id ) || 'TD'.equals( p.formaPago?.id )
           || 'TDD'.equals( p.formaPago?.id ) ) {
         if( !StringUtils.trimToEmpty(p.notaVenta.factura).isEmpty() ){
           selected.add( p )
@@ -1239,7 +1302,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
       pagos.each { Pago pago ->
         BigDecimal montoPago = ( pago?.monto ) ?: 0
         ingresoBruto += montoPago
-        if ( 'EFM'.equalsIgnoreCase( pago?.idFPago ) ) {
+        if ( TAG_TIPO_PAGO_EFECTIVO.equalsIgnoreCase( pago?.idFPago ) ) {
           efectivoRecibido += montoPago
         } else if ( 'EFD'.equalsIgnoreCase( pago?.idFPago ) ) {
           dolaresRecibidos += montoPago
@@ -1365,18 +1428,19 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
   }
 
   void archivarCierre( Date pForDate, Boolean pDeleteAfter ) {
-    String strDate = CustomDateUtils.format( DateUtils.truncate( pForDate, Calendar.DATE), DATE_FORMAT)
+    String strDate = CustomDateUtils.format( DateUtils.truncate( pForDate, Calendar.DATE), DATE_FORMAT_MAS_VISION)
+    String strDateTmp = CustomDateUtils.format( DateUtils.truncate( pForDate, Calendar.DATE), DATE_FORMAT)
     log.debug (String.format( 'CierreDiarioService.archivarCierre( %s )', strDate) )
     ArchiveTask task = new ArchiveTask(  )
     task.baseDir = Registry.dailyClosePath
     task.archiveFile = String.format( FMT_ARCHIVE_FILENAME, Registry.currentSite, strDate )
-    task.filePattern = String.format( FMT_FILE_PATTERN, strDate )
+    task.filePattern = String.format( FMT_FILE_PATTERN, strDateTmp )
     task.run()
     sleep 20000
     if ( pDeleteAfter ) {
       long nFiles = 0
       new File( Registry.dailyClosePath ).eachFile( ) { File f ->
-        if ( f.getName().contains( strDate ) ) {
+        if ( f.getName().contains( strDateTmp ) ) {
           f.delete()
           nFiles ++
         }

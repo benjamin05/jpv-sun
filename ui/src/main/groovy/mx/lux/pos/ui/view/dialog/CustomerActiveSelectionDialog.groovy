@@ -1,5 +1,6 @@
 package mx.lux.pos.ui.view.dialog
 
+import mx.lux.pos.ui.controller.CustomerController
 import net.miginfocom.swing.MigLayout
 import org.hibernate.dialect.JDataStoreDialect
 import javax.swing.JDialog
@@ -9,7 +10,9 @@ import groovy.swing.SwingBuilder
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+import javax.swing.JOptionPane
 import javax.swing.JTextField
+import javax.swing.SwingUtilities
 import javax.swing.table.TableRowSorter
 import java.awt.BorderLayout
 import javax.swing.BorderFactory
@@ -26,7 +29,8 @@ import java.awt.Dimension
 import java.awt.Point
 import javax.swing.JLabel
 import javax.swing.JTable
-import javax.swing.RowFilter;
+import javax.swing.RowFilter
+import java.awt.event.MouseEvent;
 
 class CustomerActiveSelectionDialog extends JDialog {
 
@@ -46,6 +50,9 @@ class CustomerActiveSelectionDialog extends JDialog {
   private DefaultTableModel model
   private Boolean requestNew
   private JTextField search
+
+  private Integer idCliente
+  private Integer idSucursal
 
 
   CustomerActiveSelectionDialog( ) {
@@ -88,7 +95,7 @@ class CustomerActiveSelectionDialog extends JDialog {
         }
         scrollPane( constraints: BorderLayout.CENTER ) {
           tClientes = table( selectionMode: ListSelectionModel.SINGLE_SELECTION,
-              mouseClicked: { onCustomerClick() } ) {
+              mouseClicked: { onCustomerClick } ) {
             model = tableModel( list: customerList ) {
               closureColumn( header: TXT_CUST_NAME_LABEL,
                   minWidth: 240,
@@ -109,6 +116,7 @@ class CustomerActiveSelectionDialog extends JDialog {
           borderLayout()
           panel( constraints: BorderLayout.LINE_END ) {
 
+            button( 'No Venta', preferredSize: UI_Standards.BUTTON_SIZE, actionPerformed: { onNoSale() } )
             button( 'Nuevo', preferredSize: UI_Standards.BUTTON_SIZE, actionPerformed: { onNew() } )
             button( 'Aceptar', preferredSize: UI_Standards.BUTTON_SIZE, actionPerformed: { onSelection() } )
             button( 'Cancelar', preferredSize: UI_Standards.BUTTON_SIZE, actionPerformed: { onCancel() } )
@@ -157,8 +165,14 @@ class CustomerActiveSelectionDialog extends JDialog {
   }
 
   // Triggers
-  private void onCustomerClick( ) {
-
+  private def onCustomerClick = { MouseEvent ev ->
+    //if (SwingUtilities.isLeftMouseButton(ev)) {
+        //if (ev.clickCount == 1) {
+          ClienteProceso cliente = ev.source.selectedElement
+          idCliente = cliente.idCliente
+          idSucursal = cliente.idSucursal
+        //}
+    //}
   }
 
   protected void onCancel( ) {
@@ -187,6 +201,21 @@ class CustomerActiveSelectionDialog extends JDialog {
     requestNew = true
     selection = null
     this.setVisible( false )
+  }
+
+
+  protected void onNoSale( ){
+    if( !model.getColumnModel().selectionModel.selectionEmpty ){
+      Map<String, String> selected = model.rowModel.getValue().getProperties()
+      ClienteProceso cliente = CustomerController.findProccesClient( selected.get('idCliente') )
+      NoSaleDialog noSale = new NoSaleDialog( this, cliente.idCliente, cliente.idSucursal, true )
+      noSale.show()
+      dispose()
+    } else {
+        sb.optionPane(message: "Seleccione un Cliente", optionType: JOptionPane.DEFAULT_OPTION)
+                .createDialog(new JTextField(), "Alerta")
+                .show()
+    }
   }
 
   protected void onSelection( ) {

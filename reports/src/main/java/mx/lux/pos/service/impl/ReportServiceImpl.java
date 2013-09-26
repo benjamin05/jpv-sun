@@ -6,6 +6,7 @@ import mx.lux.pos.service.ReportService;
 import mx.lux.pos.service.SucursalService;
 import mx.lux.pos.service.business.Registry;
 import mx.lux.pos.service.business.ReportBusiness;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,8 @@ public class ReportServiceImpl implements ReportService {
     private static String INGRESOS_POR_VENDEDOR_RESUMIDO = "reports/Ingresos_Vendedor_Resumido.jrxml";
     private static String INGRESOS_POR_VENDEDOR_COMPLETO = "reports/Ingresos_Vendedor_Completo.jrxml";
     private static String VENTAS = "reports/Ventas.jrxml";
+    private static String CUPONES = "reports/Cupones.jrxml";
+    private static String VENTAS_MASVISION = "reports/Ventas_MasVision.jrxml";
     private static String VENTAS_COMPLETO = "reports/Ventas_Completo.jrxml";
     private static String VENTAS_POR_VENDEDOR_COMPLETO = "reports/Venta_Por_Vendedor_Completo.jrxml";
     private static String VENTAS_POR_VENDEDOR_RESUMIDO = "reports/Venta_Por_Vendedor_Resumido.jrxml";
@@ -105,6 +108,9 @@ public class ReportServiceImpl implements ReportService {
 
     @Resource
     private ArticuloRepository articuloRepository;
+
+    @Resource
+    private PrecioRepository precioRepository;
 
 
     @Override
@@ -975,7 +981,15 @@ public class ReportServiceImpl implements ReportService {
         Sucursal sucursal = sucursalService.obtenSucursalActual();
 
         QCotizacion cotizacion = QCotizacion.cotizacion;
-        List<Cotizacion> lstCotizaciones = ( List<Cotizacion> ) cotizacionRepository.findAll( cotizacion.fechaMod.between( fechaInicio, fechaFin ) );
+        List<Cotizaciones> lstCotizaciones = ( List<Cotizaciones> ) reportBusiness.obtenerCotizaciones( fechaInicio, fechaFin );
+        Integer totalCotizaciones = 0;
+        Integer totalCotizacionesConVenta = 0;
+        for( Cotizaciones cotiza : lstCotizaciones ){
+          if(StringUtils.trimToEmpty(cotiza.getFactura()).length() > 0){
+            totalCotizacionesConVenta = totalCotizacionesConVenta+1;
+          }
+          totalCotizaciones = totalCotizaciones+1;
+        }
 
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
@@ -983,6 +997,8 @@ public class ReportServiceImpl implements ReportService {
         parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaFin ) );
         parametros.put( "sucursal", sucursal.getNombre() );
         parametros.put( "lstCotizaciones", lstCotizaciones );
+        parametros.put( "totalCotizaciones", totalCotizaciones );
+        parametros.put( "totalCotizacionesConVenta", totalCotizacionesConVenta );
 
         String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
         log.info( "reporte:{}", reporte );
@@ -1030,6 +1046,26 @@ public class ReportServiceImpl implements ReportService {
 
         Sucursal sucursal = sucursalService.obtenSucursalActual();
         List<DescuentosPorTipo> lstExamenes = reportBusiness.obtenerExamenesporEmpleado( fechaInicio, fechaFin );
+        Integer totalRxSinVenta = 0;
+        Integer totalRxConVenta = 0;
+        Integer totalRx = 0;
+        for(DescuentosPorTipo examen : lstExamenes){
+          Integer rxXOptSin = 0;
+          Integer rxXOptCon = 0;
+          for(TipoDescuento examenDet : examen.getDescuentos()){
+            examenDet.setFactura(examenDet.getFactura().replaceFirst(", ",""));
+            if( StringUtils.trimToEmpty(examenDet.getFactura()).length() > 0 ){
+              totalRxConVenta = totalRxConVenta + 1;
+              rxXOptCon = rxXOptCon+1;
+            } else {
+              totalRxSinVenta = totalRxSinVenta + 1;
+              rxXOptSin = rxXOptSin+1;
+            }
+              totalRx = totalRx+1;
+          }
+          examen.setRxConVenta( rxXOptCon );
+          examen.setRxSinVenta( rxXOptSin );
+        }
 
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
@@ -1037,6 +1073,9 @@ public class ReportServiceImpl implements ReportService {
         parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaFin ) );
         parametros.put( "sucursal", sucursal.getNombre() );
         parametros.put( "lstExamenes", lstExamenes );
+        parametros.put( "totalRxConVenta", totalRxConVenta );
+        parametros.put( "totalRxSinVenta", totalRxSinVenta );
+        parametros.put( "totalRx", totalRx );
 
         String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
         log.info( "reporte:{}", reporte );
@@ -1045,8 +1084,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    public String obtenerReporteVentasporOptometrista( Date fechaInicio, Date fechaFin, boolean todoTipo, boolean referido, boolean rx,
-                                                       boolean lux, boolean todaVenta, boolean primera, boolean mayor, boolean resumen ) {
+    public String obtenerReporteVentasporOptometrista( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteVentasporOptometrista()" );
 
         File report = new File( System.getProperty( "java.io.tmpdir" ), "Ventas-Por-Optometrista-Completo.html" );
@@ -1057,8 +1095,7 @@ public class ReportServiceImpl implements ReportService {
         fechaFin = new Date( DateUtils.ceiling( fechaFin, Calendar.DAY_OF_MONTH ).getTime() - 1 );
 
         Sucursal sucursal = sucursalService.obtenSucursalActual();
-        List<IngresoPorVendedor> lstVentas = reportBusiness.obtenerVentasporOptometristaCompleto( fechaInicio, fechaFin,
-                todoTipo, referido, rx, lux, todaVenta, primera, mayor, resumen );
+        List<IngresoPorVendedor> lstVentas = reportBusiness.obtenerVentasporOptometristaCompleto( fechaInicio, fechaFin );
 
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
@@ -1086,8 +1123,7 @@ public class ReportServiceImpl implements ReportService {
         fechaFin = new Date( DateUtils.ceiling( fechaFin, Calendar.DAY_OF_MONTH ).getTime() - 1 );
 
         Sucursal sucursal = sucursalService.obtenSucursalActual();
-        List<IngresoPorVendedor> lstVentas = reportBusiness.obtenerVentasporOptometristaCompleto( fechaInicio, fechaFin,
-                todoTipo, referido, rx, lux, todaVenta, primera, mayor, resumen );
+        List<IngresoPorVendedor> lstVentas = reportBusiness.obtenerVentasporOptometristaCompleto( fechaInicio, fechaFin );
 
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
@@ -1125,7 +1161,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    public String obtenerReporteDeKardex( Integer sku, Date fechaInicio, Date fechaFin ) {
+    public String obtenerReporteDeKardex( String article, Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteDeKardex" );
 
         File report = new File( System.getProperty( "java.io.tmpdir" ), "Kardex-Por-SKU.html" );
@@ -1135,10 +1171,16 @@ public class ReportServiceImpl implements ReportService {
         fechaFin = new Date( DateUtils.ceiling( fechaFin, Calendar.DAY_OF_MONTH ).getTime() - 1 );
 
         Sucursal sucursal = sucursalService.obtenSucursalActual();
-        List<KardexPorArticulo> lstKardexTmp = reportBusiness.obtenerKardex( sku, fechaInicio, fechaFin );
+        List<KardexPorArticulo> lstKardexTmp = reportBusiness.obtenerKardex( article, fechaInicio, fechaFin );
         Collections.reverse( lstKardexTmp );
         List<KardexPorArticulo> lstKardex = new ArrayList<KardexPorArticulo>();
-        Articulo articulo = articuloRepository.findOne( sku );
+        Articulo articulo = new Articulo();
+        BigDecimal precio = BigDecimal.ZERO;
+        QArticulo art = QArticulo.articulo1;
+        List<Articulo> articulos = (List<Articulo>) articuloRepository.findAll( art.articulo.trim().equalsIgnoreCase(article.trim()) );
+        if( articulos.size() == 1){
+            articulo = articulos.get(0);
+        }
         Integer exisInicial = 0;
         Integer exisActual = 0;
         for ( KardexPorArticulo kardex : lstKardexTmp ) {
@@ -1152,15 +1194,22 @@ public class ReportServiceImpl implements ReportService {
             exisActual = lstKardex.get( lstKardex.size() - 1 ).getSaldoFinal();
         }
 
+        if( articulo.getArticulo() != null ){
+          List<Precio> price = precioRepository.findByArticulo( articulo.getArticulo() );
+          if(price.size() == 1){
+            precio = price.get(0).getPrecio();
+          }
+        }
+
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
         parametros.put( "fechaInicio", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaInicio ) );
         parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaFin ) );
         parametros.put( "sucursal", sucursal.getNombre() );
-        parametros.put( "articuloSku", articulo.getId() );
-        parametros.put( "articuloArticulo", articulo.getArticulo() );
-        parametros.put( "articuloDescripcion", articulo.getDescripcion() );
-        parametros.put( "articuloPrecio", articulo.getPrecio() );
+        parametros.put( "articuloSku", articulo.getId() != null ? articulo.getId() : 0 );
+        parametros.put( "articuloArticulo", articulo.getArticulo() != null ? articulo.getArticulo() : "" );
+        parametros.put( "articuloDescripcion", articulo.getDescripcion() != null ? articulo.getDescripcion() : "" );
+        parametros.put( "articuloPrecio", precio );
         parametros.put( "lstKardex", lstKardex );
         parametros.put( "existenciaInicial", exisInicial );
         parametros.put( "existenciaActual", exisActual );
@@ -1268,4 +1317,110 @@ public class ReportServiceImpl implements ReportService {
         return null;
     }
 
+
+
+    public String obtenerReporteVentasMasVision( Date fechaInicio, Date fechaFin ) {
+        log.info( "obtenerReporteVentasMasVision()" );
+
+        File report = new File( System.getProperty( "java.io.tmpdir" ), "Ventas-Completo.html" );
+        org.springframework.core.io.Resource template = new ClassPathResource( VENTAS_MASVISION );
+        log.info( "Ruta:{}", report.getAbsolutePath() );
+
+        fechaInicio = DateUtils.truncate( fechaInicio, Calendar.DAY_OF_MONTH );
+        fechaFin = new Date( DateUtils.ceiling( fechaFin, Calendar.DAY_OF_MONTH ).getTime() - 1 );
+        Sucursal sucursal = sucursalService.obtenSucursalActual();
+
+        Parametro ivaVigenteParam = parametroRepository.findOne( TipoParametro.IVA_VIGENTE.getValue() );
+        Impuesto iva = impuestoRepository.findOne( ivaVigenteParam.getValor() );
+        BigDecimal ivaTasa = new BigDecimal( iva.getTasa() ).divide( new BigDecimal( 100 ) );
+
+        List<VentasPorDia> lstVentas = reportBusiness.obtenerVentasPorPeriodoMasVision( fechaInicio, fechaFin );
+
+        BigDecimal totalVentas = BigDecimal.ZERO;
+        BigDecimal totalCupones = BigDecimal.ZERO;
+        BigDecimal totalVentaNeta = BigDecimal.ZERO;
+        for(VentasPorDia ventas : lstVentas){
+          totalVentas = totalVentas.add(ventas.getMontoTotal());
+          totalCupones = totalCupones.add(ventas.getMontoDescuento());
+          totalVentaNeta = totalVentaNeta.add(ventas.getMontoConDescuento());
+        }
+
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
+        parametros.put( "fechaInicio", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaInicio ) );
+        parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaFin ) );
+        parametros.put( "sucursal", sucursal.getNombre() );
+        parametros.put( "totalVentas", totalVentas );
+        parametros.put( "totalCupones", totalCupones );
+        parametros.put( "totalVentaNeta", totalVentaNeta );
+        parametros.put( "lstVentas", lstVentas );
+        String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
+        log.info( "reporte:{}", reporte );
+
+        return null;
+    }
+
+
+    public String obtenerReporteDescuentosMasVision( Date fechaInicio, Date fechaFin, String key ) {
+        log.info( "obtenerReporteDescuentos()" );
+
+        File report = new File( System.getProperty( "java.io.tmpdir" ), "Descuentos.html" );
+        org.springframework.core.io.Resource template = new ClassPathResource( DESCUENTOS );
+        log.info( "Ruta:{}", report.getAbsolutePath() );
+
+        fechaInicio = DateUtils.truncate( fechaInicio, Calendar.DAY_OF_MONTH );
+        fechaFin = new Date( DateUtils.ceiling( fechaFin, Calendar.DAY_OF_MONTH ).getTime() - 1 );
+
+        Sucursal sucursal = sucursalService.obtenSucursalActual();
+        List<Descuento> lstDescuentos = reportBusiness.obtenerDescuentosMasVision( fechaInicio, fechaFin, key );
+        Integer totalDesc = lstDescuentos.size();
+        BigDecimal importeTotalDesc = BigDecimal.ZERO;
+        for(Descuento desc : lstDescuentos){
+          importeTotalDesc = importeTotalDesc.add(desc.getNotaVenta().getMontoDescuento());
+        }
+
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
+        parametros.put( "fechaInicio", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaInicio ) );
+        parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaFin ) );
+        parametros.put( "sucursal", sucursal.getNombre() );
+        parametros.put( "lstDescuentos", lstDescuentos );
+        parametros.put( "totalDesc", totalDesc );
+        parametros.put( "importeTotalDesc", importeTotalDesc );
+
+        String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
+        log.info( "reporte:{}", reporte );
+
+        return null;
+    }
+
+
+    public String obtenerReporteDeCupones( Date dateStart, Date dateEnd ){
+      log.info( "obtenerReporteDeCupones()" );
+
+      File report = new File( System.getProperty( "java.io.tmpdir" ), "Cupones.html" );
+      org.springframework.core.io.Resource template = new ClassPathResource( CUPONES );
+      log.info( "Ruta:{}", report.getAbsolutePath() );
+
+      dateStart = DateUtils.truncate( dateStart, Calendar.DAY_OF_MONTH );
+      dateEnd = new Date( DateUtils.ceiling( dateEnd, Calendar.DAY_OF_MONTH ).getTime() - 1 );
+      Sucursal sucursal = sucursalService.obtenSucursalActual();
+
+      Parametro ivaVigenteParam = parametroRepository.findOne( TipoParametro.IVA_VIGENTE.getValue() );
+      Impuesto iva = impuestoRepository.findOne( ivaVigenteParam.getValor() );
+      BigDecimal ivaTasa = new BigDecimal( iva.getTasa() ).divide( new BigDecimal( 100 ) );
+
+      List<VentasPorDia> lstCupones = reportBusiness.obtenerVentasPorCupones( dateStart, dateEnd );
+
+      Map<String, Object> parametros = new HashMap<String, Object>();
+      parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
+      parametros.put( "fechaInicio", new SimpleDateFormat( "dd/MM/yyyy" ).format( dateStart ) );
+      parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( dateEnd ) );
+      parametros.put( "sucursal", sucursal.getNombre() );
+      parametros.put( "lstCupones", lstCupones );
+      String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
+      log.info( "reporte:{}", reporte );
+
+      return null;
+    }
 }

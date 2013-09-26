@@ -87,9 +87,9 @@ class ContactDialog extends JDialog {
     private void doSave(){
 
         Jb jb = ContactController.findJbxRX( nVenta?.factura)
-          println('JBContacto: '+jb?.rx)
+
         FormaContacto fc = ContactController.findFCbyRx(jb?.rx)
-           println('Fc: '+ fc?.rx)
+
         if( fc?.rx == null){
             FormaContacto  formaContacto = new FormaContacto()
              formaContacto.rx = jb?.rx
@@ -97,21 +97,30 @@ class ContactDialog extends JDialog {
              formaContacto.fecha_mod = new Date()
              formaContacto.id_sucursal = nVenta?.idSucursal
 
-             formaContacto?.id_tipo_contacto =   tipo?.selectedIndex + 1
-            String contacto
-            if( tipo?.selectedIndex == 0){
-                contacto = correo?.text + '@' + dominio?.selectedItem?.toString()
-            } else {
-                contacto = infoTipo?.text
-
+           String valor = tipo?.selectedItem?.toString()
+            if(valor.equals('CORREO')){
+                formaContacto?.id_tipo_contacto =   1
+                formaContacto?.contacto = correo?.text + '@' + dominio?.selectedItem?.toString()
+            } else if (valor.equals('RECADOS')){
+                formaContacto?.id_tipo_contacto =  2
+                formaContacto?.contacto = infoTipo?.text
+            } else if (valor.equals('TELEFONO')){
+                formaContacto?.id_tipo_contacto =   4
+                formaContacto?.contacto = infoTipo?.text
+            }  else if (valor.equals('SMS')){
+                formaContacto?.id_tipo_contacto =   3
+                formaContacto?.contacto = infoTipo?.text
             }
-            formaContacto?.contacto =  contacto
+
+
+
+
 
             formaContacto?.observaciones =  txtObservaciones?.text
 
             formaContacto = ContactController.saveFormaContacto(formaContacto)
 
-            println('Forma Contacto: '+formaContacto?.rx)
+
         }
 
         doCancel()

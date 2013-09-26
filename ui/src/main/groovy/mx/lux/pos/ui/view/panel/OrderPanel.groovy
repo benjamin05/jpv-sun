@@ -45,6 +45,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private static final String TXT_QUITAR_PAGOS = 'Error al cerrar sesion.'
     private static final String MSJ_CAMBIAR_VENDEDOR = 'Esta seguro que desea salir de esta sesion.'
     private static final String TXT_CAMBIAR_VENDEDOR = 'Cerrar Sesion'
+    private static final String TAG_GENERICO_B = 'B'
 
     private Logger logger = LoggerFactory.getLogger(this.getClass())
     private SwingBuilder sb
@@ -60,6 +61,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private JTextArea comments
     private JTextField itemSearch
     private List<IPromotionAvailable> promotionList
+    private List<OperationType> lstCustomers = OperationType.values()
+    private Collection<OperationType> customerTypes = new ArrayList<OperationType>()
     private DefaultTableModel itemsModel
     private DefaultTableModel paymentsModel
     private DefaultTableModel promotionModel
@@ -79,15 +82,20 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private Dioptra antDioptra = new Dioptra()
     private static boolean ticketRx
     private String armazonString = null
+    private Boolean activeDialogProccesCustomer = true
 
 
 
     OrderPanel() {
-
-
         sb = new SwingBuilder()
         order = new Order()
-
+        dioptra = new Dioptra()
+        String clientesActivos = OrderController.obtieneTiposClientesActivos()
+        for(OperationType customer : lstCustomers){
+            if(clientesActivos.contains(customer.value)){
+               customerTypes.add(customer)
+            }
+        }
         customer = CustomerController.findDefaultCustomer()
         promotionList = new ArrayList<PromotionAvailable>()
         this.promotionDriver.init(this)
@@ -96,6 +104,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         doBindings()
         itemsModel.addTableModelListener(this.promotionDriver)
         uiEnabled = true
+        OperationType
     }
 
     private PromotionDriver getPromotionDriver() {
@@ -110,7 +119,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     customerName = button(enabled: false, actionPerformed: doCustomerSearch)
 
                     label('Tipo')
-                    operationType = comboBox(items: OperationType.values(), itemStateChanged: operationTypeChanged)
+                    operationType = comboBox(items: customerTypes, itemStateChanged: operationTypeChanged)
                 }
 
                 panel(border: loweredEtchedBorder(), layout: new MigLayout('wrap 2', '[][grow,right]', '[top]')) {
@@ -277,12 +286,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
 
         if (order?.id != null) {
-
            /*
+>>>>>>> origin/MasVision
             if (order?.dioptra != null) {
-
                 dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
-
             }
             */
             //  println('antDioptra: ' +  OrderController.codigoDioptra(antDioptra))
@@ -301,7 +308,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         Order tmp = OrderController.getOrder(pOrderId)
         if (tmp?.id) {
             order = tmp
-
             doBindings()
         }
     }
@@ -318,17 +324,26 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         JButton source = ev.source as JButton
         source.enabled = false
         if (order.customer.id == null) {
-            CustomerController.browseCustomer(this)
+            //CustomerController.browseCustomer(this)
             sb.doLater {
                 if (this.customer == null) {
                     this.operationType.setSelectedItem(OperationType.DEFAULT)
                 }
             }
         } else {
-            order.rx = CustomerController.queryCustomer(order.customer)
-            sb.doLater {
-                this.doBindings()
-            }
+          if ( CustomerType.FOREIGN.equals( customer.type ) ) {
+              ForeignCustomerDialog dialog = new ForeignCustomerDialog( this, customer, true )
+              dialog.show()
+              this.customer = dialog.customer
+          } else {
+              NewCustomerAndRxDialog dialog = new NewCustomerAndRxDialog( this, customer, true )
+              dialog.show()
+              this.customer = dialog.customer
+          }
+          //order.rx = CustomerController.queryCustomer(order.customer)
+          sb.doLater {
+              this.doBindings()
+          }
         }
 
         doBindings()
@@ -351,14 +366,14 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         customer = dialog.customer
                     }
                     break
-                case OperationType.DOMESTIC:
+                /*case OperationType.DOMESTIC:
                     customer = new Customer(type: CustomerType.DOMESTIC)
                     CustomerSearchDialog dialog = new CustomerSearchDialog(ev.source as Component, order)
                     dialog.show()
                     if (!dialog.canceled) {
                         customer = dialog.customer
                     }
-                    break
+                    break*/
                 case OperationType.FOREIGN:
                     customer = new Customer(type: CustomerType.FOREIGN)
                     ForeignCustomerDialog dialog = new ForeignCustomerDialog(ev.source as Component, customer, false)
@@ -394,7 +409,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     break
                 case OperationType.PENDING:
                     sb.doLater {
-                        CustomerController.requestPendingCustomer(this)
+                        if(activeDialogProccesCustomer){
+                          CustomerController.requestPendingCustomer(this)
+                        }
+                        activeDialogProccesCustomer = true
                     }
                     break
                 case OperationType.PAYING:
@@ -402,6 +420,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         CustomerController.requestPayingCustomer(this)
                     }
                     break
+            }
+            if(!operationType.selectedItem.equals(OperationType.DOMESTIC)){
+              operationType.removeItem( OperationType.DOMESTIC )
             }
             this.setCustomerInOrder()
             doBindings()
@@ -414,34 +435,58 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private def doItemSearch() {
         Receta rec = new Receta()
         String input = itemSearch.text
+        String article = input
         Boolean newOrder = false
         if (order?.id != null) {
             newOrder = StringUtils.isBlank(order.id)
         }
         if (StringUtils.isNotBlank(input)) {
             sb.doOutside {
-                List<Item> results = ItemController.findItemsByQuery(input)
-                if ((results.size() == 0) && (input.length() > 6)) {
-                    results = ItemController.findItemsByQuery(input.substring(0, 6))
+                if( input.contains(/$/) ){
+                  String[] inputTmp = input.split(/\$/)
+                  if( input.trim().contains(/$$/) ) {
+                      article = inputTmp[0]
+                  } else {
+                      article = inputTmp[0] + ',' + inputTmp[1].substring(0,3)
+                  }
                 }
+                List<Item> results = ItemController.findItemsByQuery(article)
                 if (results?.any()) {
                     Item item = new Item()
-
                     if (results.size() == 1) {
                         item = results.first()
-                        validarVentaNegativa(item, customer)
+                        if( item.type.trim().equalsIgnoreCase(TAG_GENERICO_B) ){
+                          if( customer.id != CustomerController.findDefaultCustomer().id ){
+                            validarVentaNegativa(item, customer)
+                          } else {
+                            optionPane(message: "Cliente invalido, dar de alta datos", optionType: JOptionPane.DEFAULT_OPTION)
+                                    .createDialog(new JTextField(), "Articulo Invalido")
+                                    .show()
+                          }
+                        } else {
+                          validarVentaNegativa(item, customer)
+                        }
                     } else {
                         SuggestedItemsDialog dialog = new SuggestedItemsDialog(itemSearch, input, results)
                         dialog.show()
                         item = dialog.item
                         if (item?.id) {
-
+                          if( item?.type.trim().equalsIgnoreCase(TAG_GENERICO_B) ){
+                            if(customer.id != CustomerController.findDefaultCustomer().id){
+                              validarVentaNegativa(item, customer)
+                            } else {
+                              optionPane(message: "Cliente invalido, dar de alta datos", optionType: JOptionPane.DEFAULT_OPTION)
+                                      .createDialog(new JTextField(), "Articulo Invalido")
+                                      .show()
+                            }
+                          } else {
                             validarVentaNegativa(item, customer)
+                          }
                         }
                     }
                 } else {
-                    optionPane(message: "No se encontraron resultados para: ${input}", optionType: JOptionPane.DEFAULT_OPTION)
-                            .createDialog(new JTextField(), "B\u00fasqueda: ${input}")
+                    optionPane(message: "No se encontraron resultados para: ${article}", optionType: JOptionPane.DEFAULT_OPTION)
+                            .createDialog(new JTextField(), "B\u00fasqueda: ${article}")
                             .show()
                 }
                 if (newOrder && (StringUtils.trimToNull(order?.id) != null) && (StringUtils.trimToNull(customer?.id) != null)) {
@@ -450,7 +495,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
             }
             sb.doLater {
-
                 itemSearch.text = null
             }
 
@@ -475,12 +519,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         if (SwingUtilities.isLeftMouseButton(ev)) {
             if (ev.clickCount == 1) {
                 if (order.due) {
-
-
                     new PaymentDialog(ev.component, order, null).show()
                     updateOrder(order?.id)
-
-
                 } else {
                     sb.optionPane(
                             message: 'No hay saldo para aplicar pago',
@@ -517,24 +557,19 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private Receta validarGenericoB(Item item) {
-
         rec = null
         try {
             //Receta Nueva
             String artString = item.name
             if (artString.equals('SV') || artString.equals('P') || artString.equals('B')) {
-
                 Branch branch = Session.get(SessionItem.BRANCH) as Branch
                 EditRxDialog editRx = new EditRxDialog(this, new Rx(), customer?.id, branch?.id, 'Nueva Receta', item.description)
-
                 editRx.show()
-
 
                 this.disableUI()
                 this.setCustomer(customer)
                 this.setOrder(order)
                 this.enableUI()
-
 
             } else {
                 rec = null
@@ -543,12 +578,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                 this.setOrder(order)
                 this.enableUI()
             }
-        } catch (ex) {
+        } catch (Exception ex) {
+            println ex
             rec = null
         }
-
-
-
         return rec
     }
 
@@ -577,43 +610,44 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         Branch branch = Session.get(SessionItem.BRANCH) as Branch
 
         SurteSwitch surteSwitch = OrderController.surteCallWS(branch, item, 'S', order)
-        surteSwitch = surteSu(item,surteSwitch)
-
+        surteSwitch = surteSu(item, surteSwitch)
+        Boolean esInventariable = ItemController.esInventariable( item.id )
         if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
             String surte = surteSwitch?.surte
-
             if (item.stock > 0) {
                 order = OrderController.addItemToOrder(order, item, surte)
-
                 controlItem(item)
                 if (customer != null) {
                     order.customer = customer
                 }
             } else {
-                SalesWithNoInventory onSalesWithNoInventory = OrderController.requestConfigSalesWithNoInventory()
-                order.customer = customer
-                if (SalesWithNoInventory.ALLOWED.equals(onSalesWithNoInventory)) {
-                    order = OrderController.addItemToOrder(order, item, surte)
-
-                    controlItem(item)
-                } else if (SalesWithNoInventory.REQUIRE_AUTHORIZATION.equals(onSalesWithNoInventory)) {
-                    boolean authorized
-                    if (AccessController.authorizerInSession) {
-                        authorized = true
-                    } else {
-                        AuthorizationDialog authDialog = new AuthorizationDialog(this, "Cancelaci\u00f3n requiere autorizaci\u00f3n")
-                        authDialog.show()
-                        authorized = authDialog.authorized
-                    }
-                    if (authorized) {
+                if( esInventariable ){
+                    SalesWithNoInventory onSalesWithNoInventory = OrderController.requestConfigSalesWithNoInventory()
+                    order.customer = customer
+                    if (SalesWithNoInventory.ALLOWED.equals(onSalesWithNoInventory)) {
                         order = OrderController.addItemToOrder(order, item, surte)
-
                         controlItem(item)
+                    } else if (SalesWithNoInventory.REQUIRE_AUTHORIZATION.equals(onSalesWithNoInventory)) {
+                        boolean authorized
+                        if (AccessController.authorizerInSession) {
+                            authorized = true
+                        } else {
+                            AuthorizationDialog authDialog = new AuthorizationDialog(this, " ")
+                            authDialog.show()
+                            authorized = authDialog.authorized
+                        }
+                        if (authorized) {
+                            order = OrderController.addItemToOrder(order, item, surte)
+                            controlItem(item)
+                        }
+                    } else {
+                        sb.optionPane(message: MSJ_VENTA_NEGATIVA, messageType: JOptionPane.ERROR_MESSAGE,)
+                                .createDialog(this, TXT_VENTA_NEGATIVA_TITULO)
+                                .show()
                     }
                 } else {
-                    sb.optionPane(message: MSJ_VENTA_NEGATIVA, messageType: JOptionPane.ERROR_MESSAGE,)
-                            .createDialog(this, TXT_VENTA_NEGATIVA_TITULO)
-                            .show()
+                  order = OrderController.addItemToOrder(order, item, surte)
+                  controlItem(item)
                 }
             }
         }
@@ -644,7 +678,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             Item i = OrderController.findArt(dio.trim())
             if (i?.id != null || dio.trim().equals('nullnullnullnullnullnull')) {
                 String tipoArt = null
-
                 for (int row = 0; row <= itemsModel.rowCount; row++) {
                     String artString = itemsModel.getValueAt(row, 0).toString()
                     if (artString.trim().equals('SV')) {
@@ -658,10 +691,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         tipoArt = 'PROGRESIVO'
                     }
                 }
-
                 armazonString = OrderController.armazonString(order?.id)
-
-
 
                 if (artCount == 0) {
                     JButton source = ev.source as JButton
@@ -669,21 +699,15 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     ticketRx = false
                     flujoImprimir(artCount)
                     source.enabled = true
-
                 } else {
-
                     rec = OrderController.findRx(order, customer)
                     Order armOrder = OrderController.getOrder(order?.id)
-
                     if (rec.id == null) {   //Receta Nueva
                         Branch branch = Session.get(SessionItem.BRANCH) as Branch
-
                         EditRxDialog editRx = new EditRxDialog(this, new Rx(), customer?.id, branch?.id, 'Nueva Receta', tipoArt)
                         editRx.show()
-
                         try {
                             OrderController.saveRxOrder(order?.id, rec.id)
-
                             JButton source = ev.source as JButton
                             source.enabled = false
                             ticketRx = true
@@ -694,9 +718,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                             }
                             flujoImprimir(artCount)
                             source.enabled = true
-                        } catch (ex) {
-
-                        }
+                        } catch ( Exception e) { println e }
                     } else {
                         JButton source = ev.source as JButton
                         source.enabled = false
@@ -708,10 +730,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         }
                         flujoImprimir(artCount)
                         source.enabled = true
-
                     }
-
-
                 }
             } else {
                 sb.optionPane(message: "Codigo Dioptra Incorrecto", optionType: JOptionPane.DEFAULT_OPTION)
@@ -725,7 +744,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void controlItem(Item item) {
-
         String indexDioptra = item?.indexDiotra
         println('Index Dioptra del Articulo : ' + item?.indexDiotra)
         if (!indexDioptra.equals(null) && item?.indexDiotra != null) {
@@ -753,13 +771,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         }
 
 
-
-
         rec = validarGenericoB(item)
         OrderController.saveRxOrder(order?.id, rec.id)
-
-
-
         updateOrder(order?.id)
         if (!order.customer.equals(customer)) {
             order.customer = customer
@@ -770,93 +783,49 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         armazonString = null
         Boolean validOrder = isValidOrder()
         if (artCount != 0) {
-
-
             Parametro diaIntervalo = Registry.find(TipoParametro.DIA_PRO)
-
             Date diaPrometido = new Date() + diaIntervalo?.valor.toInteger()
             OrderController.savePromisedDate(order?.id, diaPrometido)
-
-
             Double pAnticipo = Registry.getAdvancePct()
             if (order?.paid < (order?.total * pAnticipo)) {
-
                 AuthorizationDialog authDialog = new AuthorizationDialog(this, "Anticipo menor al permitido, esta operacion requiere autorizaci\u00f3n")
                 authDialog.show()
-
-
                 if (authDialog.authorized) {
                     validOrder = isValidOrder()
                 } else {
-
                     validOrder = false
-
                     sb.optionPane(
                             message: 'El monto del anticipo tiene que ser minimo de: $' + (order?.total * pAnticipo),
                             messageType: JOptionPane.ERROR_MESSAGE
                     ).createDialog(this, 'No se puede registrar la venta')
                             .show()
                 }
-
             } else {
                 validOrder = isValidOrder()
             }
-
         }
         if (validOrder) {
-
-
-            if (operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.WALKIN.value) ||
-                    operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.DOMESTIC.value)) {
-                order.country = 'MEXICO'
-                saveOrder()
-            } else if (operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.FOREIGN.value)) {
-                String paisCliente = CustomerController.countryCustomer(order)
-                if (paisCliente.length() > 0) {
-                    order.country = paisCliente
-                    saveOrder()
-                } else {
-                    CountryCustomerDialog dialog = new CountryCustomerDialog(MainWindow.instance)
-                    dialog.show()
-                    if (dialog.button == true) {
-                        order.country = dialog.pais
-                        saveOrder()
-                    }
-                }
-            } else if (operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.DEFAULT.value)) {
-                CountryCustomerDialog dialog = new CountryCustomerDialog(MainWindow.instance)
-                dialog.show()
-                if (dialog.button == true) {
-                    order.country = dialog.pais
-                    saveOrder()
-                }
-            } else if (operationType.selectedItem.toString().trim().equalsIgnoreCase(OperationType.PAYING.value)) {
-
-                saveOrder()
-            }
+            doBindings()
+            saveOrder()
         }
 
     }
 
     private void saveOrder() {
-
-
         User user = Session.get(SessionItem.USER) as User
         CambiaVendedorDialog cambiaVendedor = new CambiaVendedorDialog(this,user?.username)
         cambiaVendedor.show()
 
         Order newOrder = OrderController.placeOrder(order, cambiaVendedor?.vendedor)
-        CustomerController.saveOrderCountries(order.country)
-
-
+        //CustomerController.saveOrderCountries(order.country)
         this.promotionDriver.requestPromotionSave(newOrder?.id)
         Boolean cSaldo = false
         // if(newOrder?.due > 0){
         //   cSaldo = true
         // }
         OrderController.creaJb(newOrder?.ticket.trim(), cSaldo)
-        OrderController.validaEntrega(newOrder?.bill.trim(), newOrder?.branch?.id.toString(), true)
-
+        OrderController.validaEntrega(newOrder?.bill.trim(),newOrder?.branch?.id.toString(), true)
+        OrderController.validaSurtePorGenerico( order )
         if (StringUtils.isNotBlank(newOrder?.id)) {
 
             Branch branch = Session.get(SessionItem.BRANCH) as Branch
@@ -882,26 +851,16 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
                 OrderController.printSuyo(newOrder,u)
             }
-
-
-
             OrderController.printOrder(newOrder.id)
             if (ticketRx == true) {
                 OrderController.printRx(newOrder.id, false)
                 OrderController.fieldRX(newOrder.id)
             }
-
-
-
             reviewForTransfers(newOrder.id)
-
             // Flujo despues de imprimir nota de venta
 
             CustomerController.requestOrderByCustomer(this, customer)
-
-
             // Flujo despues de imprimir nota de venta
-
         } else {
             sb.optionPane(
                     message: 'Ocurrio un error al registrar la venta, intentar nuevamente',
@@ -984,12 +943,11 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void fireRequestQuote() {
-
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
         String dio = OrderController.codigoDioptra(dioptra)
-        if (dioptra.getLente() != null) {
+        //if (dioptra.getLente() != null) {
             Item i = OrderController.findArt(dio.trim())
-            if (i?.id != null) {
+            //if (i?.id != null) {
                 if (itemsModel.size() > 0) {
                     if (paymentsModel.size() == 0) {
                         OrderController.requestSaveAsQuote(order, customer)
@@ -1004,18 +962,14 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         OrderController.notifyAlert(TXT_REQUEST_QUOTE, TXT_NO_ORDER_PRESENT)
                     }
                 }
-
-
-            } else {
+            /*} else {
                 sb.optionPane(message: "Codigo Dioptra Incorrecto", optionType: JOptionPane.DEFAULT_OPTION)
                         .createDialog(new JTextField(), "Error")
                         .show()
-            }
-
-        } else {
+            }*/
+        /*} else {
             flujoContinuar()
-        }
-
+        }*/
     }
 
     private void setCustomerInOrder() {
@@ -1027,12 +981,35 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         }
     }
 
-    void reset() {
+    void setCustomerInOrderFromMenu( Customer customer ) {
+        if ((order?.id != null) && (customer != null)) {
+            if (!order.customer.equals(customer)) {
+                order.customer = customer
+                OrderController.saveCustomerForOrder(order.id, customer.id)
+            }
+        }
+        this.customer = customer
+        if(!operationType.selectedItem.equals(OperationType.DOMESTIC) ){
+          operationType.addItem( OperationType.DOMESTIC )
+        }
+        if(this.customer != null){
+          if( CustomerController.findProccesClient(this.customer.id) != null ){
+            activeDialogProccesCustomer = false
+            operationType.setSelectedItem( OperationType.PENDING )
+          } else {
+            activeDialogProccesCustomer = false
+            operationType.setSelectedItem( OperationType.PENDING )
+            //operationType.setSelectedItem( OperationType.DOMESTIC )
+          }
+        } else {
+          operationType.removeItem( OperationType.DOMESTIC )
+        }
+        doBindings()
+    }
 
+    void reset() {
         order = new Order()
         customer = CustomerController.findDefaultCustomer()
-        // Benja: Favor de no cambiar la siguiente linea. Esta comentada porque NO debe de estar
-        // this.promotionList = new ArrayList<PromotionAvailable>()
         this.getPromotionDriver().init(this)
         dioptra = new Dioptra()
         antDioptra = new Dioptra()
@@ -1070,15 +1047,13 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private void fireRequestContinue(DefaultTableModel itemsModel) {
 
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
-
         String dio = OrderController.codigoDioptra(dioptra)
-
         if (!dioptra.getLente().equals(null)) {
 
             Item i = OrderController.findArt(dio.trim())
-
+            println i?.id
+            println dio.trim()
             if (i?.id != null || dio.trim().equals('nullnullnullnullnullnull')) {
-
                 String tipoArt = null
                 int artCount = 0
                 for (int row = 0; row <= itemsModel.rowCount; row++) {
@@ -1094,14 +1069,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         tipoArt = 'PROGRESIVO'
                     }
                 }
-
-
                 if (artCount == 0) {
                     flujoContinuar()
 
                 } else {
-
-
                     rec = OrderController.findRx(order, customer)
                     Order armOrder = OrderController.getOrder(order?.id)
 
@@ -1158,18 +1129,11 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void flujoContinuar() {
-
         if (isPaymentListEmpty()) {
-
-
             sb.doLater {
-
                 OrderController.saveOrder(order)
                 CustomerController.updateCustomerInSite(this.customer.id)
-
                 this.reset()
-
-
             }
         } else {
             sb.doLater {

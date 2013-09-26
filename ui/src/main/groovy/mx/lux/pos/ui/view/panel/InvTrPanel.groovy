@@ -19,6 +19,8 @@ import java.awt.Dimension
 import javax.swing.table.TableModel
 import mx.lux.pos.ui.MainWindow
 
+import java.awt.event.ActionEvent
+
 class InvTrPanel extends JPanel {
 
   static final String MSG_INCORRECT_BRANCH = 'El archivo: <%s> hace referencia a otra sucursal'
@@ -27,10 +29,14 @@ class InvTrPanel extends JPanel {
   static final String MSG_NO_RESULTS_FOUND = "No se encontraron resultados para: <%s>"
   static final String MSG_POST_FAILED = "La transacción NO fue registrada.\nNotifique a soporte técnico."
   static final String MSG_NO_DOCUMENT_AVAILABLE = "Remisión no disponible."
+  static final String MSG_DOCUMENT_ALREADY_PROCCESED = "El archivo ya fue cargado."
+  static final String MSG_ARTICLE_NOT_FOUND = "Articulo %s no existe."
   static final String MSG_CUM_QTY_ADJUST_WRONG = "Cantidad de piezas incorrecta. Reintente."
   static final String MSG_RECEIPT_WARNING = "%,d transacciones registradas con Tipo:<%s> y Ref:<%s> (%s - %s)"
   static final String MSG_TRANSACTION_POSTED = "Transaccion aplicada"
   static final String MSG_UNABLE_TO_PARSE_QTY = 'La cantidad debe ser numérica'
+  static final String MSG_NO_STOCK = 'Articulo sin existencia ¿Desea continuar?'
+  static final String TXT_NO_STOCK = 'Articulo sin existencia'
   static final String TXT_CONFIRM_TITLE = "Confirmar selección"
   static final String TXT_SECTION_DISPLAY_TITLE = "Informacion"
   static final String TXT_SECTION_INPUT_TITLE = "Registro"
@@ -81,6 +87,9 @@ class InvTrPanel extends JPanel {
   JTable tBrowser
   JPanel selector
   TableModel browserSku
+  Boolean stock = true
+  Sucursal site = new Sucursal()
+  Boolean newTransaction = true
 
   InvTrPanel( InvTrView pView ) {
     view = pView
@@ -91,6 +100,7 @@ class InvTrPanel extends JPanel {
   private void buildUI() {
     sb.panel ( this ) {
       borderLayout( )
+      onSiteChange( )
       composeTopSection( )
       composeMidSection( )
       composeBottomSection( )
@@ -151,7 +161,8 @@ class InvTrPanel extends JPanel {
       label( TXT_TR_SITE_TO_LABEL )
       comboBox ( comboSiteTo.comboBox,
           minimumSize: [160, 8] as Dimension,
-          maximumSize: MAX_SIZE
+          maximumSize: MAX_SIZE,
+          actionPerformed: {onSiteChange()}
       )
       comboSiteTo.setItems( view.data.siteList )
       label( TXT_VIEW_MODE_LABEL )
@@ -201,6 +212,12 @@ class InvTrPanel extends JPanel {
         composeInputSection( )
         composeDisplaySection( )
       }
+    }
+  }
+
+  private def onSiteChange( ) {
+    if( comboSiteTo?.comboBox?.selectedItem != null ){
+      site = comboSiteTo.selection
     }
   }
 }

@@ -13,8 +13,11 @@ import java.util.List;
 public class VentasPorDia {
 
     private String factura;
+    private String articulos;
+    private String tipoPago;
     private String facturaCancelada;
     private Date fecha;
+    private Date fechaEntrega;
     private BigDecimal montoConDescuento;
     private BigDecimal montoTotal;
     private BigDecimal montoDescuento;
@@ -31,7 +34,10 @@ public class VentasPorDia {
     private BigDecimal total;
     private Double montoSinIva;
     private String empleado;
+    private String descripcion;
     private Boolean esNotaCredito;
+
+    private static final String TAG_CUPON = "CUPON";
 
     BigDecimal porcentaje = new BigDecimal( 100 );
     private static final BigDecimal CERO = BigDecimal.valueOf( 0.005 );
@@ -54,6 +60,8 @@ public class VentasPorDia {
         montoTotalDescuentoCan = BigDecimal.ZERO;
         total = BigDecimal.ZERO;
         esNotaCredito = false;
+        articulos = "";
+        tipoPago = "";
     }
 
     public void acumulaArticulos( NotaVenta notaVenta, Boolean artPrecioMayorCero ) {
@@ -171,6 +179,46 @@ public class VentasPorDia {
     }
 
 
+    public void acumulaVentasPorDiaMasVision( NotaVenta nota ){
+      for(DetalleNotaVenta det : nota.getDetalles()){
+        articulos = articulos + "," + det.getArticulo().getArticulo();
+      }
+      fecha = nota.getFechaHoraFactura();
+      montoTotal = nota.getVentaTotal();
+      for(Pago pago : nota.getPagos()){
+          if(pago.geteTipoPago().getDescripcion().contains(TAG_CUPON)){
+            montoDescuento = montoDescuento.add(pago.getMonto());
+          }
+          tipoPago = tipoPago + "," + pago.getIdFPago();
+      }
+      montoConDescuento = montoTotal.subtract(montoDescuento);
+      fechaEntrega = nota.getFechaEntrega();
+
+      articulos = articulos.replaceFirst(",", "");
+      tipoPago = tipoPago.replaceFirst(",", "");
+    }
+
+
+    public void acumulaCancelacionesPorDiaMasVision( Modificacion modificacion ){
+        for(DetalleNotaVenta det : modificacion.getNotaVenta().getDetalles()){
+            articulos = articulos + "," + det.getArticulo().getArticulo();
+        }
+        fecha = modificacion.getNotaVenta().getFechaHoraFactura();
+        montoTotal = (modificacion.getNotaVenta().getVentaTotal()).negate();
+        for(Pago pago : modificacion.getNotaVenta().getPagos()){
+            if(pago.geteTipoPago().getDescripcion().contains(TAG_CUPON)){
+                montoDescuento = montoDescuento.add(pago.getMonto()).negate();
+            }
+            tipoPago = tipoPago + "," + pago.getIdFPago();
+        }
+        montoConDescuento = montoTotal.subtract(montoDescuento);
+        fechaEntrega = modificacion.getNotaVenta().getFechaEntrega();
+
+        articulos = articulos.replaceFirst(",", "");
+        tipoPago = tipoPago.replaceFirst(",", "");
+    }
+
+
     public void acumulaNotasCreditoVentasPorDia( NotaVenta notaVenta, double iva ){
         BigDecimal importeTotal = BigDecimal.ZERO;
         Double importeTotalSinIva = 0.00;
@@ -206,6 +254,15 @@ public class VentasPorDia {
         montoTotal =importeTotal.negate();
         montoSinIva = importeTotalSinIva*-1;
     }
+
+
+    public void acumulaCupones( Pago pago ){
+      descripcion = pago.geteTipoPago().getDescripcion();
+      montoTotal = montoTotal.add(pago.getMonto());
+      contadorArt = contadorArt+1;
+    }
+
+
 
     public Integer getContadorArt() {
         return contadorArt;
@@ -373,5 +430,37 @@ public class VentasPorDia {
 
     public void setEsNotaCredito( Boolean esNotaCredito ) {
         this.esNotaCredito = esNotaCredito;
+    }
+
+    public String getArticulos() {
+        return articulos;
+    }
+
+    public void setArticulos(String articulos) {
+        this.articulos = articulos;
+    }
+
+    public String getTipoPago() {
+        return tipoPago;
+    }
+
+    public void setTipoPago(String tipoPago) {
+        this.tipoPago = tipoPago;
+    }
+
+    public Date getFechaEntrega() {
+        return fechaEntrega;
+    }
+
+    public void setFechaEntrega(Date fechaEntrega) {
+        this.fechaEntrega = fechaEntrega;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 }

@@ -96,10 +96,6 @@ class ContactController {
         }
 
 
-
-        println(contactos.get(0).contacto)
-        println(contactos.get(0).tipoContacto.descripcion)
-
         return contactos
 
     }
@@ -138,7 +134,7 @@ class ContactController {
            if( !cliente?.telefonoTrabajo.trim().equals('') ){
            FormaContacto formaContacto = new FormaContacto()
            formaContacto?.contacto = cliente?.telefonoCasa
-           formaContacto?.tipoContacto = tipoContactoRepository.findOne(3)
+           formaContacto?.tipoContacto = tipoContactoRepository.findOne(4)
            contactos.add(formaContacto)
        }
        }
@@ -146,7 +142,7 @@ class ContactController {
            if( !cliente?.telefonoAdicional.trim().equals('')  ){
            FormaContacto formaContacto = new FormaContacto()
            formaContacto?.contacto = cliente?.telefonoAdicional
-           formaContacto?.tipoContacto = tipoContactoRepository.findOne(4)
+           formaContacto?.tipoContacto = tipoContactoRepository.findOne(3)
            contactos.add(formaContacto)
            }
        }

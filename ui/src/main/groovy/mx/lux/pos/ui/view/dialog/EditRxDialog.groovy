@@ -29,7 +29,7 @@ class EditRxDialog extends JDialog {
     private Component component
 
 
-    private Rx receta
+    Rx receta
     private Receta rec
     private Integer idCliente
     private Integer idSucursal
@@ -416,14 +416,27 @@ class EditRxDialog extends JDialog {
         }
     }
 
+    private void limpiar(JTextField txtField) {
 
+        //   limpiarAux = txtField.text
+        //txtField.text = txtField.text.substring(1,txtField.text.indexOf('.'))
+        /*
+          if(txtField.text != ''){
+              if(txtField.text.substring(txtField.text.indexOf('.') + 1,txtField.text.size()).toInteger() > 0){
+                   txtField.text = txtField.text.substring(1,txtField.text.indexOf('.')) + '.' + txtField.text.substring(txtField.text.indexOf('.') + 1,txtField.text.size())
+              }   else{
+                  txtField.text = txtField.text.substring(1,txtField.text.indexOf('.'))
+              }
+          }
+             */
+        //txtField.text = ''
+    }
 
     private void validacion(JTextField txtField, double max, double min, double interval, String format, String mask) {
         if (txtField.text.trim().length() > 0 && !txtField.text.trim().equals('0')) {
             double number
             String txt = txtField.text.trim()
             String signo = ''
-
             if (txt.substring(0, 1) == '-') {
                 txt = txt.substring(1, txt.size())
                 signo = '-'
@@ -441,7 +454,6 @@ class EditRxDialog extends JDialog {
             } catch (e) {
 
             }
-
             try {
 
                 if (txt.substring(txt.size() - 3, txt.size()).equals('.00')) {
@@ -454,16 +466,12 @@ class EditRxDialog extends JDialog {
             }
             println(signo)
             println(txt)
-
-
             txtField.text = ''
             Double multiplo = 0.0
             if (txt.length() > 0) {
                 number = Double.parseDouble(txt);
-
                 multiplo = number / interval;
                 multiplo = multiplo % 1
-
                 if (multiplo == 0 || multiplo.toString().equals('-0.0')) {
 
                     if (number >= min && number <= max) {
@@ -478,7 +486,6 @@ class EditRxDialog extends JDialog {
                         if (number > -1 && number < 1 && number != 0) {
                             txt = '0' + txt
                         }
-
                         if (mask.equals('+')) {
                             if (signo.equals('')) {
                                 txtField.text = '+' + txt
@@ -509,18 +516,13 @@ class EditRxDialog extends JDialog {
                     } else {
                         txtField.text = ''
                     }
-
                 } else {
                     txtField.text = ''
                 }
-
             } else {
                 txtField.text = ''
             }
-
-
         } else if (txtField.text.trim().length() > 0 && txtField.text.trim().equals('0')) {
-
             if(format.equals('0')){
                 txtField.text = '0'
             }else{
@@ -534,6 +536,8 @@ class EditRxDialog extends JDialog {
 
     private void doBindings() {
         sb.build {
+            txtEmpleado.setText(receta?.idOpt?.trim())
+            txtFolio.setText(receta?.folio)
             txtOdEsfera.setText(receta.odEsfR)
             txtOdCil.setText(receta.odCilR)
             txtOdEje.setText(receta.odEjeR)
@@ -557,6 +561,7 @@ class EditRxDialog extends JDialog {
              }
              */
             txtOiDm.setText(receta.diOi)
+            txtOiAd.setText(receta.oiAdcR)
             //txtOiPrisma.setText(receta.oiPrismH)
             /*if (receta.odPrismaV != null) {
                 cbOdUbic.setSelectedItem(receta.odPrismaV)
@@ -606,11 +611,9 @@ class EditRxDialog extends JDialog {
     }
 
     void doCancel() {
-
         component.rec = rec
-
         this.setVisible(false)
-        this.dispose()
+        //this.dispose()
 
     }
 
@@ -660,11 +663,7 @@ class EditRxDialog extends JDialog {
             receta.setIdStore(idSucursal)
             receta.setIdClient(idCliente)
         }
-
-
         rec = CustomerController.saveRx(receta)
-
-
         doCancel()
 
     }
