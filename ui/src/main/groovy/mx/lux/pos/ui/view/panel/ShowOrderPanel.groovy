@@ -44,6 +44,11 @@ class ShowOrderPanel extends JPanel {
   private JLabel folio
   private JLabel bill
     private JLabel status
+    private JLabel statusE
+    private JLabel fechaE
+    private JLabel empIDE
+
+
   private JLabel date
   private JLabel employee
   private JLabel total
@@ -77,14 +82,15 @@ class ShowOrderPanel extends JPanel {
         }
 
         panel( border: loweredEtchedBorder(), layout: new MigLayout( 'wrap 2', '[][grow,right]', '[top]' ) ) {
-          /*label( 'Folio' )
-          folio = label()*/
+
           label( 'Factura' )
           bill = label()
           label( 'Fecha' )
           date = label()
           employee = label( constraints: 'span 2', maximumSize: [ 210, 30 ] )
-            status = label( text: 'CANCELADA', foreground: UI_Standards.WARNING_FOREGROUND, visible: false )
+            status = label(  foreground: UI_Standards.NORMAL_FOREGROUND, visible: false )
+            fechaE = label(foreground: UI_Standards.NORMAL_FOREGROUND, visible: false )
+            empIDE = label(constraints: 'span 2', maximumSize: [ 210, 30 ] ,foreground: UI_Standards.NORMAL_FOREGROUND, visible: false )
 
         }
 
@@ -177,12 +183,24 @@ class ShowOrderPanel extends JPanel {
   }
 
   private void doBindings( ) {
+
     sb.build {
       bean( customerName, text: bind {order.customer?.fullName} )
       //bean( folio, text: bind {order.id} )
       bean( bill, text: bind {order.bill} )
       bean( employee, text: bind {order.employee} )
       bean( status, visible: bind {'T'.equalsIgnoreCase( order.status )} )
+        if('T'.equalsIgnoreCase( order.status )){
+            bean( status, text: 'CANCELADA',foreground: UI_Standards.WARNING_FOREGROUND )
+        }
+      bean( status, visible: bind { order.fechaEntrega != null} )
+        if(order.fechaEntrega != null){
+            bean( status, text: 'ENTREGADA',foreground: UI_Standards.NORMAL_FOREGROUND )
+        }
+        bean( fechaE, visible: bind { order.fechaEntrega != null} )
+        bean( fechaE, text: bind( source: order, sourceProperty: 'fechaEntrega', converter: dateConverter ) )
+        bean( empIDE, visible: bind { order.fechaEntrega != null} )
+        bean( empIDE, text: bind( source: order, sourceProperty: 'employee' ) )
       bean( date, text: bind( source: order, sourceProperty: 'date', converter: dateConverter ) )
       bean( total, text: bind( source: order, sourceProperty: 'total', converter: currencyConverter ) )
       bean( paid, text: bind( source: order, sourceProperty: 'paid', converter: currencyConverter ) )
@@ -216,6 +234,8 @@ class ShowOrderPanel extends JPanel {
       } else{
           ppButton?.setText('Pagar')
       }
+
+
 
   }
 

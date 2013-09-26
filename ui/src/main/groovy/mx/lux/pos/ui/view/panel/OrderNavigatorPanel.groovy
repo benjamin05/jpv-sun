@@ -78,6 +78,8 @@ class OrderNavigatorPanel extends JPanel {
       order.paid = newOrder.paid
       order.due = newOrder.due
       order.employee = newOrder.employee
+      order.fechaEntrega = newOrder.fechaEntrega
+      order.empEntrega = newOrder.empEntrega
       updateSearchButtonText()
       update.call()
     }

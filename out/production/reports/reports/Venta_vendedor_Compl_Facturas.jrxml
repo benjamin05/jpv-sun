@@ -92,9 +92,9 @@
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{fechaPago}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="¤ #,##0.00">
 				<reportElement uuid="a9a38ae5-c079-4353-8b62-da9447f84e05" x="326" y="1" width="60" height="12"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -102,15 +102,15 @@
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="¤ #,##0.00">
 				<reportElement uuid="1fd06b98-cdea-43d8-9e08-96ce9b10cf52" x="450" y="1" width="86" height="13"/>
-				<textElement textAlignment="Center"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{sumaMonto}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField pattern="¤ #,##0.00" isBlankWhenNull="true">
 				<reportElement uuid="5b2e74b7-2380-43e0-8106-b1c6d7d8a0ec" x="387" y="1" width="62" height="12"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{color}]]></textFieldExpression>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{color} ]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
