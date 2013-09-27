@@ -87,10 +87,11 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
         log.debug( "obteniendo articulo: ${tmpArticulo?.articulo} en lista de precios a validar" )
         def a = QArticulo.articulo1
         List<Articulo> existencias = articuloRepository.findAll(
-            a.articulo.eq( tmpArticulo?.articulo ).and( a.existencia.cantidad.gt( 0 ) )
+            a.id.eq( tmpArticulo?.id ).and( a.cantExistencia.gt( 0 ) )
+            //a.articulo.eq( tmpArticulo?.articulo ).and( a.existencia.cantidad.gt( 0 ) )
         ) as List<Articulo>
         existencias.each {
-          log.debug( "validando articulo: ${it?.articulo}, id: ${it?.id}, color: ${it?.codigoColor}, cantidad: ${it?.existencia?.cantidad}" )
+          /*log.debug( "validando articulo: ${it?.articulo}, id: ${it?.id}, color: ${it?.codigoColor}, cantidad: ${it?.existencia?.cantidad}" )
           try {
             def sql = new Sql( invDataSource )
             def row = sql.firstRow( "SELECT * FROM verify WHERE articulo=${it?.articulo} AND color=${it?.codigoColor}" )
@@ -99,7 +100,7 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
             sql.close()
           } catch ( ex ) {
             log.error( "no se pudo obtener ubicacion", ex )
-          }
+          }*/
           resultados.add( it )
         }
       }
@@ -205,7 +206,7 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
         log.debug( "registrando nuevo articulo: ${tmpArticulo.articulo}" )
         tmpArticulo.setIdSucursal(sucursal.id)
           articuloRepository.save( tmpArticulo )
-          articuloRepository.flush( tmpArticulo )
+          articuloRepository.flush()
       }
       def tipoPrecio = esLista ? 'L' : ( esOferta ? 'O' : tmpArticulo?.tipoPrecio )
       Precio tmpPrecio = precioRepository.findByArticuloAndLista( tmpArticulo?.articulo, tipoPrecio )
@@ -246,4 +247,15 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
       it?.tipoPrecio?.matches( sucursal?.sears ? sears : lux )
     }
   }
+
+  Integer listasPreciosPendientes( ){
+      log.debug( "Obteniendo listas de precios pendientes" )
+      QListaPrecios lista = QListaPrecios.listaPrecios
+      List<ListaPrecios> lstListaPrecios = listaPreciosRepository.findAll( lista.tipoCarga.isEmpty().or(lista.tipoCarga.isNull()).
+              and(lista.fechaCarga.isNull()) )
+      log.debug( "Numero de listas pendientes: ${lstListaPrecios.size()}" )
+
+      return lstListaPrecios.size()
+  }
+
 }

@@ -60,7 +60,22 @@ class ArchiveTask {
       }
 
       try {
+        File file = new File( 'empaqueta.sh' )
+        if ( file.exists() ) {
+            file.delete()
+        }
+        PrintStream strOut = new PrintStream( file )
+        StringBuffer sb1 = new StringBuffer()
+        sb1.append('CIERRE_HOME='+Registry.dailyClosePath)
+        sb1.append( "\n" )
+        sb1.append('cd $CIERRE_HOME')
+        sb1.append( "\n" )
+        sb1.append('tar -cvf '+this.getArchiveFile()+' '+this.filePattern)
+        strOut.println sb1.toString()
+        strOut.close()
+
         String s = null
+        Process p1 = Runtime.getRuntime().exec("chmod 777 empaqueta.sh");
         Process p = Runtime.getRuntime().exec("./empaqueta.sh");
 
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));

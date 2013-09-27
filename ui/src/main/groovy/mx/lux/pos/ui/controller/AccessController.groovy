@@ -3,6 +3,7 @@ package mx.lux.pos.ui.controller
 import groovy.util.logging.Slf4j
 import mx.lux.pos.model.Empleado
 import mx.lux.pos.service.EmpleadoService
+import mx.lux.pos.service.ListaPreciosService
 import mx.lux.pos.service.SucursalService
 import mx.lux.pos.ui.model.Branch
 import mx.lux.pos.ui.model.Session
@@ -18,11 +19,13 @@ class AccessController {
 
   private static EmpleadoService empleadoService
   private static SucursalService sucursalService
+  private static ListaPreciosService listaPreciosService
 
   @Autowired
-  AccessController( EmpleadoService empleadoService, SucursalService sucursalService ) {
+  AccessController( EmpleadoService empleadoService, SucursalService sucursalService, ListaPreciosService listaPreciosService ) {
     this.empleadoService = empleadoService
     this.sucursalService = sucursalService
+    this.listaPreciosService = listaPreciosService
   }
 
   static User getUser( String username ) {
@@ -144,5 +147,9 @@ class AccessController {
           println e
           return false
       }
+  }
+
+  static Integer listaPreciosPendientes(){
+      return listaPreciosService.listasPreciosPendientes()
   }
 }
