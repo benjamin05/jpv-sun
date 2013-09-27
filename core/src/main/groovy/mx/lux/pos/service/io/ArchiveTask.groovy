@@ -60,8 +60,20 @@ class ArchiveTask {
       }
 
       try {
-        cmd.execute()
-        //Process p = Runtime.getRuntime().exec(cmd);
+        String s = null
+        Process p = Runtime.getRuntime().exec("pwd");
+        Process p1 = Runtime.getRuntime().exec("./empaqueta.sh");
+
+        BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+        BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+
+        while ((s = stdInput.readLine()) != null) {
+            println(s+"\n");
+        }
+        while ((s = stdError.readLine()) != null) {
+            println(s+"\n");
+        }
+
       } catch ( Exception e ) {
         logger.error( e.getMessage(), e )
       }

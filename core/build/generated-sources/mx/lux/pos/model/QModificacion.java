@@ -22,6 +22,8 @@ public class QModificacion extends EntityPathBase<Modificacion> {
 
     public final StringPath causa = createString("causa");
 
+    public final QCausaCancelacion causaCancelacion;
+
     public final SetPath<Devolucion, QDevolucion> devolucion = this.<Devolucion, QDevolucion>createSet("devolucion", Devolucion.class, QDevolucion.class);
 
     public final QEmpleado empleado;
@@ -60,6 +62,7 @@ public class QModificacion extends EntityPathBase<Modificacion> {
 
     public QModificacion(Class<? extends Modificacion> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.causaCancelacion = inits.isInitialized("causaCancelacion") ? new QCausaCancelacion(forProperty("causaCancelacion")) : null;
         this.empleado = inits.isInitialized("empleado") ? new QEmpleado(forProperty("empleado"), inits.get("empleado")) : null;
         this.modificacionCan = inits.isInitialized("modificacionCan") ? new QModificacionCan(forProperty("modificacionCan")) : null;
         this.modificacionImp = inits.isInitialized("modificacionImp") ? new QModificacionImp(forProperty("modificacionImp")) : null;

@@ -360,7 +360,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
       def datos = [
           sucursal: sucursal,
           fecha_ahora: CustomDateUtils.format( new Date(), 'dd-MM-yyyy' ),
-          fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ),
+          fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd/MM/yyyy' ),
           detalles: detalles,
           parte: '',
           numero_detalles: detalles.size()
@@ -507,14 +507,16 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
           id_clasif_cli: StringUtils.defaultIfBlank( clasifCliente?.idClasifCliente?.toString(), '' ),
           fecha_entrega: nv.fechaEntrega != null ? CustomDateUtils.format( nv.fechaEntrega, 'dd-MM-yyyy' ) : '',
           hora_entrega: nv.horaEntrega != null ? CustomDateUtils.format( nv.horaEntrega, 'HH:mm:ss' ) : '',
+          hora_venta: nv.fechaHoraFactura != null ? CustomDateUtils.format( nv.fechaHoraFactura, 'HH:mm:ss' ) : '',
           pais: paisCliente,
           codigoDioptra: codigoDioptra.trim(),
-          idOpto: idOpt != null ? idOpt : ""
+          idOpto: idOpt != null ? idOpt : "",
+          tipo_cliente: nv.cliente.tipo
       ]
     }
     def datos = [ sucursal: sucursal,
         fecha_ahora: CustomDateUtils.format( new Date(), 'dd-MM-yyyy' ),
-        fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ),
+        fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd/MM/yyyy' ),
         numero_registros: notasVenta.size(),
         convenio: '',
         tipoVenta: '',
@@ -533,6 +535,12 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     String nombreFichero = "3.${ sucursal.id }.${ CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ) }.ZP"
     log.info( "Generando fichero ZP ${ nombreFichero }" )
     List<Pago> pagosTmp = pagoRepository.findBy_Fecha( fechaCierre )
+    Collections.sort(pagosTmp, new Comparator<Pago>() {
+        @Override
+        int compare(Pago o1, Pago o2) {
+            return o1.idFactura.compareTo(o2.idFactura)
+        }
+    })
     log.debug( "Se han encontrado ${pagosTmp.size()} pagos" )
     pagosTmp = pagosTmp.findAll { pago ->
       List<EntregadoExterno> ees = entregadoExternoRepository.findByIdFactura( pago.notaVenta?.id )
@@ -579,7 +587,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     def datos = [
         sucursal: sucursal,
         fecha_ahora: CustomDateUtils.format( new Date(), 'dd-MM-yyyy' ),
-        fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ),
+        fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd/MM/yyyy' ),
         numero_registros: pagos.size(),
         pagos: pagos
     ]
@@ -591,6 +599,12 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     String nombreFichero = "3.${ sucursal.id }.${ CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ) }.ZM"
     log.info( "Generando fichero ZM ${ nombreFichero }" )
     List<Modificacion> modificaciones = modificacionRepository.findBy_Fecha( fechaCierre )
+    Collections.sort(modificaciones, new Comparator<Modificacion>() {
+        @Override
+        int compare(Modificacion o1, Modificacion o2) {
+            return o1.idFactura.compareTo(o2.idFactura)
+        }
+    })
     log.debug( "Se han encontrado ${ modificaciones.size() } modificaciones" )
     Integer mod1 = 0
     Integer mod2 = 0
@@ -677,7 +691,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     def datos = [
         sucursal: sucursal,
         fecha_ahora: CustomDateUtils.format( new Date(), 'dd-MM-yyyy' ),
-        fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ),
+        fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd/MM/yyyy' ),
         numero_registros: ( mod1 - mod2 ),
         modificaciones: mods
     ]
@@ -691,7 +705,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     List<Deposito> depositos = depositoRepository.findBy_Fecha( fechaCierre )
     def datos = [ sucursal: sucursal,
         fecha_ahora: CustomDateUtils.format( new Date(), 'dd-MM-yyyy' ),
-        fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ),
+        fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd/MM/yyyy' ),
         numero_registros: depositos.size(),
         depositos: depositos,
         sdf: new SimpleDateFormat( 'dd-MM-yyyy' ) ]
@@ -705,7 +719,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     List<Devolucion> devoluciones = devolucionRepository.findBy_Fecha( fechaCierre )
     def datos = [ sucursal: sucursal,
         fecha_ahora: CustomDateUtils.format( new Date(), 'dd-MM-yyyy' ),
-        fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ),
+        fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd/MM/yyyy' ),
         numero_registros: devoluciones.size(),
         devoluciones: devoluciones ]
     generarFichero( ubicacion, nombreFichero, 'fichero-ZV', datos )
@@ -746,6 +760,12 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
       log.info( "Generando fichero ZT ${ nombreFichero }" )
       QNotaVenta nota = QNotaVenta.notaVenta
       List<NotaVenta> notasVentas = notaVentaRepository.findAll(nota.fechaEntrega.eq(fechaCierre))
+      Collections.sort(notasVentas, new Comparator<NotaVenta>() {
+          @Override
+          int compare(NotaVenta o1, NotaVenta o2) {
+              return o1.id.compareTo(o2.id)
+          }
+      })
       def entregadas = notasVentas.collect { entregada ->
           [
             id_factura: entregada.id,
