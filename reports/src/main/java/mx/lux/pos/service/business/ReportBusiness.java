@@ -265,7 +265,17 @@ public class ReportBusiness {
                    
                 }
 
-                String cuponString = cupon.toString();
+                String cuponString = "";
+
+               if(cupon != null){
+                   System.out.println(cupon.equals( new BigDecimal(0)));
+                if(cupon.equals( new BigDecimal(0))){
+                    cuponString = "-";
+                }  else{
+                    cuponString = cupon.toString();
+                }
+
+               }
 
                 ingresoPorFactura.setSumaMonto(venta.getVentaTotal().subtract(cupon));
 
