@@ -62,7 +62,7 @@ class ArchiveTask {
       try {
         String s = null
         Process p = Runtime.getRuntime().exec("pwd");
-        Process p1 = Runtime.getRuntime().exec("./empaqueta.sh");
+        //Process p1 = Runtime.getRuntime().exec("./empaqueta.sh");
 
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
         BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
