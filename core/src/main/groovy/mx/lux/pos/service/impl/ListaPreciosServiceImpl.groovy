@@ -243,8 +243,9 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
     log.debug( "sucursal sears: ${sucursal?.sears}" )
     def sears = ~/P_SEARS(.+)?|[1-9]/
     def lux = ~/P_LUX(.+)?|[1-9]/
+    def masVision = ~/M(.+)?|[1-9]/
     return articulos.findAll {
-      it?.tipoPrecio?.matches( sucursal?.sears ? sears : lux )
+      it?.tipoPrecio?.matches( sucursal?.sears ? sears : masVision )
     }
   }
 

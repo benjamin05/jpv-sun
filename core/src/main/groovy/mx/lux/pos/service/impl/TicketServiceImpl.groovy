@@ -1077,6 +1077,10 @@ class TicketServiceImpl implements TicketService {
   void imprimeUbicacionListaPrecios( ListaPrecios listaPrecios, List<Articulo> articulos ) {
     def idSucursal = parametroRepository.findOne( TipoParametro.ID_SUCURSAL.value )?.valor
     def sucursal = sucursalRepository.findOne( idSucursal?.toInteger() )
+    for(Articulo art : articulos){
+      art.codigoColor = art.codigoColor != null ? art.codigoColor : ''
+      art.ubicacion = art.ubicacion != null ? art.ubicacion : ''
+    }
     def items = [
         nombre_ticket: 'ticket-ubicacion-lista-precios',
         sucursal: sucursal,
