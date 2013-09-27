@@ -65,8 +65,15 @@ class NotaVentaServiceImpl implements NotaVentaService {
     }
     return null
   }
+    @Override
+    @Transactional
+    NotaVenta notaVentaxRx(Integer rx){
 
-  @Override
+     return  notaVentaRepository.notaVentaxRx(rx)
+    }
+
+
+    @Override
   @Transactional
   NotaVenta abrirNotaVenta(String clienteID, String empleadoID ) {
     log.info( 'abriendo nueva notaVenta' )

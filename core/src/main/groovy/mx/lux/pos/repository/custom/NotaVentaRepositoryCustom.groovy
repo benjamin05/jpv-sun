@@ -6,4 +6,6 @@ interface NotaVentaRepositoryCustom {
 
   List<NotaVenta> findByFacturaNotEmptyLimitingLatestResults( Integer results )
 
+    NotaVenta notaVentaxRx(Integer rx)
+
 }

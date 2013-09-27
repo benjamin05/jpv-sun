@@ -8,6 +8,8 @@ interface NotaVentaService {
 
   NotaVenta abrirNotaVenta(String clienteID,String empleadoID )
 
+  NotaVenta notaVentaxRx(Integer rx)
+
   NotaVenta registrarNotaVenta( NotaVenta notaVenta )
 
   NotaVenta registrarDetalleNotaVentaEnNotaVenta( String idNotaVenta, DetalleNotaVenta detalleNotaVenta )

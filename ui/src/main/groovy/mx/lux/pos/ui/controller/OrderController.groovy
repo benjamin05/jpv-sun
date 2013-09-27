@@ -560,12 +560,17 @@ class OrderController {
         }
     }
 
+    static Order notaVentaxRx(Integer rx){
+        return Order.toOrder(notaVentaService.notaVentaxRx(rx))
+    }
+
     static void printRx(String orderId, Boolean reimpresion) {
         log.info("imprimiendo receta id: ")
         if (StringUtils.isNotBlank(orderId)) {
             ticketService.imprimeRx(orderId, reimpresion)
         } else {
             log.warn("no se imprime receta, parametros invalidos")
+
         }
     }
 

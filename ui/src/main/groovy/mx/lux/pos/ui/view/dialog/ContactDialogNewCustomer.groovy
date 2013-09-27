@@ -109,7 +109,7 @@ class ContactDialogNewCustomer extends JDialog {
                 correo = textField(minimumSize: [140, 20], visible: cHide)
                 correo.text = correoText
                 arroba = label(text: '@', visible: cHide)
-                dominio = comboBox(items: dominios, visible: cHide)
+                dominio = comboBox(items: dominios, visible: cHide,editable:true )
             }
 
             panel(layout: new MigLayout('wrap 3', '[fill,grow][fill,grow][fill,grow]')) {

@@ -5,330 +5,27 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85a3f2a7-5fe4-477a-b715-aab86b5598d8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Cupones.jasper" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Cupones_Detalle.jasper" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Descuentos_Articulos.jasper" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Ventas_MasVision.jasper" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Ventas_MasVision_Det.jasper" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/&quot;/home/paso/por_enviar/12009.08-09-2013.zip&quot;" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Cotizaciones.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Cupones.jrxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Cupones_Detalle.jrxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Descuentos_Articulos.jrxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/FacturasImpuestos.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/FacturasImpuestosRepository.groovy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/NoSaleDialog.groovy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/TipoUrl.groovy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/TwoDatesSelectionAndKeyDialog.groovy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Ventas_MasVision.jrxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Ventas_MasVision_Det.jrxml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/resources/template/fichero-ZR.vm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/core/src/main/resources/template/fichero-ZT.vm" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Acuse.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Apertura.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Articulo.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Banco.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/BancoDeposito.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/BancoEmisor.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/CausaCancelacion.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/CierreDiario.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/CierreTerminales.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/ClasifCliente.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Cliente.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/ClientePais.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Comprobante.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/CondicionIcGener.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Contribuyente.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/CotizaDet.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Cotizacion.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Deposito.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Descuento.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/DescuentosPorTipo.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/DetalleComprobante.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/DetalleIngresoPorDia.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/DetalleNotaVenta.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Devolucion.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Dominio.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Empleado.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/EntregadoExterno.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Estado.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Examen.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Existencia.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Externo.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/FacturasPorEmpleado.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/FormaPago.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Generico.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/GrupoArticulo.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/GrupoArticuloDet.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Impuesto.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/IngresoPorDia$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/IngresoPorDia.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/IngresoPorFactura.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/IngresoPorVendedor.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/InstitucionIc.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/KardexPorArticulo.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/ListaPrecios.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Localidad.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Mensaje.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/MensajeAlt.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Modificacion.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/ModificacionCan.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/ModificacionEmp.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/ModificacionImp.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/ModificacionPag.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Moneda.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/MonedaDetalle.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Municipio.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/NotaFactura.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/NotaVenta.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/OrdenProm.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/OrdenPromDet.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Pago.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/PagoExterno.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Paises.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Parametro.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Plan.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Precio.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Promocion.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/PromocionesAplicadas.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/PropiedadesporEstado.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QAcuse.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QApertura.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QArticulo.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QBanco.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QBancoDeposito.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QBancoEmisor.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QCausaCancelacion.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QCierreDiario.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QClasifCliente.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QCliente.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QClientePais.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QComprobante.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QCondicionIcGener.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QContribuyente.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QCotizaDet.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QCotizacion.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QDeposito.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QDescuento.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QDetalleComprobante.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QDetalleNotaVenta.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QDevolucion.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QDominio.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QEmpleado.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QEntregadoExterno.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QEstado.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QExamen.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QExistencia.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QExterno.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QFormaPago.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QGenerico.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QGrupoArticulo.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QGrupoArticuloDet.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QImpuesto.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QInstitucionIc.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QListaPrecios.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QLocalidad.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QMensaje.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QMensajeAlt.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QModificacion.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QModificacionCan.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QModificacionEmp.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QModificacionImp.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QModificacionPag.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QMoneda.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QMonedaDetalle.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QMunicipio.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QNotaFactura.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QNotaVenta.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QOrdenProm.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QOrdenPromDet.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QPago.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QPagoExterno.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QPaises.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QParametro.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QPlan.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QPrecio.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QPromocion.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QReimpresion.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QRelacionPlan.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QResumenDiario.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QResumenTerminal.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QRetorno.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QRetornoDet.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QSucursal.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QTerminal.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QTipoDetalle.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QTipoPago.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QTipoTransInv.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QTitulo.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QTrabajo.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QTrabajoEstado.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QTrabajoTrack.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QTransInv.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QTransInvDetalle.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/QVoucherTmp.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Reimpresion.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/RelacionPlan.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/RelacionPlanId.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/ResumenCierre$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/ResumenCierre$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/ResumenCierre.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/ResumenDiario.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/ResumenTerminal.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Retorno.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/RetornoDet.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/SaldoPorEstado.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Sucursal.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Terminal.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/TipoDescuento.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/TipoDetalle.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/TipoMov.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/TipoPago.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/TipoTransInv.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Titulo.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/Trabajo.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/TrabajoEstado.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/TrabajoTrack.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/TransInv.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/TransInvDetalle.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/VentasPorDia.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/VentasPorDiaGenericos.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/classes/main/mx/lux/pos/model/VoucherTmp.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/core/build/libs/core-1.0.jar" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Cancelaciones_Completo.jasper" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Cancelaciones_Completo.jasper" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Cancelaciones_Completo_Articulos.jasper" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Cancelaciones_Completo_Articulos.jasper" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Cancelaciones_Completo_Detalle.jasper" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Cancelaciones_Completo_Detalle.jasper" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Cancelaciones_Completo_Lista.jasper" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Cancelaciones_Completo_Lista.jasper" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Cotizaciones.jasper" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Cotizaciones.jasper" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Cotizaciones_Detalle.jasper" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Cotizaciones_Detalle.jasper" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Cotizaciones_Lista.jasper" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Cotizaciones_Lista.jasper" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Descuentos.jasper" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Descuentos.jasper" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Descuentos_Detalle.jasper" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Descuentos_Detalle.jasper" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Examenes_Completo.jasper" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Examenes_Completo.jasper" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Examenes_Completo_Detalle.jasper" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Examenes_Completo_Detalle.jasper" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Examenes_Completo_Lista.jasper" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Examenes_Completo_Lista.jasper" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Ventas_Por_Optometrista_Completo.jasper" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Ventas_Por_Optometrista_Completo.jasper" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Ventas_Por_Optometrista_Completo_Detalle.jasper" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Ventas_Por_Optometrista_Completo_Detalle.jasper" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Ventas_Por_Optometrista_Completo_Lista.jasper" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Ventas_Por_Optometrista_Completo_Lista.jasper" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/AccessController.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/AccessController.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/io/ArchiveTask.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/io/ArchiveTask.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/ArticuloService.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/ArticuloService.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/ArticuloServiceImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/ArticuloServiceImpl.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/ArticuloSombra.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/ArticuloSombra.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Cancelaciones_Completo_Articulos.jrxml" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Cancelaciones_Completo_Articulos.jrxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Cancelaciones_Completo_Detalle.jrxml" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Cancelaciones_Completo_Detalle.jrxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Cancelaciones_Completo_Lista.jrxml" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Cancelaciones_Completo_Lista.jrxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/CierreDiarioServiceImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/CierreDiarioServiceImpl.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/ClienteService.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/ClienteService.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/ClienteServiceImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/ClienteServiceImpl.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/ContactController.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/ContactController.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Trabajos_Sin_Entregar.jasper" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Trabajos_Sin_Entregar.jasper" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ContactDialog.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ContactDialog.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/CotizacionServiceImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/CotizacionServiceImpl.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Cotizaciones.jrxml" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Cotizaciones.jrxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Cotizaciones_Detalle.jrxml" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Cotizaciones_Detalle.jrxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/CustomerActiveSelectionDialog.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/CustomerActiveSelectionDialog.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/CustomerController.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/CustomerController.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/CustomerPanel.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/CustomerPanel.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/CustomerSearchDialog.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/CustomerSearchDialog.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Descuento.java" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Descuento.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Descuentos.jrxml" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Descuentos.jrxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/DescuentosPorTipo.java" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/DescuentosPorTipo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Descuentos_Detalle.jrxml" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Descuentos_Detalle.jrxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Devolucion.java" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Devolucion.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/DiscountCouponDialog.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/DiscountCouponDialog.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/EditRxDialog.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/EditRxDialog.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/EmpleadoService.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/EmpleadoService.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/EmpleadoServiceImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/EmpleadoServiceImpl.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Examenes_Completo.jrxml" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Examenes_Completo.jrxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Examenes_Completo_Detalle.jrxml" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Examenes_Completo_Detalle.jrxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Examenes_Completo_Lista.jrxml" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Examenes_Completo_Lista.jrxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/FacturasPorEmpleado.java" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/FacturasPorEmpleado.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/IOController.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/IOController.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/IOService.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/IOService.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/IOServiceImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/IOServiceImpl.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/IngresoPorFactura.java" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/IngresoPorFactura.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/IngresoPorVendedor.java" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/IngresoPorVendedor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/InvOhData.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/InvOhData.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/InvTr.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/InvTr.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/InvTrController.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/InvTrController.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/io/InvTrFile.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/io/InvTrFile.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/InvTrPanel.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/InvTrPanel.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/driver/InvTrQueryDriver.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/driver/InvTrQueryDriver.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/driver/InvTrReceiptDriver.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/driver/InvTrReceiptDriver.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/InvTrViewMode.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/InvTrViewMode.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/Item.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/Item.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/ItemController.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/ItemController.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/KardexReportDialog.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/KardexReportDialog.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/MainWindow.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/MainWindow.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Modificacion.java" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Modificacion.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/NewCustomerAndRxDialog.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/NewCustomerAndRxDialog.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/NotaVenta.java" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/NotaVenta.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ContactDialogNewCustomer.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ContactDialogNewCustomer.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/NotaVentaRepository.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/NotaVentaRepository.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/custom/NotaVentaRepositoryCustom.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/custom/NotaVentaRepositoryCustom.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/impl/NotaVentaRepositoryImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/impl/NotaVentaRepositoryImpl.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/NotaVentaService.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/NotaVentaService.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/test/groovy/mx/lux/pos/ui/view/OpenDayDialogSample.groovy" afterPath="$PROJECT_DIR$/ui/src/test/groovy/mx/lux/pos/ui/view/OpenDayDialogSample.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/OperationType.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/OperationType.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/Order.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/Order.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/OrderActiveSelectionDialog.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/OrderActiveSelectionDialog.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/OrderSearchDialog.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/OrderSearchDialog.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/PaymentDialog.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/PaymentDialog.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/business/PrepareInvTrBusiness.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/business/PrepareInvTrBusiness.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/generated-sources/mx/lux/pos/model/QDescuento.java" afterPath="$PROJECT_DIR$/core/build/generated-sources/mx/lux/pos/model/QDescuento.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/generated-sources/mx/lux/pos/model/QDevolucion.java" afterPath="$PROJECT_DIR$/core/build/generated-sources/mx/lux/pos/model/QDevolucion.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/generated-sources/mx/lux/pos/model/QModificacion.java" afterPath="$PROJECT_DIR$/core/build/generated-sources/mx/lux/pos/model/QModificacion.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/RXPanel.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/RXPanel.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Receta.java" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Receta.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/RecetaServiceImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/RecetaServiceImpl.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/business/Registry.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/business/Registry.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/java/mx/lux/pos/service/business/ReportBusiness.java" afterPath="$PROJECT_DIR$/reports/src/main/java/mx/lux/pos/service/business/ReportBusiness.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/ReportController.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/ReportController.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/java/mx/lux/pos/service/ReportService.java" afterPath="$PROJECT_DIR$/reports/src/main/java/mx/lux/pos/service/ReportService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/java/mx/lux/pos/service/impl/ReportServiceImpl.java" afterPath="$PROJECT_DIR$/reports/src/main/java/mx/lux/pos/service/impl/ReportServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/Rx.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/Rx.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/resources/ServiceManager.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/resources/ServiceManager.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/io/ShippingNoticeFile.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/io/ShippingNoticeFile.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy" afterPath="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/TipoDescuento.java" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/TipoDescuento.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TipoPagoServiceImpl.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TipoPagoServiceImpl.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/TipoParametro.groovy" afterPath="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/model/TipoParametro.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Trabajo.java" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/Trabajo.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/VentasPorDia.java" afterPath="$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/VentasPorDia.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Ventas_Por_Optometrista_Completo_Detalle.jrxml" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Ventas_Por_Optometrista_Completo_Detalle.jrxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Ventas_Por_Optometrista_Completo_Lista.jrxml" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Ventas_Por_Optometrista_Completo_Lista.jrxml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/core.iml" afterPath="$PROJECT_DIR$/core/core.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/resources/main/database.properties" afterPath="$PROJECT_DIR$/core/build/resources/main/database.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/resources/database.properties" afterPath="$PROJECT_DIR$/core/src/main/resources/database.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/resources/main/template/fichero-ZD.vm" afterPath="$PROJECT_DIR$/core/build/resources/main/template/fichero-ZD.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/resources/template/fichero-ZD.vm" afterPath="$PROJECT_DIR$/core/src/main/resources/template/fichero-ZD.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/resources/main/template/fichero-ZM.vm" afterPath="$PROJECT_DIR$/core/build/resources/main/template/fichero-ZM.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/resources/template/fichero-ZM.vm" afterPath="$PROJECT_DIR$/core/src/main/resources/template/fichero-ZM.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/resources/main/template/fichero-ZO.vm" afterPath="$PROJECT_DIR$/core/build/resources/main/template/fichero-ZO.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/resources/template/fichero-ZO.vm" afterPath="$PROJECT_DIR$/core/src/main/resources/template/fichero-ZO.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/resources/main/template/fichero-ZP.vm" afterPath="$PROJECT_DIR$/core/build/resources/main/template/fichero-ZP.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/resources/template/fichero-ZP.vm" afterPath="$PROJECT_DIR$/core/src/main/resources/template/fichero-ZP.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/resources/main/template/fichero-ZZ.vm" afterPath="$PROJECT_DIR$/core/build/resources/main/template/fichero-ZZ.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/resources/template/fichero-ZZ.vm" afterPath="$PROJECT_DIR$/core/src/main/resources/template/fichero-ZZ.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/resources/main/template/fichero-ff.vm" afterPath="$PROJECT_DIR$/core/build/resources/main/template/fichero-ff.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/resources/template/fichero-ff.vm" afterPath="$PROJECT_DIR$/core/src/main/resources/template/fichero-ff.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jpv.iml" afterPath="$PROJECT_DIR$/jpv.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/src/main/resources/reports/Trabajos_Sin_Entregar.jrxml" afterPath="$PROJECT_DIR$/reports/src/main/resources/reports/Trabajos_Sin_Entregar.jrxml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/jpv.iws" afterPath="$PROJECT_DIR$/jpv.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reports/reports.iml" afterPath="$PROJECT_DIR$/reports/reports.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/resources/main/template/ticket-resumen-diario.vm" afterPath="$PROJECT_DIR$/core/build/resources/main/template/ticket-resumen-diario.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/resources/template/ticket-resumen-diario.vm" afterPath="$PROJECT_DIR$/core/src/main/resources/template/ticket-resumen-diario.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/resources/main/template/ticket-venta-si.vm" afterPath="$PROJECT_DIR$/core/build/resources/main/template/ticket-venta-si.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/resources/template/ticket-venta-si.vm" afterPath="$PROJECT_DIR$/core/src/main/resources/template/ticket-venta-si.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ui/ui.iml" afterPath="$PROJECT_DIR$/ui/ui.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/build/resources/main/version" afterPath="$PROJECT_DIR$/core/build/resources/main/version" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/core/src/main/resources/version" afterPath="$PROJECT_DIR$/core/src/main/resources/version" />
     </list>
     <ignored path="jpv.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="$PROJECT_DIR$/ui/src/test/groovy/mx/lux/pos/ui/view/InvTicketSample.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1369776598593" ignored="false" />
     <file path="/AccessController.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371852118078" ignored="false" />
     <file path="/Session.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1369781950984" ignored="false" />
-    <file path="/OrderController.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380234374650" ignored="false" />
+    <file path="/OrderController.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380304882292" ignored="false" />
     <file path="/ArticuloServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371850068062" ignored="false" />
     <file path="/ItemController.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1369848607218" ignored="false" />
     <file path="/ArticuloRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371850997078" ignored="false" />
@@ -347,7 +44,7 @@
     <file path="/Order.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380210350822" ignored="false" />
     <file path="/RxPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370270634218" ignored="false" />
     <file path="/RXPanel2.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370268916484" ignored="false" />
-    <file path="/RXPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370968662500" ignored="false" />
+    <file path="/RXPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380312078957" ignored="false" />
     <file path="/EditRxDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1378913217790" ignored="false" />
     <file path="/CustomerDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1377639017365" ignored="false" />
     <file path="/SingleCustomerDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370271499765" ignored="false" />
@@ -361,10 +58,10 @@
     <file path="/ClienteService.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1377119619563" ignored="false" />
     <file path="/CotizacionServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1370366514046" ignored="false" />
     <file path="/CustomerActiveSelectionDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371483250000" ignored="false" />
-    <file path="/NotaVentaServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380030019609" ignored="false" />
-    <file path="/NotaVentaService.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1377879627512" ignored="false" />
+    <file path="/NotaVentaServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380305184662" ignored="false" />
+    <file path="/NotaVentaService.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380304864466" ignored="false" />
     <file path="/TicketServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1379970921723" ignored="false" />
-    <file path="/Dummy.txt" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380232380780" ignored="false" />
+    <file path="/Dummy.txt" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380295355933" ignored="false" />
     <file path="/OrderActiveSelectionDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371228674203" ignored="false" />
     <file path="/RecetaServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376511315032" ignored="false" />
     <file path="/DetalleNotaVenta.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1371136095125" ignored="false" />
@@ -401,7 +98,7 @@
     <file path="/ContribuyenteRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1375365732355" ignored="false" />
     <file path="/Registry.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1377012031695" ignored="false" />
     <file path="/ticket-venta-si.vm" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1377898799163" ignored="false" />
-    <file path="/ContactDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380235047355" ignored="false" />
+    <file path="/ContactDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380288770919" ignored="false" />
     <file path="/TipoContacto.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1376068875995" ignored="false" />
     <file path="/TipoContactoRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1375828105065" ignored="false" />
     <file path="/EstadoServiceImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1375828006633" ignored="false" />
@@ -452,13 +149,14 @@
     <file path="/JbNotasRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1378310721393" ignored="false" />
     <file path="/ReportServiceImpl.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1379713210211" ignored="false" />
     <file path="/TwoDatesSelectionFilterDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1379631093443" ignored="false" />
-    <file path="/ReportBusiness.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380129373765" ignored="false" />
+    <file path="/ReportBusiness.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380296404426" ignored="false" />
     <file path="/IngresoPorVendedor.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1379713109268" ignored="false" />
     <file path="/ReporteVentasVendedor.java" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1379712484263" ignored="false" />
-    <file path="/NotaVentaRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1379949211947" ignored="false" />
+    <file path="/NotaVentaRepository.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380305022228" ignored="false" />
     <file path="/ticket-rx.vm" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380049566755" ignored="false" />
     <file path="/CambiaVendedorDialog.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380030918722" ignored="false" />
     <file path="/OrderNavigatorPanel.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380212799565" ignored="false" />
+    <file path="/NotaVentaRepositoryImpl.groovy" changelist="85a3f2a7-5fe4-477a-b715-aab86b5598d8" time="1380308801100" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -546,25 +244,16 @@
       <file leaf-file-name="OrderPanel.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="92" column="56" selection-start="3963" selection-end="3963" vertical-scroll-proportion="-2.2">
+            <state line="856" column="15" selection-start="38656" selection-end="38693" vertical-scroll-proportion="-6.72">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ItemDialog.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ItemDialog.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="112" column="37" selection-start="3423" selection-end="3423" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OrderController.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="OrderController.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="890" column="54" selection-start="36256" selection-end="36256" vertical-scroll-proportion="0.74358976">
+            <state line="569" column="34" selection-start="23713" selection-end="23713" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#34#66#0" expanded="true" />
               </folding>
@@ -572,64 +261,66 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ContactClientDialog.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ContactClientDialog.groovy">
+      <file leaf-file-name="RecetaServiceImpl.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/RecetaServiceImpl.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="102" column="50" selection-start="3052" selection-end="3052" vertical-scroll-proportion="0.0">
+            <state line="79" column="23" selection-start="2018" selection-end="2018" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ContactController.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/ContactController.groovy">
+      <file leaf-file-name="ReimpresionRepository.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/ReimpresionRepository.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="142" column="77" selection-start="5429" selection-end="5429" vertical-scroll-proportion="0.0">
+            <state line="13" column="24" selection-start="529" selection-end="529" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ContactDialog.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ContactDialog.groovy">
+      <file leaf-file-name="TicketServiceImpl.groovy" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="113" column="42" selection-start="3758" selection-end="3758" vertical-scroll-proportion="0.0">
+            <state line="290" column="42" selection-start="8865" selection-end="8865" vertical-scroll-proportion="0.60820895">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CustomerController.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/CustomerController.groovy">
+      <file leaf-file-name="NotaVentaServiceImpl.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="592" column="25" selection-start="21859" selection-end="21859" vertical-scroll-proportion="0.0">
+            <state line="67" column="76" selection-start="2116" selection-end="2116" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ContactoServiceImpl.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/ContactoServiceImpl.groovy">
+      <file leaf-file-name="NotaVentaRepositoryImpl.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/impl/NotaVentaRepositoryImpl.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="53" selection-start="952" selection-end="952" vertical-scroll-proportion="0.0">
+            <state line="38" column="56" selection-start="1335" selection-end="1335" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#36#73#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewCustomerAndRxDialog.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/NewCustomerAndRxDialog.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="38" column="58" selection-start="1154" selection-end="1154" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Order.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/Order.groovy">
+      <file leaf-file-name="RXPanel.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/RXPanel.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="71" selection-start="836" selection-end="836" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainWindow.groovy" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/MainWindow.groovy">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="589" column="0" selection-start="29438" selection-end="29438" vertical-scroll-proportion="0.0">
+            <state line="278" column="51" selection-start="13969" selection-end="13969" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -778,36 +469,36 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ItemDialog.groovy" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ItemDialog.groovy" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/SucursalServiceImpl.groovy" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/ArticuloRepository.groovy" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/CustomerController.groovy" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/CustomerController.groovy" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/NotaVenta.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/core/src/main/java/mx/lux/pos/model/NotaVenta.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/reports/src/main/java/mx/lux/pos/service/impl/ReportServiceImpl.java" />
-        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy" />
-        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/NotaVentaRepository.groovy" />
-        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy" />
-        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy" />
-        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/CambiaVendedorDialog.groovy" />
-        <option value="$PROJECT_DIR$/core/src/main/resources/template/ticket-rx.vm" />
-        <option value="$PROJECT_DIR$/reports/src/main/java/mx/lux/pos/service/business/ReportBusiness.java" />
-        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderNavigatorPanel.groovy" />
-        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy" />
         <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/Order.groovy" />
         <option value="$PROJECT_DIR$/core/src/main/resources/database.properties" />
-        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" />
         <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/CustomerController.groovy" />
-        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ContactDialog.groovy" />
         <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/ContactController.groovy" />
+        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ContactDialog.groovy" />
+        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ContactDialogNewCustomer.groovy" />
+        <option value="$PROJECT_DIR$/reports/src/main/java/mx/lux/pos/service/business/ReportBusiness.java" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/NotaVentaService.groovy" />
+        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/NotaVentaRepository.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/custom/NotaVentaRepositoryCustom.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/impl/NotaVentaRepositoryImpl.groovy" />
+        <option value="$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/RXPanel.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/ReimpresionRepository.groovy" />
+        <option value="$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy" />
       </list>
     </option>
   </component>
@@ -1173,6 +864,180 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="groovy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="groovy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="groovy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="service" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="impl" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="groovy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="repository" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="core" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="groovy" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pos" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="repository" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="impl" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jpv" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jpv-sun" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="config" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1188,14 +1053,14 @@
   <component name="PropertiesComponent">
     <property name="project.structure.last.edited" value="Modules" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="97" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="OverrideImplement.combined" value="true" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="99" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="97" />
-    <property name="MemberChooser.sorted" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
+    <property name="recentsLimit" value="5" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="97" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/.gitignore" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="103" />
@@ -1210,8 +1075,8 @@
     <property name="FullScreen" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
     <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
@@ -1219,8 +1084,8 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="gradle.tool.window.active" value="Project" />
-    <property name="options.searchVisible" value="true" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -1265,12 +1130,6 @@
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xms128m&#13;&#10;-Xmx512m&#13;&#10;-XX:MaxPermSize=250m&#13;&#10;-XX:ReservedCodeCacheSize=64m&#13;&#10;-XX:+UseCodeCacheFlushing&#13;&#10;-ea&#13;&#10;-Dsun.io.useCanonCaches=false&#13;&#10;-Djava.net.preferIPv4Stack=true" />
-      <option name="PROGRAM_PARAMETERS" />
-      <method />
-    </configuration>
     <configuration default="true" type="GroovyScriptRunConfiguration" factoryName="Groovy">
       <module name="" />
       <setting name="path" value="" />
@@ -1278,6 +1137,30 @@
       <setting name="params" value="" />
       <setting name="workDir" value="file://$PROJECT_DIR$" />
       <setting name="debug" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xms128m&#13;&#10;-Xmx512m&#13;&#10;-XX:MaxPermSize=250m&#13;&#10;-XX:ReservedCodeCacheSize=64m&#13;&#10;-XX:+UseCodeCacheFlushing&#13;&#10;-ea&#13;&#10;-Dsun.io.useCanonCaches=false&#13;&#10;-Djava.net.preferIPv4Stack=true" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="MavenRunConfiguration" factoryName="Maven">
@@ -1302,24 +1185,6 @@
       </MavenSettings>
       <method />
     </configuration>
-    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
-      <module name="" />
-      <option name="TESTING_TYPE" value="0" />
-      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
-      <option name="PREFERRED_AVD" value="" />
-      <option name="USE_COMMAND_LINE" value="true" />
-      <option name="COMMAND_LINE" value="" />
-      <option name="WIPE_USER_DATA" value="false" />
-      <option name="DISABLE_BOOT_ANIMATION" value="false" />
-      <option name="NETWORK_SPEED" value="full" />
-      <option name="NETWORK_LATENCY" value="none" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <method />
-    </configuration>
     <configuration default="true" type="GriffonRunConfigurationType" factoryName="Griffon">
       <module name="" />
       <setting name="vmparams" value="" />
@@ -1336,20 +1201,17 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="XSLT" factoryName="XSLT">
-      <option name="myOutputFile" />
-      <option name="myOpenOutputFile" value="false" />
-      <option name="myOpenInBrowser" value="false" />
-      <option name="mySmartErrorHandling" value="true" />
-      <option name="myRunnerPort" value="34873" />
-      <option name="myVmArguments" />
-      <option name="myWorkingDirectory" />
-      <option name="myModule" />
-      <option name="myJdk" />
-      <parameters />
-      <OutputType value="CONSOLE" save-to-file="false" />
-      <FileType name="XML" />
-      <JdkChoice value="FROM_MODULE" />
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
@@ -1379,17 +1241,20 @@
       <listeners />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
+    <configuration default="true" type="XSLT" factoryName="XSLT">
+      <option name="myOutputFile" />
+      <option name="myOpenOutputFile" value="false" />
+      <option name="myOpenInBrowser" value="false" />
+      <option name="mySmartErrorHandling" value="true" />
+      <option name="myRunnerPort" value="34873" />
+      <option name="myVmArguments" />
+      <option name="myWorkingDirectory" />
+      <option name="myModule" />
+      <option name="myJdk" />
+      <parameters />
+      <OutputType value="CONSOLE" save-to-file="false" />
+      <FileType name="XML" />
+      <JdkChoice value="FROM_MODULE" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -1511,7 +1376,7 @@
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.6288" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959481" sideWeight="0.6288" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.38181818" sideWeight="0.4796417" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36545455" sideWeight="0.4796417" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41197821" sideWeight="0.5203583" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31604537" sideWeight="0.2721417" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32909092" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1520,7 +1385,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24959481" sideWeight="0.6827697" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5888" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3213703" sideWeight="0.6181818" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3213703" sideWeight="0.63454545" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29764065" sideWeight="0.45867097" order="6" side_tool="false" content_ui="tabs" x="357" y="284" width="566" height="197" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298217" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1600,117 +1465,119 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/ReportController.groovy">
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/ArticuloService.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="131" column="28" selection-start="5612" selection-end="5612" vertical-scroll-proportion="0.0">
+        <state line="7" column="10" selection-start="175" selection-end="175" vertical-scroll-proportion="0.12448133">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reports/src/main/java/mx/lux/pos/service/impl/ReportServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/ArticuloServiceImpl.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="308" column="71" selection-start="15711" selection-end="15711" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/reports/src/main/java/mx/lux/pos/service/business/ReportBusiness.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="264" column="14" selection-start="9553" selection-end="9553" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderNavigatorPanel.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="83" selection-start="2949" selection-end="2949" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/ShowOrderPanel.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="91" selection-start="1478" selection-end="1478" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/model/Order.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="71" selection-start="836" selection-end="836" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/core/src/main/resources/database.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="54" selection-start="207" selection-end="207" vertical-scroll-proportion="0.2757353">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/MainWindow.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="589" column="0" selection-start="29438" selection-end="29438" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ItemDialog.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="112" column="37" selection-start="3423" selection-end="3423" vertical-scroll-proportion="0.0">
+        <state line="288" column="34" selection-start="10011" selection-end="10011" vertical-scroll-proportion="0.93603414">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/ContactoServiceImpl.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="53" selection-start="952" selection-end="952" vertical-scroll-proportion="0.0">
+        <state line="21" column="6" selection-start="701" selection-end="701" vertical-scroll-proportion="0.21784233">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/CustomerController.groovy">
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/NotaVentaRepository.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="592" column="25" selection-start="21859" selection-end="21859" vertical-scroll-proportion="0.0">
+        <state line="42" column="14" selection-start="1740" selection-end="1740" vertical-scroll-proportion="0.7121535">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ContactDialog.groovy">
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/NotaVentaService.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="113" column="42" selection-start="3758" selection-end="3758" vertical-scroll-proportion="0.0">
+        <state line="10" column="37" selection-start="238" selection-end="238" vertical-scroll-proportion="0.19294606">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/ContactController.groovy">
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/custom/NotaVentaRepositoryCustom.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="142" column="77" selection-start="5429" selection-end="5429" vertical-scroll-proportion="0.0">
+        <state line="8" column="38" selection-start="231" selection-end="231" vertical-scroll-proportion="0.26030368">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/ContactClientDialog.groovy">
+    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/dialog/NewCustomerAndRxDialog.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="50" selection-start="3052" selection-end="3052" vertical-scroll-proportion="0.0">
+        <state line="38" column="58" selection-start="1154" selection-end="1154" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/impl/ArticuloRepositoryImpl.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="50" selection-start="536" selection-end="823" vertical-scroll-proportion="0.4473161">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/impl/NotaVentaRepositoryImpl.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="56" selection-start="1335" selection-end="1335" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#36#73#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/NotaVentaServiceImpl.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="67" column="76" selection-start="2116" selection-end="2116" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/OrderPanel.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="92" column="56" selection-start="3963" selection-end="3963" vertical-scroll-proportion="-2.2">
+        <state line="856" column="15" selection-start="38656" selection-end="38693" vertical-scroll-proportion="-6.72">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/repository/ReimpresionRepository.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="24" selection-start="529" selection-end="529" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/RecetaServiceImpl.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="79" column="23" selection-start="2018" selection-end="2018" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/view/panel/RXPanel.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="278" column="51" selection-start="13969" selection-end="13969" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ui/src/main/groovy/mx/lux/pos/ui/controller/OrderController.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="890" column="54" selection-start="36256" selection-end="36256" vertical-scroll-proportion="0.74358976">
+        <state line="569" column="34" selection-start="23713" selection-end="23713" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#34#66#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/core/src/main/groovy/mx/lux/pos/service/impl/TicketServiceImpl.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="290" column="42" selection-start="8865" selection-end="8865" vertical-scroll-proportion="0.60820895">
+          <folding />
         </state>
       </provider>
     </entry>

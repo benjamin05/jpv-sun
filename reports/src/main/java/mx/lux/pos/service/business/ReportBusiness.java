@@ -1926,7 +1926,9 @@ public class ReportBusiness {
     List<VentasPorDia> lstCupones = new ArrayList<VentasPorDia>();
     QPago payment = QPago.pago;
     List<Pago> lstPagos = (List<Pago>) pagoRepository.findAll( payment.fecha.between(fechaInicio,fechaFin).
-            and(payment.idFPago.startsWith("C")).and(payment.notaVenta.sFactura.ne(TAG_CANCELADO)));
+            and(payment.idFPago.startsWith("C")).and(payment.notaVenta.sFactura.ne(TAG_CANCELADO)), payment.tipoPago.asc());
+
+
     for(Pago pago : lstPagos){
       VentasPorDia venta = findorCreateFactura(lstCupones, pago.getIdFPago());
       venta.acumulaCupones( pago );
