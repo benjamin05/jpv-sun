@@ -60,7 +60,7 @@ class ContactDialog extends JDialog {
                      infoTipo =  textField(minimumSize: [140, 20], visible: false)
                      correo =  textField(minimumSize: [140, 20])
                      arroba = label(text: '@')
-                     dominio = comboBox( items: dominios )
+                     dominio = comboBox( items: dominios,editable:true )
                  }
 
             panel(layout: new MigLayout('wrap,center', '[fill,grow]')) {

@@ -285,9 +285,9 @@ class TicketServiceImpl implements TicketService {
                  primerTicket = reimpresionRepository.noReimpresiones(notaVenta?.factura).toInteger()
 
 
-          if(primerTicket.toInteger() > 1){
+          if(primerTicket.toInteger() >= 1){
 
-                numero = 'COPIA ' + (primerTicket.toInteger() - 1).toString()
+                numero = 'COPIA ' + (primerTicket.toInteger()).toString()
 
           }
 

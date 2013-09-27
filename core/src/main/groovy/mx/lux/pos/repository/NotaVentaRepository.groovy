@@ -38,4 +38,8 @@ interface NotaVentaRepository extends JpaRepository<NotaVenta, String>, QueryDsl
 
   List<NotaVenta> findByIdCliente( Integer pIdCliente )
 
+
+
+    NotaVenta notaVentaxRx(Integer rx)
+
 }
