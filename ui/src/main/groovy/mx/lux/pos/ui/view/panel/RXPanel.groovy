@@ -251,21 +251,21 @@ class RXPanel extends JPanel {
             Rx selection = ev.source.selectedElement as Rx
             if ( selection.id ) {
                 sb.popupMenu {
-                    menuItem( text: 'Editar', visible: selection?.order?.deliveryDate == null,
+                    menuItem( text: 'Nueva Receta',
                             actionPerformed: {
-                                EditRxDialog editRx = new EditRxDialog( this, selection, selection.idClient, selection.idStore, selection.clientName, selection.tipoEditRx )
-                                editRx.show()
+                                NoSaleDialog newRx = new NoSaleDialog( this, selection.idClient, selection.idStore, false)
+                                //EditRxDialog editRx = new EditRxDialog( this, new Rx(), selection.idClient, selection.idStore, selection.clientName, NUEVA )
+                                newRx.show()
                                 lstRecetas.clear()
                                 lstRecetas.addAll( CustomerController.findAllPrescriptions( idCliente ) )
                                 doBindings()
                                 rxModel.fireTableDataChanged()
                             }
                     )
-                    menuItem( text: 'Nueva Receta',
+                    menuItem( text: 'Editar', visible: selection?.order?.deliveryDate == null,
                             actionPerformed: {
-                                NoSaleDialog newRx = new NoSaleDialog( this, selection.idClient, selection.idStore, false)
-                                //EditRxDialog editRx = new EditRxDialog( this, new Rx(), selection.idClient, selection.idStore, selection.clientName, NUEVA )
-                                newRx.show()
+                                EditRxDialog editRx = new EditRxDialog( this, selection, selection.idClient, selection.idStore, selection.clientName, selection.tipoEditRx )
+                                editRx.show()
                                 lstRecetas.clear()
                                 lstRecetas.addAll( CustomerController.findAllPrescriptions( idCliente ) )
                                 doBindings()

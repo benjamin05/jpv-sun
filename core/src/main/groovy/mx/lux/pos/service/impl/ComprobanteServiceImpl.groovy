@@ -21,6 +21,11 @@ import mx.lux.pos.service.business.Registry
 class ComprobanteServiceImpl implements ComprobanteService {
 
   private static final String DATE_TIME_FORMAT = 'dd-MM-yyyy HH:mm:ss'
+  private static final String TAG_GENERICO_A = 'A'
+  private static final String TAG_GENERICO_B = 'B'
+  private static final String TAG_GENERICO_C = 'C'
+  private static final String TAG_GENERICO_H = 'H'
+  private static final String TAG_GENERICO_E = 'E'
 
   @Resource
   private ComprobanteRepository comprobanteRepository
@@ -263,26 +268,83 @@ class ComprobanteServiceImpl implements ComprobanteService {
           List<DetalleComprobante> detalles = [ ]
           List<DetalleNotaVenta> detallesVenta = detalleNotaVentaRepository.findByIdFacturaOrderByIdArticuloAsc( venta.id )
           log.debug( "obtiene detalles notaVenta: ${detallesVenta*.id}" )
+          Boolean genericoAyB = false
+          BigDecimal precioUnidad = BigDecimal.ZERO
+          Boolean genericoA = false
+          Boolean genericoB = false
+          for(DetalleNotaVenta det : detallesVenta){
+            if(det.articulo.idGenerico.equalsIgnoreCase(TAG_GENERICO_A)){
+                genericoA = true
+                precioUnidad = precioUnidad.add(det.precioUnitFinal)
+            } else if(det.articulo.idGenerico.equalsIgnoreCase(TAG_GENERICO_B)){
+                genericoB = true
+                precioUnidad = precioUnidad.add(det.precioUnitFinal)
+            }
+
+            if(genericoA && genericoB){
+              genericoAyB = true
+            }
+          }
           detallesVenta?.each { DetalleNotaVenta det ->
             Articulo articulo = articuloRepository.findOne( det?.idArticulo ?: 0 )
-            if ( articulo?.id ) {
-              Integer cantidad = det?.cantidadFac ?: 0
-              BigDecimal precioVenta = det.precioUnitFinal ?: BigDecimal.ZERO
-              BigDecimal precioUnitario = precioVenta.divide( referencia, mathContext ) ?: BigDecimal.ZERO
-              BigDecimal importe = precioUnitario.multiply( cantidad )
-              DetalleComprobante detalle = new DetalleComprobante(
-                  idArticulo: articulo.id,
-                  articulo: articulo.articulo,
-                  color: articulo.codigoColor,
-                  idGenerico: articulo.idGenerico,
-                  descripcion: articulo.descripcion,
-                  cantidad: cantidad,
-                  precioUnitario: precioUnitario,
-                  importe: importe
-              )
-              log.debug( "genera detalle comprobante: ${detalle.dump()}" )
-              detalles.add( detalle )
-            }
+                if ( articulo?.id ) {
+                    Integer cantidad = det?.cantidadFac ?: 0
+                    BigDecimal precioVenta = det.precioUnitFinal ?: BigDecimal.ZERO
+                    BigDecimal precioUnitario = precioVenta.divide( referencia, mathContext ) ?: BigDecimal.ZERO
+                    BigDecimal precioUnitarioAB = precioUnidad.divide( referencia, mathContext ) ?: BigDecimal.ZERO
+                    BigDecimal importe = precioUnitario.multiply( cantidad )
+                    BigDecimal importeAB = precioUnitarioAB.multiply( cantidad )
+                    Boolean ABinsertado = false
+                    String idArticulo = articulo.id
+                    String article = articulo.articulo
+                    String color = articulo.codigoColor
+                    String idGenerico = articulo.idGenerico
+                    String descripcion = ""
+                    Double quantity = cantidad
+                    BigDecimal priceUnit = precioUnitario
+                    BigDecimal amount = importe
+                    println genericoAyB
+                    if(genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
+                        idArticulo = 'ANTEOJO'
+                        article = 'ANTEOJO'
+                        idGenerico = 'ANTEOJO'
+                        descripcion = 'ANTEOJO GRADUADO'
+                        quantity = cantidad
+                        priceUnit = precioUnitarioAB
+                        amount = importeAB
+                    } else if(articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_A)){
+                        descripcion = 'ARMAZON'
+                    } else if(articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
+                        descripcion = 'LENTE GRADUADO'
+                    } else if(articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_C) || articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_H)){
+                        descripcion = 'LENTES DE CONTACTO'
+                    } else if(articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_E)){
+                        descripcion = 'ACCESORIOS VARIOS'
+                    }
+
+                    DetalleComprobante detalle = new DetalleComprobante(
+                            idArticulo: idArticulo,
+                            articulo: article,
+                            color: color,
+                            idGenerico: idGenerico,
+                            descripcion: descripcion,
+                            cantidad: quantity,
+                            precioUnitario: priceUnit,
+                            importe: amount
+                    )
+                    if( genericoAyB && descripcion.trim().contains('ANTEOJO GRADUADO') ){
+                      if( !ABinsertado ){
+                        log.debug( "genera detalle comprobante: ${detalle.dump()}" )
+                        detalles.add( detalle )
+                      }
+                    } else if( !genericoAyB || (genericoAyB && (!idGenerico.equalsIgnoreCase(TAG_GENERICO_A) && !idGenerico.equalsIgnoreCase(TAG_GENERICO_B))) ) {
+                      log.debug( "genera detalle comprobante: ${detalle.dump()}" )
+                      detalles.add( detalle )
+                    }
+                    if(descripcion.trim().contains('ANTEOJO GRADUADO')){
+                      ABinsertado = true
+                    }
+                }
           }
 
           comprobante.factura = venta.factura

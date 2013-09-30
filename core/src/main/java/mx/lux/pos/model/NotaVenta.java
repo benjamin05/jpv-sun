@@ -204,6 +204,11 @@ public class NotaVenta implements Serializable {
     @JoinColumn( name = "receta", insertable = false, updatable = false )
     private Examen examen;
 
+    @ManyToOne
+    @NotFound( action = NotFoundAction.IGNORE )
+    @JoinColumn( name = "receta", referencedColumnName = "id_receta",insertable = false, updatable = false )
+    private Receta rx;
+
     @PrePersist
     protected void onPrePersist() {
         fechaHoraFactura = new Date();
@@ -668,5 +673,13 @@ public class NotaVenta implements Serializable {
 
     public void setCodigo_lente(String codigo_lente) {
         this.codigo_lente = codigo_lente;
+    }
+
+    public Receta getRx() {
+        return rx;
+    }
+
+    public void setRx(Receta rx) {
+        this.rx = rx;
     }
 }

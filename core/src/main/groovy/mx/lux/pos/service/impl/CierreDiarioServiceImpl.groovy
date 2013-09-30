@@ -301,7 +301,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     Collections.sort(detallesTmp, new Comparator<DetalleNotaVenta>() {
         @Override
         int compare(DetalleNotaVenta o1, DetalleNotaVenta o2) {
-            return o1.id.compareTo(o2.id)
+            return o1.idFactura.compareTo(o2.idFactura)
         }
     })
     def detalles = detallesTmp.collect { detalleNotaVenta ->
@@ -345,7 +345,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
           id_factura: detalleNotaVenta.idFactura,
           sku: detalleNotaVenta.idArticulo,
           articulo: detalleNotaVenta.articulo.articulo,
-          cantidad: detalleNotaVenta.cantidadFac,
+          cantidad: detalleNotaVenta.cantidadFac.toInteger(),
           precio: precio != null ? precio.toPlainString() : '',
           precio_factura: detalleNotaVenta.precioFactura?.toPlainString(),
           id_tipo_detalle: idTipoDetalle,
@@ -370,7 +370,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
       def datos = [
           sucursal: sucursal,
           fecha_ahora: CustomDateUtils.format( new Date(), 'dd-MM-yyyy' ),
-          fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ),
+          fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd/MM/yyyy' ),
           detalles: detalles,
           numero_detalles: detalles.size()
       ]
@@ -487,7 +487,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
         porcentajeDescSunI = (descuentoSunI*100)/(descuentoSunI+Double.parseDouble( String.format("%.2f",nv.ventaTotal) ))
 
         String codigoDioptra = nv?.codigo_lente != null ? nv?.codigo_lente : ""
-        String idOpt = nv?.examen != null ? nv?.examen.idAtendio.toString() : ''
+        String idOpt = nv?.rx != null ? nv?.rx?.idOptometrista.trim() : ''
       [
           factura: StringUtils.defaultIfBlank( nv.factura, '' ),
           id_factura: StringUtils.defaultIfBlank( nv.id, '' ),
