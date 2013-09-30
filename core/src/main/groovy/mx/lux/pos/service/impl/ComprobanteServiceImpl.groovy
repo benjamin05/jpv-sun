@@ -240,7 +240,13 @@ class ComprobanteServiceImpl implements ComprobanteService {
           log.debug( "obtiene tasa vigente: ${tasa}" )
           Double referencia = ( ( tasa?.isDouble() ? tasa.toDouble() : 0 ) / 100 ) + 1
           MathContext mathContext = new MathContext( 5 )
-          BigDecimal total = venta.ventaNeta ?: BigDecimal.ZERO
+          BigDecimal montoCupones = BigDecimal.ZERO
+          for(Pago pago : venta.pagos){
+            if( pago.idFPago.trim().startsWith('C')){
+              montoCupones = montoCupones.add(pago.monto)
+            }
+          }
+          BigDecimal total = venta.ventaNeta ? venta.ventaNeta.subtract(montoCupones): BigDecimal.ZERO
           BigDecimal subTotal = total.divide( referencia, mathContext ) ?: BigDecimal.ZERO
           BigDecimal impuestos = total.subtract( subTotal )
 
@@ -263,7 +269,13 @@ class ComprobanteServiceImpl implements ComprobanteService {
             String idFormaPago = pmt?.idFormaPago ?: ''
             'VA'.equalsIgnoreCase( idFormaPago ) || 'TR'.equalsIgnoreCase( idFormaPago )
           }
-          Pago pago = pagosVenta?.any() ? pagosVenta.first() : null
+          Pago pago = new Pago()
+          for(Pago payment : pagosVenta){
+            if(!payment.idFPago.startsWith('C')){
+              pago = payment
+              break
+            }
+          }
 
           List<DetalleComprobante> detalles = [ ]
           List<DetalleNotaVenta> detallesVenta = detalleNotaVentaRepository.findByIdFacturaOrderByIdArticuloAsc( venta.id )
@@ -358,8 +370,10 @@ class ComprobanteServiceImpl implements ComprobanteService {
 
           log.debug( "genera comprobante ${comprobante.dump()}" )
 
-          comprobante = solicitarComprobanteServicioWeb( comprobante, detalles )
-          if ( StringUtils.isNotBlank( comprobante?.idFiscal ) ) {
+          if(comprobante.metodoPago.trim().length() > 0){
+            comprobante = solicitarComprobanteServicioWeb( comprobante, detalles )
+          }
+          if ( StringUtils.isNotBlank( comprobante?.idFiscal ) && comprobante.metodoPago.trim().length() > 0) {
             comprobante = comprobanteRepository.save( comprobante )
             if ( comprobante?.id ) {
               detalles.each { DetalleComprobante detalle ->

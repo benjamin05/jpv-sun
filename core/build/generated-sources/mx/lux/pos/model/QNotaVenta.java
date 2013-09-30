@@ -94,6 +94,8 @@ public class QNotaVenta extends EntityPathBase<NotaVenta> {
 
     public final NumberPath<Integer> receta = createNumber("receta", Integer.class);
 
+    public final QReceta rx;
+
     public final StringPath sFactura = createString("sFactura");
 
     public final StringPath sucDest = createString("sucDest");
@@ -143,6 +145,7 @@ public class QNotaVenta extends EntityPathBase<NotaVenta> {
         this.cliente = inits.isInitialized("cliente") ? new QCliente(forProperty("cliente"), inits.get("cliente")) : null;
         this.empleado = inits.isInitialized("empleado") ? new QEmpleado(forProperty("empleado"), inits.get("empleado")) : null;
         this.examen = inits.isInitialized("examen") ? new QExamen(forProperty("examen"), inits.get("examen")) : null;
+        this.rx = inits.isInitialized("rx") ? new QReceta(forProperty("rx"), inits.get("rx")) : null;
         this.sucursal = inits.isInitialized("sucursal") ? new QSucursal(forProperty("sucursal"), inits.get("sucursal")) : null;
     }
 

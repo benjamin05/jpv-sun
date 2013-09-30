@@ -70,10 +70,8 @@ class RecetaServiceImpl implements RecetaService {
     @Override
     @Transactional
     void generaAcuse(String orderID){
-
        NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(orderID)
        Receta rx = findbyId(notaVenta.receta)
-
 
         DetalleNotaVenta artArmazon = new DetalleNotaVenta()
         List<DetalleNotaVenta> articulos = detalleNotaVentaRepository.findByIdFactura(notaVenta?.id)
@@ -84,7 +82,6 @@ class RecetaServiceImpl implements RecetaService {
                 artArmazon = detalle
             }
         }
-
 
         String trat = notaVenta?.udf2
 
@@ -98,8 +95,10 @@ class RecetaServiceImpl implements RecetaService {
         }
 
         BigInteger primerTicket = reimpresionRepository.noReimpresiones(notaVenta?.factura).toInteger()
-
-
+        String pTicket = ''
+        if(primerTicket != 0){
+            pTicket = primerTicket.toString()
+        }
 
       String contenido = 'eje_dVal='+rx?.odEjeR
         contenido = contenido+'|cilindro_iVal='+rx?.oiCilR
@@ -111,7 +110,7 @@ class RecetaServiceImpl implements RecetaService {
         contenido = contenido+'|prisma_d_hVal='+ rx?.odPrismaH
         contenido = contenido+'|sucursalVal='+ notaVenta?.sucursal.id
         contenido = contenido+'|distancia_cVal='+rx?.diCercaR
-        contenido = contenido+'|archivoVal='+notaVenta?.sucursal?.id.toString()+ notaVenta?.factura + 'RX'
+        contenido = contenido+'|archivoVal='+notaVenta?.sucursal?.id.toString()+ notaVenta?.factura + pTicket + 'RX'
         contenido = contenido+'|recetaVal='+notaVenta?.factura
         contenido = contenido+'|cilindro_dVal='+rx?.odCilR
         contenido = contenido+'|alturaVal='+ rx?.altOblR
@@ -130,7 +129,6 @@ class RecetaServiceImpl implements RecetaService {
         contenido = contenido+'|codigoVal='+ notaVenta.codigo_lente
         contenido = contenido+'|eje_iVal='+ rx?.oiEjeR
         contenido = contenido+'|'
-
         String cont = contenido
         contenido= ''
         for (int x=0; x < cont.length(); x++) {
@@ -146,10 +144,6 @@ class RecetaServiceImpl implements RecetaService {
         acuseRx.intentos = 0
 
         acuseRepository.saveAndFlush(acuseRx)
-        String pTicket = ''
-        if(primerTicket != 0){
-             pTicket = primerTicket.toString()
-        }
 
         String contenido2 = ''+ notaVenta?.sucursal.id
         contenido2 = contenido2+'|'+notaVenta?.factura
@@ -179,7 +173,6 @@ class RecetaServiceImpl implements RecetaService {
         contenido2 = contenido2+'|'+ rx?.odPrismaV
         contenido2 = contenido2+'|'+ rx?.oiPrismaV
         contenido2 = contenido2+'|'
-
         String cont2 = contenido2
         contenido2= ''
         for (int x=0; x < cont2.length(); x++) {
@@ -187,11 +180,7 @@ class RecetaServiceImpl implements RecetaService {
                 contenido2 += cont2.charAt(x)
         }
         contenido2= contenido2.replace('null','')
-
-
         generaArchivoEnvio(contenido2, notaVenta?.sucursal?.id.toString()+ notaVenta?.factura + pTicket + 'RX')
-
-
     }
 
     @Override

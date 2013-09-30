@@ -511,7 +511,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
           pais: paisCliente,
           codigoDioptra: codigoDioptra.trim(),
           idOpto: idOpt != null ? idOpt : "",
-          tipo_cliente: nv.cliente.tipo
+          tipo_cliente: ''
       ]
     }
     def datos = [ sucursal: sucursal,
@@ -759,7 +759,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
 
       log.info( "Generando fichero ZT ${ nombreFichero }" )
       QNotaVenta nota = QNotaVenta.notaVenta
-      List<NotaVenta> notasVentas = notaVentaRepository.findAll(nota.fechaEntrega.eq(fechaCierre))
+      List<NotaVenta> notasVentas = notaVentaRepository.findAll(nota.fechaEntrega.eq(fechaCierre)) as List<NotaVenta>
       Collections.sort(notasVentas, new Comparator<NotaVenta>() {
           @Override
           int compare(NotaVenta o1, NotaVenta o2) {

@@ -68,7 +68,6 @@ class NotaVentaServiceImpl implements NotaVentaService {
     @Override
     @Transactional
     NotaVenta notaVentaxRx(Integer rx){
-
      return  notaVentaRepository.notaVentaxRx(rx)
     }
 
