@@ -135,8 +135,8 @@ class MainWindow extends JFrame implements KeyListener {
                                 orderMenuItem.visible = userLoggedIn
                                 orderSearchMenuItem.visible = userLoggedIn
                                 dailyCloseMenuItem.visible = userLoggedIn
-                                //priceListMenuItem.visible = userLoggedIn
-                                //invoiceMenuItem.visible = userLoggedIn
+                                priceListMenuItem.visible = userLoggedIn
+                                invoiceMenuItem.visible = userLoggedIn
                                 nationalClientMenuItem.visible = userLoggedIn
                                 // TODO: Benja enable feature cotizacionMenuItem.visible = userLoggedIn
                             }

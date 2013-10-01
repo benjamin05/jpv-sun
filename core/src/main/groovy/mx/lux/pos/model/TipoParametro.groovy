@@ -11,7 +11,7 @@ enum TipoParametro {
   CAN_MISMO_DIA( 'can_mismo_dia', 'no' ),
   CLIENTES_ACTIVOS( 'clientes_activos', 'Público General,Cliente Nuevo,Cliente en Proceso,Cliente en Caja,Cotización' ),
   CONV_NOMINA( 'conv_nomina' ),
-  COMANDO_ZIP( 'comando_zip', 'tar czvf' ),
+  COMANDO_ZIP( 'comando_zip', 'tar -cvf' ),
   COMPANIA_NOMBRE_CORTO( 'compania_nombre_corto', 'OPTICAS LUX' ),
   COMPANIA_REGION( 'compania_region', '01' ),
   COMPANIA_RFC( 'compania_rfc', 'POP 591001 E92' ),
