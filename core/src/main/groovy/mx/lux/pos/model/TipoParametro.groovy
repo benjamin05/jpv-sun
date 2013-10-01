@@ -23,7 +23,7 @@ enum TipoParametro {
   FORMATO_ARCHIVO( 'formato_archivo_salida', 'default' ),
   GRUPO_COMPANIA( 'grupo_compania', 'lux' ),
   GENERICOS_NO_ETREGABLES( 'genericos_no_entregables', 'B' ),
-  GENERICO_PRECIO_VARIABLE( 'generico_precio_variable', 'S' ),
+  GENERICO_PRECIO_VARIABLE( 'generico_precio_variable', '' ),
   ID_CLIENTE_GENERICO( 'cli_gen', '1' ),
   ID_ESTADO( 'id_estado', '' ),
   ID_GERENTE( 'id_gerente', '' ),
