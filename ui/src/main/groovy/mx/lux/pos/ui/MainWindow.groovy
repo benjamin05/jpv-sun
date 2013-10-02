@@ -547,7 +547,7 @@ class MainWindow extends JFrame implements KeyListener {
             DailyCloseController.openDay()
             DailyCloseController.RegistrarPromociones()
             IOController.getInstance().autoUpdateEmployeeFile()
-            IOController.getInstance().startAsyncNotifyDispatcher()
+            //IOController.getInstance().startAsyncNotifyDispatcher()
         }
     }
 
