@@ -90,8 +90,8 @@ class ShowOrderPanel extends JPanel {
           label( 'Fecha' )
           date = label()
           employee = label( constraints: 'span 2', maximumSize: [ 210, 30 ] )
-            status = label(  foreground: UI_Standards.NORMAL_FOREGROUND, visible: false, constraints: 'hidemode 3' )
-            fechaE = label(foreground: UI_Standards.NORMAL_FOREGROUND, visible: false, constraints: 'hidemode 3' )
+            status = label(  foreground: UI_Standards.NORMAL_FOREGROUND, visible: false )
+            fechaE = label(foreground: UI_Standards.NORMAL_FOREGROUND, visible: false )
             empIDE = label(constraints: 'span 2,hidemode 3', maximumSize: [ 210, 30 ] ,foreground: UI_Standards.NORMAL_FOREGROUND, visible: false )
 
         }
@@ -191,16 +191,14 @@ class ShowOrderPanel extends JPanel {
       //bean( folio, text: bind {order.id} )
       bean( bill, text: bind {order.bill} )
       bean( employee, text: bind {order.employee} )
-      bean( status, visible: bind {'T'.equalsIgnoreCase( order.status )} )
+      //bean( status )
         if('T'.equalsIgnoreCase( order.status )){
-            bean( status, text: 'CANCELADA',foreground: UI_Standards.WARNING_FOREGROUND )
-        } else if(order.fechaEntrega != null){
-            bean( status, text: 'ENTREGADA',foreground: UI_Standards.NORMAL_FOREGROUND )
+            bean( status, text: 'CANCELADA',foreground: UI_Standards.WARNING_FOREGROUND,visible: bind {'T'.equalsIgnoreCase( order.status )} )
         }
-      /*bean( status, visible: bind { order.fechaEntrega != null} )
+      bean( status )
         if(order.fechaEntrega != null){
-            bean( status, text: 'ENTREGADA',foreground: UI_Standards.NORMAL_FOREGROUND )
-        }*/
+            bean( status, text: 'ENTREGADA',foreground: UI_Standards.NORMAL_FOREGROUND, visible: bind { order.fechaEntrega != null} )
+        }
         bean( fechaE, visible: bind { order.fechaEntrega != null && !'T'.equalsIgnoreCase( order.status )} )
         bean( fechaE, text: bind( source: order, sourceProperty: 'fechaEntrega', converter: dateConverter ) )
         bean( empIDE, visible: bind { order.fechaEntrega != null && !'T'.equalsIgnoreCase( order.status )} )

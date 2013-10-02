@@ -17,14 +17,23 @@ public class ResumenCierre {
     private BigDecimal totalDolares;
     private BigDecimal totalDolaresEnPesos;
     private String totalDolaresYPesos;
+    private NotaVenta notaVenta;
+    private String idPlan;
+    private BigDecimal monto;
+    private Terminal terminal;
+    private String idFPago;
+    private String tipoPago;
 
 
     public ResumenCierre(Date fecha) {
         this.factura = factura;
-        this.fecha = fecha;
+        this.   fecha = fecha;
         lstPagos = new ArrayList<DetalleIngresoPorDia>();
         totalDolares = BigDecimal.ZERO;
         totalDolaresEnPesos = BigDecimal.ZERO;
+        notaVenta = new NotaVenta();
+        monto = BigDecimal.ZERO;
+        terminal = new Terminal();
     }
 
     public void acumulaIngresosPorDia(NotaVenta notaVenta) {
@@ -135,5 +144,53 @@ public class ResumenCierre {
 
     public void setTotalDolaresYPesos(String totalDolaresYPesos) {
         this.totalDolaresYPesos = totalDolaresYPesos;
+    }
+
+    public NotaVenta getNotaVenta() {
+        return notaVenta;
+    }
+
+    public void setNotaVenta(NotaVenta notaVenta) {
+        this.notaVenta = notaVenta;
+    }
+
+    public String getIdPlan() {
+        return idPlan;
+    }
+
+    public void setIdPlan(String idPlan) {
+        this.idPlan = idPlan;
+    }
+
+    public BigDecimal getMonto() {
+        return monto;
+    }
+
+    public void setMonto(BigDecimal monto) {
+        this.monto = monto;
+    }
+
+    public Terminal getTerminal() {
+        return terminal;
+    }
+
+    public void setTerminal(Terminal terminal) {
+        this.terminal = terminal;
+    }
+
+    public String getIdFPago() {
+        return idFPago;
+    }
+
+    public void setIdFPago(String idFPago) {
+        this.idFPago = idFPago;
+    }
+
+    public String getTipoPago() {
+        return tipoPago;
+    }
+
+    public void setTipoPago(String tipoPago) {
+        this.tipoPago = tipoPago;
     }
 }
