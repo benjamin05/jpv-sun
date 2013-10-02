@@ -2,7 +2,10 @@ package mx.lux.pos.service.impl
 
 import groovy.sql.Sql
 import groovy.util.logging.Slf4j
+import mx.lux.pos.repository.impl.RepositoryFactory
 import mx.lux.pos.service.ListaPreciosService
+import mx.lux.pos.service.business.Registry
+import mx.lux.pos.util.CustomDateUtils
 import org.apache.commons.lang3.StringUtils
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -36,6 +39,8 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
   @Resource
   private DataSource invDataSource
 
+  private static final String TAG_ACK_RECEIVED = 'recibe_lp'
+
   @Override
   String obtenRutaPorRecibir( ) {
     log.debug( "obteniendo ruta por recibir" )
@@ -67,7 +72,7 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
     if ( StringUtils.isNotBlank( listaPrecios?.id ) && StringUtils.isNotBlank( listaPrecios?.filename ) ) {
       listaPrecios = listaPreciosRepository.save( listaPrecios )
       if ( listaPrecios?.id ) {
-        def urlTexto = generaUrlServicioWeb( TipoParametro.URL_RECIBE_LISTA_PRECIOS, listaPrecios.id, null )
+        def urlTexto = generaUrlServicioWeb( TipoParametro.URL_RECIBE_LISTA_PRECIOS, listaPrecios.id, null, listaPrecios.id )
         log.debug( "invocando ${urlTexto}" )
         def resp = urlTexto?.toURL()?.text
         log.debug( "respuesta: ${resp}" )
@@ -121,7 +126,7 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
         listaPrecios = listaPreciosRepository.save( listaPrecios )
         procesaCargaArticulos( articulos )
         if ( listaPrecios?.id ) {
-          def urlTexto = generaUrlServicioWeb( TipoParametro.URL_CARGA_LISTA_PRECIOS, listaPrecios.id, listaPrecios.tipoCarga )
+          def urlTexto = generaUrlServicioWeb( TipoParametro.URL_CARGA_LISTA_PRECIOS, listaPrecios.id, listaPrecios.tipoCarga, listaPrecios.id )
           log.debug( "invocando ${urlTexto}" )
           def resp = urlTexto?.toURL()?.text
           log.debug( "respuesta: ${resp}" )
@@ -135,7 +140,7 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
     return null
   }
 
-  private String generaUrlServicioWeb( TipoParametro tipoParametro, String idCambio, String tipoCarga ) {
+  private String generaUrlServicioWeb( TipoParametro tipoParametro, String idCambio, String tipoCarga, String idLp ) {
     log.debug( "generando url de servicio web: ${tipoParametro}, ${idCambio}, ${tipoCarga}" )
     boolean esCarga
     if ( TipoParametro.URL_RECIBE_LISTA_PRECIOS.equals( tipoParametro ) ) {
@@ -152,6 +157,28 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
       def valores = "id_suc=${idSucursal}&id_cambio=${idCambio}&fecha=${new Date().format( 'ddMMyyyy' )}"
       if ( esCarga ) {
         valores += "&tipo=${tipoCarga?.charAt( 0 ) ?: ''}"
+      } else {
+          Integer idSuc = Registry.currentSite
+          AcuseRepository acuses = RepositoryFactory.acknowledgements
+          Acuse acuse = new Acuse()
+          acuse.idTipo = TAG_ACK_RECEIVED
+          try {
+              acuse = acuses.saveAndFlush( acuse )
+              log.debug( String.format( 'Acuse: (%d) %s -> %s', acuse.id, acuse.idTipo, acuse.contenido ) )
+          } catch ( Exception e ) {
+              log.error( e.getMessage() )
+          }
+          acuse.contenido = ''
+          acuse.contenido += String.format( 'fechaVal=%s|', CustomDateUtils.format(new Date(), 'ddMMyyyy') )
+          acuse.contenido += String.format( 'id_cambioVal=%s|', idLp.trim() )
+          acuse.contenido += String.format( 'id_sucVal=%s|', idSuc.toString().trim() )
+          acuse.fechaCarga = new Date()
+          try {
+              acuse = acuses.saveAndFlush( acuse )
+              log.debug( String.format( 'Acuse: (%d) %s -> %s', acuse.id, acuse.idTipo, acuse.contenido ) )
+          } catch ( Exception e ) {
+              log.error( e.getMessage() )
+          }
       }
       log.debug( "url base: ${urlBase}" )
       log.debug( "valores: ${valores}" )
@@ -175,7 +202,7 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
     try{
       tmpArticulos.each { tmpArticulo ->
       log.debug( "procesando articulo de lista de precios ${tmpArticulo?.dump()}" )
-      boolean esLista = tmpArticulo?.tipoPrecio?.matches( ~/P_.*(LUX|SEARS)/ )
+      boolean esLista = tmpArticulo?.tipoPrecio?.matches( ~/P_.*(LUX|SEARS)/ ) || tmpArticulo?.tipoPrecio?.matches( 'M' )
       boolean esOferta = tmpArticulo?.tipoPrecio?.matches( ~/P_.+_O$/ )
       boolean esEspecial = tmpArticulo?.tipoPrecio?.matches( ~/[1-9]/ )
       Parametro parametro = parametroRepository.findOne( TipoParametro.ID_SUCURSAL.value )

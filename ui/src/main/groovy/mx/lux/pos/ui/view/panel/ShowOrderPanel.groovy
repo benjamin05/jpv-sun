@@ -192,12 +192,12 @@ class ShowOrderPanel extends JPanel {
       bean( bill, text: bind {order.bill} )
       bean( employee, text: bind {order.employee} )
       //bean( status )
-        if('T'.equalsIgnoreCase( order.status )){
-            bean( status, text: 'CANCELADA',foreground: UI_Standards.WARNING_FOREGROUND,visible: bind {'T'.equalsIgnoreCase( order.status )} )
-        }
-      bean( status )
+      //bean( status )
         if(order.fechaEntrega != null){
             bean( status, text: 'ENTREGADA',foreground: UI_Standards.NORMAL_FOREGROUND, visible: bind { order.fechaEntrega != null} )
+        }
+        if('T'.equalsIgnoreCase( order.status )){
+            bean( status, text: 'CANCELADA',foreground: UI_Standards.WARNING_FOREGROUND,visible: bind {'T'.equalsIgnoreCase( order.status )} )
         }
         bean( fechaE, visible: bind { order.fechaEntrega != null && !'T'.equalsIgnoreCase( order.status )} )
         bean( fechaE, text: bind( source: order, sourceProperty: 'fechaEntrega', converter: dateConverter ) )

@@ -1133,11 +1133,11 @@ class TicketServiceImpl implements TicketService {
         articulos: articulos,
         lstArticulos: lstArticulos
     ]
-    if ( Registry.isSunglass() ) {
+    //if ( Registry.isSunglass() ) {
       imprimeTicket( 'template/ticket-ubicacion-lista-precios-si.vm', items )
-    } else {
+    /*} else {
       imprimeTicket( 'template/ticket-ubicacion-lista-precios.vm', items )
-    }
+    }*/
   }
 
   @Override
