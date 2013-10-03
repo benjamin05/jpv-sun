@@ -74,9 +74,9 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
       listaPrecios = listaPreciosRepository.save( listaPrecios )
       if ( listaPrecios?.id ) {
         def urlTexto = generaUrlServicioWeb( TipoParametro.URL_RECIBE_LISTA_PRECIOS, listaPrecios.id, null, listaPrecios.id )
-        log.debug( "invocando ${urlTexto}" )
+        /*log.debug( "invocando ${urlTexto}" )
         def resp = urlTexto?.toURL()?.text
-        log.debug( "respuesta: ${resp}" )
+        log.debug( "respuesta: ${resp}" )*/
       }
       return listaPrecios
     }
@@ -128,9 +128,9 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
         procesaCargaArticulos( articulos )
         if ( listaPrecios?.id ) {
           def urlTexto = generaUrlServicioWeb( TipoParametro.URL_CARGA_LISTA_PRECIOS, listaPrecios.id, listaPrecios.tipoCarga, listaPrecios.id )
-          log.debug( "invocando ${urlTexto}" )
+          /*log.debug( "invocando ${urlTexto}" )
           def resp = urlTexto?.toURL()?.text
-          log.debug( "respuesta: ${resp}" )
+          log.debug( "respuesta: ${resp}" )*/
         }
         return listaPrecios
       } else {

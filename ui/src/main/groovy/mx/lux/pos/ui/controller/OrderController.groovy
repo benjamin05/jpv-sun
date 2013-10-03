@@ -655,6 +655,12 @@ class OrderController {
         return Order.toOrder(result)
     }
 
+    static Order findOrderByIdOrder(String idOrder) {
+        log.info("buscando orden por ticket: ${idOrder}")
+        NotaVenta result = notaVentaService.obtenerNotaVenta(idOrder)
+        return Order.toOrder(result)
+    }
+
     static Double requestUsdRate() {
         log.info("Request USD rate")
 

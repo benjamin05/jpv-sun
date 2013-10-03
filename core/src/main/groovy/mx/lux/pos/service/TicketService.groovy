@@ -42,4 +42,8 @@ interface TicketService {
 
   void imprimeCotizacion( Integer pQuoteNbr )
 
+  void imprimeRegresoMaterial( String idNotaVenta )
+
+  void imprimeRecepcionMaterial( String idNotaVenta )
+
 }

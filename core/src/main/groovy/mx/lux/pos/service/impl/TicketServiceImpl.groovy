@@ -48,6 +48,7 @@ class TicketServiceImpl implements TicketService {
   private static final String TAG_TRANSFER = 'TR'
   private static final String TAG_DEPOSITO_MN = 'EFECTIVO'
   private static final String TAG_DEPOSITO_US = 'DOLARES'
+  private static final String TAG_GENERICO_ARMAZON = 'A'
 
   private static final BigDecimal CERO_BIGDECIMAL = 0.005
 
@@ -1889,4 +1890,69 @@ class TicketServiceImpl implements TicketService {
   }
 
 
+  @Override
+  void imprimeRegresoMaterial( String idNotaVenta ){
+     log.debug('imprimeRegresoMaterial( )')
+      NotaVenta nota = notaVentaRepository.findOne(idNotaVenta)
+      List<Modificacion> modificaciones = modificacionRepository.findByIdFactura(idNotaVenta)
+      Integer idSuc = Registry.currentSite
+      Sucursal sucursal = sucursalRepository.findOne(idSuc)
+      Articulo articulo = new Articulo()
+      for(DetalleNotaVenta detalle : nota.detalles){
+        if(detalle.articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_ARMAZON)){
+          articulo = detalle.articulo
+        }
+      }
+
+      if(nota != null && modificaciones.size() > 0){
+         Modificacion mod = modificaciones.first()
+      def datos = [ nombre_ticket: "ticket-regreso-material",
+          idMod: mod.id,
+          sucursal: sucursal.nombre+' ['+sucursal.id+']',
+          fecha: new Date().format('dd/MM/yyyy'),
+          hora: new Date().format('HH:mm:ss'),
+          idFactura: nota.id,
+          factura: nota.factura,
+          idSucursal: idSuc,
+          gerente: sucursal.gerente?.nombreCompleto(),
+          armazon: articulo.id != null ? (StringUtils.trimToEmpty(articulo.codigoColor) != '' ? articulo.articulo+'$'+articulo.codigoColor : articulo.articulo)  : ''
+        ]
+        this.imprimeTicket( 'template/ticket-regreso-material.vm', datos )
+      } else {
+          log.debug( String.format( 'Nota (%s) not found.', idNotaVenta ) )
+      }
+  }
+
+
+  void imprimeRecepcionMaterial( String idNotaVenta ){
+      log.debug('imprimeRecepcionMaterial( )')
+      NotaVenta nota = notaVentaRepository.findOne(idNotaVenta)
+      List<Modificacion> modificaciones = modificacionRepository.findByIdFactura(idNotaVenta)
+      Integer idSuc = Registry.currentSite
+      Sucursal sucursal = sucursalRepository.findOne(idSuc)
+      List<Articulo> articulos = new ArrayList<>()
+      for(DetalleNotaVenta detalle : nota.detalles){
+          if(detalle.articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_ARMAZON)){
+              articulos.add(detalle.articulo)
+          }
+      }
+
+      if(nota != null && modificaciones.size() > 0){
+          Modificacion mod = modificaciones.first()
+          def datos = [ nombre_ticket: "ticket-recepcion-material",
+                  idMod: mod.id,
+                  sucursal: sucursal.nombre+' ['+sucursal.id+']',
+                  fecha: new Date().format('dd/MM/yyyy'),
+                  hora: new Date().format('HH:mm:ss'),
+                  idFactura: nota.id,
+                  factura: nota.factura,
+                  idSucursal: idSuc,
+                  gerente: sucursal.gerente?.nombreCompleto(),
+                  armazones: articulos
+          ]
+          this.imprimeTicket( 'template/ticket-recepcion-material.vm', datos )
+      } else {
+          log.debug( String.format( 'Nota (%s) not found.', idNotaVenta ) )
+      }
+  }
 }

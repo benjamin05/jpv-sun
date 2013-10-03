@@ -205,4 +205,24 @@ class CancellationController {
       Order.toOrder( tmp )
     }
   }
+
+
+  static void printMaterialReturn( String orderId ) {
+      log.info( "imprimiendo regreso de material de orden id: ${orderId}" )
+      if ( StringUtils.isNotBlank( orderId ) ) {
+          ticketService.imprimeRegresoMaterial( orderId )
+      } else {
+          log.warn( 'no se imprime regreso de material, parametros invalidos' )
+      }
+  }
+
+
+  static void printMaterialReception( String orderId ) {
+      log.info( "imprimiendo recepcion de material de orden id: ${orderId}" )
+      if ( StringUtils.isNotBlank( orderId ) ) {
+          ticketService.imprimeRecepcionMaterial( orderId )
+      } else {
+          log.warn( 'no se imprime recepcion de material, parametros invalidos' )
+      }
+  }
 }

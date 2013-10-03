@@ -98,9 +98,13 @@ class CancelacionServiceImpl implements CancelacionService {
                 modificacionCanRepository.save(modificacionCan)
                 notaVentaRepository.save(notaVenta)
                 pagoRepository.save(pagos)
-                if (!ServiceFactory.inventory.solicitarTransaccionDevolucion(notaVenta)) {
-                    log.warn("no se registra el movimiento, error al registrar devolucion")
-                    modificacion.id = null
+                String orderDate = notaVenta.fechaHoraFactura.format('dd-MM-yyyy')
+                String currentDate = new Date().format('dd-MM-yyyy')
+                if(currentDate.trim().equalsIgnoreCase(orderDate.trim())){
+                  if (!ServiceFactory.inventory.solicitarTransaccionDevolucion(notaVenta)) {
+                      log.warn("no se registra el movimiento, error al registrar devolucion")
+                      modificacion.id = null
+                  }
                 }
                 return modificacion
             } else {

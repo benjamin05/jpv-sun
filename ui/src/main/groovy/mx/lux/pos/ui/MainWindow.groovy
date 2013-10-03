@@ -541,9 +541,9 @@ class MainWindow extends JFrame implements KeyListener {
         } else {
             IOController.getInstance().updateInitialDate(fechaActual)
         }
+        PriceListController.loadExpiredPriceList()
         sb.doOutside {
             IOController.getInstance().autoUpdateFxRates()
-            PriceListController.loadExpiredPriceList()
             DailyCloseController.openDay()
             DailyCloseController.RegistrarPromociones()
             IOController.getInstance().autoUpdateEmployeeFile()

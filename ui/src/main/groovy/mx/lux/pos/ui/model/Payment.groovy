@@ -29,6 +29,7 @@ class Payment {
   BigDecimal refund
   BigDecimal refundable
   Date date
+  //Order pOrder
 
   String getDescription( ) {
     Integer pos = ( paymentReference?.size() >= 4 ) ? ( paymentReference.size() - 4 ) : 0
@@ -62,6 +63,7 @@ class Payment {
           amount: pago.monto,
           refundable: pago.porDevolver,
           date: pago.fecha
+          //pOrder: Order.toOrder(pago.notaVenta)
       )
       return payment
     }
