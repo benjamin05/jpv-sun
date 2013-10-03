@@ -40,6 +40,7 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
   private DataSource invDataSource
 
   private static final String TAG_ACK_RECEIVED = 'recibe_lp'
+  private static final String TAG_ACK_LOAD = 'carga_lp'
 
   @Override
   String obtenRutaPorRecibir( ) {
@@ -157,6 +158,28 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
       def valores = "id_suc=${idSucursal}&id_cambio=${idCambio}&fecha=${new Date().format( 'ddMMyyyy' )}"
       if ( esCarga ) {
         valores += "&tipo=${tipoCarga?.charAt( 0 ) ?: ''}"
+          Integer idSuc = Registry.currentSite
+          AcuseRepository acuses = RepositoryFactory.acknowledgements
+          Acuse acuse = new Acuse()
+          acuse.idTipo = TAG_ACK_LOAD
+          try {
+              acuse = acuses.saveAndFlush( acuse )
+              log.debug( String.format( 'Acuse: (%d) %s -> %s', acuse.id, acuse.idTipo, acuse.contenido ) )
+          } catch ( Exception e ) {
+              log.error( e.getMessage() )
+          }
+          acuse.contenido = ''
+          acuse.contenido += String.format( 'fechaVal=%s|', CustomDateUtils.format(new Date(), 'ddMMyyyy') )
+          acuse.contenido += String.format( 'id_cambioVal=%s|', idLp.trim() )
+          acuse.contenido += String.format( 'id_sucVal=%s|', idSuc.toString().trim() )
+          acuse.contenido += String.format( 'tipoVal=%s|', tipoCarga.trim().equalsIgnoreCase('MANUAL') ? 'M': 'A' )
+          acuse.fechaCarga = new Date()
+          try {
+              acuse = acuses.saveAndFlush( acuse )
+              log.debug( String.format( 'Acuse: (%d) %s -> %s', acuse.id, acuse.idTipo, acuse.contenido ) )
+          } catch ( Exception e ) {
+              log.error( e.getMessage() )
+          }
       } else {
           Integer idSuc = Registry.currentSite
           AcuseRepository acuses = RepositoryFactory.acknowledgements
