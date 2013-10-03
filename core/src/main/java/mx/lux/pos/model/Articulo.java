@@ -114,6 +114,9 @@ public class Articulo implements Serializable {
     @Transient
     private String ubicacion;
 
+    @Transient
+    private String descConColor;
+
     @PrePersist
     private void onPrePersist() {
         fechaMod = new Date();
@@ -374,5 +377,14 @@ public class Articulo implements Serializable {
 
     public void setIndice_dioptra(String indice_dioptra) {
         this.indice_dioptra = indice_dioptra;
+    }
+
+    public String getDescConColor() {
+        String desc = "["+StringUtils.trimToEmpty(codigoColor) != "" ? codigoColor: " "+"]"+ StringUtils.trimToEmpty(descripcion) != "" ? descripcion : descripcionColor;
+        return descConColor;
+    }
+
+    public void setDescConColor(String descConColor) {
+        this.descConColor = descConColor;
     }
 }

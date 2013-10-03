@@ -29,7 +29,7 @@ class ValidatePriceListDialog {
         table() {
           tableModel( list: items ) {
             closureColumn( header: 'Artículo', read: {it?.name}, maxWidth: 150 )
-            closureColumn( header: 'Descripcion', read: {it?.reference} )
+            closureColumn( header: 'Descripcion', read: {it?.descriptionColor} )
             closureColumn( header: 'Cant.', read: {it?.stock}, maxWidth: 50 )
           }
         }

@@ -324,9 +324,9 @@ class ComprobanteServiceImpl implements ComprobanteService {
                         quantity = cantidad
                         priceUnit = precioUnitarioAB
                         amount = importeAB
-                    } else if(articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_A)){
+                    } else if(descripcion != "" && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_A)){
                         descripcion = 'ARMAZON'
-                    } else if(articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
+                    } else if(descripcion != "" && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
                         descripcion = 'LENTE GRADUADO'
                     } else if(articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_C) || articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_H)){
                         descripcion = 'LENTES DE CONTACTO'

@@ -1115,6 +1115,7 @@ class TicketServiceImpl implements TicketService {
       def tmpArticulo = [
         id: art.id,
         articulo: art.articulo,
+        color: art.codigoColor != null && StringUtils.trimToEmpty(art.codigoColor) != '' ? art.codigoColor : art.idCb != null ? art.idCb : '',
         descripcion1: descripcion1,
         descripcion2: descripcion2,
         descripcion3: descripcion3,
@@ -1915,7 +1916,7 @@ class TicketServiceImpl implements TicketService {
           factura: nota.factura,
           idSucursal: idSuc,
           gerente: sucursal.gerente?.nombreCompleto(),
-          armazon: articulo.id != null ? (StringUtils.trimToEmpty(articulo.codigoColor) != '' ? articulo.articulo+'$'+articulo.codigoColor : articulo.articulo)  : ''
+          armazon: articulo.id != null ? (StringUtils.trimToEmpty(articulo.idCb) != '' ? articulo.articulo+'$'+articulo.idCb : articulo.articulo)  : ''
         ]
         this.imprimeTicket( 'template/ticket-regreso-material.vm', datos )
       } else {

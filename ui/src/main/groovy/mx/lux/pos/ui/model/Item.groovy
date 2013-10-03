@@ -40,6 +40,10 @@ class Item {
     "${reference ? "${reference} " : ''}${color ? "[${color}] " : ''}${colorDesc ?: ''}"
   }
 
+  String getDescriptionColor( ){
+    "[${color? "${color} " : ''}]${reference? "${reference} " : colorDesc}"
+  }
+
   static Item toItem( Articulo articulo ) {
     if ( articulo?.id ) {
       Item item = new Item(
