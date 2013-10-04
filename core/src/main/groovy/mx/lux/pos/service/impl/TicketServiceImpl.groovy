@@ -1956,4 +1956,35 @@ class TicketServiceImpl implements TicketService {
           log.debug( String.format( 'Nota (%s) not found.', idNotaVenta ) )
       }
   }
+
+
+  @Override
+  void imprimePinoNoSurtido( String idNotaVenta ){
+      log.debug('imprimePinoNoSurtido( )')
+      NotaVenta nota = notaVentaRepository.findOne(idNotaVenta)
+      Integer idSuc = Registry.currentSite
+      Sucursal sucursal = sucursalRepository.findOne(idSuc)
+      List<Articulo> articulos = new ArrayList<>()
+      for(DetalleNotaVenta detalle : nota.detalles){
+          if(detalle.articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_ARMAZON)){
+              articulos.add(detalle.articulo)
+          }
+      }
+
+      if(nota != null){
+          def datos = [ nombre_ticket: "ticket-pino-no-surtido",
+                  fecha: new Date().format('dd/MM/yyyy'),
+                  sucursal: sucursal.nombre+' ['+sucursal.id+']',
+                  factura: nota.factura,
+                  idSucursal: idSuc,
+                  gerente: sucursal.gerente?.nombreCompleto(),
+                  armazones: articulos.first()
+          ]
+          this.imprimeTicket( 'template/ticket-pino-no-surtido.vm', datos )
+      } else {
+          log.debug( String.format( 'Nota (%s) not found.', idNotaVenta ) )
+      }
+  }
+
+
 }

@@ -28,7 +28,7 @@ public class Pago implements Serializable {
     @Column( name = "id_banco", length = 18 )
     private String idBanco;
 
-    @Column( name = "id_forma_pago", length = 2 )
+    @Column( name = "id_forma_pago" )
     private String idFormaPago;
 
     @Column( name = "tipo_pago", length = 1 )
@@ -76,7 +76,7 @@ public class Pago implements Serializable {
     @Column( name = "ref_clave" )
     private String referenciaClave;
 
-    @Column( name = "id_banco_emi", length = 2 )
+    @Column( name = "id_banco_emi" )
     private String idBancoEmisor;
 
     @Column( name = "id_term", length = 30 )

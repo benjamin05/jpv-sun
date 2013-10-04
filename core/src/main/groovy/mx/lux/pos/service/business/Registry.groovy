@@ -353,6 +353,10 @@ class Registry {
     return asString( TipoParametro.URL_ACUSE_AJUSTE_VENTA )
   }
 
+  static String getURLValidSP( ) {
+      return asString( TipoParametro.VALIDA_SP )
+  }
+
   static String getURLSalidaAlmacen( ) {
     return asString( TipoParametro.URL_SALIDA_ALMACEN )
   }

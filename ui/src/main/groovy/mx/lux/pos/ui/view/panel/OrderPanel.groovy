@@ -78,8 +78,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private OperationType currentOperationType
     private Boolean uiEnabled
     private Receta rec
-    private Dioptra dioptra = new Dioptra()
-    private Dioptra antDioptra = new Dioptra()
+    private Dioptra dioptra //= new Dioptra()
+    private Dioptra antDioptra //= new Dioptra()
     private static boolean ticketRx
     private String armazonString = null
     private Boolean activeDialogProccesCustomer = true
@@ -1171,4 +1171,19 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
 
+
+    public void cleanAll( ){
+      sb = null
+      order = null
+      dioptra = null
+      customerTypes = null
+      customer = null
+      promotionList = null
+      ticketRx = null
+      lstCustomers = null
+      discountMenu = null
+      currentOperationType = null
+      dioptra = null
+      antDioptra = null
+    }
 }

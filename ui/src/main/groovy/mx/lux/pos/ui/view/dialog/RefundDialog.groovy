@@ -179,15 +179,23 @@ class RefundDialog extends JDialog {
                     .show()
         }
       } else {
-        Item item = new Item()
-        String surte = ''
-        for(OrderItem i : orderCom.items){
+          printCancellationNotToday( orderCom, creditRefunds )
+      }
+    }
+    source.enabled = true
+  }
+
+
+  private def printCancellationNotToday(Order orderCom, Map<Integer, String> creditRefunds){
+      Item item = new Item()
+      String surte = ''
+      for(OrderItem i : orderCom.items){
           if(i.item.type.trim().equalsIgnoreCase(GENERICO_ARMAZON)){
-            surte = i.delivers.trim()
-            item = i.item
+              surte = i.delivers.trim()
+              item = i.item
           }
-        }
-        if(item.id != null && surte.equalsIgnoreCase(TAG_SURTE_SUCURSAL)){
+      }
+      if(item.id != null && surte.equalsIgnoreCase(TAG_SURTE_SUCURSAL)){
           if(CancellationController.refundPaymentsCreditFromOrder( orderId, creditRefunds )){
               CancellationController.printMaterialReturn( orderId )
               CancellationController.printMaterialReception( orderId )
@@ -200,9 +208,25 @@ class RefundDialog extends JDialog {
               ).createDialog( this, 'No se registran devoluciones' )
                       .show()
           }
-        }
+      } else if(item.id != null && surte.equalsIgnoreCase(TAG_SURTE_PINO)){
+          if(CancellationController.verificaPino(orderId) ){
+              CancellationController.printPinoNotStocked(orderId)
+          } else {
+              CancellationController.printMaterialReturn( orderId )
+              CancellationController.printMaterialReception( orderId )
+          }
+          if(CancellationController.refundPaymentsCreditFromOrder( orderId, creditRefunds )){
+              CancellationController.printOrderCancellation( orderId )
+              dispose()
+          } else {
+              sb.optionPane(
+                      message: 'Ocurrio un error al registrar devoluciones',
+                      messageType: JOptionPane.ERROR_MESSAGE
+              ).createDialog( this, 'No se registran devoluciones' )
+                      .show()
+          }
       }
-    }
-    source.enabled = true
   }
+
+
 }

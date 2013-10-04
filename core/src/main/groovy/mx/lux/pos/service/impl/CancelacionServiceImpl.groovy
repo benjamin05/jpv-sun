@@ -395,4 +395,33 @@ class CancelacionServiceImpl implements CancelacionService {
           }
         }
     }
+
+
+
+    @Override
+    Boolean validandoEnvioPino( String idOrder ){
+      Boolean surtioPino = false
+      NotaVenta nota = notaVentaRepository.findOne( idOrder.trim() )
+      String urlValida = Registry.URLValidSP
+      String contenido = "id_suc=${nota.idSucursal}&factura=${nota.factura}&id_acuse=${nota.factura}"
+
+      try{
+        URL url = "${urlValida}?${contenido}".toURL()
+        //String response = urlValida.toURL().text
+        String respuesta = url.text?.find( /<XX>\s*(.*)\s*<\/XX>/ ) {m, r -> return r}
+        String[] valores = respuesta.split(/\|/)
+        if(valores.length >=2){
+          if(!valores[1].toString().trim().equalsIgnoreCase('0')){
+            surtioPino = true
+          }
+        }
+        println respuesta
+      } catch (Exception e){
+        println( e )
+      }
+
+      return surtioPino
+    }
+
+
 }

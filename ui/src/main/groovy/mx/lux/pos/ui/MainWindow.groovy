@@ -145,7 +145,9 @@ class MainWindow extends JFrame implements KeyListener {
                                 visible: false,
                                 actionPerformed: {
                                     mainPanel.remove( orderPanel )
+                                    orderPanel = null
                                     orderPanel = new OrderPanel()
+                                    clean( orderPanel )
                                     mainPanel.add( 'orderPanel', orderPanel )
                                     mainPanel.layout.show( mainPanel, 'orderPanel' )
                                 }
@@ -153,19 +155,24 @@ class MainWindow extends JFrame implements KeyListener {
                         orderSearchMenuItem = menuItem( text: 'Consulta',
                                 visible: false,
                                 actionPerformed: {
+                                    clean( showOrderPanel )
                                     mainPanel.remove( showOrderPanel )
                                     showOrderPanel = new ShowOrderPanel()
                                     mainPanel.add( 'showOrderPanel', showOrderPanel )
                                     mainPanel.layout.show( mainPanel, 'showOrderPanel' )
                                 }
                         )
-                        cotizacionMenuItem = menuItem( text: 'Cotizaciones',
+                        /*cotizacionMenuItem = menuItem( text: 'Cotizaciones',
                                 visible: false,
-                                actionPerformed: { QuoteController.instance.requestQuote() }
-                        )
+                                actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
+                                    QuoteController.instance.requestQuote() }
+                        )*/
                         dailyCloseMenuItem = menuItem( text: 'Cierre diario',
                                 visible: false,
                                 actionPerformed: {
+                                    clean( dailyClosePanel )
                                     dailyClosePanel = new DailyClosePanel()
                                     mainPanel.add( 'dailyClosePanel', dailyClosePanel )
                                     mainPanel.layout.show( mainPanel, 'dailyClosePanel' )
@@ -174,6 +181,7 @@ class MainWindow extends JFrame implements KeyListener {
                         priceListMenuItem = menuItem( text: 'Lista de Precios',
                                 visible: false,
                                 actionPerformed: {
+                                    clean( priceListPanel )
                                     priceListPanel = new PriceListPanel().panel
                                     mainPanel.add( 'priceListPanel', priceListPanel )
                                     mainPanel.layout.show( mainPanel, 'priceListPanel' )
@@ -182,6 +190,7 @@ class MainWindow extends JFrame implements KeyListener {
                         invoiceMenuItem = menuItem( text: 'Facturaci\u00f3n',
                                 visible: false,
                                 actionPerformed: {
+                                    clean( invoicePanel )
                                     invoicePanel = new InvoicePanel()
                                     mainPanel.add( 'invoicePanel', invoicePanel )
                                     mainPanel.layout.show( mainPanel, 'invoicePanel' )
@@ -190,12 +199,17 @@ class MainWindow extends JFrame implements KeyListener {
                     }
                     clientsMenu = menu( text: 'Clientes', mnemonic: 'C',
                             menuSelected: {
+                                Runtime garbage = Runtime.getRuntime();
+                                garbage.gc();
                                 boolean userLoggedIn = Session.contains( SessionItem.USER )
                                 nationalClientMenuItem.visible = userLoggedIn
                             }
                     ){
                       nationalClientMenuItem = menuItem( text: "Cliente Nacional", visible: true,
-                              actionPerformed: { if ( customerDialog == null ) {
+                              actionPerformed: {
+                                  Runtime garbage = Runtime.getRuntime();
+                                  garbage.gc();
+                                  if ( customerDialog == null ) {
                                   customerDialog = new CustomerSearchDialog( this, new Order() )
                               }
                                   customerDialog.show()
@@ -226,6 +240,8 @@ class MainWindow extends JFrame implements KeyListener {
                         inventoryTransactionMenuItem = menuItem( text: 'Transacciones',
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     if ( invTrView == null ) {
                                         invTrView = new InvTrView()
                                     }
@@ -235,7 +251,10 @@ class MainWindow extends JFrame implements KeyListener {
                                 }
                         )
                         inventoryOhQueryMenuItem = menuItem( text: "Ticket Existencias", visible: true,
-                                actionPerformed: { InvQryController.instance.requestInvOhTicket() }
+                                actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
+                                    InvQryController.instance.requestInvOhTicket() }
                         )
                         /*loadPartsMenuItem = menuItem( text: TEXT_LOAD_PARTS_TITLE,
                                 visible: true,
@@ -292,78 +311,104 @@ class MainWindow extends JFrame implements KeyListener {
                         salesReportMenuItem = menuItem( text: "Ventas",
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ReportController.fireReport( ReportController.Report.Sales )
                                 }
                         )
                         optometristSalesMenuItem = menuItem( text: "Ventas por Optometrista",
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ReportController.fireReport( ReportController.Report.OptometristSales )
                                 }
                         )
                         salesBySellerReportMenuItem = menuItem( text: "Ventas por Vendedor",
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ReportController.fireReport( ReportController.Report.SalesbySeller )
                                 }
                         )
                         cancellationReportMenuItem = menuItem( text: "Cancelaciones",
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ReportController.fireReport( ReportController.Report.Cancellations )
                                 }
                         )
                         dailyCloseReportMenuItem = menuItem( text: "Cierre Diario",
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ReportController.fireReport( ReportController.Report.DailyClose )
                                 }
                         )
                         jobControlMenuItem = menuItem( text: "Control de Trabajos",
                             visible: false,
                             actionPerformed: {
+                                Runtime garbage = Runtime.getRuntime();
+                                garbage.gc();
                               ReportController.fireReport( ReportController.Report.JobControl )
                             }
                         )
                         quoteMenuItem = menuItem( text: "Cotizaciones",
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ReportController.fireReport( ReportController.Report.Quote )
                                 }
                         )
                         couponMenuItem = menuItem( text: "Cupones",
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ReportController.fireReport( ReportController.Report.Coupon )
                                 }
                         )
                         discountsMenuItem = menuItem( text: "Descuentos",
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ReportController.fireReport( ReportController.Report.Discounts )
                                 }
                         )
                         examsMenuItem = menuItem( text: "Examenes",
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ReportController.fireReport( ReportController.Report.Exams )
                                 }
                         )
                         stockbyBrandColorMenuItem = menuItem( text: "Existencias por Art\u00edculo",
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ReportController.fireReport( ReportController.Report.StockbyBrandColor )
                                 }
                         )
                         stockbyBrandMenuItem = menuItem( text: "Existencias por Marca",
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ReportController.fireReport( ReportController.Report.StockbyBrand )
                                 }
                         )
                         taxBillsMenuItem = menuItem( text: "Facturas Fiscales",
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ReportController.fireReport( ReportController.Report.TaxBills )
                                 }
                         )
@@ -388,12 +433,16 @@ class MainWindow extends JFrame implements KeyListener {
                         kardexMenuItem = menuItem( text: "Kardex por Articulo",
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ReportController.fireReport( ReportController.Report.Kardex )
                                 }
                         )
                         paymentsMenuItem = menuItem( text: "Pagos",
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ReportController.fireReport( ReportController.Report.Payments )
                                 }
                         )
@@ -412,12 +461,16 @@ class MainWindow extends JFrame implements KeyListener {
                         workSubmittedMenuItem = menuItem( text: "Trabajos Entregados",
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ReportController.fireReport( ReportController.Report.WorkSubmitted )
                                 }
                         )
                         undeliveredJobsReportMenuItem = menuItem( text: "Trabajos sin Entregar",
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ReportController.fireReport( ReportController.Report.UndeliveredJobs )
                                 }
                         )
@@ -458,12 +511,16 @@ class MainWindow extends JFrame implements KeyListener {
                         entregaMenuItem = menuItem(text: 'Entrega',
                                 visible: true,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     entrega()
                                 }
                         )
                         changePasswordMenuItem = menuItem( text: 'Cambio de Password',
                                 visible: true,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     ChangePasswordDialog dialog = new ChangePasswordDialog()
                                     dialog.show()
                                 }
@@ -471,12 +528,16 @@ class MainWindow extends JFrame implements KeyListener {
                         newSalesDayMenuItem = menuItem( text: 'Registrar Efectivo Caja',
                                 visible: true,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     requestNewSalesDay()
                                 }
                         )
                         sessionMenuItem = menuItem( text: 'Cerrar Sesi\u00f3n',
                                 visible: false,
                                 actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
                                     requestLogout()
                                 }
                         )
@@ -583,7 +644,48 @@ class MainWindow extends JFrame implements KeyListener {
         mainPanel.remove( showOrderPanel )
         mainPanel.remove( dailyClosePanel )
         mainPanel.remove( priceListPanel )
+        mainPanel.remove( invoicePanel )
+        orderPanel = null
+        showOrderPanel = null
+        dailyClosePanel = null
+        priceListPanel = null
+        invoicePanel = null
+        Runtime garbage = Runtime.getRuntime();
+        garbage.gc();
         mainPanel.layout.show( mainPanel, 'logInPanel' )
+    }
+
+
+    void clean( JPanel panelSelected ){
+      if( !panelSelected.equals(orderPanel) ){
+          orderPanel.cleanAll( )
+          mainPanel.remove( orderPanel )
+          orderPanel.finalize()
+          orderPanel = null
+      }
+      if( !panelSelected.equals(showOrderPanel) ){
+          showOrderPanel.cleanAll( )
+          mainPanel.remove( showOrderPanel )
+          orderPanel.finalize()
+          showOrderPanel = null
+      }
+      if( !panelSelected.equals(dailyClosePanel) ){
+          mainPanel.remove( dailyClosePanel )
+          orderPanel.finalize()
+          dailyClosePanel = null
+      }
+      if( !panelSelected.equals(priceListPanel) ){
+          mainPanel.remove( priceListPanel )
+          orderPanel.finalize()
+          priceListPanel = null
+      }
+      if( !panelSelected.equals(invoicePanel) ){
+          mainPanel.remove( invoicePanel )
+          orderPanel.finalize()
+          invoicePanel = null
+      }
+      Runtime garbage = Runtime.getRuntime();
+      garbage.gc();
     }
 
     static void main( args ) {

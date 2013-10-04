@@ -60,6 +60,7 @@ class ReportController {
     if ( reportForDate != null && dateDialog.button ) {
       log.debug( "Imprime el reporte de Cierre Diario" )
       reportService.obtenerReporteCierreDiario( reportForDate )
+      dateDialog = null
     } else {
       log.debug( "Cancelar y continuar" )
     }
@@ -116,6 +117,7 @@ class ReportController {
       log.debug( "Imprime el reporte de Ventas Completo" )
       //reportService.obtenerReporteVentasCompleto( reportForDateStart, reportForDateEnd )
         reportService.obtenerReporteVentasMasVision( reportForDateStart, reportForDateEnd )
+        twoDateDialog = null
     } else {
       log.debug( "Cancelar_continuar" )
     }
@@ -134,6 +136,7 @@ class ReportController {
       if ( resumen == false ) {
         reportService.obtenerReporteVentasporVendedorCompleto( reportForDateStart, reportForDateEnd )
         log.debug( "Imprime el reporte de Ventas por Vendedor Completo" )
+        twoDateFilterDialog = null
       }
     } else {
       log.debug( "Cancelar_continuar" )
@@ -159,9 +162,11 @@ class ReportController {
       if ( resumen ) {
         log.debug( "Imprime el reporte de Cancelaciones Resumido" )
         reportService.obtenerReporteCancelacionesResumido( reportForDateStart, reportForDateEnd )
+        twoDateFilterDialog = null
       } else {
         reportService.obtenerReporteCancelacionesCompleto( reportForDateStart, reportForDateEnd )
         log.debug( "Imprime el reporte de Cancelaciones Completo" )
+        twoDateFilterDialog = null
       }
     } else {
       log.debug( "Cancelar_continuar" )
@@ -253,9 +258,11 @@ class ReportController {
       if ( resumen == true ) {
         log.debug( "Imprime el reporte de Existencias por Marca Resumido" )
         reportService.obtenerReporteExistenciasporMarcaResumido( articuloDesc, gogle, oftalmico, todo )
+        articleSelectionFilterDialog = null
       } else {
         log.debug( "Imprime el reporte de Existencias por Marca" )
         reportService.obtenerReporteExistenciasporMarca( articuloDesc, gogle, oftalmico, todo )
+        articleSelectionFilterDialog = null
       }
     }
   }
@@ -272,6 +279,7 @@ class ReportController {
     if ( articleAndColorSelectionFilterDialog.button ) {
       log.debug( "Imprime el reporte de Existencias por Articulo" )
       reportService.obtenerReporteExistenciasporArticulo( articuloDesc, descripcion, colorDesc )
+      articleAndColorSelectionFilterDialog = null
     }
   }
 
@@ -291,6 +299,7 @@ class ReportController {
     if ( filterDialog.button ) {
       log.debug( "Imprime el reporte de Control de Trabajos" )
       reportService.obtenerReporteControldeTrabajos( retenido, porEnviar, pino, sucursal, todos, factura, fecha );
+      filterDialog = null
     }
   }
 
@@ -307,10 +316,12 @@ class ReportController {
       if ( resumen == true ) {
         log.debug( "Imprime el reporte de Trabajos Entregados por Empleado" )
         reportService.obtenerReporteTrabajosEntregadosporEmpleado( reportForDateStart, reportForDateEnd )
+        twoDatesSelectionFilterbyEmployeeDialog = null
       }
       if ( resumen == false ) {
         log.debug( "Imprime el reporte de Trabajos Entregados sin Corte por Empleado" )
         reportService.obtenerReporteTrabajosEntregados( reportForDateStart, reportForDateEnd )
+        twoDatesSelectionFilterbyEmployeeDialog = null
       }
     } else {
       log.debug( "Cancelar_continuar" )
@@ -328,6 +339,7 @@ class ReportController {
     if ( reportForDateStart != null && reportForDateEnd != null && twoDateDialog.button ) {
       log.debug( "Imprime el reporte de Facturas Fiscales" )
       reportService.obtenerReporteFacturasFiscales( reportForDateStart, reportForDateEnd )
+      twoDateDialog = null
     } else {
       log.debug( "Cancelar_continuar" )
     }
@@ -345,6 +357,7 @@ class ReportController {
     if ( reportForDateStart != null && reportForDateEnd != null && twoDateKeyDialog.button ) {
       log.debug( "Imprime el reporte de Descuentos" )
       reportService.obtenerReporteDescuentosMasVision( reportForDateStart, reportForDateEnd, key )
+      twoDateKeyDialog = null
     } else {
       log.debug( "Cancelar_continuar" )
     }
@@ -379,6 +392,7 @@ class ReportController {
     if ( reportForDateStart != null && reportForDateEnd != null && twoDatesSelectionFilterPaymentsDialog.button ) {
       log.debug( "Imprime el reporte de Pagos" )
       reportService.obtenerReportePagos( reportForDateStart, reportForDateEnd, payment, bill )
+      twoDatesSelectionFilterPaymentsDialog = null
     } else {
       log.debug( "Cancelar_continuar" )
     }
@@ -395,6 +409,7 @@ class ReportController {
     if ( reportForDateStart != null && reportForDateEnd != null && twoDateDialog.button ) {
       log.debug( "Imprime el reporte de Cotizaciones" )
       reportService.obtenerReporteCotizaciones( reportForDateStart, reportForDateEnd )
+      twoDateDialog = null
     } else {
       log.debug( "Cancelar_continuar" )
     }
@@ -413,9 +428,11 @@ class ReportController {
       if ( resumen == true ) {
         log.debug( "Imprime el reporte de Examenes Resumido" )
         reportService.obtenerReporteExamenesResumido( reportForDateStart, reportForDateEnd )
+        twoDateFilterDialog = null
       }
       if ( resumen == false ) {
         reportService.obtenerReporteExamenesCompleto( reportForDateStart, reportForDateEnd )
+        twoDateFilterDialog = null
         log.debug( "Imprime el reporte de Examenes Completo" )
       }
     } else {
@@ -438,6 +455,7 @@ class ReportController {
       } else {*/
         log.debug( "Imprime el reporte de Ventas por Optometrista" )
         reportService.obtenerReporteVentasporOptometrista( reportForDateStart, reportForDateEnd )
+        twoDateDialog = null
       //}
     } else {
       log.debug( "Cancelar_continuar" )
@@ -465,6 +483,7 @@ class ReportController {
     if( StringUtils.trimToEmpty(articulo) != '' && reportForDateStart != null && reportForDateEnd != null ){
       //Integer sku = NumberFormat.getInstance().parse( strSku )
       reportService.obtenerReporteDeKardex( articulo, reportForDateStart, reportForDateEnd )
+      kardexReportDialog = null
     }
   }
 
@@ -509,6 +528,7 @@ class ReportController {
       Date dateEnd = twoDateDialog.getSelectedDateEnd()
       if( dateStart != null && dateEnd != null ){
           reportService.obtenerReporteDeCupones( dateStart, dateEnd )
+          twoDateDialog = null
       }
   }
 

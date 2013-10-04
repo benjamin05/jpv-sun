@@ -4,7 +4,9 @@ import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.controller.AccessController
 import mx.lux.pos.ui.controller.CancellationController
 import mx.lux.pos.ui.controller.OrderController
+import mx.lux.pos.ui.model.Item
 import mx.lux.pos.ui.model.Order
+import mx.lux.pos.ui.model.OrderItem
 import mx.lux.pos.ui.model.Payment
 import mx.lux.pos.ui.model.UpperCaseDocument
 import mx.lux.pos.ui.view.renderer.DateCellRenderer
@@ -27,6 +29,11 @@ class CancellationDialog extends JDialog {
   private JButton transferButton
   private JButton returnButton
   private List<String> reasons
+
+  private static final String DATE_FORMAT = 'dd-MM-yyyy'
+  private static final String GENERICO_ARMAZON = 'A'
+  private static final String TAG_SURTE_SUCURSAL = 'S'
+  private static final String TAG_SURTE_PINO = 'P'
 
   CancellationDialog( Component parent, String orderId ) {
     sb = new SwingBuilder()
@@ -107,15 +114,15 @@ class CancellationDialog extends JDialog {
   }
 
   private boolean cancelOrder( ) {
-    if ( CancellationController.cancelOrder( order.id, reasonField.selectedItem as String, commentsField.text ) ) {
-      CancellationController.printCancellationPlan( order.id )
-      return true
-    } else {
-      sb.optionPane( message: "Ocurrio un error al cancelar", optionType: JOptionPane.DEFAULT_OPTION )
-          .createDialog( this, "Error" )
-          .show()
-      return false
-    }
+      if ( CancellationController.cancelOrder( order.id, reasonField.selectedItem as String, commentsField.text ) ) {
+          CancellationController.printCancellationPlan( order.id )
+          return true
+      } else {
+          sb.optionPane( message: "Ocurrio un error al cancelar", optionType: JOptionPane.DEFAULT_OPTION )
+                  .createDialog( this, "Error" )
+                  .show()
+          return false
+      }
   }
 
   private def doTransfer = { ActionEvent ev ->
@@ -123,6 +130,7 @@ class CancellationDialog extends JDialog {
     source.enabled = false
     if ( allowLateCancellation() ) {
       if ( cancelOrder() ) {
+        printCancellationNotToday(order, )
         dispose()
       }
     }
@@ -150,4 +158,27 @@ class CancellationDialog extends JDialog {
     }
     source.enabled = true
   }
+
+
+    private def printCancellationNotToday(Order orderCom){
+        Item item = new Item()
+        String surte = ''
+        for(OrderItem i : orderCom.items){
+            if(i.item.type.trim().equalsIgnoreCase(GENERICO_ARMAZON)){
+                surte = i.delivers.trim()
+                item = i.item
+            }
+        }
+        if(item.id != null && surte.equalsIgnoreCase(TAG_SURTE_SUCURSAL)){
+            CancellationController.printMaterialReturn( order.id )
+            CancellationController.printMaterialReception( order.id )
+        } else if(item.id != null && surte.equalsIgnoreCase(TAG_SURTE_PINO)){
+            if(CancellationController.verificaPino(order.id) ){
+                CancellationController.printPinoNotStocked(order.id)
+            } else {
+                CancellationController.printMaterialReturn( order.id )
+                CancellationController.printMaterialReception( order.id )
+            }
+        }
+    }
 }

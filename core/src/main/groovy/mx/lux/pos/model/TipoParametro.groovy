@@ -64,6 +64,7 @@ enum TipoParametro {
   URL_ACUSE_VENTA_DIA( 'url_acuse_venta_dia', '' ),
   URL_CARGA_LISTA_PRECIOS( 'url_carga_lista_precios', '' ),
   URL_RECIBE_LISTA_PRECIOS( 'url_recibe_lista_precios', '' ),
+  VALIDA_SP( 'valida_sp', '' ),
   VENTA_NEGATIVA_AUTORIZACION( 'venta_negativo_aut', 'S' ),
   ALMACENES('almacenes','00000'),
   ARCHIVO_CONSULTA_WEB('archivo_consulta_web',''),

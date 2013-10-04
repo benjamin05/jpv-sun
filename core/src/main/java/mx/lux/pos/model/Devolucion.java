@@ -28,7 +28,7 @@ public class Devolucion implements Serializable {
     @Column( name = "id_pago" )
     private Integer idPago;
 
-    @Column( name = "id_forma_pago", length = 2 )
+    @Column( name = "id_forma_pago" )
     private String idFormaPago;
 
     @Column( name = "id_banco" )

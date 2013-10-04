@@ -225,4 +225,19 @@ class CancellationController {
           log.warn( 'no se imprime recepcion de material, parametros invalidos' )
       }
   }
+
+  static Boolean verificaPino( String idOrder ){
+      Boolean isPino =  cancelacionService.validandoEnvioPino( idOrder )
+      return isPino
+  }
+
+
+  static void printPinoNotStocked( String orderId ) {
+      log.info( "imprimiendo pino no surtido de orden id: ${orderId}" )
+      if ( StringUtils.isNotBlank( orderId ) ) {
+          ticketService.imprimePinoNoSurtido( orderId )
+      } else {
+          log.warn( 'no se imprime plan de cancelacion de orden, parametros invalidos' )
+      }
+  }
 }

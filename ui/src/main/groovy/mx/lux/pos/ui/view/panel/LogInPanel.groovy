@@ -24,6 +24,7 @@ class LogInPanel extends JPanel {
   private String priceListPending
   private Closure doAction
   private String version
+  Boolean loggedOk = false
 
   LogInPanel( Closure doAction, String version ) {
     this.version = version
@@ -66,11 +67,10 @@ class LogInPanel extends JPanel {
     logInButton.enabled = false
     User user = AccessController.logIn( username.text, password.text )
     if ( StringUtils.isNotBlank( user?.username ) ) {
-
-
       messages.text = null
       messages.visible = false
       doAction()
+      loggedOk = true
     } else {
       messages.text = 'Empleado/Contrase\u00f1a incorrectos'
       messages.visible = true

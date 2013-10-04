@@ -190,6 +190,11 @@ public class ReportBusiness {
     public String CompilayGeneraReporte( org.springframework.core.io.Resource template, Map<String, Object> parametros, File report ) {
 
         try {
+            /*Runtime rt = Runtime.getRuntime();
+            long memoriaAntes=0, memoriaDespues=0, memoriaConsumida=0;
+            System.gc();
+            memoriaAntes = rt.freeMemory();*/
+
             String cmd = "chmod 777 "+report.getAbsolutePath();
             Process p = Runtime.getRuntime().exec(cmd);
             JasperReport jasperReport = JasperCompileManager.compileReport( template.getInputStream() );
@@ -197,6 +202,14 @@ public class ReportBusiness {
             JasperExportManager.exportReportToHtmlFile( jasperPrint, report.getPath() );
             Desktop.getDesktop().open( report );
             log.info( "Mostrar Reporte" );
+
+            Runtime garbage = Runtime.getRuntime();
+            garbage.gc();
+            /*memoriaDespues = rt.freeMemory();
+            memoriaConsumida = memoriaAntes - memoriaDespues;
+            System.out.println( String.format("Memoria Antes: %s", memoriaAntes) );
+            System.out.println( String.format("Memoria Despues: %s", memoriaDespues) );
+            System.out.println( String.format("Memoria Consumida: %s", memoriaConsumida) );*/
 
             return report.getPath();
         } catch ( JRException e ) {

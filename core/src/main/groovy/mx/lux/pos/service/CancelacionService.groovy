@@ -26,4 +26,6 @@ interface CancelacionService {
 
   void restablecerMontoAlBorrarPago( Integer idPago )
 
+  Boolean validandoEnvioPino( String idOrder )
+
 }

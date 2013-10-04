@@ -37,6 +37,9 @@ class ComprobanteServiceImpl implements ComprobanteService {
   private NotaVentaRepository notaVentaRepository
 
   @Resource
+  private ImpuestoRepository impuestoRepository
+
+  @Resource
   private DetalleNotaVentaRepository detalleNotaVentaRepository
 
   @Resource
@@ -236,7 +239,12 @@ class ComprobanteServiceImpl implements ComprobanteService {
       if ( StringUtils.isNotBlank( venta?.id ) ) {
         try {
           Parametro parametroTasa = parametroRepository.findOne( TipoParametro.IVA_VIGENTE.value )
-          String tasa = parametroTasa?.valor
+          String idIva = parametroTasa?.valor
+          Impuesto iva = impuestoRepository.findOne( idIva )
+          String tasa = '0'
+          if( iva != null ){
+            tasa = iva.tasa.toString().trim()
+          }
           log.debug( "obtiene tasa vigente: ${tasa}" )
           Double referencia = ( ( tasa?.isDouble() ? tasa.toDouble() : 0 ) / 100 ) + 1
           MathContext mathContext = new MathContext( 5 )
@@ -303,7 +311,7 @@ class ComprobanteServiceImpl implements ComprobanteService {
                     Integer cantidad = det?.cantidadFac ?: 0
                     BigDecimal precioVenta = det.precioUnitFinal ?: BigDecimal.ZERO
                     BigDecimal precioUnitario = precioVenta.divide( referencia, mathContext ) ?: BigDecimal.ZERO
-                    BigDecimal precioUnitarioAB = precioUnidad.divide( referencia, mathContext ) ?: BigDecimal.ZERO
+                    BigDecimal precioUnitarioAB = det.notaVenta.ventaNeta.divide( referencia, mathContext ) ?: BigDecimal.ZERO
                     BigDecimal importe = precioUnitario.multiply( cantidad )
                     BigDecimal importeAB = precioUnitarioAB.multiply( cantidad )
                     Boolean ABinsertado = false
