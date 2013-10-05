@@ -405,6 +405,13 @@ class ShowOrderPanel extends JPanel {
     }
 
 
-
+    public void cleanAll( ){
+      sb.finalize()
+      sb = null
+      order.finalize()
+      order = null
+      navigatorPanel.finalize()
+      navigatorPanel = null
+    }
 }
 
