@@ -240,4 +240,17 @@ class CancellationController {
           log.warn( 'no se imprime plan de cancelacion de orden, parametros invalidos' )
       }
   }
+
+
+  static void updateJb( String orderId ){
+    log.info( "updateJb( )" )
+    cancelacionService.actualizaJb( orderId )
+    cancelacionService.insertaJbTrack( orderId )
+    cancelacionService.eliminaJbLlamada( orderId )
+  }
+
+  static void generatedAcuses( orderId ){
+    log.info( 'generatedAcuses( )' )
+    cancelacionService.generaAcuses( orderId )
+  }
 }

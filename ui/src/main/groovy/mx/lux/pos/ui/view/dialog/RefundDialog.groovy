@@ -210,11 +210,23 @@ class RefundDialog extends JDialog {
           }
       } else if(item.id != null && surte.equalsIgnoreCase(TAG_SURTE_PINO)){
           if(CancellationController.verificaPino(orderId) ){
-              CancellationController.printPinoNotStocked(orderId)
+            CancellationController.printMaterialReturn( orderId )
+            CancellationController.printMaterialReception( orderId )
           } else {
-              CancellationController.printMaterialReturn( orderId )
-              CancellationController.printMaterialReception( orderId )
+            CancellationController.printPinoNotStocked(orderId)
+            CancellationController.updateJb(orderId)
           }
+          if(CancellationController.refundPaymentsCreditFromOrder( orderId, creditRefunds )){
+              CancellationController.printOrderCancellation( orderId )
+              dispose()
+          } else {
+              sb.optionPane(
+                      message: 'Ocurrio un error al registrar devoluciones',
+                      messageType: JOptionPane.ERROR_MESSAGE
+              ).createDialog( this, 'No se registran devoluciones' )
+                      .show()
+          }
+      } else if( item.id == null ){
           if(CancellationController.refundPaymentsCreditFromOrder( orderId, creditRefunds )){
               CancellationController.printOrderCancellation( orderId )
               dispose()

@@ -118,16 +118,23 @@ class ComprobanteServiceImpl implements ComprobanteService {
         Integer idSucursal = sucursalRepository.getCurrentSucursalId()
         Parametro parametroEmpresa = parametroRepository.findOne( TipoParametro.EMP_ELECTRONICO.value )
         Parametro parametroTasa = parametroRepository.findOne( TipoParametro.IVA_VIGENTE.value )
+        Impuesto iva = impuestoRepository.findOne( parametroTasa.valor )
         String plantilla = '$id_sucursal|$ticket|$tipo_comprobante|$forma_pago|$subtotal|$total|' +
             '$metodo_pago|$impuestos|$tasa|$rfc|$nombre|$calle|$colonia|$municipio|$estado|$pais|' +
             '$codigo_postal|$email|$observaciones|$empresa|$tipo|<% listaDetalles.each { print it } %>'
         String decimalFormat = '%,3.2f'
+        Boolean esAnteojoGraduado = false
+        List<String> listaDetallesTmp = [ ]
         List<String> listaDetalles = [ ]
         detalles.eachWithIndex { DetalleComprobante tmp, int idx ->
           String cantidad = tmp.cantidad ?: ''
           String articulo = tmp.articulo ?: ''
           String desc = StringUtils.trimToEmpty( tmp.descripcion )
           String descripcion = ''
+
+          if( tmp.descripcion.contains('ANTEOJO GRADUADO') ){
+            esAnteojoGraduado = true
+          }
 
           if ( desc.length() > 0 ) {
             if ( desc.length() >= this.getMaxLength() ) {
@@ -139,8 +146,18 @@ class ComprobanteServiceImpl implements ComprobanteService {
 
           String precio = sprintf( decimalFormat, tmp?.precioUnitario ?: BigDecimal.ZERO )
           String importe = sprintf( decimalFormat, tmp?.importe ?: BigDecimal.ZERO )
-          listaDetalles.add( "${idx == 0 ? '>' : ''}${cantidad}|${articulo}|${descripcion}|${precio}|${importe}|>" )
+          listaDetallesTmp.add( "${idx == 0 ? '>' : ''}${cantidad}|${articulo}|${descripcion}|${precio}|${importe}|>" )
         }
+        if( esAnteojoGraduado ){
+          for(String det : listaDetallesTmp){
+              if( det.contains('ANTEOJO GRADUADO') ){
+                listaDetalles.add( det )
+              }
+          }
+        } else {
+          listaDetalles.addAll( listaDetallesTmp )
+        }
+
         Map<String, String> valores = [
             id_sucursal: idSucursal ?: '',
             ticket: comprobante.ticket,
@@ -150,7 +167,7 @@ class ComprobanteServiceImpl implements ComprobanteService {
             total: comprobante.importe?.replace( '$', '' ) ?: '0.00',
             metodo_pago: comprobante.metodoPago ?: '',
             impuestos: sprintf( decimalFormat, comprobante.impuestos ?: BigDecimal.ZERO ),
-            tasa: parametroTasa?.valor ?: '',
+            tasa: iva.tasa ?: '',
             rfc: comprobante.rfc ?: '',
             nombre: comprobante.razon ?: '',
             calle: comprobante.calle ?: '',
@@ -246,7 +263,7 @@ class ComprobanteServiceImpl implements ComprobanteService {
             tasa = iva.tasa.toString().trim()
           }
           log.debug( "obtiene tasa vigente: ${tasa}" )
-          Double referencia = ( ( tasa?.isDouble() ? tasa.toDouble() : 0 ) / 100 ) + 1
+          Double referencia = ( ( tasa?.isDouble() ? tasa.toDouble() : 0 ) / 100 )
           MathContext mathContext = new MathContext( 5 )
           BigDecimal montoCupones = BigDecimal.ZERO
           for(Pago pago : venta.pagos){
@@ -255,8 +272,8 @@ class ComprobanteServiceImpl implements ComprobanteService {
             }
           }
           BigDecimal total = venta.ventaNeta ? venta.ventaNeta.subtract(montoCupones): BigDecimal.ZERO
-          BigDecimal subTotal = total.divide( referencia, mathContext ) ?: BigDecimal.ZERO
-          BigDecimal impuestos = total.subtract( subTotal )
+          BigDecimal impuestos = total.multiply( referencia )
+          BigDecimal subTotal = total.subtract( impuestos ) ?: BigDecimal.ZERO
 
           Comprobante ultimo = null
           List<Comprobante> anteriores = comprobanteRepository.findByTicketOrderByFechaImpresionDesc( comprobante.ticket )
@@ -330,8 +347,8 @@ class ComprobanteServiceImpl implements ComprobanteService {
                         idGenerico = 'ANTEOJO'
                         descripcion = 'ANTEOJO GRADUADO'
                         quantity = cantidad
-                        priceUnit = precioUnitarioAB
-                        amount = importeAB
+                        priceUnit = total
+                        amount = total
                     } else if(descripcion != "" && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_A)){
                         descripcion = 'ARMAZON'
                     } else if(descripcion != "" && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
@@ -367,13 +384,28 @@ class ComprobanteServiceImpl implements ComprobanteService {
                 }
           }
 
+          String formaPago = ''
+          Collections.sort(venta.pagos as List<Pago>, new Comparator<Pago>() {
+              @Override
+              int compare(Pago o1, Pago o2) {
+                  return o1.parcialidad.compareTo(o2.parcialidad)
+              }
+          })
+          for(Pago payment : venta.pagos){
+            if(payment?.parcialidad.length() > 0){
+              formaPago = "PARCIALIDAD ${payment.parcialidad} DE ${payment.parcialidad}"
+            } else {
+              formaPago = 'UNA SOLA EXHIBICION'
+            }
+          }
+
           comprobante.factura = venta.factura
           comprobante.idCliente = venta.idCliente
           comprobante.importe = sprintf( '$%,3.2f', total ?: BigDecimal.ZERO )
           comprobante.subtotal = subTotal
           comprobante.impuestos = impuestos
           comprobante.estatus = 'N'
-          comprobante.formaPago = 'UNA SOLA EXHIBICION'
+          comprobante.formaPago = formaPago
           comprobante.metodoPago = "${pago?.eTipoPago?.descripcion ?: ''} ${pago?.referenciaPago ?: ''}"
 
           log.debug( "genera comprobante ${comprobante.dump()}" )

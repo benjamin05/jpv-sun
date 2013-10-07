@@ -115,6 +115,7 @@ class CancellationDialog extends JDialog {
 
   private boolean cancelOrder( ) {
       if ( CancellationController.cancelOrder( order.id, reasonField.selectedItem as String, commentsField.text ) ) {
+          CancellationController.generatedAcuses( order.id )
           CancellationController.printCancellationPlan( order.id )
           return true
       } else {

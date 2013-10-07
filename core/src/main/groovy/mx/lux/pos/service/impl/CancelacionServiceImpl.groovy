@@ -4,8 +4,10 @@ import com.mysema.query.BooleanBuilder
 import com.mysema.query.types.OrderSpecifier
 import com.mysema.query.types.Predicate
 import groovy.util.logging.Slf4j
+import mx.lux.pos.repository.impl.RepositoryFactory
 import mx.lux.pos.service.CancelacionService
 import mx.lux.pos.service.NotaVentaService
+import mx.lux.pos.util.CustomDateUtils
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.time.DateUtils
 import org.springframework.stereotype.Service
@@ -36,6 +38,15 @@ class CancelacionServiceImpl implements CancelacionService {
     private ParametroRepository parametroRepository
 
     @Resource
+    private JbRepository jbRepository
+
+    @Resource
+    private AcuseRepository acuseRepository
+
+    @Resource
+    private JbTrackRepository jbTrackRepository
+
+    @Resource
     private ModificacionRepository modificacionRepository
 
     @Resource
@@ -45,7 +56,23 @@ class CancelacionServiceImpl implements CancelacionService {
     private PagoRepository pagoRepository
 
     @Resource
+    private EmpleadoRepository empleadoRepository
+
+    @Resource
+    private NotaFacturaRepository notaFacturaRepository
+
+    @Resource
+    private JbLlamadaRepository jbLlamadaRepository
+
+    @Resource
     private DevolucionRepository devolucionRepository
+
+
+    private static final TAG_JB_CANCELADA = 'CN'
+    private static final TAG_NOTA_FACTURA_CANCELACION = 'cancelacion'
+    private static final TAG_DETALLES_CANCELACION = 'CAN_APART'
+    private static final TAG_GENERICO_ARMAZON = 'A'
+    private static final TAG_SURTE_PINO = 'P'
 
     @Override
     List<CausaCancelacion> listarCausasCancelacion() {
@@ -422,6 +449,116 @@ class CancelacionServiceImpl implements CancelacionService {
 
       return surtioPino
     }
+
+
+    @Override
+    @Transactional
+    Jb actualizaJb( String idFactura ){
+      log.debug( 'actualizaJb( )' )
+      Jb jb = jbRepository.findOne( idFactura )
+      if( jb != null ){
+        jb.estado = TAG_JB_CANCELADA
+        jb = jbRepository.saveAndFlush( jb )
+      }
+      return jb
+    }
+
+
+    @Override
+    @Transactional
+    JbTrack insertaJbTrack( String idFactura ){
+      log.debug( 'actualizaJbTrack( )' )
+      NotaVenta nota = notaVentaRepository.findOne( idFactura.trim() )
+      List<Modificacion> lstModificaciones = new ArrayList<Modificacion>()
+      if( nota != null ){
+        lstModificaciones = modificacionRepository.findByIdFactura( nota.id )
+      }
+
+      JbTrack jbTrack = new JbTrack()
+      jbTrack.rx = idFactura.trim()
+      jbTrack.estado = TAG_JB_CANCELADA
+      jbTrack.emp = lstModificaciones.size() > 0 ? lstModificaciones.first().idEmpleado : ''
+      jbTrack.obs = ''
+      jbTrack.id_viaje = null
+      jbTrack.fecha = new Date()
+
+      jbTrack = jbTrackRepository.saveAndFlush( jbTrack )
+      return jbTrack
+    }
+
+
+    @Override
+    @Transactional
+    void eliminaJbLlamada( String idFactura ){
+      log.debug( 'eliminaJbLlamada( )' )
+      NotaVenta nota = notaVentaRepository.findOne( idFactura )
+      QJbLlamada llamada = QJbLlamada.jbLlamada
+      JbLlamada jbLlamada = jbLlamadaRepository.findOne( llamada.rx.eq(nota != null ? nota.factura : '') )
+      if(jbLlamada != null ){
+        jbLlamadaRepository.delete( jbLlamada )
+      }
+    }
+
+
+  @Override
+  void generaAcuses( String idFactura ){
+    log.debug( "generaAcuses()" )
+    Parametro idSuc = parametroRepository.findOne( TipoParametro.ID_SUCURSAL.value )
+    NotaVenta notaVenta = notaVentaRepository.findOne( idFactura )
+    QNotaFactura nota = QNotaFactura.notaFactura
+    NotaFactura notaFactura = notaFacturaRepository.findOne( nota.ticket.eq(idSuc.valor.trim()+'-'+idFactura.trim()) )
+    if( notaFactura != null ){
+        Acuse acuse = new Acuse()
+        acuse.idTipo = TAG_NOTA_FACTURA_CANCELACION
+        try {
+            acuse = acuseRepository.saveAndFlush( acuse )
+            log.debug( String.format( 'Acuse: (%d) %s -> %s', acuse.id, acuse.idTipo, acuse.contenido ) )
+        } catch ( Exception e ) {
+            log.error( e.getMessage() )
+        }
+        acuse.contenido = String.format( 'fechaVal=%s|', CustomDateUtils.format(new Date(), 'ddMMyyyy') )
+        acuse.contenido += String.format( 'id_acuseVal=%s|', String.format( '%d', acuse.id ) )
+        acuse.contenido += String.format( 'id_facturaVal=%s|', notaVenta.factura.trim() )
+        acuse.contenido += String.format( 'id_sucVal=%s|', String.format( '%d', notaVenta.idSucursal ) )
+        acuse.contenido += String.format( 'no_soiVal=%s|', notaVenta.id.trim() )
+        acuse.fechaCarga = new Date()
+        try {
+            acuse = acuseRepository.saveAndFlush( acuse )
+            log.debug( String.format( 'Acuse: (%d) %s -> %s', acuse.id, acuse.idTipo, acuse.contenido ) )
+        } catch ( Exception e ) {
+            log.error( e.getMessage() )
+        }
+    }
+
+    Boolean acuseCanApart = false
+    for(DetalleNotaVenta det : notaVenta.detalles){
+      if( TAG_GENERICO_ARMAZON.equalsIgnoreCase(det.articulo.idGenerico.trim()) ){
+        if( TAG_SURTE_PINO.equalsIgnoreCase(det.surte.trim()) ){
+          if( det.notaVenta.fechaEntrega == null ){
+              Acuse acuse = new Acuse()
+              acuse.idTipo = TAG_DETALLES_CANCELACION
+              try {
+                  acuse = acuseRepository.saveAndFlush( acuse )
+                  log.debug( String.format( 'Acuse: (%d) %s -> %s', acuse.id, acuse.idTipo, acuse.contenido ) )
+              } catch ( Exception e ) {
+                  log.error( e.getMessage() )
+              }
+              acuse.contenido = String.format( 'id_sucVal=%s|', String.format( '%d', notaVenta.idSucursal ) )
+              acuse.contenido += String.format( 'facturaVal=%s|', notaVenta.factura.trim() )
+              acuse.contenido += String.format( 'id_acuseVal=%s|', String.format( '%d', acuse.id ) )
+              acuse.fechaCarga = new Date()
+              try {
+                  acuse = acuseRepository.saveAndFlush( acuse )
+                  log.debug( String.format( 'Acuse: (%d) %s -> %s', acuse.id, acuse.idTipo, acuse.contenido ) )
+              } catch ( Exception e ) {
+                  log.error( e.getMessage() )
+              }
+          }
+        }
+      }
+    }
+
+  }
 
 
 }

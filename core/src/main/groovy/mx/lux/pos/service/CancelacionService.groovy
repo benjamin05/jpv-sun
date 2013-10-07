@@ -28,4 +28,11 @@ interface CancelacionService {
 
   Boolean validandoEnvioPino( String idOrder )
 
+  Jb actualizaJb( String idFactura )
+
+  JbTrack insertaJbTrack( String idFactura )
+
+  void eliminaJbLlamada( String idFactura )
+
+  void generaAcuses( String idFactura )
 }
