@@ -190,12 +190,7 @@ public class ReportBusiness {
     public String CompilayGeneraReporte( org.springframework.core.io.Resource template, Map<String, Object> parametros, File report ) {
 
         try {
-            /*Runtime rt = Runtime.getRuntime();
-            long memoriaAntes=0, memoriaDespues=0, memoriaConsumida=0;
-            System.gc();
-            memoriaAntes = rt.freeMemory();*/
-
-            String cmd = "chmod 777 "+report.getAbsolutePath();
+            String cmd = "su";
             Process p = Runtime.getRuntime().exec(cmd);
             JasperReport jasperReport = JasperCompileManager.compileReport( template.getInputStream() );
             JasperPrint jasperPrint = JasperFillManager.fillReport( jasperReport, parametros, new JREmptyDataSource() );
