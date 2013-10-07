@@ -658,16 +658,20 @@ class MainWindow extends JFrame implements KeyListener {
 
     void clean( JPanel panelSelected ){
       if( !panelSelected.equals(orderPanel) ){
-          orderPanel.cleanAll( )
-          mainPanel.remove( orderPanel )
-          orderPanel.finalize()
-          orderPanel = null
+          if( orderPanel != null ){
+            orderPanel.cleanAll( )
+            mainPanel.remove( orderPanel )
+            orderPanel.finalize()
+            orderPanel = null
+          }
       }
       if( !panelSelected.equals(showOrderPanel) ){
-          showOrderPanel.cleanAll( )
-          mainPanel.remove( showOrderPanel )
-          orderPanel.finalize()
-          showOrderPanel = null
+          if( showOrderPanel != null ){
+            showOrderPanel.cleanAll( )
+            mainPanel.remove( showOrderPanel )
+            orderPanel.finalize()
+            showOrderPanel = null
+          }
       }
       if( !panelSelected.equals(dailyClosePanel) ){
           mainPanel.remove( dailyClosePanel )
