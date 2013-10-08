@@ -303,7 +303,7 @@ class OrderController {
                             precioCalcOferta: 0,
                             precioConv: 0,
                             idTipoDetalle: 'N',
-                            surte: surte
+                            surte: item?.type.trim().equalsIgnoreCase('B') ? 'P' : surte
 
                     )
                     nota.observacionesNv = dlg.remarks
@@ -321,7 +321,7 @@ class OrderController {
                         precioCalcOferta: 0,
                         precioConv: 0,
                         idTipoDetalle: 'N',
-                        surte: surte
+                        surte: item?.type.trim().equalsIgnoreCase('B') ? 'P' : surte
 
                 )
             }
@@ -596,6 +596,10 @@ class OrderController {
         if (entregaInstante == false) {
 
             Jb trabajo = jbRepository.findOne(idFactura)
+            if( trabajo == null ){
+              idFactura = idFactura.replaceFirst("^0*", "")
+              trabajo = jbRepository.findOne( idFactura)
+            }
             trabajo.setEstado('TE')
             trabajo = jbRepository.saveAndFlush(trabajo)
 

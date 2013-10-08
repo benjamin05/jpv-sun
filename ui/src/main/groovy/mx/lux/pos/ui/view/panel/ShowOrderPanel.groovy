@@ -335,23 +335,17 @@ class ShowOrderPanel extends JPanel {
                     OrderController.printPaid(order?.id, pagoN?.id)
                 }
             }
-
-
-
         }
-
-
-
 
         if((order?.total - order?.paid) == 0){
             updatePagos()
-
             Jb trabajo = OrderController.entraJb(order?.bill)
+            if( trabajo == null ){
+              String bill = order?.bill.replaceFirst("^0*", "")
+              trabajo = OrderController.entraJb(bill)
+            }
             if(trabajo != null){
-
-
                 if(trabajo?.estado.trim().equals('RS')){
-
                         OrderController.insertaEntrega(order,false)
                         //JOptionPane.showMessageDialog(null,"datos guardados correctamente")
 
