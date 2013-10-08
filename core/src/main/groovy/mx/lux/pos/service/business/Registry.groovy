@@ -286,6 +286,10 @@ class Registry {
     return asString( TipoParametro.RUTA_POR_ENVIAR )
   }
 
+  static String getArchivePathDropbox( ) {
+      return asString( TipoParametro.RUTA_POR_ENVIAR_DROPBOX )
+  }
+
   static String getMessageFile( ) {
     return ( asString( TipoParametro.RUTA_POR_RECIBIR ) + File.separator + asString( TipoParametro.ARCHIVO_MENSAJE ) )
   }
