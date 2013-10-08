@@ -385,14 +385,16 @@ class ComprobanteServiceImpl implements ComprobanteService {
                 }
           }
 
+          List<Pago> lstPagos = venta.pagos as List<Pago>
           String formaPago = ''
-          Collections.sort(venta.pagos as List<Pago>, new Comparator<Pago>() {
+          Collections.sort(lstPagos, new Comparator<Pago>() {
               @Override
               int compare(Pago o1, Pago o2) {
-                  return o2.fecha.compareTo(o1.fecha)
+                  return o1.parcialidad.compareTo(o2.parcialidad)
               }
           })
-          for(Pago payment : venta.pagos){
+
+          for(Pago payment : lstPagos){
             if(payment?.parcialidad.length() > 0){
               formaPago = "PARCIALIDAD ${payment.parcialidad} DE ${payment.parcialidad}"
             } else {
