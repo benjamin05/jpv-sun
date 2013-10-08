@@ -263,7 +263,8 @@ class ComprobanteServiceImpl implements ComprobanteService {
             tasa = iva.tasa.toString().trim()
           }
           log.debug( "obtiene tasa vigente: ${tasa}" )
-          Double referencia = ( ( tasa?.isDouble() ? tasa.toDouble() : 0 ) / 100 )
+          Double referencia = ( ( tasa?.isDouble() ? tasa.toDouble() : 0 ) / 100 ) + 1
+          Double referenciaAB = ( ( tasa?.isDouble() ? tasa.toDouble() : 0 ) / 100 )
           MathContext mathContext = new MathContext( 5 )
           BigDecimal montoCupones = BigDecimal.ZERO
           for(Pago pago : venta.pagos){
@@ -272,7 +273,7 @@ class ComprobanteServiceImpl implements ComprobanteService {
             }
           }
           BigDecimal total = venta.ventaNeta ? venta.ventaNeta.subtract(montoCupones): BigDecimal.ZERO
-          BigDecimal impuestos = total.multiply( referencia )
+          BigDecimal impuestos = total.multiply( referenciaAB )
           BigDecimal subTotal = total.subtract( impuestos ) ?: BigDecimal.ZERO
 
           Comprobante ultimo = null
@@ -327,8 +328,8 @@ class ComprobanteServiceImpl implements ComprobanteService {
                 if ( articulo?.id ) {
                     Integer cantidad = det?.cantidadFac ?: 0
                     BigDecimal precioVenta = det.precioUnitFinal ?: BigDecimal.ZERO
-                    BigDecimal precioUnitario = precioVenta.divide( referencia, mathContext ) ?: BigDecimal.ZERO
-                    BigDecimal precioUnitarioAB = det.notaVenta.ventaNeta.divide( referencia, mathContext ) ?: BigDecimal.ZERO
+                    BigDecimal precioUnitario = precioVenta.subtract( precioVenta.multiply( referenciaAB ) ) ?: BigDecimal.ZERO
+                    BigDecimal precioUnitarioAB = det.notaVenta.ventaNeta.divide( referenciaAB, mathContext ) ?: BigDecimal.ZERO
                     BigDecimal importe = precioUnitario.multiply( cantidad )
                     BigDecimal importeAB = precioUnitarioAB.multiply( cantidad )
                     Boolean ABinsertado = false
@@ -349,9 +350,9 @@ class ComprobanteServiceImpl implements ComprobanteService {
                         quantity = cantidad
                         priceUnit = total
                         amount = total
-                    } else if(descripcion != "" && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_A)){
+                    } else if(!genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_A)){
                         descripcion = 'ARMAZON'
-                    } else if(descripcion != "" && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
+                    } else if(!genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
                         descripcion = 'LENTE GRADUADO'
                     } else if(articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_C) || articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_H)){
                         descripcion = 'LENTES DE CONTACTO'
@@ -388,7 +389,7 @@ class ComprobanteServiceImpl implements ComprobanteService {
           Collections.sort(venta.pagos as List<Pago>, new Comparator<Pago>() {
               @Override
               int compare(Pago o1, Pago o2) {
-                  return o1.parcialidad.compareTo(o2.parcialidad)
+                  return o2.fecha.compareTo(o1.fecha)
               }
           })
           for(Pago payment : venta.pagos){
