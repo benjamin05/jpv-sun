@@ -510,7 +510,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             if (ev.clickCount == 2) {
                 new ItemDialog(ev.component, order, ev.source.selectedElement, this).show()
                 updateOrder(order?.id)
-
             }
         }
     }
@@ -616,7 +615,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             String surte = surteSwitch?.surte
             if (item.stock > 0) {
                 order = OrderController.addItemToOrder(order, item, surte)
-                controlItem(item)
+                controlItem(item, false)
                 if (customer != null) {
                     order.customer = customer
                 }
@@ -626,7 +625,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     order.customer = customer
                     if (SalesWithNoInventory.ALLOWED.equals(onSalesWithNoInventory)) {
                         order = OrderController.addItemToOrder(order, item, surte)
-                        controlItem(item)
+                        controlItem(item, false)
                     } else if (SalesWithNoInventory.REQUIRE_AUTHORIZATION.equals(onSalesWithNoInventory)) {
                         boolean authorized
                         if (AccessController.authorizerInSession) {
@@ -638,7 +637,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                         }
                         if (authorized) {
                             order = OrderController.addItemToOrder(order, item, surte)
-                            controlItem(item)
+                            controlItem(item, false)
                         }
                     } else {
                         sb.optionPane(message: MSJ_VENTA_NEGATIVA, messageType: JOptionPane.ERROR_MESSAGE,)
@@ -647,7 +646,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     }
                 } else {
                   order = OrderController.addItemToOrder(order, item, surte)
-                  controlItem(item)
+                  controlItem(item, false)
                 }
             }
         }
@@ -743,7 +742,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         }
     }
 
-    private void controlItem(Item item) {
+    private void controlItem(Item item, Boolean itemDelete) {
         String indexDioptra = item?.indexDiotra
         println('Index Dioptra del Articulo : ' + item?.indexDiotra)
         if (!indexDioptra.equals(null) && item?.indexDiotra != null) {
@@ -770,9 +769,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             capturaSuyoDialog.show()
         }
 
-
-        rec = validarGenericoB(item)
-        OrderController.saveRxOrder(order?.id, rec.id)
+        if( !itemDelete ){
+          rec = validarGenericoB(item)
+          OrderController.saveRxOrder(order?.id, rec.id)
+        }
         updateOrder(order?.id)
         if (!order.customer.equals(customer)) {
             order.customer = customer
@@ -1046,6 +1046,12 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
     private void fireRequestContinue(DefaultTableModel itemsModel) {
 
+        for(OrderItem it : order.items){
+          List<Item> results = ItemController.findItemsById(it.item.id)
+          if( results.size() > 0 ){
+            controlItem( results.first(), true )
+          }
+        }
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
         String dio = OrderController.codigoDioptra(dioptra)
         if (!dioptra.getLente().equals(null)) {

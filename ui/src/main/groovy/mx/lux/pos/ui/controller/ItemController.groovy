@@ -149,4 +149,16 @@ class ItemController {
     Boolean esInventariable = articuloService.esInventariable( idArticulo )
     return esInventariable
   }
+
+
+
+  static List<Item> findItemsById( Integer idItem ) {
+      log.debug( "buscando de articulos con id: $idItem" )
+      List<Articulo> items = articuloService.obtenerArticulo( idItem )
+        if (items.size() > 0) {
+            log.debug( "Items:: ${items.first()?.dump()} " )
+            return items?.collect { Item.toItem( it ) }
+        }
+      return [ ]
+  }
 }

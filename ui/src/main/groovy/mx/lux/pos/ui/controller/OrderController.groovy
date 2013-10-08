@@ -303,8 +303,7 @@ class OrderController {
                             precioCalcOferta: 0,
                             precioConv: 0,
                             idTipoDetalle: 'N',
-                            surte: item?.type.trim().equalsIgnoreCase('B') ? 'P' : surte
-
+                            surte: item?.type.trim().equalsIgnoreCase('B') ? 'P' : surte,
                     )
                     nota.observacionesNv = dlg.remarks
 
