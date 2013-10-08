@@ -135,7 +135,7 @@ class MainWindow extends JFrame implements KeyListener {
                                 orderMenuItem.visible = userLoggedIn
                                 orderSearchMenuItem.visible = userLoggedIn
                                 dailyCloseMenuItem.visible = userLoggedIn
-                                priceListMenuItem.visible = userLoggedIn
+                                //priceListMenuItem.visible = userLoggedIn
                                 //invoiceMenuItem.visible = userLoggedIn
                                 nationalClientMenuItem.visible = userLoggedIn
                                 // TODO: Benja enable feature cotizacionMenuItem.visible = userLoggedIn
@@ -178,7 +178,7 @@ class MainWindow extends JFrame implements KeyListener {
                                     mainPanel.layout.show( mainPanel, 'dailyClosePanel' )
                                 }
                         )
-                        priceListMenuItem = menuItem( text: 'Lista de Precios',
+                        /*priceListMenuItem = menuItem( text: 'Lista de Precios',
                                 visible: false,
                                 actionPerformed: {
                                     clean( priceListPanel )
@@ -186,7 +186,7 @@ class MainWindow extends JFrame implements KeyListener {
                                     mainPanel.add( 'priceListPanel', priceListPanel )
                                     mainPanel.layout.show( mainPanel, 'priceListPanel' )
                                 }
-                        )
+                        )*/
                         /*invoiceMenuItem = menuItem( text: 'Facturaci\u00f3n',
                                 visible: false,
                                 actionPerformed: {
