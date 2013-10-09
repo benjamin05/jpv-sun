@@ -15,6 +15,8 @@ import mx.lux.pos.model.*
 import mx.lux.pos.repository.*
 import mx.lux.pos.service.business.Registry
 
+import java.math.RoundingMode
+
 @Slf4j
 @Service( 'comprobanteService' )
 @Transactional( readOnly = true )
@@ -273,8 +275,8 @@ class ComprobanteServiceImpl implements ComprobanteService {
             }
           }
           BigDecimal total = venta.ventaNeta ? venta.ventaNeta.subtract(montoCupones): BigDecimal.ZERO
-          BigDecimal impuestos = total.multiply( referenciaAB )
-          BigDecimal subTotal = total.subtract( impuestos ) ?: BigDecimal.ZERO
+          BigDecimal subTotal = total.divide( referencia, 10, RoundingMode.CEILING ) ?: BigDecimal.ZERO
+          BigDecimal impuestos = total.subtract( subTotal )
 
           Comprobante ultimo = null
           List<Comprobante> anteriores = comprobanteRepository.findByTicketOrderByFechaImpresionDesc( comprobante.ticket )
@@ -328,7 +330,7 @@ class ComprobanteServiceImpl implements ComprobanteService {
                 if ( articulo?.id ) {
                     Integer cantidad = det?.cantidadFac ?: 0
                     BigDecimal precioVenta = det.precioUnitFinal ?: BigDecimal.ZERO
-                    BigDecimal precioUnitario = precioVenta.subtract( precioVenta.multiply( referenciaAB ) ) ?: BigDecimal.ZERO
+                    BigDecimal precioUnitario = precioVenta.divide( referencia, 10, RoundingMode.CEILING ) ?: BigDecimal.ZERO
                     BigDecimal precioUnitarioAB = det.notaVenta.ventaNeta.divide( referenciaAB, mathContext ) ?: BigDecimal.ZERO
                     BigDecimal importe = precioUnitario.multiply( cantidad )
                     BigDecimal importeAB = precioUnitarioAB.multiply( cantidad )
