@@ -344,7 +344,7 @@ class ComprobanteServiceImpl implements ComprobanteService {
                     println genericoAyB
                     if(genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
                         idArticulo = 'ANTEOJO'
-                        article = 'ANTEOJO'
+                        article = ''
                         idGenerico = 'ANTEOJO'
                         descripcion = 'ANTEOJO GRADUADO'
                         quantity = cantidad
@@ -413,9 +413,9 @@ class ComprobanteServiceImpl implements ComprobanteService {
 
           log.debug( "genera comprobante ${comprobante.dump()}" )
 
-          if(comprobante.metodoPago.trim().length() > 0){
+          //if(comprobante.metodoPago.trim().length() > 0){
             comprobante = solicitarComprobanteServicioWeb( comprobante, detalles )
-          }
+          //}
           if ( StringUtils.isNotBlank( comprobante?.idFiscal ) && comprobante.metodoPago.trim().length() > 0) {
             comprobante = comprobanteRepository.save( comprobante )
             if ( comprobante?.id ) {
