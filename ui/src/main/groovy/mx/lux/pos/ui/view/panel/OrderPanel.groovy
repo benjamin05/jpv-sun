@@ -763,7 +763,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         }
         println('Codigo Dioptra :' + antDioptra)
 
-        if (item?.name.trim().equals('MONTAJE')) {
+        if (item?.name.trim().equals('MONTAJE') && !itemDelete) {
             User u = Session.get(SessionItem.USER) as User
             CapturaSuyoDialog capturaSuyoDialog = new CapturaSuyoDialog(order, u,true)
             capturaSuyoDialog.show()
