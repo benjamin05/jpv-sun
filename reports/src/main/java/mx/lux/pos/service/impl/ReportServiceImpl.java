@@ -1,5 +1,6 @@
 package mx.lux.pos.service.impl;
 
+import com.mysema.query.BooleanBuilder;
 import mx.lux.pos.model.*;
 import mx.lux.pos.repository.*;
 import mx.lux.pos.service.ReportService;
@@ -1176,8 +1177,21 @@ public class ReportServiceImpl implements ReportService {
         List<KardexPorArticulo> lstKardex = new ArrayList<KardexPorArticulo>();
         Articulo articulo = new Articulo();
         BigDecimal precio = BigDecimal.ZERO;
+        String [] articuloColor = article.split(",");
+        String artl = articuloColor[0];
+        String color = "";
         QArticulo art = QArticulo.articulo1;
-        List<Articulo> articulos = (List<Articulo>) articuloRepository.findAll( art.articulo.trim().equalsIgnoreCase(article.trim()) );
+        if(articuloColor.length > 1){
+            color = articuloColor[1] != null ? articuloColor[1] : "" ;
+        }
+        BooleanBuilder booleanColor = new BooleanBuilder();
+        if( color.trim().length() > 0 ){
+            booleanColor.and(art.codigoColor.eq(color));
+        } else {
+            booleanColor.and(art.codigoColor.isEmpty()).or(art.codigoColor.isNull());
+        }
+        List<Articulo> articulos = (List<Articulo>) articuloRepository.findAll( art.articulo.trim().equalsIgnoreCase(artl.trim()).
+                and(booleanColor) );
         if( articulos.size() == 1){
             articulo = articulos.get(0);
         }
