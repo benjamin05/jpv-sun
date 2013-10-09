@@ -310,4 +310,41 @@ class ArticuloServiceImpl implements ArticuloService {
   }
 
 
+  @Override
+  Boolean validaUnSoloPaquete( List<Integer> lstIds, Integer idArticulo ){
+    log.debug( "validaUnSoloPaquete( )" )
+    String paquetes = Registry.packages
+    String[] paquete = paquetes.split(',')
+    Boolean esUnSoloPaq = true
+    Boolean esPaquete = false
+    Boolean existePaquete = false
+    Articulo articulo = articuloRepository.findOne( idArticulo )
+    List<Articulo> lstArticulo = new ArrayList<Articulo>()
+    for(Integer id : lstIds){
+      Articulo articulo1 = new Articulo()
+      articulo1 = articuloRepository.findOne( id )
+      if(articulo1 != null){
+        lstArticulo.add( articulo1 )
+      }
+    }
+    if( articulo != null ){
+      if(paquetes.contains(articulo.articulo.trim())){
+        esPaquete = true
+      }
+    }
+    for(Articulo art : lstArticulo){
+      for(int i=0;i<paquete.length;i++){
+        if( paquete[i].equalsIgnoreCase(art.articulo.trim()) ){
+            existePaquete = true
+        }
+      }
+    }
+    if( esPaquete && existePaquete ){
+      esUnSoloPaq = false
+    }
+    return  esUnSoloPaq
+  }
+
+
+
 }

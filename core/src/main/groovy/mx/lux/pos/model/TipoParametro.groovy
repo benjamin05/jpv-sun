@@ -40,6 +40,7 @@ enum TipoParametro {
   IVA_VIGENTE( 'iva_vigente', '16' ),
   MAX_DISCOUNT_STORE( 'tope_descto_tienda', '10.0' ),
   MAX_LONG_DESC_FACTURA( 'max_long_desc_efactura', '50' ),
+  PAQUETES('paquetes','BRONCE,PLATA,ORO,PLATINO,DIAMANTE'),
   PIDE_FACTURA( 'pide_factura', '' ),
   PORCENTAJE_ANTICIPO( 'porcentaje_anticipo', '100.0' ),
   RUTA_CIERRE( 'ruta_cierre', 'C:/Documents and Settings/mensajero/cierre' ),

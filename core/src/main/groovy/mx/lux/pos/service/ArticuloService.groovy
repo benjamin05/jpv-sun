@@ -46,4 +46,6 @@ interface ArticuloService {
   Articulo findbyName(String dioptra)
 
   Precio findPriceByArticle( Articulo articulo )
+
+  Boolean validaUnSoloPaquete( List<Integer> lstIds, Integer idArticulo )
 }

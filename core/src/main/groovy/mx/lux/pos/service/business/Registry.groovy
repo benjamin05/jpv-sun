@@ -377,6 +377,10 @@ class Registry {
         return  asString(TipoParametro.ALMACENES)
     }
 
+    static String getPackages() {
+        return  asString(TipoParametro.PAQUETES)
+    }
+
   static String getURL( String pAckType ) {
     String url = ''
     String type = StringUtils.trimToEmpty( pAckType ).toUpperCase( )

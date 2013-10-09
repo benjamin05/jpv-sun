@@ -1395,4 +1395,16 @@ class OrderController {
         return list
     }
 
+
+
+    static Boolean validOnlyOnePackage( List<OrderItem> lstItems, Integer idItem ){
+      List<Integer> lstIds = new ArrayList<Integer>()
+      for(OrderItem item : lstItems){
+        lstIds.add( item.item.id )
+      }
+      Boolean unPaquete = articuloService.validaUnSoloPaquete( lstIds, idItem )
+      return unPaquete
+    }
+
+
 }

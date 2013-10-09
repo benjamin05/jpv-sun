@@ -37,7 +37,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private static final String TXT_NO_ORDER_PRESENT = 'Se debe agregar al menos un artículo.'
     private static final String TXT_PAYMENTS_PRESENT = 'Elimine los pagos registrados y reintente.'
     private static final String MSJ_VENTA_NEGATIVA = 'No se pueden agregar artículos sin existencia.'
+    private static final String MSJ_PAQUETE_INVALIDO = 'No se pueden agregar el paquete, ya existe uno.'
     private static final String TXT_VENTA_NEGATIVA_TITULO = 'Error al agregar artículo'
+    private static final String TXT_PAQUETE_INVALIDO = 'Error al agregar paquete'
     private static final String TXT_REQUEST_NEW_ORDER = 'Solicita nueva orden a mismo cliente.'
     private static final String TXT_REQUEST_CONTINUE = 'Solicita nueva orden a otro cliente.'
     private static final String TXT_REQUEST_QUOTE = 'Cotizar orden actual.'
@@ -608,47 +610,54 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         order.setEmployee(u.username)
         Branch branch = Session.get(SessionItem.BRANCH) as Branch
 
+        Boolean isOnePackage = OrderController.validOnlyOnePackage( order.items, item.id )
         SurteSwitch surteSwitch = OrderController.surteCallWS(branch, item, 'S', order)
         surteSwitch = surteSu(item, surteSwitch)
         Boolean esInventariable = ItemController.esInventariable( item.id )
-        if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
-            String surte = surteSwitch?.surte
-            if (item.stock > 0) {
-                order = OrderController.addItemToOrder(order, item, surte)
-                controlItem(item, false)
-                if (customer != null) {
-                    order.customer = customer
-                }
-            } else {
-                if( esInventariable ){
-                    SalesWithNoInventory onSalesWithNoInventory = OrderController.requestConfigSalesWithNoInventory()
-                    order.customer = customer
-                    if (SalesWithNoInventory.ALLOWED.equals(onSalesWithNoInventory)) {
-                        order = OrderController.addItemToOrder(order, item, surte)
-                        controlItem(item, false)
-                    } else if (SalesWithNoInventory.REQUIRE_AUTHORIZATION.equals(onSalesWithNoInventory)) {
-                        boolean authorized
-                        if (AccessController.authorizerInSession) {
-                            authorized = true
-                        } else {
-                            AuthorizationDialog authDialog = new AuthorizationDialog(this, " ")
-                            authDialog.show()
-                            authorized = authDialog.authorized
-                        }
-                        if (authorized) {
-                            order = OrderController.addItemToOrder(order, item, surte)
-                            controlItem(item, false)
-                        }
-                    } else {
-                        sb.optionPane(message: MSJ_VENTA_NEGATIVA, messageType: JOptionPane.ERROR_MESSAGE,)
-                                .createDialog(this, TXT_VENTA_NEGATIVA_TITULO)
-                                .show()
+        if( isOnePackage ){
+            if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
+                String surte = surteSwitch?.surte
+                if (item.stock > 0) {
+                    order = OrderController.addItemToOrder(order, item, surte)
+                    controlItem(item, false)
+                    if (customer != null) {
+                        order.customer = customer
                     }
                 } else {
-                  order = OrderController.addItemToOrder(order, item, surte)
-                  controlItem(item, false)
+                    if( esInventariable ){
+                        SalesWithNoInventory onSalesWithNoInventory = OrderController.requestConfigSalesWithNoInventory()
+                        order.customer = customer
+                        if (SalesWithNoInventory.ALLOWED.equals(onSalesWithNoInventory)) {
+                            order = OrderController.addItemToOrder(order, item, surte)
+                            controlItem(item, false)
+                        } else if (SalesWithNoInventory.REQUIRE_AUTHORIZATION.equals(onSalesWithNoInventory)) {
+                            boolean authorized
+                            if (AccessController.authorizerInSession) {
+                                authorized = true
+                            } else {
+                                AuthorizationDialog authDialog = new AuthorizationDialog(this, " ")
+                                authDialog.show()
+                                authorized = authDialog.authorized
+                            }
+                            if (authorized) {
+                                order = OrderController.addItemToOrder(order, item, surte)
+                                controlItem(item, false)
+                            }
+                        } else {
+                            sb.optionPane(message: MSJ_VENTA_NEGATIVA, messageType: JOptionPane.ERROR_MESSAGE,)
+                                    .createDialog(this, TXT_VENTA_NEGATIVA_TITULO)
+                                    .show()
+                        }
+                    } else {
+                      order = OrderController.addItemToOrder(order, item, surte)
+                      controlItem(item, false)
+                    }
                 }
             }
+        } else {
+          sb.optionPane(message: MSJ_PAQUETE_INVALIDO, messageType: JOptionPane.ERROR_MESSAGE,)
+                  .createDialog(this, TXT_PAQUETE_INVALIDO)
+                  .show()
         }
     }
 
