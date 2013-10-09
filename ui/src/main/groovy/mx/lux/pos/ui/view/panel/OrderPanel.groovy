@@ -1045,11 +1045,11 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void fireRequestContinue(DefaultTableModel itemsModel) {
-
+        dioptra = new Dioptra()
         for(OrderItem it : order.items){
-          List<Item> results = ItemController.findItemsById(it.item.id)
-          if( results.size() > 0 ){
-            controlItem( results.first(), true )
+          Item result = ItemController.findItemsById(it.item.id)
+          if( result != null ){
+            controlItem( result, true )
           }
         }
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
