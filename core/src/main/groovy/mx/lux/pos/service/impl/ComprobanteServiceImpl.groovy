@@ -344,7 +344,7 @@ class ComprobanteServiceImpl implements ComprobanteService {
                     BigDecimal priceUnit = precioUnitario
                     BigDecimal amount = importe
                     println genericoAyB
-                    if(genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
+                    if(genericoAyB || articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
                         idArticulo = 'ANTEOJO'
                         article = ''
                         idGenerico = 'ANTEOJO'
@@ -354,8 +354,8 @@ class ComprobanteServiceImpl implements ComprobanteService {
                         amount = total
                     } else if(!genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_A)){
                         descripcion = 'ARMAZON'
-                    } else if(!genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
-                        descripcion = 'LENTE GRADUADO'
+                    /*} else if(!genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
+                        descripcion = 'LENTE GRADUADO'*/
                     } else if(articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_C) || articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_H)){
                         descripcion = 'LENTES DE CONTACTO'
                     } else if(articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_E)){
