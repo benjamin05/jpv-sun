@@ -1,11 +1,14 @@
 package mx.lux.pos.ui.controller
 
 import groovy.util.logging.Slf4j
+import mx.lux.pos.service.business.Registry
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import mx.lux.pos.model.*
 import mx.lux.pos.service.*
 import mx.lux.pos.ui.model.*
+
+import java.text.NumberFormat
 
 @Slf4j
 @Component
@@ -202,5 +205,18 @@ class DailyCloseController {
       DailyClose.toDailyClose( it )
     }
   }
+
+    static Long timeWait(  ) {
+        String seconds = Registry.timeToWait
+        Long time = 0L
+        Long newTime = 0L
+        try{
+            time = NumberFormat.getInstance().parse( seconds.trim() ).toLong()
+        } catch ( Exception e ){
+            println( e )
+        }
+        newTime = time*1000L
+        return newTime
+    }
 
 }

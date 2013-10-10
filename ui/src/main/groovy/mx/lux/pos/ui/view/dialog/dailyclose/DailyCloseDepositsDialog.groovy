@@ -6,6 +6,7 @@ import mx.lux.pos.ui.controller.DailyCloseController
 import mx.lux.pos.ui.model.DailyClose
 import mx.lux.pos.ui.model.Deposit
 import mx.lux.pos.ui.model.UpperCaseDocument
+import mx.lux.pos.ui.view.dialog.WaitDialog
 import mx.lux.pos.ui.view.renderer.DateCellRenderer
 import mx.lux.pos.ui.view.renderer.MoneyCellRenderer
 import net.miginfocom.swing.MigLayout
@@ -32,6 +33,7 @@ class DailyCloseDepositsDialog extends JDialog {
   private JLabel grossIncome
   private JLabel returns
   private JLabel netIncome
+  private JLabel lblClosingDay
   private JTextArea observations
   private DefaultTableModel depositsModel
   private List<Deposit> deposits
@@ -190,11 +192,21 @@ class DailyCloseDepositsDialog extends JDialog {
   private def doCloseDay = { ActionEvent ev ->
     JButton source = ev.source as JButton
     source.enabled = false
-    if ( DailyCloseController.closeDailyClose( closeDate, observations.text ) ) {
-      sb.optionPane().showMessageDialog( null, 'Se ha cerrado correctamente', 'Ok', JOptionPane.INFORMATION_MESSAGE )
-    } else {
-      sb.optionPane().showMessageDialog( null, 'Error al cerrar', 'Error', JOptionPane.ERROR_MESSAGE )
+    //lblClosingDay.visible = true
+    Boolean succesClose = false
+    WaitDialog dialog = new WaitDialog( "Cierre", "Cerrando dia. Espere un momento." )
+    sb.doOutside {
+      succesClose = DailyCloseController.closeDailyClose( closeDate, observations.text )
+      Long time = DailyCloseController.timeWait()
+      sleep( time )
+      dialog.dispose()
+      if ( succesClose ) {
+          sb.optionPane().showMessageDialog( null, 'Se ha cerrado correctamente', 'Ok', JOptionPane.INFORMATION_MESSAGE )
+      } else {
+          sb.optionPane().showMessageDialog( null, 'Error al cerrar', 'Error', JOptionPane.ERROR_MESSAGE )
+      }
     }
+    dialog.show()
     source.enabled = true
   }
 

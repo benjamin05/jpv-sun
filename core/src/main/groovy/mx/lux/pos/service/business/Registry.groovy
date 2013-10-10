@@ -290,6 +290,10 @@ class Registry {
       return asString( TipoParametro.RUTA_POR_ENVIAR_DROPBOX )
   }
 
+    static String getTimeToWait( ) {
+        return asString( TipoParametro.ESPERA_CIERRE )
+    }
+
   static String getMessageFile( ) {
     return ( asString( TipoParametro.RUTA_POR_RECIBIR ) + File.separator + asString( TipoParametro.ARCHIVO_MENSAJE ) )
   }
