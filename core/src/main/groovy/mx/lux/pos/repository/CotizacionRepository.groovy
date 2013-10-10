@@ -2,8 +2,8 @@ package mx.lux.pos.repository
 
 import mx.lux.pos.model.Cotizacion
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.querydsl.QueryDslPredicateExecutor
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.querydsl.QueryDslPredicateExecutor
 
 interface CotizacionRepository extends JpaRepository<Cotizacion, Integer>,
     QueryDslPredicateExecutor<Cotizacion> {

@@ -5,7 +5,6 @@ import mx.lux.pos.repository.ArticuloRepository
 import mx.lux.pos.repository.impl.RepositoryFactory
 import mx.lux.pos.service.impl.ServiceFactory
 import mx.lux.pos.service.io.ArticuloClassAdapter
-import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 

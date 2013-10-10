@@ -1,8 +1,8 @@
 package mx.lux.pos.service.impl
 
-import spock.lang.Specification
-import mx.lux.pos.service.io.InventoryAdjustFile
 import mx.lux.pos.model.InvAdjustSheet
+import mx.lux.pos.service.io.InventoryAdjustFile
+import spock.lang.Specification
 
 class InventoryAdjustFileIntegration extends Specification {
 

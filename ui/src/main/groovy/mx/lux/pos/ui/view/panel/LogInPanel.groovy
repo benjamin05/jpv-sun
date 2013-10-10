@@ -7,12 +7,9 @@ import mx.lux.pos.ui.model.User
 import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
 
-import java.awt.Color
-import java.awt.Font
-import javax.swing.border.TitledBorder
 import javax.swing.*
-import java.text.DateFormat
-import java.text.SimpleDateFormat
+import javax.swing.border.TitledBorder
+import java.awt.*
 
 class LogInPanel extends JPanel {
 

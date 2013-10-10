@@ -1,10 +1,9 @@
 package mx.lux.pos.service.business
 
-import mx.lux.pos.model.Mensaje
-import mx.lux.pos.repository.impl.RepositoryFactory
 import groovy.util.logging.Slf4j
-import mx.lux.pos.model.QMensaje
+import mx.lux.pos.model.Mensaje
 import mx.lux.pos.model.MensajesPorParametro
+import mx.lux.pos.repository.impl.RepositoryFactory
 import org.apache.commons.lang3.StringUtils
 
 @Slf4j

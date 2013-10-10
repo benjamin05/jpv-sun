@@ -1,11 +1,13 @@
 package mx.lux.pos.model;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.*;
+import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -22,6 +24,7 @@ public class QExterno extends EntityPathBase<Externo> {
 
     public final StringPath armazon = createString("armazon");
 
+    @NotNull
     public final QCliente cliente;
 
     public final StringPath factura = createString("factura");
@@ -44,21 +47,22 @@ public class QExterno extends EntityPathBase<Externo> {
 
     public final StringPath origen = createString("origen");
 
+    @NotNull
     public final QTrabajo trabajo;
 
     public QExterno(String variable) {
         this(Externo.class, forVariable(variable), INITS);
     }
 
-    public QExterno(PathMetadata<?> metadata) {
+    public QExterno(@NotNull PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QExterno(PathMetadata<?> metadata, PathInits inits) {
+    public QExterno(PathMetadata<?> metadata, @NotNull PathInits inits) {
         this(Externo.class, metadata, inits);
     }
 
-    public QExterno(Class<? extends Externo> type, PathMetadata<?> metadata, PathInits inits) {
+    public QExterno(Class<? extends Externo> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
         super(type, metadata, inits);
         this.cliente = inits.isInitialized("cliente") ? new QCliente(forProperty("cliente"), inits.get("cliente")) : null;
         this.trabajo = inits.isInitialized("trabajo") ? new QTrabajo(forProperty("trabajo"), inits.get("trabajo")) : null;

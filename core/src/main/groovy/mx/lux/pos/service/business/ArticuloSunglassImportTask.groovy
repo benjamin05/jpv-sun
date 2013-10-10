@@ -3,7 +3,6 @@ package mx.lux.pos.service.business
 import mx.lux.pos.model.Articulo
 import mx.lux.pos.model.ArticuloSunglass
 import mx.lux.pos.model.Generico
-import mx.lux.pos.model.Sucursal
 import mx.lux.pos.repository.impl.RepositoryFactory
 import mx.lux.pos.service.impl.ServiceFactory
 import mx.lux.pos.service.io.PartFileSunglass

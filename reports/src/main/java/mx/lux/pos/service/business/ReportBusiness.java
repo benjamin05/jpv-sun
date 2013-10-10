@@ -8,6 +8,8 @@ import mx.lux.pos.service.impl.ReportServiceImpl;
 import net.sf.jasperreports.engine.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -105,6 +107,7 @@ public class ReportBusiness {
     private static final String TAG_CANCELADO = "T";
     private static final String TAG_TIPO_CANCELADO = "can";
 
+    @NotNull
     public List<IngresoPorDia> obtenerIngresoporDia( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerIngresoporDia()" );
 
@@ -136,7 +139,7 @@ public class ReportBusiness {
         return lstIngresos;
     }
 
-    protected boolean isPagoValid( Pago pPago ) {
+    protected boolean isPagoValid( @NotNull Pago pPago ) {
         boolean valid = true;
         if ( valid )
             valid = !pPago.getIdFormaPago().equalsIgnoreCase( "BD" );
@@ -150,7 +153,8 @@ public class ReportBusiness {
         return valid;
     }
 
-    public IngresoPorDia FindOrCreate( List<IngresoPorDia> lstIngresos, Date fecha ) {
+    @Nullable
+    public IngresoPorDia FindOrCreate( @NotNull List<IngresoPorDia> lstIngresos, Date fecha ) {
         Date onlyDay = DateUtils.truncate( fecha, Calendar.DATE );
         IngresoPorDia found = null;
         for ( IngresoPorDia ingresos : lstIngresos ) {
@@ -167,7 +171,8 @@ public class ReportBusiness {
         return found;
     }
 
-    public IngresoPorVendedor FindorCreate( List<IngresoPorVendedor> lstIngresos, String idEmpleado ) {
+    @Nullable
+    public IngresoPorVendedor FindorCreate( @NotNull List<IngresoPorVendedor> lstIngresos, String idEmpleado ) {
         IngresoPorVendedor found = null;
         for ( IngresoPorVendedor ingresos : lstIngresos ) {
             if ( ingresos.getIdEmpleado().equals( idEmpleado ) ) {
@@ -187,7 +192,7 @@ public class ReportBusiness {
         return found;
     }
 
-    public String CompilayGeneraReporte( org.springframework.core.io.Resource template, Map<String, Object> parametros, File report ) {
+    public String CompilayGeneraReporte( @NotNull org.springframework.core.io.Resource template, Map<String, Object> parametros, @NotNull File report ) {
 
         try {
             report.setExecutable( true );
@@ -218,6 +223,7 @@ public class ReportBusiness {
         return report.getPath();
     }
 
+    @NotNull
     public List<IngresoPorVendedor> obtenerVentasporVendedor( Date fechaInicio, Date fechaFin ) {
 
         List<IngresoPorVendedor> lstIngresos = new ArrayList<IngresoPorVendedor>();
@@ -243,7 +249,8 @@ public class ReportBusiness {
         return lstIngresos;
     }
 
-    private IngresoPorVendedor agregaRegistros(List<NotaVenta> lstVentas){
+    @NotNull
+    private IngresoPorVendedor agregaRegistros(@NotNull List<NotaVenta> lstVentas){
         List<IngresoPorFactura> ingresoPorFacturas = new ArrayList<IngresoPorFactura>();
         NotaVenta nVenta = new NotaVenta();
         for ( NotaVenta venta : lstVentas ) {
@@ -314,6 +321,7 @@ public class ReportBusiness {
         return ingreso;
     }
 
+    @NotNull
     public List<FacturasPorEmpleado> obtenerFacturasporVendedor( Date fechaInicio, Date fechaFin ) {
 
         List<FacturasPorEmpleado> lstFacturas = new ArrayList<FacturasPorEmpleado>();
@@ -336,7 +344,8 @@ public class ReportBusiness {
         return lstFacturas;
     }
 
-    public FacturasPorEmpleado FindOrCreate( List<FacturasPorEmpleado> lstFacturas, String idEmpleado ) {
+    @Nullable
+    public FacturasPorEmpleado FindOrCreate( @NotNull List<FacturasPorEmpleado> lstFacturas, String idEmpleado ) {
         FacturasPorEmpleado found = null;
 
         for ( FacturasPorEmpleado facturas : lstFacturas ) {
@@ -356,7 +365,8 @@ public class ReportBusiness {
         return found;
     }
 
-    public List<NotaVenta> obtenerVentasLineaporFacturas( Date fechaInicio, Date fechaFin, String articulo, boolean gogle, boolean oftalmico, boolean todo ) {
+    @NotNull
+    public List<NotaVenta> obtenerVentasLineaporFacturas( Date fechaInicio, Date fechaFin, @NotNull String articulo, boolean gogle, boolean oftalmico, boolean todo ) {
 
         QNotaVenta venta = QNotaVenta.notaVenta;
         log.info( "Verifica que se halla seleccionado un articulo especifico" );
@@ -395,7 +405,8 @@ public class ReportBusiness {
 
     }
 
-    public List<FacturasPorEmpleado> obtenerVentasLineaporArticulos( Date fechaInicio, Date fechaFin, String articulo, boolean gogle, boolean oftalmico, boolean todo ) {
+    @NotNull
+    public List<FacturasPorEmpleado> obtenerVentasLineaporArticulos( Date fechaInicio, Date fechaFin, @NotNull String articulo, boolean gogle, boolean oftalmico, boolean todo ) {
 
         QDetalleNotaVenta venta = QDetalleNotaVenta.detalleNotaVenta;
 
@@ -457,7 +468,8 @@ public class ReportBusiness {
         return lstArticulos;
     }
 
-    public FacturasPorEmpleado FindOrCreated( List<FacturasPorEmpleado> lstFacturas, String art ) {
+    @Nullable
+    public FacturasPorEmpleado FindOrCreated( @NotNull List<FacturasPorEmpleado> lstFacturas, @NotNull String art ) {
         FacturasPorEmpleado found = null;
 
         for ( FacturasPorEmpleado articulos : lstFacturas ) {
@@ -473,7 +485,8 @@ public class ReportBusiness {
         return found;
     }
 
-    public List<FacturasPorEmpleado> obtenerVentasMarca( Date fechaInicio, Date fechaFin, String marca, boolean noMostrarArticulos, boolean gogle, boolean oftalmico, boolean todo ) {
+    @NotNull
+    public List<FacturasPorEmpleado> obtenerVentasMarca( Date fechaInicio, Date fechaFin, @NotNull String marca, boolean noMostrarArticulos, boolean gogle, boolean oftalmico, boolean todo ) {
 
         QDetalleNotaVenta venta = QDetalleNotaVenta.detalleNotaVenta;
         log.info( "Verifica que se halla seleccionado un articulo especifico" );
@@ -532,7 +545,7 @@ public class ReportBusiness {
                 List<DetalleNotaVenta> lstDetalles = new ArrayList<DetalleNotaVenta>(mod.getNotaVenta().getDetalles());
                 Collections.sort(lstDetalles, new Comparator<DetalleNotaVenta>() {
                     @Override
-                    public int compare( DetalleNotaVenta o1, DetalleNotaVenta o2 ) {
+                    public int compare( @NotNull DetalleNotaVenta o1, @NotNull DetalleNotaVenta o2 ) {
                         return o1.getArticulo().getIdGenTipo().compareTo(o2.getArticulo().getIdGenTipo());
                     }
                 });
@@ -550,7 +563,7 @@ public class ReportBusiness {
                 List<DetalleNotaVenta> lstDetalles = new ArrayList<DetalleNotaVenta>(mod.getNotaVenta().getDetalles());
                 Collections.sort(lstDetalles, new Comparator<DetalleNotaVenta>() {
                     @Override
-                    public int compare( DetalleNotaVenta o1, DetalleNotaVenta o2 ) {
+                    public int compare( @NotNull DetalleNotaVenta o1, @NotNull DetalleNotaVenta o2 ) {
                         return o1.getArticulo().getIdGenTipo().compareTo(o2.getArticulo().getIdGenTipo());
                     }
                 });
@@ -567,7 +580,7 @@ public class ReportBusiness {
 
         Collections.sort( lstArticulo, new Comparator<DetalleNotaVenta>() {
             @Override
-            public int compare(DetalleNotaVenta o1, DetalleNotaVenta o2) {
+            public int compare(@NotNull DetalleNotaVenta o1, @NotNull DetalleNotaVenta o2) {
                 return o1.getIdFactura().compareTo(o2.getIdFactura());
             }
         });
@@ -601,7 +614,8 @@ public class ReportBusiness {
         return lstArticulos;
     }
 
-    public FacturasPorEmpleado FindorCreated( List<FacturasPorEmpleado> lstFacturas, String art ) {
+    @Nullable
+    public FacturasPorEmpleado FindorCreated( @NotNull List<FacturasPorEmpleado> lstFacturas, String art ) {
         FacturasPorEmpleado found = null;
 
         for ( FacturasPorEmpleado articulos : lstFacturas ) {
@@ -617,7 +631,8 @@ public class ReportBusiness {
         return found;
     }
 
-    public List<IngresoPorVendedor> obtenerVentasporVendedorporMarca( Date fechaInicio, Date fechaFin, String marca, boolean mostrarArticulos, boolean gogle, boolean oftalmico, boolean todo ) {
+    @NotNull
+    public List<IngresoPorVendedor> obtenerVentasporVendedorporMarca( Date fechaInicio, Date fechaFin, @NotNull String marca, boolean mostrarArticulos, boolean gogle, boolean oftalmico, boolean todo ) {
         log.info( "obtenerVentasporVendedor()" );
 
         log.info( "Se obtiene elvalor del IVA" );
@@ -753,7 +768,7 @@ public class ReportBusiness {
         for(IngresoPorVendedor ingreso : lstIngresos){
             Collections.sort( ingreso.getPagos(), new Comparator<IngresoPorFactura>() {
                 @Override
-                public int compare(IngresoPorFactura o1, IngresoPorFactura o2) {
+                public int compare(@NotNull IngresoPorFactura o1, @NotNull IngresoPorFactura o2) {
                     return o1.getFechaPago().compareTo(o2.getFechaPago());
                 }
             });
@@ -761,7 +776,8 @@ public class ReportBusiness {
         return lstIngresos;
     }
 
-    public List<Articulo> obtenerExistenciasporMarcaDetallado( String marca, boolean gogle, boolean oftalmico, boolean todo ) {
+    @NotNull
+    public List<Articulo> obtenerExistenciasporMarcaDetallado( @NotNull String marca, boolean gogle, boolean oftalmico, boolean todo ) {
         log.info( "obtenerVentasporVendedor()" );
 
 
@@ -811,6 +827,7 @@ public class ReportBusiness {
         return lstArticulos;
     }
 
+    @NotNull
     public List<FacturasPorEmpleado> obtenerExistenciasporMarcaCompleto( String marca, boolean gogle, boolean oftalmico, boolean todo ) {
         log.info( "obtenerVentasporVendedor()" );
 
@@ -871,7 +888,7 @@ public class ReportBusiness {
             facturas.AcumulaMarcas( articulos.getMarca(), articulos, precio );
             Collections.sort( facturas.getFacturasVendedor(), new Comparator<IngresoPorFactura>() {
                 @Override
-                public int compare(IngresoPorFactura o1, IngresoPorFactura o2) {
+                public int compare(@NotNull IngresoPorFactura o1, @NotNull IngresoPorFactura o2) {
                     return o1.getMarca().compareTo(o2.getMarca());
                 }
             } );
@@ -881,6 +898,7 @@ public class ReportBusiness {
     }
 
 
+    @NotNull
     public List<FacturasPorEmpleado> obtenerExistenciasporMarcaResumido( String marca, boolean gogle, boolean oftalmico, boolean todo ) {
         log.info( "obtenerVentasporVendedor()" );
 
@@ -934,7 +952,7 @@ public class ReportBusiness {
             facturas.AcumulaMarcasResumido( articulos.getMarca(), articulos );
             Collections.sort( facturas.getFacturasVendedor(), new Comparator<IngresoPorFactura>() {
                 @Override
-                public int compare(IngresoPorFactura o1, IngresoPorFactura o2) {
+                public int compare(@NotNull IngresoPorFactura o1, @NotNull IngresoPorFactura o2) {
                     return o1.getMarca().compareTo(o2.getMarca());
                 }
             } );
@@ -943,7 +961,8 @@ public class ReportBusiness {
         return lstArticulos;
     }
 
-    public FacturasPorEmpleado FindOorCreate( List<FacturasPorEmpleado> lstFacturas, String idEmpleado ) {
+    @Nullable
+    public FacturasPorEmpleado FindOorCreate( @NotNull List<FacturasPorEmpleado> lstFacturas, String idEmpleado ) {
         FacturasPorEmpleado found = null;
         for ( FacturasPorEmpleado facturas : lstFacturas ) {
             if ( facturas.getIdEmpleado().equals( idEmpleado ) ) {
@@ -958,6 +977,7 @@ public class ReportBusiness {
         return found;
     }
 
+    @NotNull
     public List<Articulo> obtenerExistenciasporArticulo( String marca, String descripcion, String color ) {
         log.info( "obtenerVentasporVendedor()" );
 
@@ -1013,7 +1033,7 @@ public class ReportBusiness {
 
         Collections.sort( lstArticulos, new Comparator<Articulo>() {
             @Override
-            public int compare(Articulo o1, Articulo o2) {
+            public int compare(@NotNull Articulo o1, @NotNull Articulo o2) {
                 return o1.getArticulo().compareTo(o2.getArticulo());
             }
         });
@@ -1021,6 +1041,7 @@ public class ReportBusiness {
         return lstArticulos;
     }
 
+    @NotNull
     public List<SaldoPorEstado> obtenerTrabajos( boolean retenidos, boolean porEnviar, boolean pino, boolean sucursal, boolean todos, boolean factura, boolean fechaPromesa ) {
 
         QTrabajo trabajo = QTrabajo.trabajo;
@@ -1087,7 +1108,8 @@ public class ReportBusiness {
         return lstTrabajos;
     }
 
-    public SaldoPorEstado FindoorCreate( List<SaldoPorEstado> lstSaldos, String estado ) {
+    @Nullable
+    public SaldoPorEstado FindoorCreate( @NotNull List<SaldoPorEstado> lstSaldos, String estado ) {
 
         SaldoPorEstado found = null;
 
@@ -1106,6 +1128,7 @@ public class ReportBusiness {
         return found;
     }
 
+    @NotNull
     public List<TrabajoTrack> obtenerTrabajosporEntregar( Date fechaInicio, Date fechaFin ) {
 
         QTrabajoTrack trabajo = QTrabajoTrack.trabajoTrack;
@@ -1116,6 +1139,7 @@ public class ReportBusiness {
         return lstTrabajos;
     }
 
+    @NotNull
     public List<SaldoPorEstado> obtenerTrabajosporEntregarporEmpleado( Date fechaInicio, Date fechaFin ) {
 
         QTrabajoTrack trabajo = QTrabajoTrack.trabajoTrack;
@@ -1133,7 +1157,8 @@ public class ReportBusiness {
         return lstTrabajos;
     }
 
-    public SaldoPorEstado FindoOrCreate( List<SaldoPorEstado> lstSaldos, String empleado ) {
+    @Nullable
+    public SaldoPorEstado FindoOrCreate( @NotNull List<SaldoPorEstado> lstSaldos, @Nullable String empleado ) {
 
         SaldoPorEstado found = null;
 
@@ -1155,6 +1180,7 @@ public class ReportBusiness {
         return found;
     }
 
+    @NotNull
     public List<IngresoPorDia> obtenerVentasporDia( Date fechaInicio, Date fechaFin ) {
 
         Parametro ivaVigenteParam = parametroRepository.findOne( TipoParametro.IVA_VIGENTE.getValue() );
@@ -1177,6 +1203,7 @@ public class ReportBusiness {
         return lstVentas;
     }
 
+    @NotNull
     public List<DescuentosPorTipo> obtenerDescuentosporTipo( Date fechaInicio, Date fechaFin ) {
 
         List<DescuentosPorTipo> lstDescuentos = new ArrayList<DescuentosPorTipo>();
@@ -1191,7 +1218,8 @@ public class ReportBusiness {
         return lstDescuentos;
     }
 
-    public DescuentosPorTipo FindOoorCreate( List<DescuentosPorTipo> lstDescuentos, String tipo ) {
+    @Nullable
+    public DescuentosPorTipo FindOoorCreate( @NotNull List<DescuentosPorTipo> lstDescuentos, String tipo ) {
         DescuentosPorTipo found = null;
         for ( DescuentosPorTipo desc : lstDescuentos ) {
             if ( desc.getTipo().equalsIgnoreCase( tipo ) ) {
@@ -1206,7 +1234,8 @@ public class ReportBusiness {
         return found;
     }
 
-    public List<DescuentosPorTipo> obtenerPagosporTipo( Date fechaInicio, Date fechaFin, String formaPago, String factura ) {
+    @NotNull
+    public List<DescuentosPorTipo> obtenerPagosporTipo( Date fechaInicio, Date fechaFin, @NotNull String formaPago, @NotNull String factura ) {
 
         List<DescuentosPorTipo> lstPagos = new ArrayList<DescuentosPorTipo>();
         QPago pago = QPago.pago;
@@ -1247,7 +1276,7 @@ public class ReportBusiness {
                 desc.AcumulaTipoPagos( pagos, bancos, descPago, esPagoDolares );
                 Collections.sort( desc.getDescuentos(), new Comparator<TipoDescuento>() {
                     @Override
-                    public int compare( TipoDescuento o1, TipoDescuento o2 ) {
+                    public int compare( @NotNull TipoDescuento o1, @NotNull TipoDescuento o2 ) {
                         return o1.getFecha().compareTo(o2.getFecha());
                     }
                 });
@@ -1256,7 +1285,7 @@ public class ReportBusiness {
                 desc.AcumulaTipoPagos( pagos, bancos, descPago, esPagoDolares );
                 Collections.sort( desc.getDescuentos(), new Comparator<TipoDescuento>() {
                     @Override
-                    public int compare( TipoDescuento o1, TipoDescuento o2 ) {
+                    public int compare( @NotNull TipoDescuento o1, @NotNull TipoDescuento o2 ) {
                         return o1.getFecha().compareTo(o2.getFecha());
                     }
                 });
@@ -1266,7 +1295,8 @@ public class ReportBusiness {
         return lstPagos;
     }
 
-    public DescuentosPorTipo FindeOrCreate( List<DescuentosPorTipo> lstPagos, String tipoPago ) {
+    @Nullable
+    public DescuentosPorTipo FindeOrCreate( @NotNull List<DescuentosPorTipo> lstPagos, String tipoPago ) {
         DescuentosPorTipo found = null;
 
         for ( DescuentosPorTipo tipo : lstPagos ) {
@@ -1282,6 +1312,7 @@ public class ReportBusiness {
         return found;
     }
 
+    @NotNull
     public List<DescuentosPorTipo> obtenerExamenesporEmpleado( Date fechaInicio, Date fechaFin ) {
 
         List<DescuentosPorTipo> lstExamenes = new ArrayList<DescuentosPorTipo>();
@@ -1301,7 +1332,8 @@ public class ReportBusiness {
         return lstExamenes;
     }
 
-    public DescuentosPorTipo EncontraroCrear( List<DescuentosPorTipo> lstExamenes, String idEmpleado ) {
+    @Nullable
+    public DescuentosPorTipo EncontraroCrear( @NotNull List<DescuentosPorTipo> lstExamenes, String idEmpleado ) {
         DescuentosPorTipo found = null;
 
         for ( DescuentosPorTipo tipo : lstExamenes ) {
@@ -1322,6 +1354,7 @@ public class ReportBusiness {
     }
 
 
+    @NotNull
     public List<IngresoPorVendedor> obtenerVentasporOptometristaCompleto( Date fechaInicio, Date fechaFin ) {
 
         Parametro ivaVigenteParam = parametroRepository.findOne( TipoParametro.IVA_VIGENTE.getValue() );
@@ -1364,7 +1397,8 @@ public class ReportBusiness {
         return lstVentas;
     }
 
-    public IngresoPorVendedor FindorCreatePrimera( List<IngresoPorVendedor> lstIngresos, String idEmpleado ) {
+    @Nullable
+    public IngresoPorVendedor FindorCreatePrimera( @NotNull List<IngresoPorVendedor> lstIngresos, String idEmpleado ) {
         IngresoPorVendedor found = null;
         for ( IngresoPorVendedor ingresos : lstIngresos ) {
             if ( ingresos.getIdEmpleado().equals( idEmpleado ) ) {
@@ -1384,7 +1418,8 @@ public class ReportBusiness {
     }
 
 
-    public IngresoPorVendedor FindorCreateMayor( List<IngresoPorVendedor> lstIngresos, String idEmpleado ) {
+    @Nullable
+    public IngresoPorVendedor FindorCreateMayor( @NotNull List<IngresoPorVendedor> lstIngresos, String idEmpleado ) {
         IngresoPorVendedor found = null;
         for ( IngresoPorVendedor ingresos : lstIngresos ) {
             if ( ingresos.getIdEmpleado().equals( idEmpleado ) ) {
@@ -1404,6 +1439,7 @@ public class ReportBusiness {
     }
 
 
+    @NotNull
     public List<Promocion> obtenerPromociones( Date fechaImpresion ) {
 
         Date fechaInicio;
@@ -1425,7 +1461,8 @@ public class ReportBusiness {
     }
 
 
-    public List<KardexPorArticulo> obtenerKardex( String article, Date fechaInicio, Date fechaFin ){
+    @NotNull
+    public List<KardexPorArticulo> obtenerKardex( @NotNull String article, Date fechaInicio, Date fechaFin ){
         QTransInv transInv = QTransInv.transInv;
         QTransInvDetalle transInvDet = QTransInvDetalle.transInvDetalle;
         List<TransInvDetalle> lstMovimientos = new ArrayList<TransInvDetalle>();
@@ -1503,6 +1540,7 @@ public class ReportBusiness {
     }
 
 
+    @NotNull
     public List<VentasPorDia> obtenerVentasDelDiaActual( Date fechaInicio, Date fechaFin, Boolean artPrecioMayorcero ){
 
         QNotaVenta nv = QNotaVenta.notaVenta;
@@ -1521,6 +1559,7 @@ public class ReportBusiness {
 
 
 
+    @NotNull
     public List<VentasPorDia> obtenerNotasDeCreditoEnVentasDelDiaActual( Date fechaInicio, Date fechaFin, Boolean artPrecioMayorcero ){
 
         QNotaVenta nv = QNotaVenta.notaVenta;
@@ -1537,6 +1576,7 @@ public class ReportBusiness {
         return lstVentasDia;
     }
 
+    @NotNull
     public List<VentasPorDia> obtenerCancelacionesDelDiaActual( Date fechaInicio, Date fechaFin, Boolean artPrecioMayorcero ){
 
         List<VentasPorDia> lstVentasDia = new ArrayList<VentasPorDia>();
@@ -1552,6 +1592,7 @@ public class ReportBusiness {
     }
 
 
+    @NotNull
     public List<VentasPorDia> obtenerVentasDelDiaActualPorGenerico( Date fechaInicio, Date fechaFin, Boolean artPrecioMayorCero ){
 
         List<VentasPorDia> lstVentasDia = new ArrayList<VentasPorDia>();
@@ -1576,7 +1617,7 @@ public class ReportBusiness {
             List<DetalleNotaVenta> lstDet = new ArrayList<DetalleNotaVenta>(mod.getNotaVenta().getDetalles());
             Collections.sort( lstDet, new Comparator<DetalleNotaVenta>() {
             @Override
-            public int compare( DetalleNotaVenta o1, DetalleNotaVenta o2 ) {
+            public int compare( @NotNull DetalleNotaVenta o1, @NotNull DetalleNotaVenta o2 ) {
             return o1.getArticulo().getGenerico().getDescripcion().compareToIgnoreCase(o2.getArticulo().getGenerico().getDescripcion());
             }
             });
@@ -1608,7 +1649,8 @@ public class ReportBusiness {
         return lstVentasDia;
     }
 
-    protected VentasPorDia FindOrCreateGenerico( List<VentasPorDia> lstVemtas, String idGenerico ) {
+    @Nullable
+    protected VentasPorDia FindOrCreateGenerico( @NotNull List<VentasPorDia> lstVemtas, String idGenerico ) {
         VentasPorDia found = null;
 
         for ( VentasPorDia ventas : lstVemtas ) {
@@ -1625,7 +1667,8 @@ public class ReportBusiness {
     }
 
 
-    public VentasPorDia findorCreateFactura( List<VentasPorDia> lstVentas, String factura ) {
+    @Nullable
+    public VentasPorDia findorCreateFactura( @NotNull List<VentasPorDia> lstVentas, String factura ) {
         VentasPorDia found = null;
         for ( VentasPorDia ventas : lstVentas ) {
             if ( ventas.getFactura().equals( factura ) ) {
@@ -1641,6 +1684,7 @@ public class ReportBusiness {
     }
 
 
+    @NotNull
     public List<IngresoPorDia> obtenerPagosPorPeriodo( Date fechaInicio, Date fechaFin ){
         List<IngresoPorDia> lstIngresos = new ArrayList<IngresoPorDia>();
 
@@ -1660,6 +1704,7 @@ public class ReportBusiness {
 
 
 
+    @NotNull
     public List<VentasPorDia> obtenerVentasPorPeriodo( Date fechaInicio, Date fechaFin ){
         List<VentasPorDia> lstVentas = new ArrayList<VentasPorDia>();
         QNotaVenta nv = QNotaVenta.notaVenta;
@@ -1681,6 +1726,7 @@ public class ReportBusiness {
     }
 
 
+    @NotNull
     public List<VentasPorDia> obtenerVentasCanceladasPorPeriodo( Date fechaInicio, Date fechaFin ){
         List<VentasPorDia> lstVentas = new ArrayList<VentasPorDia>();
         QNotaVenta nv = QNotaVenta.notaVenta;
@@ -1702,6 +1748,7 @@ public class ReportBusiness {
         return lstVentas;
     }
 
+    @NotNull
     public List<VentasPorDia> obtenerNotasDeCreditoEnVentasPorPeriodo( Date fechaInicio, Date fechaFin ){
         List<VentasPorDia> lstVentas = new ArrayList<VentasPorDia>();
         List<VentasPorDia> lstNotasCredito = new ArrayList<VentasPorDia>();
@@ -1729,7 +1776,8 @@ public class ReportBusiness {
         return lstNotasCredito;
     }
 
-    protected VentasPorDia FindOrCreatePorFecha( List<VentasPorDia> lstVentas, Date fecha ) {
+    @Nullable
+    protected VentasPorDia FindOrCreatePorFecha( @NotNull List<VentasPorDia> lstVentas, Date fecha ) {
         VentasPorDia found = null;
 
         for ( VentasPorDia ventas : lstVentas ) {
@@ -1746,6 +1794,7 @@ public class ReportBusiness {
     }
 
 
+    @NotNull
     public List<PromocionesAplicadas> obtenerPromocionesAplicadas( Date fechaInicio, Date fechaFin ){
         List<PromocionesAplicadas> lstPromociones = new ArrayList<PromocionesAplicadas>();
 
@@ -1794,6 +1843,7 @@ public class ReportBusiness {
         return lstPromociones;
     }
 
+    @NotNull
     public List<ResumenCierre> obtenerVentasCierreDiario( Date fechaInicio, Date fechaFin ){
         List<ResumenCierre> lstIngresos = new ArrayList<ResumenCierre>();
         QNotaVenta nota = QNotaVenta.notaVenta;
@@ -1811,6 +1861,7 @@ public class ReportBusiness {
 
     }
 
+    @NotNull
     public List<ResumenCierre> obtenerDevolucionesCierreDiario( Date fechaInicio, Date fechaFin ){
         List<ResumenCierre> lstIngresos = new ArrayList<ResumenCierre>();
         List<Pago> lstPagos = new ArrayList<Pago>();
@@ -1823,7 +1874,7 @@ public class ReportBusiness {
         }
         Collections.sort( lstPagos, new Comparator<Pago>() {
             @Override
-            public int compare(Pago o1, Pago o2) {
+            public int compare(@NotNull Pago o1, @NotNull Pago o2) {
                 return o1.getIdFactura().compareTo(o2.getIdFactura());
             }
         });
@@ -1831,7 +1882,8 @@ public class ReportBusiness {
         return lstIngresos;
     }
 
-    public ResumenCierre FindOrCreateCierreDiario( List<ResumenCierre> lstIngresos, Date fecha ) {
+    @Nullable
+    public ResumenCierre FindOrCreateCierreDiario( @NotNull List<ResumenCierre> lstIngresos, Date fecha ) {
         Date onlyDay = DateUtils.truncate( fecha, Calendar.DATE );
         ResumenCierre found = null;
         for ( ResumenCierre ingresos : lstIngresos ) {
@@ -1850,6 +1902,7 @@ public class ReportBusiness {
 
 
 
+    @NotNull
     public List<VentasPorDia> obtenerVentasPorPeriodoMasVision( Date fechaInicio, Date fechaFin ){
         List<VentasPorDia> lstVentas = new ArrayList<VentasPorDia>();
         QNotaVenta nv = QNotaVenta.notaVenta;
@@ -1875,7 +1928,8 @@ public class ReportBusiness {
 
 
 
-    public List<Descuento> obtenerDescuentosMasVision( Date fechaInicio, Date fechaFin, String key ) {
+    @NotNull
+    public List<Descuento> obtenerDescuentosMasVision( Date fechaInicio, Date fechaFin, @NotNull String key ) {
         BooleanBuilder claveBuilder = new BooleanBuilder();
         QDescuento descuento = QDescuento.descuento;
         if( !key.trim().equalsIgnoreCase("") ){
@@ -1895,6 +1949,7 @@ public class ReportBusiness {
     }
 
 
+    @NotNull
     public List<Cotizaciones> obtenerCotizaciones( Date fechaInicio, Date fechaFin ) {
         List<Cotizaciones> lstCotizaciones = new ArrayList<Cotizaciones>();
         QCotizacion cotiza = QCotizacion.cotizacion;
@@ -1945,6 +2000,7 @@ public class ReportBusiness {
     }
 
 
+  @NotNull
   public List<VentasPorDia> obtenerVentasPorCupones( Date fechaInicio, Date fechaFin ){
     log.debug( "obtenerVentasPorCupones" );
 

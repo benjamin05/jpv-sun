@@ -2,15 +2,12 @@ package mx.lux.pos.model;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Type;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Collection;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 @Entity
 @Table( name = "orden_prom", schema = "public" )
@@ -40,6 +37,7 @@ public class OrdenProm implements Serializable, Comparable<OrdenProm> {
     @Column( name = "fecha_mod" )
     private Date fechaMod;
 
+    @NotNull
     @Transient
     private Set<OrdenPromDet> ordenPromDetSet = new HashSet<OrdenPromDet>();
 
@@ -108,6 +106,7 @@ public class OrdenProm implements Serializable, Comparable<OrdenProm> {
         fechaMod = pFechaMod;
     }
 
+    @NotNull
     public Set<OrdenPromDet> getOrdenPromDetSet() {
         return ordenPromDetSet;
     }
@@ -121,14 +120,14 @@ public class OrdenProm implements Serializable, Comparable<OrdenProm> {
         this.ordenPromDetSet.add( det );
     }
 
-    public void add( List<OrdenPromDet> pListaOrdenPromDet ) {
+    public void add( @NotNull List<OrdenPromDet> pListaOrdenPromDet ) {
         for ( OrdenPromDet det : pListaOrdenPromDet ) {
             this.add( det );
         }
     }
 
     // Entity
-    public int compareTo( OrdenProm pOrdenProm ) {
+    public int compareTo( @NotNull OrdenProm pOrdenProm ) {
         int result = this.getIdFactura().compareTo( pOrdenProm.getIdFactura() );
         if ( result == 0 )
             result = this.getIdPromocion().compareTo( pOrdenProm.getIdPromocion() );

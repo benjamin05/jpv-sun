@@ -1,6 +1,7 @@
 package mx.lux.pos.model;
 
 import org.apache.commons.lang.time.DateUtils;
+import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -33,7 +34,7 @@ public class IngresoPorDia {
         montoAcumulado = montoAcumulado.add( monto );
     }
 
-    public void AcumulaDevolucion( BigDecimal montodev, Double iva ) {
+    public void AcumulaDevolucion( @Nullable BigDecimal montodev, Double iva ) {
         if ( montodev != null ) {
             double ivaMonto = 1+( iva/porcentaje );
             BigDecimal montoIva = new BigDecimal(montodev.doubleValue()/(ivaMonto));

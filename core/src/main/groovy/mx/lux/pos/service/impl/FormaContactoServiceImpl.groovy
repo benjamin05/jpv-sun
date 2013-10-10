@@ -3,9 +3,7 @@ package mx.lux.pos.service.impl
 import com.mysema.query.jpa.JPQLQuery
 import com.mysema.query.types.Predicate
 import groovy.util.logging.Slf4j
-
 import mx.lux.pos.model.FormaContacto
-
 import mx.lux.pos.model.QFormaContacto
 import mx.lux.pos.repository.FormaContactoRepository
 import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 import javax.annotation.Resource
-import javax.persistence.criteria.Expression
 
 @Slf4j
 @Service( 'FormaContactoService' )

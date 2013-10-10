@@ -1,5 +1,6 @@
 package mx.lux.pos.service.business
 
+import mx.lux.pos.model.*
 import mx.lux.pos.repository.GrupoArticuloDetRepository
 import mx.lux.pos.repository.GrupoArticuloRepository
 import mx.lux.pos.repository.PromocionRepository
@@ -9,8 +10,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import javax.annotation.Resource
-
-import mx.lux.pos.model.*
 
 class PromotionCommit {
 

@@ -1,12 +1,12 @@
 package mx.lux.pos.service.io
 
+import mx.lux.pos.model.Articulo
 import mx.lux.pos.util.StringList
 import org.apache.commons.lang3.StringUtils
-import java.text.ParseException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import mx.lux.pos.model.Articulo
-import mx.lux.pos.model.ArticuloSombra
+
+import java.text.ParseException
 
 class ArticuloClassAdapter implements Comparable<ArticuloClassAdapter> {
 

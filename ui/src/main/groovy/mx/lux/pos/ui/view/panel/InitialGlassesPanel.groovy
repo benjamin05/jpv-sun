@@ -1,17 +1,10 @@
 package mx.lux.pos.ui.view.panel
 
 import groovy.swing.SwingBuilder
-
-import javax.swing.ButtonGroup
-import javax.swing.JCheckBox
-import javax.swing.JPanel
-import javax.swing.JRadioButton
-import javax.swing.JTextField
-import javax.swing.border.TitledBorder
-
 import net.miginfocom.swing.MigLayout
 
-import org.apache.poi.hssf.record.formula.functions.T
+import javax.swing.*
+import javax.swing.border.TitledBorder
 
 class InitialGlassesPanel extends JPanel {
 

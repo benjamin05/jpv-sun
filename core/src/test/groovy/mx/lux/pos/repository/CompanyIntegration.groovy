@@ -1,11 +1,9 @@
 package mx.lux.pos.repository
 
+import mx.lux.pos.model.AddressAdapter
+import mx.lux.pos.service.business.Registry
 import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
-import mx.lux.pos.model.Contribuyente
-import mx.lux.pos.service.business.Registry
-import com.sun.jndi.cosnaming.IiopUrl
-import mx.lux.pos.model.AddressAdapter
 
 @ContextConfiguration( 'classpath:spring-config.xml' )
 class CompanyIntegration extends Specification {

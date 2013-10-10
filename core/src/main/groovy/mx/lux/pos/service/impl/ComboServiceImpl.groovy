@@ -1,5 +1,6 @@
 package mx.lux.pos.service.impl
 
+import mx.lux.pos.model.*
 import mx.lux.pos.repository.BancoRepository
 import mx.lux.pos.repository.PlanRepository
 import mx.lux.pos.repository.SucursalRepository
@@ -11,8 +12,6 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 import javax.annotation.Resource
-
-import mx.lux.pos.model.*
 
 @Service( 'comboService' )
 @Transactional( readOnly = true )

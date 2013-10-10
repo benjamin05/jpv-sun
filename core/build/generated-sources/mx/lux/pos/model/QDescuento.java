@@ -1,11 +1,13 @@
 package mx.lux.pos.model;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.*;
+import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -22,6 +24,7 @@ public class QDescuento extends EntityPathBase<Descuento> {
 
     public final StringPath clave = createString("clave");
 
+    @NotNull
     public final QDescuentoClave descuentosClave;
 
     public final DateTimePath<java.util.Date> fecha = createDateTime("fecha", java.util.Date.class);
@@ -34,6 +37,7 @@ public class QDescuento extends EntityPathBase<Descuento> {
 
     public final StringPath idTipoD = createString("idTipoD");
 
+    @NotNull
     public final QNotaVenta notaVenta;
 
     public final StringPath porcentaje = createString("porcentaje");
@@ -44,15 +48,15 @@ public class QDescuento extends EntityPathBase<Descuento> {
         this(Descuento.class, forVariable(variable), INITS);
     }
 
-    public QDescuento(PathMetadata<?> metadata) {
+    public QDescuento(@NotNull PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QDescuento(PathMetadata<?> metadata, PathInits inits) {
+    public QDescuento(PathMetadata<?> metadata, @NotNull PathInits inits) {
         this(Descuento.class, metadata, inits);
     }
 
-    public QDescuento(Class<? extends Descuento> type, PathMetadata<?> metadata, PathInits inits) {
+    public QDescuento(Class<? extends Descuento> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
         super(type, metadata, inits);
         this.descuentosClave = inits.isInitialized("descuentosClave") ? new QDescuentoClave(forProperty("descuentosClave")) : null;
         this.notaVenta = inits.isInitialized("notaVenta") ? new QNotaVenta(forProperty("notaVenta"), inits.get("notaVenta")) : null;

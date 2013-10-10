@@ -1,11 +1,12 @@
 package mx.lux.pos.service.io
 
-import mx.lux.pos.model.MessageImportAdapter
-import java.text.ParseException
-import mx.lux.pos.service.business.Registry
 import mx.lux.pos.model.Mensaje
+import mx.lux.pos.model.MessageImportAdapter
 import mx.lux.pos.repository.impl.RepositoryFactory
+import mx.lux.pos.service.business.Registry
 import org.apache.commons.lang3.StringUtils
+
+import java.text.ParseException
 
 class MessageImportTask {
 

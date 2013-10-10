@@ -5,8 +5,6 @@ import mx.lux.pos.util.CustomDateUtils
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import mx.lux.pos.model.TipoParametro
-import org.hibernate.type.CharacterArrayClobType
 
 class ArchiveTask {
 

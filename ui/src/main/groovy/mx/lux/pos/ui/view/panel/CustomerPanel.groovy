@@ -5,21 +5,19 @@ import groovy.swing.SwingBuilder
 import mx.lux.pos.model.FormaContacto
 import mx.lux.pos.ui.controller.ContactController
 import mx.lux.pos.ui.controller.CustomerController
+import mx.lux.pos.ui.model.*
 import mx.lux.pos.ui.resources.UI_Standards
 import mx.lux.pos.ui.view.dialog.ContactDialogNewCustomer
 import mx.lux.pos.ui.view.dialog.NewCustomerAndRxDialog
 import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
 
-import java.awt.BorderLayout
-import java.awt.Component
+import javax.swing.*
+import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.event.ItemEvent
-
-import mx.lux.pos.ui.model.*
-
-import javax.swing.*
 import java.awt.event.MouseEvent
+import java.util.List
 
 class CustomerPanel extends JPanel {
 

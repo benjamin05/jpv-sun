@@ -51,7 +51,7 @@ class CancellationController {
       modificacion = cancelacionService.registrarCancelacionDeNotaVenta( orderId, modificacion )
       if ( modificacion?.id ) {
         log.debug( "modificacion de cancelacion registrada id: ${modificacion.id}" )
-        ServiceManager.ioServices.logAdjustmentNotification( modificacion.id )
+        //ServiceManager.ioServices.logAdjustmentNotification( modificacion.id )
         return true
       } else {
         log.warn( 'error, no se registra cancelacion' )

@@ -1,13 +1,13 @@
 package mx.lux.pos.service.business
 
+import mx.lux.pos.model.*
 import mx.lux.pos.repository.impl.RepositoryFactory
 import mx.lux.pos.service.impl.ServiceFactory
 import mx.lux.pos.service.io.InvTrFile
 import mx.lux.pos.service.io.ShippingNoticeFile
+import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import mx.lux.pos.model.*
-import org.apache.commons.lang3.StringUtils
 
 class InventoryCommit {
 

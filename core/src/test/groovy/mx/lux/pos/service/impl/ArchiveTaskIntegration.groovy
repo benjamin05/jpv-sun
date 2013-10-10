@@ -1,11 +1,11 @@
 package mx.lux.pos.service.impl
 
-import spock.lang.Specification
+import mx.lux.pos.service.business.Registry
 import mx.lux.pos.service.io.ArchiveTask
-import org.springframework.test.context.ContextConfiguration
 import mx.lux.pos.util.CustomDateUtils
 import org.apache.commons.lang3.time.DateUtils
-import mx.lux.pos.service.business.Registry
+import org.springframework.test.context.ContextConfiguration
+import spock.lang.Specification
 
 @ContextConfiguration( 'classpath:spring-config.xml' )
 class ArchiveTaskIntegration extends Specification {

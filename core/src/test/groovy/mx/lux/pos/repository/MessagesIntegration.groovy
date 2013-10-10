@@ -1,15 +1,13 @@
 package mx.lux.pos.repository
 
 import mx.lux.pos.model.Mensaje
+import mx.lux.pos.model.MensajesPorParametro
+import mx.lux.pos.service.MensajeService
+import mx.lux.pos.service.business.MessageManager
 import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
 import javax.annotation.Resource
-import mx.lux.pos.model.QMensaje
-import mx.lux.pos.service.business.MessageManager
-import mx.lux.pos.model.MensajesPorParametro
-import mx.lux.pos.model.TipoParametro
-import mx.lux.pos.service.MensajeService
 
 @ContextConfiguration('classpath:spring-config.xml')
 class MessagesIntegration extends Specification {

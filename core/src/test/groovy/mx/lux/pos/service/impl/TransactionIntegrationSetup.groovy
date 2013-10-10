@@ -1,14 +1,13 @@
 package mx.lux.pos.service.impl
 
-import org.springframework.test.context.ContextConfiguration
-import spock.lang.Specification
-import mx.lux.pos.repository.impl.RepositoryFactory
 import mx.lux.pos.model.Articulo
-import mx.lux.pos.service.InventarioService
-import mx.lux.pos.service.ArticuloService
 import mx.lux.pos.model.Shipment
 import mx.lux.pos.model.ShipmentLine
+import mx.lux.pos.service.ArticuloService
+import mx.lux.pos.service.InventarioService
 import org.apache.commons.lang3.StringUtils
+import org.springframework.test.context.ContextConfiguration
+import spock.lang.Specification
 
 @ContextConfiguration( 'classpath:spring-config.xml' )
 class TransactionIntegrationSetup extends Specification {

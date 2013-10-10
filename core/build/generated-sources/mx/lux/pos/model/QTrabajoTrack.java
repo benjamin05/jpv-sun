@@ -1,11 +1,16 @@
 package mx.lux.pos.model;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.*;
-import com.mysema.query.types.path.*;
+import com.mysema.query.types.PathMetadata;
+import com.mysema.query.types.path.DateTimePath;
+import com.mysema.query.types.path.EntityPathBase;
+import com.mysema.query.types.path.PathInits;
+import com.mysema.query.types.path.StringPath;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -34,21 +39,22 @@ public class QTrabajoTrack extends EntityPathBase<TrabajoTrack> {
 
     public final StringPath obs = createString("obs");
 
+    @NotNull
     public final QTrabajo trabajo;
 
     public QTrabajoTrack(String variable) {
         this(TrabajoTrack.class, forVariable(variable), INITS);
     }
 
-    public QTrabajoTrack(PathMetadata<?> metadata) {
+    public QTrabajoTrack(@NotNull PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QTrabajoTrack(PathMetadata<?> metadata, PathInits inits) {
+    public QTrabajoTrack(PathMetadata<?> metadata, @NotNull PathInits inits) {
         this(TrabajoTrack.class, metadata, inits);
     }
 
-    public QTrabajoTrack(Class<? extends TrabajoTrack> type, PathMetadata<?> metadata, PathInits inits) {
+    public QTrabajoTrack(Class<? extends TrabajoTrack> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
         super(type, metadata, inits);
         this.trabajo = inits.isInitialized("trabajo") ? new QTrabajo(forProperty("trabajo"), inits.get("trabajo")) : null;
     }

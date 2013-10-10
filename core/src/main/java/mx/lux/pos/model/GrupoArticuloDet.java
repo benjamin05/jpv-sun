@@ -1,6 +1,7 @@
 package mx.lux.pos.model;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -58,7 +59,7 @@ public class GrupoArticuloDet implements Serializable, Comparable<GrupoArticuloD
     }
 
     // Entity
-    public int compareTo( GrupoArticuloDet pGrupoArtDet ) {
+    public int compareTo( @NotNull GrupoArticuloDet pGrupoArtDet ) {
         int result = this.getIdGrupo().compareTo( pGrupoArtDet.getIdGrupo() );
         if ( result == 0 ) this.getArticulo().compareTo( pGrupoArtDet.getArticulo() );
         return result;

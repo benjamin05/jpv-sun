@@ -1,11 +1,13 @@
 package mx.lux.pos.model;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.*;
+import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -26,6 +28,7 @@ public class QTrabajo extends EntityPathBase<Trabajo> {
 
     public final StringPath empAtendio = createString("empAtendio");
 
+    @NotNull
     public final QEmpleado empleado;
 
     public final StringPath estado = createString("estado");
@@ -68,6 +71,7 @@ public class QTrabajo extends EntityPathBase<Trabajo> {
 
     public final StringPath tipoVenta = createString("tipoVenta");
 
+    @NotNull
     public final QTrabajoEstado trabajoEstado;
 
     public final ListPath<TrabajoTrack, QTrabajoTrack> trabajoTrack = this.<TrabajoTrack, QTrabajoTrack>createList("trabajoTrack", TrabajoTrack.class, QTrabajoTrack.class);
@@ -78,15 +82,15 @@ public class QTrabajo extends EntityPathBase<Trabajo> {
         this(Trabajo.class, forVariable(variable), INITS);
     }
 
-    public QTrabajo(PathMetadata<?> metadata) {
+    public QTrabajo(@NotNull PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QTrabajo(PathMetadata<?> metadata, PathInits inits) {
+    public QTrabajo(PathMetadata<?> metadata, @NotNull PathInits inits) {
         this(Trabajo.class, metadata, inits);
     }
 
-    public QTrabajo(Class<? extends Trabajo> type, PathMetadata<?> metadata, PathInits inits) {
+    public QTrabajo(Class<? extends Trabajo> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
         super(type, metadata, inits);
         this.empleado = inits.isInitialized("empleado") ? new QEmpleado(forProperty("empleado"), inits.get("empleado")) : null;
         this.trabajoEstado = inits.isInitialized("trabajoEstado") ? new QTrabajoEstado(forProperty("trabajoEstado")) : null;

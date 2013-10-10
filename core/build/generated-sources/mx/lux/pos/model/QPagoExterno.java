@@ -1,11 +1,13 @@
 package mx.lux.pos.model;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.*;
+import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -24,14 +26,17 @@ public class QPagoExterno extends EntityPathBase<PagoExterno> {
 
     public final BooleanPath confirm = createBoolean("confirm");
 
+    @NotNull
     public final QEmpleado empleado;
 
+    @NotNull
     public final QExterno externo;
 
     public final StringPath factura = createString("factura");
 
     public final DateTimePath<java.util.Date> fecha = createDateTime("fecha", java.util.Date.class);
 
+    @NotNull
     public final QFormaPago formaPago;
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
@@ -58,21 +63,22 @@ public class QPagoExterno extends EntityPathBase<PagoExterno> {
 
     public final StringPath referencia = createString("referencia");
 
+    @NotNull
     public final QTerminal terminal;
 
     public QPagoExterno(String variable) {
         this(PagoExterno.class, forVariable(variable), INITS);
     }
 
-    public QPagoExterno(PathMetadata<?> metadata) {
+    public QPagoExterno(@NotNull PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QPagoExterno(PathMetadata<?> metadata, PathInits inits) {
+    public QPagoExterno(PathMetadata<?> metadata, @NotNull PathInits inits) {
         this(PagoExterno.class, metadata, inits);
     }
 
-    public QPagoExterno(Class<? extends PagoExterno> type, PathMetadata<?> metadata, PathInits inits) {
+    public QPagoExterno(Class<? extends PagoExterno> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
         super(type, metadata, inits);
         this.empleado = inits.isInitialized("empleado") ? new QEmpleado(forProperty("empleado"), inits.get("empleado")) : null;
         this.externo = inits.isInitialized("externo") ? new QExterno(forProperty("externo"), inits.get("externo")) : null;

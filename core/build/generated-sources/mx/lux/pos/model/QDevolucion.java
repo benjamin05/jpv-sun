@@ -1,11 +1,13 @@
 package mx.lux.pos.model;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.*;
+import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -22,6 +24,7 @@ public class QDevolucion extends EntityPathBase<Devolucion> {
 
     public final DateTimePath<java.util.Date> fecha = createDateTime("fecha", java.util.Date.class);
 
+    @NotNull
     public final QFormaPago formaPago;
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
@@ -34,12 +37,15 @@ public class QDevolucion extends EntityPathBase<Devolucion> {
 
     public final NumberPath<Integer> idPago = createNumber("idPago", Integer.class);
 
+    @NotNull
     public final QModificacion modificacion;
 
     public final NumberPath<java.math.BigDecimal> monto = createNumber("monto", java.math.BigDecimal.class);
 
+    @NotNull
     public final QNotaVenta notaVenta;
 
+    @NotNull
     public final QPago pago;
 
     public final StringPath referencia = createString("referencia");
@@ -52,15 +58,15 @@ public class QDevolucion extends EntityPathBase<Devolucion> {
         this(Devolucion.class, forVariable(variable), INITS);
     }
 
-    public QDevolucion(PathMetadata<?> metadata) {
+    public QDevolucion(@NotNull PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QDevolucion(PathMetadata<?> metadata, PathInits inits) {
+    public QDevolucion(PathMetadata<?> metadata, @NotNull PathInits inits) {
         this(Devolucion.class, metadata, inits);
     }
 
-    public QDevolucion(Class<? extends Devolucion> type, PathMetadata<?> metadata, PathInits inits) {
+    public QDevolucion(Class<? extends Devolucion> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
         super(type, metadata, inits);
         this.formaPago = inits.isInitialized("formaPago") ? new QFormaPago(forProperty("formaPago")) : null;
         this.modificacion = inits.isInitialized("modificacion") ? new QModificacion(forProperty("modificacion"), inits.get("modificacion")) : null;

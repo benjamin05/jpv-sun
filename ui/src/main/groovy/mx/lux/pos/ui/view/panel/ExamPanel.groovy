@@ -1,23 +1,15 @@
 package mx.lux.pos.ui.view.panel
 
-import java.awt.CardLayout
-import java.awt.Image;
-import java.awt.event.ActionEvent
-
 import groovy.swing.SwingBuilder
-import javax.swing.JPanel
-import javax.swing.JTextField;
-import javax.swing.border.CompoundBorder
-import javax.swing.border.TitledBorder
-import mx.lux.pos.ui.resources.UI_Standards
 import mx.lux.pos.ui.resources.ImageLibrary
+import mx.lux.pos.ui.resources.UI_Standards
 import mx.lux.pos.ui.view.dialog.ContactLensesDialog
 import mx.lux.pos.ui.view.dialog.QuoteDialog
-import mx.lux.pos.ui.view.dialog.ReceptionDialog
-import mx.lux.pos.ui.view.dialog.ReviewDialog
-
 import net.miginfocom.swing.MigLayout
-import mx.lux.pos.ui.view.dialog.PolicyDialog
+
+import javax.swing.*
+import javax.swing.border.TitledBorder
+import java.awt.event.ActionEvent
 
 class ExamPanel extends JPanel {
 

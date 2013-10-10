@@ -1,9 +1,9 @@
 package mx.lux.pos.service.impl
 
-import spock.lang.Specification
-import mx.lux.pos.service.io.MessageImportTask
 import mx.lux.pos.service.business.Registry
+import mx.lux.pos.service.io.MessageImportTask
 import org.springframework.test.context.ContextConfiguration
+import spock.lang.Specification
 
 @ContextConfiguration( 'classpath:spring-config.xml' )
 class MensajeServiceIntegration extends Specification {

@@ -1,5 +1,7 @@
 package mx.lux.pos.model;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +60,8 @@ public class SaldoPorEstado {
 		this.totalTrabajos = totalTrabajos;
 	}
 
-	protected PropiedadesporEstado FindOrCreate( List<PropiedadesporEstado> lstPropiedades, String id ) {
+	@Nullable
+    protected PropiedadesporEstado FindOrCreate( List<PropiedadesporEstado> lstPropiedades, String id ) {
 		PropiedadesporEstado found = null;
 
         for ( PropiedadesporEstado propiedades : lstPropiedades ) {

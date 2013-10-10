@@ -16,6 +16,7 @@ import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+
 import javax.swing.*
 import java.awt.*
 import java.awt.event.*
@@ -680,6 +681,13 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
     private def doPrint = { ActionEvent ev ->
         int artCount = 0
+        dioptra = new Dioptra()
+        for(OrderItem it : order.items){
+            Item result = ItemController.findItemsById(it.item.id)
+            if( result != null ){
+                controlItem( result, true )
+            }
+        }
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
         String dio = OrderController.codigoDioptra(dioptra)
         if (!dioptra.getLente().equals(null)) {

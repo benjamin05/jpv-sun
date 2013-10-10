@@ -1,7 +1,7 @@
 package mx.lux.pos.service.impl
 
-import mx.lux.pos.service.business.Registry
 import mx.lux.pos.service.SettingsService
+import mx.lux.pos.service.business.Registry
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

@@ -4,14 +4,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Type;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table( name = "nota_venta", schema = "public" )
@@ -169,16 +170,19 @@ public class NotaVenta implements Serializable {
     @Column( name = "codigo_lente" )
     private String codigo_lente;
 
+    @Nullable
     @OneToMany( fetch = FetchType.EAGER )
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "id_factura", insertable = false, updatable = false )
     private Set<DetalleNotaVenta> detalles = new HashSet<DetalleNotaVenta>();
 
+    @Nullable
     @OneToMany( fetch = FetchType.EAGER )
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "id_factura", insertable = false, updatable = false )
     private Set<Pago> pagos = new HashSet<Pago>();
 
+    @Nullable
     @ManyToOne
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "id_cliente", insertable = false, updatable = false )
@@ -189,11 +193,13 @@ public class NotaVenta implements Serializable {
     @JoinColumn( name = "id_factura", insertable = false, updatable = false )
     private List<OrdenPromDet> OrdenPromDet;
 
+    @Nullable
     @ManyToOne
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "id_empleado", insertable = false, updatable = false )
     private Empleado empleado;
 
+    @Nullable
     @ManyToOne
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "id_sucursal", insertable = false, updatable = false )
@@ -611,6 +617,7 @@ public class NotaVenta implements Serializable {
         this.poliza = poliza;
     }
 
+    @Nullable
     public Set<DetalleNotaVenta> getDetalles() {
         return detalles;
     }
@@ -619,6 +626,7 @@ public class NotaVenta implements Serializable {
         this.detalles = detalles;
     }
 
+    @Nullable
     public Set<Pago> getPagos() {
         return pagos;
     }
@@ -627,6 +635,7 @@ public class NotaVenta implements Serializable {
         this.pagos = pagos;
     }
 
+    @Nullable
     public Cliente getCliente() {
         return cliente;
     }
@@ -635,6 +644,7 @@ public class NotaVenta implements Serializable {
         this.cliente = cliente;
     }
 
+    @Nullable
     public Empleado getEmpleado() {
         return empleado;
     }
@@ -643,6 +653,7 @@ public class NotaVenta implements Serializable {
         this.empleado = empleado;
     }
 
+    @Nullable
     public Sucursal getSucursal() {
         return sucursal;
     }

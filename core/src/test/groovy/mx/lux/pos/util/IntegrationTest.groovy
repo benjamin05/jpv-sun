@@ -1,7 +1,8 @@
 package mx.lux.pos.util
 
-import javax.swing.SwingUtilities
 import org.apache.commons.lang.math.NumberUtils
+
+import javax.swing.*
 import java.text.NumberFormat
 
 class IntegrationTest  {

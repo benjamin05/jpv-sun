@@ -2,8 +2,12 @@ package mx.lux.pos.model;
 
 
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
@@ -39,7 +43,7 @@ public class Moneda implements Serializable, Comparable<Moneda> {
     // Data Management
 
     // Identity
-    public int compareTo( Moneda pMoneda ) {
+    public int compareTo( @NotNull Moneda pMoneda ) {
         return this.getIdMoneda().compareTo( pMoneda.getIdMoneda() );
     }
 

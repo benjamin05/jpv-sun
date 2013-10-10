@@ -12,11 +12,11 @@ import mx.lux.pos.ui.view.renderer.MoneyCellRenderer
 import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.time.DateUtils
 
-import java.awt.event.ActionEvent
-import java.awt.event.MouseEvent
+import javax.swing.*
 import javax.swing.event.ChangeEvent
 import javax.swing.event.ChangeListener
-import javax.swing.*
+import java.awt.event.ActionEvent
+import java.awt.event.MouseEvent
 
 class DailyClosePanel extends JPanel {
 

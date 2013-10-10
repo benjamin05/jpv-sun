@@ -1,11 +1,11 @@
 package mx.lux.pos.service.impl
 
-import spock.lang.Specification
-import org.springframework.test.context.ContextConfiguration
 import mx.lux.pos.model.TransInv
 import mx.lux.pos.service.business.InventorySearch
-import mx.lux.pos.util.CustomDateUtils
 import mx.lux.pos.service.io.ZInFile
+import mx.lux.pos.util.CustomDateUtils
+import org.springframework.test.context.ContextConfiguration
+import spock.lang.Specification
 
 @ContextConfiguration( 'classpath:spring-config.xml' )
 class ZInFileIntegration extends Specification {

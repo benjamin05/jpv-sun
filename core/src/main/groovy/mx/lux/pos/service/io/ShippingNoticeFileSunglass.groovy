@@ -1,10 +1,10 @@
 package mx.lux.pos.service.io
 
+import mx.lux.pos.model.*
 import mx.lux.pos.service.business.Registry
 import mx.lux.pos.service.impl.ServiceFactory
 import mx.lux.pos.util.StringList
 import mx.lux.pos.util.SunglassUtils
-import mx.lux.pos.model.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 

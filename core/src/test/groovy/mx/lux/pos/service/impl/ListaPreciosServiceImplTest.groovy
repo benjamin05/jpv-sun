@@ -1,12 +1,11 @@
 package mx.lux.pos.service.impl
 
+import mx.lux.pos.model.*
+import mx.lux.pos.repository.*
 import spock.lang.Shared
 import spock.lang.Specification
 
 import javax.sql.DataSource
-
-import mx.lux.pos.model.*
-import mx.lux.pos.repository.*
 
 import static mx.lux.pos.assertions.Assert.assertListaPreciosEquals
 

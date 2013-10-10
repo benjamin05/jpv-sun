@@ -1,11 +1,13 @@
 package mx.lux.pos.model;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.*;
+import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -28,8 +30,10 @@ public class QResumenTerminal extends EntityPathBase<ResumenTerminal> {
 
     public final StringPath idTerminal = createString("idTerminal");
 
+    @NotNull
     public final QSucursal sucursal;
 
+    @NotNull
     public final QTerminal terminal;
 
     public final NumberPath<java.math.BigDecimal> total = createNumber("total", java.math.BigDecimal.class);
@@ -38,15 +42,15 @@ public class QResumenTerminal extends EntityPathBase<ResumenTerminal> {
         this(ResumenTerminal.class, forVariable(variable), INITS);
     }
 
-    public QResumenTerminal(PathMetadata<?> metadata) {
+    public QResumenTerminal(@NotNull PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QResumenTerminal(PathMetadata<?> metadata, PathInits inits) {
+    public QResumenTerminal(PathMetadata<?> metadata, @NotNull PathInits inits) {
         this(ResumenTerminal.class, metadata, inits);
     }
 
-    public QResumenTerminal(Class<? extends ResumenTerminal> type, PathMetadata<?> metadata, PathInits inits) {
+    public QResumenTerminal(Class<? extends ResumenTerminal> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
         super(type, metadata, inits);
         this.sucursal = inits.isInitialized("sucursal") ? new QSucursal(forProperty("sucursal"), inits.get("sucursal")) : null;
         this.terminal = inits.isInitialized("terminal") ? new QTerminal(forProperty("terminal"), inits.get("terminal")) : null;

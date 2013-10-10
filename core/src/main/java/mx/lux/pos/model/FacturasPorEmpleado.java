@@ -1,5 +1,8 @@
 package mx.lux.pos.model;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,20 +44,20 @@ public class FacturasPorEmpleado {
         ventas = ventas + 1;
     }
 
-    public void AcumulaCancelaciones( Modificacion modificacion ) {
+    public void AcumulaCancelaciones( @NotNull Modificacion modificacion ) {
         cancelaciones = cancelaciones + 1;
         IngresoPorFactura factura = FindOrCreate( facturasVendedor, modificacion.getNotaVenta().getFactura() );
         factura.AcumulaFacturas( modificacion );
     }
 
-    public void AcumulaMarcas( String brand, Articulo articulo, Precio precio ) {
+    public void AcumulaMarcas( String brand, @NotNull Articulo articulo, @NotNull Precio precio ) {
         marca = brand;
         cantidad = cantidad + articulo.getCantExistencia();
         IngresoPorFactura article = FindOrCreate( facturasVendedor, articulo.getId().toString() );
         article.AcumulaMarca( articulo, precio );
     }
 
-    public void AcumulaMarcasResumido( String brand, Articulo articulo ) {
+    public void AcumulaMarcasResumido( String brand, @NotNull Articulo articulo ) {
         if("A".equalsIgnoreCase(articulo.getIdGenerico())){
             idGenerico = "Armazones";
         } else if("E".equalsIgnoreCase(articulo.getIdGenerico())){
@@ -116,7 +119,8 @@ public class FacturasPorEmpleado {
         this.facturasVendedor = facturasVendedor;
     }
 
-    protected IngresoPorFactura FindOrCreate( List<IngresoPorFactura> lstIngresos, String idFactura ) {
+    @Nullable
+    protected IngresoPorFactura FindOrCreate( @NotNull List<IngresoPorFactura> lstIngresos, String idFactura ) {
         IngresoPorFactura found = null;
 
         for ( IngresoPorFactura ingresos : lstIngresos ) {
@@ -133,7 +137,7 @@ public class FacturasPorEmpleado {
     }
 
 
-    public void AcumulaArticulos( boolean mostrarArticulos, DetalleNotaVenta ventas, Double iva, String descArticulo ) {
+    public void AcumulaArticulos( boolean mostrarArticulos, @NotNull DetalleNotaVenta ventas, Double iva, String descArticulo ) {
         Boolean esNotaCredito = false;
         for(Pago pago : ventas.getNotaVenta().getPagos()){
             if( "NOT".equalsIgnoreCase(pago.getIdFPago()) ){
@@ -157,7 +161,7 @@ public class FacturasPorEmpleado {
         this.noMostrarArticulos = mostrarArticulos;
     }
 
-    public void AcumulaCancelaciones( DetalleNotaVenta ventas, Double iva ){
+    public void AcumulaCancelaciones( @NotNull DetalleNotaVenta ventas, Double iva ){
         articulo = ventas.getArticulo().getDescripcion();
         idArticulo = ventas.getArticulo().getId();
         importe = (importe.add( ventas.getPrecioUnitFinal() )).negate();
@@ -165,7 +169,7 @@ public class FacturasPorEmpleado {
     }
 
 
-    public void AcumulaArticulosCancelados( boolean noMostrarArticulos, DetalleNotaVenta ventas, Double iva, String descArticulo ) {
+    public void AcumulaArticulosCancelados( boolean noMostrarArticulos, @NotNull DetalleNotaVenta ventas, Double iva, String descArticulo ) {
         articulo = ventas.getArticulo().getArticulo();
         marca = ventas.getArticulo().getMarca();
         color = ventas.getArticulo().getCodigoColor();
@@ -178,12 +182,12 @@ public class FacturasPorEmpleado {
         this.noMostrarArticulos = noMostrarArticulos;
     }
 
-    public void AcumulaMontoNotasCredito( DetalleNotaVenta ventas, BigDecimal monto, Double iva ) {
+    public void AcumulaMontoNotasCredito( @NotNull DetalleNotaVenta ventas, BigDecimal monto, Double iva ) {
         importe = importe.subtract( ventas.getPrecioUnitFinal().multiply(new BigDecimal(ventas.getCantidadFac())) );
         importeSinIva = new BigDecimal(importe.doubleValue()/( 1+iva ) );
     }
 
-    public void AcumulaArticulosNotasCredito( DetalleNotaVenta ventas, BigDecimal monto, Double iva ) {
+    public void AcumulaArticulosNotasCredito( @NotNull DetalleNotaVenta ventas, BigDecimal monto, Double iva ) {
         cantidad = cantidad - ventas.getCantidadFac().intValue();
     }
 

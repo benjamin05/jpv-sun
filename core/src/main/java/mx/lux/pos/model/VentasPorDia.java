@@ -1,12 +1,8 @@
 package mx.lux.pos.model;
 
-import org.apache.commons.lang.time.DateUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -64,7 +60,7 @@ public class VentasPorDia {
         tipoPago = "";
     }
 
-    public void acumulaArticulos( NotaVenta notaVenta, Boolean artPrecioMayorCero ) {
+    public void acumulaArticulos( @NotNull NotaVenta notaVenta, Boolean artPrecioMayorCero ) {
         for( DetalleNotaVenta detalle : notaVenta.getDetalles() ){
             if( artPrecioMayorCero){
                 if( detalle.getPrecioUnitFinal().compareTo( CERO ) > 0 ){

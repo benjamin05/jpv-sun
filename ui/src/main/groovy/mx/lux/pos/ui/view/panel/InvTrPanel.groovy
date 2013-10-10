@@ -11,15 +11,9 @@ import mx.lux.pos.ui.view.component.ComboBoxSelector
 import mx.lux.pos.ui.view.component.NavigationBar
 import net.miginfocom.swing.MigLayout
 
-import java.awt.BorderLayout
-import java.awt.Font
-import javax.swing.table.AbstractTableModel
 import javax.swing.*
-import java.awt.Dimension
 import javax.swing.table.TableModel
-import mx.lux.pos.ui.MainWindow
-
-import java.awt.event.ActionEvent
+import java.awt.*
 
 class InvTrPanel extends JPanel {
 

@@ -1,14 +1,14 @@
 package mx.lux.pos.service.impl
 
-import spock.lang.Specification
-import org.springframework.test.context.ContextConfiguration
+import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.repository.NotaVentaRepository
 import mx.lux.pos.repository.impl.RepositoryFactory
-import mx.lux.pos.model.NotaVenta
-import org.apache.commons.lang3.time.DateUtils
-import org.apache.commons.lang3.StringUtils
-import mx.lux.pos.util.CustomDateUtils
 import mx.lux.pos.service.business.EliminarNotaVentaTask
+import mx.lux.pos.util.CustomDateUtils
+import org.apache.commons.lang3.StringUtils
+import org.apache.commons.lang3.time.DateUtils
+import org.springframework.test.context.ContextConfiguration
+import spock.lang.Specification
 
 @ContextConfiguration('classpath:spring-config.xml')
 class EliminarNotaVentaTaskIntegration extends Specification {

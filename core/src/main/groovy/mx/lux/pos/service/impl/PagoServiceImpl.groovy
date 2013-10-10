@@ -4,12 +4,12 @@ import groovy.util.logging.Slf4j
 import mx.lux.pos.model.Pago
 import mx.lux.pos.repository.PagoRepository
 import mx.lux.pos.service.PagoService
+import mx.lux.pos.service.business.Registry
 import org.apache.commons.lang3.StringUtils
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 import javax.annotation.Resource
-import mx.lux.pos.service.business.Registry
 
 @Slf4j
 @Service( "pagoService" )

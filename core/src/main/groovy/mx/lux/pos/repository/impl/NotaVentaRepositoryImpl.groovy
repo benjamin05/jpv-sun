@@ -4,10 +4,8 @@ import com.mysema.query.jpa.JPQLQuery
 import com.mysema.query.jpa.impl.JPAQuery
 import com.mysema.query.types.Predicate
 import mx.lux.pos.model.NotaVenta
-import mx.lux.pos.model.QArticulo
 import mx.lux.pos.model.QNotaVenta
 import mx.lux.pos.repository.custom.NotaVentaRepositoryCustom
-import org.apache.commons.lang3.StringUtils
 import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport
 
 class NotaVentaRepositoryImpl extends QueryDslRepositorySupport implements NotaVentaRepositoryCustom {

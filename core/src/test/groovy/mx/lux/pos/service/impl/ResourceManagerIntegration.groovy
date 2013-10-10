@@ -1,10 +1,9 @@
 package mx.lux.pos.service.impl
 
-import org.springframework.test.context.ContextConfiguration
-
-import spock.lang.Specification
 import mx.lux.pos.model.TipoParametro
 import mx.lux.pos.service.business.ResourceManager
+import org.springframework.test.context.ContextConfiguration
+import spock.lang.Specification
 
 @ContextConfiguration('classpath:spring-config.xml')
 class ResourceManagerIntegration extends Specification {

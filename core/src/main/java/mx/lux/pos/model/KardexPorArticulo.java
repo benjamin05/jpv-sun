@@ -1,8 +1,8 @@
 package mx.lux.pos.model;
 
-import java.math.BigDecimal;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Date;
-import java.util.List;
 
 public class KardexPorArticulo {
 
@@ -18,7 +18,7 @@ public class KardexPorArticulo {
     private String tipoTransaccion;
     private String empleado;
 
-    public KardexPorArticulo( TransInvDetalle transInvDetalle, String idFactura ) {
+    public KardexPorArticulo( @NotNull TransInvDetalle transInvDetalle, String idFactura ) {
 
         fecha = transInvDetalle.getTransInv().getFecha();
         folio = transInvDetalle.getIdTipoTrans()+"."+transInvDetalle.getFolio().toString();

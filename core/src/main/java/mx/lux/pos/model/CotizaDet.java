@@ -1,13 +1,10 @@
 package mx.lux.pos.model;
 
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.annotations.Type;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -135,7 +132,7 @@ public class CotizaDet implements Serializable, Comparable<CotizaDet> {
     }
 
     // Identity Methods
-    public int compareTo(CotizaDet pDet) {
+    public int compareTo(@NotNull CotizaDet pDet) {
         int result = this.getIdCotiza().compareTo(pDet.getIdCotiza());
         if (result == 0) {
             result = this.getSku().compareTo(pDet.getSku());

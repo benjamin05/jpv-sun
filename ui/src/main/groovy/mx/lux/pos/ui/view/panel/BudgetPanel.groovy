@@ -5,10 +5,11 @@ import mx.lux.pos.ui.resources.UI_Standards
 import mx.lux.pos.ui.view.dialog.SingleListDialog
 import net.miginfocom.swing.MigLayout
 
-import java.awt.Font
-import java.awt.event.ActionEvent
-import javax.swing.border.TitledBorder
 import javax.swing.*
+import javax.swing.border.TitledBorder
+import java.awt.*
+import java.awt.event.ActionEvent
+import java.util.List
 
 class BudgetPanel extends JPanel {
 

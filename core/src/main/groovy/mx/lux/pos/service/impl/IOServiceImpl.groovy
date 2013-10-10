@@ -1,23 +1,19 @@
 package mx.lux.pos.service.impl
 
+import mx.lux.pos.model.*
+import mx.lux.pos.repository.*
 import mx.lux.pos.repository.impl.RepositoryFactory
 import mx.lux.pos.service.IOService
+import mx.lux.pos.service.business.*
 import mx.lux.pos.service.io.AsynchronousNotificationDispatcher
 import mx.lux.pos.util.CustomDateUtils
 import mx.lux.pos.util.FileFilterUtil
-import org.apache.commons.lang.StringUtils
-import org.apache.commons.lang3.time.DateUtils
+import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import mx.lux.pos.model.*
-import mx.lux.pos.repository.*
-import mx.lux.pos.service.business.*
-import org.apache.commons.lang3.StringUtils
-
-import java.text.DateFormat
 
 @Service
 @Transactional( readOnly = true )
@@ -269,8 +265,11 @@ class IOServiceImpl implements IOService {
   @Transactional
   void logRemittanceNotification( String idTipoTrans, Integer folio ) {
       TransInvRepository transactionRep = RepositoryFactory.inventoryMaster
+      TipoTransInvRepository tipoTransactionRep = RepositoryFactory.trTypes
+      QTipoTransInv tipoTrans = QTipoTransInv.tipoTransInv
+      TipoTransInv tipoTransInv = tipoTransactionRep.findOne( idTipoTrans )
       QTransInv trans = QTransInv.transInv
-      TransInv transInv = transactionRep.findOne(trans.idTipoTrans.eq(idTipoTrans).and(trans.folio.eq(folio)))
+      TransInv transInv = transactionRep.findOne(trans.idTipoTrans.eq(idTipoTrans).and(trans.folio.eq(tipoTransInv.ultimoFolio)))
       if ( transInv != null ) {
           AcuseRepository acuses = RepositoryFactory.acknowledgements
           Acuse acuse = new Acuse()

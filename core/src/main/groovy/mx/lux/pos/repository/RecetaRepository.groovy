@@ -1,7 +1,6 @@
 package mx.lux.pos.repository
 
 import mx.lux.pos.model.Receta
-import mx.lux.pos.repository.custom.ClienteRepositoryCustom
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.querydsl.QueryDslPredicateExecutor
 

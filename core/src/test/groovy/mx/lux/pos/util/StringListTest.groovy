@@ -1,10 +1,9 @@
 package mx.lux.pos.util
 
-import java.text.SimpleDateFormat
-
 import org.apache.commons.lang3.time.DateUtils
-
 import spock.lang.Specification
+
+import java.text.SimpleDateFormat
 
 class StringListTest extends Specification {
 

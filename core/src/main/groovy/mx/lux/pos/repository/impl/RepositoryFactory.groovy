@@ -1,9 +1,8 @@
 package mx.lux.pos.repository.impl
 
-import mx.lux.pos.model.QTmpServicios
+import mx.lux.pos.repository.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import mx.lux.pos.repository.*
 
 @Component
 class RepositoryFactory {

@@ -1,7 +1,7 @@
 package mx.lux.pos.model
 
-import org.apache.commons.lang3.StringUtils
 import mx.lux.pos.service.business.Registry
+import org.apache.commons.lang3.StringUtils
 
 class PromotionPart {
 

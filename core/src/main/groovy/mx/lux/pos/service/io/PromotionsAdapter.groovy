@@ -1,16 +1,12 @@
 package mx.lux.pos.service.io
 
-import mx.lux.pos.model.ArticuloSunglassAdapter
-import mx.lux.pos.model.ArticuloSunglassDescriptor
+import mx.lux.pos.model.Promocion
+import mx.lux.pos.service.business.Registry
+import mx.lux.pos.util.CustomDateUtils
 import mx.lux.pos.util.StringList
-import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.math.NumberUtils
 
 import java.text.ParseException
-import mx.lux.pos.model.Promocion
-import mx.lux.pos.model.NotaVenta
-import mx.lux.pos.service.business.Registry
-import mx.lux.pos.util.CustomDateUtils
 
 class PromotionsAdapter {
 

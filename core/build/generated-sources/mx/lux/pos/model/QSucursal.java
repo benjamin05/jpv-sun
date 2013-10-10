@@ -1,11 +1,13 @@
 package mx.lux.pos.model;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.*;
+import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -32,10 +34,12 @@ public class QSucursal extends EntityPathBase<Sucursal> {
 
     public final BooleanPath domingo = createBoolean("domingo");
 
+    @NotNull
     public final QEstado estado;
 
     public final DateTimePath<java.util.Date> fechaModificado = createDateTime("fechaModificado", java.util.Date.class);
 
+    @NotNull
     public final QEmpleado gerente;
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
@@ -56,6 +60,7 @@ public class QSucursal extends EntityPathBase<Sucursal> {
 
     public final StringPath marca = createString("marca");
 
+    @NotNull
     public final QMunicipio municipio;
 
     public final StringPath nombre = createString("nombre");
@@ -78,15 +83,15 @@ public class QSucursal extends EntityPathBase<Sucursal> {
         this(Sucursal.class, forVariable(variable), INITS);
     }
 
-    public QSucursal(PathMetadata<?> metadata) {
+    public QSucursal(@NotNull PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QSucursal(PathMetadata<?> metadata, PathInits inits) {
+    public QSucursal(PathMetadata<?> metadata, @NotNull PathInits inits) {
         this(Sucursal.class, metadata, inits);
     }
 
-    public QSucursal(Class<? extends Sucursal> type, PathMetadata<?> metadata, PathInits inits) {
+    public QSucursal(Class<? extends Sucursal> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
         super(type, metadata, inits);
         this.estado = inits.isInitialized("estado") ? new QEstado(forProperty("estado")) : null;
         this.gerente = inits.isInitialized("gerente") ? new QEmpleado(forProperty("gerente"), inits.get("gerente")) : null;

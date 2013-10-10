@@ -1,11 +1,10 @@
 package mx.lux.pos.service.impl
 
+import mx.lux.pos.model.*
 import mx.lux.pos.service.business.PromotionCommit
 import mx.lux.pos.service.business.PromotionEngine
 import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
-import mx.lux.pos.model.*
-import mx.lux.pos.service.business.PromotionImportTask
 
 @ContextConfiguration('classpath:spring-config.xml')
 class PromotionModelIntegration extends Specification {

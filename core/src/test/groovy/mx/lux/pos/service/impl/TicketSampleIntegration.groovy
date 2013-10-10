@@ -1,12 +1,12 @@
 package mx.lux.pos.service.impl
 
-import org.springframework.test.context.ContextConfiguration
-import spock.lang.Specification
+import mx.lux.pos.model.Empleado
+import mx.lux.pos.model.ResumenDiario
 import mx.lux.pos.model.TransInv
 import mx.lux.pos.service.business.InventorySearch
 import org.apache.commons.lang3.time.DateUtils
-import mx.lux.pos.model.ResumenDiario
-import mx.lux.pos.model.Empleado
+import org.springframework.test.context.ContextConfiguration
+import spock.lang.Specification
 
 @ContextConfiguration('classpath:spring-config.xml')
 class TicketSampleIntegration extends Specification {

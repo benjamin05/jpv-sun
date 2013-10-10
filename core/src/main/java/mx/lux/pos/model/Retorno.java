@@ -1,15 +1,13 @@
 package mx.lux.pos.model;
 
-import mx.lux.pos.model.*;
-import org.apache.commons.lang3.StringUtils;
-import org.hibernate.annotations.NotFound;
-import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
 
 @Entity
 @Table( name = "retorno", schema = "public" )

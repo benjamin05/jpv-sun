@@ -1,11 +1,15 @@
 package mx.lux.pos.model;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.*;
-import com.mysema.query.types.path.*;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.PathMetadata;
+import com.mysema.query.types.path.EntityPathBase;
+import com.mysema.query.types.path.NumberPath;
+import com.mysema.query.types.path.StringPath;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Generated;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -28,7 +32,7 @@ public class QBancoEmisor extends EntityPathBase<BancoEmisor> {
         super(BancoEmisor.class, forVariable(variable));
     }
 
-    public QBancoEmisor(Path<? extends BancoEmisor> entity) {
+    public QBancoEmisor(@NotNull Path<? extends BancoEmisor> entity) {
         super(entity.getType(), entity.getMetadata());
     }
 

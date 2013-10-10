@@ -8,11 +8,10 @@ import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
 import org.springframework.core.io.ClassPathResource
 
-import java.awt.Dimension
+import javax.swing.*
+import java.awt.*
 import java.awt.event.ActionEvent
-import javax.swing.JButton
-import javax.swing.JPanel
-import mx.lux.pos.ui.controller.CancellationController
+import java.util.List
 
 class OrderNavigatorPanel extends JPanel {
 

@@ -1,11 +1,16 @@
 package mx.lux.pos.model;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.*;
-import com.mysema.query.types.path.*;
+import com.mysema.query.types.Path;
+import com.mysema.query.types.PathMetadata;
+import com.mysema.query.types.path.DateTimePath;
+import com.mysema.query.types.path.EntityPathBase;
+import com.mysema.query.types.path.NumberPath;
+import com.mysema.query.types.path.StringPath;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Generated;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -34,7 +39,7 @@ public class QPrecio extends EntityPathBase<Precio> {
         super(Precio.class, forVariable(variable));
     }
 
-    public QPrecio(Path<? extends Precio> entity) {
+    public QPrecio(@NotNull Path<? extends Precio> entity) {
         super(entity.getType(), entity.getMetadata());
     }
 

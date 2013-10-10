@@ -1,14 +1,14 @@
 package mx.lux.pos.service.impl
 
 import groovy.util.logging.Slf4j
-import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 import mx.lux.pos.model.InstitucionIc
-import mx.lux.pos.service.ConvenioService
 import mx.lux.pos.model.QInstitucionIc
 import mx.lux.pos.repository.ConvenioRepository
+import mx.lux.pos.service.ConvenioService
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+
 import javax.annotation.Resource
-import javax.sql.rowset.Predicate
 
 @Slf4j
 @Service( "convenioService" )

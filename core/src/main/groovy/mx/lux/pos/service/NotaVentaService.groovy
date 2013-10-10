@@ -47,4 +47,6 @@ interface NotaVentaService {
   void validaSurtePorGenericoInventariable( NotaVenta notaVenta )
 
   void registraImpuestoPorFactura( NotaVenta notaVenta )
+
+  Boolean ticketReusoValido( String ticket, Integer idArticulo )
 }

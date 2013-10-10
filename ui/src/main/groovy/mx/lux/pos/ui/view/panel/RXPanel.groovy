@@ -3,30 +3,22 @@ package mx.lux.pos.ui.view.panel
 import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
 import mx.lux.pos.model.Receta
+import mx.lux.pos.ui.controller.CustomerController
 import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.model.Branch
+import mx.lux.pos.ui.model.Rx
 import mx.lux.pos.ui.model.Session
 import mx.lux.pos.ui.model.SessionItem
-import mx.lux.pos.ui.view.dialog.NoSaleDialog
-import mx.lux.pos.ui.view.panel.RXPanel
-import mx.lux.pos.ui.model.Rx
-import mx.lux.pos.ui.controller.CustomerController
 import mx.lux.pos.ui.view.dialog.EditRxDialog
+import mx.lux.pos.ui.view.dialog.NoSaleDialog
 import mx.lux.pos.ui.view.renderer.DateCellRenderer
 import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang.StringUtils
 
-import javax.swing.BorderFactory
-import javax.swing.ButtonGroup
-import javax.swing.JLabel
-import javax.swing.JPanel
-import javax.swing.JRadioButton
-import javax.swing.JTextField
-import javax.swing.ListSelectionModel
-import javax.swing.SwingUtilities
-import java.awt.BorderLayout
-import java.awt.Dimension
+import javax.swing.*
+import java.awt.*
 import java.awt.event.MouseEvent
+import java.util.List
 
 /**
  * Created with IntelliJ IDEA.

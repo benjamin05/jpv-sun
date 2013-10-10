@@ -15,10 +15,12 @@ import net.miginfocom.swing.MigLayout
 import javax.swing.*
 import java.awt.*
 import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
 import java.awt.event.ItemEvent
+import java.awt.event.ItemListener
 import java.util.List
 
-class ItemDialog extends JDialog {
+class ItemDialog extends JDialog implements ItemListener{
 
   private SwingBuilder sb
   private OrderItem tmpOrderItem
@@ -29,8 +31,13 @@ class ItemDialog extends JDialog {
   private JSpinner quantity
   private OrderPanel op
   private JComboBox surte
-    private List<String> surteOption
-    private Boolean surteVisible
+  private JTextField txtTicket
+  private JLabel lblTicket
+  private JLabel lblTicketInvalid
+  private List<String> surteOption
+  private Boolean surteVisible
+
+  private final TAG_REUSO = 'R'
 
     ItemDialog( Component parent, Order order, final OrderItem orderItem, Component orderP) {
 
@@ -62,7 +69,7 @@ class ItemDialog extends JDialog {
     sb.dialog( this,
         title: "Artículo ${tmpOrderItem.item?.name ?: ''}",
         location: parent.locationOnScreen,
-        resizable: false,
+        resizable: true,
         modal: true,
         pack: true,
         layout: new MigLayout( 'wrap 6', '[fill,grow]20[fill]20[fill]20[fill,grow]' )
@@ -80,7 +87,11 @@ class ItemDialog extends JDialog {
       label( tmpOrderItem.item?.name )
       quantity = spinner( model: spinnerNumberModel( minimum: 1, stepSize: 1, value: tmpOrderItem.quantity ) )
         surte = comboBox( items: surteOption, visible: surteVisible )
+        surte.addItemListener( this )
         label()
+        lblTicket = label( text: 'Ticket:', visible: false, constraints: 'hidemode 3' )
+        txtTicket = textField( visible: false, constraints: 'span 5' )
+        lblTicketInvalid = label( text: 'Ticket o armazon invalido', visible: false, constraints: 'span' )
 
 
       panel( layout: new MigLayout( 'right', '[fill,100!]' ), constraints: 'span' ) {
@@ -147,17 +158,35 @@ class ItemDialog extends JDialog {
     JButton source = ev.source as JButton
     source.enabled = false
     println('Seleccionado: '+surte.selectedItem?.toString())
-
-
-      SurteSwitch surteSwitch = OrderController.surteCallWS(order?.branch, orderItem?.item, 'S',order)
-      surteSwitch = surteSu(orderItem?.item,surteSwitch)
-      if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
-
-          OrderController.removeOrderItemFromOrder( order.id, orderItem )
-          OrderController.addOrderItemToOrder( order.id, tmpOrderItem, surte.selectedItem?.toString() )
+    Boolean ticketValido = OrderController.validReusoTicket( txtTicket.text.trim(), orderItem.item.id )
+      if( txtTicket.visible && ticketValido ){
+        SurteSwitch surteSwitch = OrderController.surteCallWS(order?.branch, orderItem?.item, 'S',order)
+        surteSwitch = surteSu(orderItem?.item,surteSwitch)
+        if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
+            OrderController.removeOrderItemFromOrder( order.id, orderItem )
+            OrderController.addOrderItemToOrder( order.id, tmpOrderItem, surte.selectedItem?.toString() )
+        }
+        source.enabled = true
+        dispose()
+      } else if( !txtTicket.visible ){
+        SurteSwitch surteSwitch = OrderController.surteCallWS(order?.branch, orderItem?.item, 'S',order)
+        surteSwitch = surteSu(orderItem?.item,surteSwitch)
+        if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
+            OrderController.removeOrderItemFromOrder( order.id, orderItem )
+            OrderController.addOrderItemToOrder( order.id, tmpOrderItem, surte.selectedItem?.toString() )
+        }
+        source.enabled = true
+        dispose()
+      } else if( txtTicket.visible && !ticketValido ){
+        lblTicketInvalid.visible = true
       }
-
-    source.enabled = true
-    dispose()
   }
+
+    @Override
+    void itemStateChanged(ItemEvent e) {
+        if( TAG_REUSO.equalsIgnoreCase(e.item.toString().trim()) ){
+            lblTicket.visible = true
+            txtTicket.visible = true
+        }
+    }
 }

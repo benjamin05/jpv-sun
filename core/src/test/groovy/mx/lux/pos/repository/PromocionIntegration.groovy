@@ -4,9 +4,9 @@ import mx.lux.pos.model.Promocion
 import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
+import javax.annotation.Resource
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import javax.annotation.Resource
 
 @ContextConfiguration('classpath:spring-config.xml')
 class PromocionIntegration extends Specification {

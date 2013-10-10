@@ -3,18 +3,16 @@ package mx.lux.pos.service.impl
 import groovy.text.SimpleTemplateEngine
 import groovy.text.Template
 import groovy.util.logging.Slf4j
+import mx.lux.pos.model.*
+import mx.lux.pos.repository.*
 import mx.lux.pos.service.ComprobanteService
+import mx.lux.pos.service.business.Registry
 import org.apache.commons.lang3.StringUtils
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-import java.math.MathContext
 import javax.annotation.Resource
-
-import mx.lux.pos.model.*
-import mx.lux.pos.repository.*
-import mx.lux.pos.service.business.Registry
-
+import java.math.MathContext
 import java.math.RoundingMode
 
 @Slf4j

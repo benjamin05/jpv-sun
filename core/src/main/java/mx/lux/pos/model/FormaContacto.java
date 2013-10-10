@@ -1,6 +1,5 @@
 package mx.lux.pos.model;
 
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 

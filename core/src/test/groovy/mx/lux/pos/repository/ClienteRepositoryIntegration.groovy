@@ -1,9 +1,9 @@
 package mx.lux.pos.repository
 
+import mx.lux.pos.model.Cliente
+import mx.lux.pos.repository.impl.RepositoryFactory
 import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
-import mx.lux.pos.repository.impl.RepositoryFactory
-import mx.lux.pos.model.Cliente
 
 @ContextConfiguration( 'classpath:spring-config.xml' )
 class ClienteRepositoryIntegration extends Specification {

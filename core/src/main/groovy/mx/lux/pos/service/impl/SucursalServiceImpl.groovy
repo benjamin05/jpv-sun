@@ -1,7 +1,6 @@
 package mx.lux.pos.service.impl
 
 import groovy.util.logging.Slf4j
-import mx.lux.pos.model.Empleado
 import mx.lux.pos.model.Sucursal
 import mx.lux.pos.model.TipoParametro
 import mx.lux.pos.repository.ParametroRepository

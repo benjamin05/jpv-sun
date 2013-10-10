@@ -1,7 +1,9 @@
 package mx.lux.pos.model;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -44,7 +46,7 @@ public class IngresoPorVendedor {
     public IngresoPorVendedor() {
     }
 
-    public void AcumulaPago( String idFactura, BigDecimal monto, Date FechaPago ) {
+    public void AcumulaPago( String idFactura, @NotNull BigDecimal monto, Date FechaPago ) {
         IngresoPorFactura ingreso = FindOrCreate( pagos, idFactura );
 
         ingreso.AcumulaPago( new BigDecimal(monto.doubleValue()), FechaPago );
@@ -55,7 +57,7 @@ public class IngresoPorVendedor {
     }
 
 
-    public void AcumulaCancelaciones( String idFactura, BigDecimal monto, Date FechaPago ) {
+    public void AcumulaCancelaciones( String idFactura, @NotNull BigDecimal monto, Date FechaPago ) {
         IngresoPorFactura ingreso = FindOrCreate( pagos, idFactura );
 
         ingreso.AcumulaCancelaciones(new BigDecimal(monto.doubleValue()), FechaPago);
@@ -66,7 +68,7 @@ public class IngresoPorVendedor {
     }
 
 
-    public void AcumulaDevolucion( String idFactura, BigDecimal monto, Double iva ) {
+    public void AcumulaDevolucion( String idFactura, @NotNull BigDecimal monto, Double iva ) {
         IngresoPorFactura ingreso = FindOrCreate( devoluciones, idFactura );
         double ivaMonto = iva/porcentaje;
         ingreso.AcumulaDevolucion( new BigDecimal(monto.doubleValue()/( 1+ ivaMonto ) ) );
@@ -74,7 +76,7 @@ public class IngresoPorVendedor {
         totalPagosIva = totalPagosIva.subtract( monto );
     }
 
-    public void AcumulaPagos( boolean mostrarArticulos, String idArticulo, DetalleNotaVenta notaVenta, Date fecha, String articulo, BigDecimal monto,
+    public void AcumulaPagos( boolean mostrarArticulos, String idArticulo, @NotNull DetalleNotaVenta notaVenta, Date fecha, @NotNull String articulo, @NotNull BigDecimal monto,
                               Double iva, String descripcion ) {
         IngresoPorFactura ingreso = FindorCreate( pagos, articulo );
         ingreso.AcumulaMarcas( mostrarArticulos, idArticulo, notaVenta, monto, iva, fecha, articulo, descripcion );
@@ -84,7 +86,7 @@ public class IngresoPorVendedor {
         this.mostrarArticulos = mostrarArticulos;
     }
 
-    public void AcumulaPagosCan( DetalleNotaVenta detalles, String idArticulo, Date fecha, String articulo, BigDecimal monto,
+    public void AcumulaPagosCan( @NotNull DetalleNotaVenta detalles, String idArticulo, Date fecha, @NotNull String articulo, @NotNull BigDecimal monto,
                               Double iva, String descripcion ) {
         IngresoPorFactura ingreso = FindorCreate( pagos, articulo );
         ingreso.AcumulaMarcasCan( detalles, idArticulo, monto, iva, fecha, articulo, descripcion );
@@ -94,7 +96,7 @@ public class IngresoPorVendedor {
     }
 
 
-    public void AcumulaPagosNotaCredito( Integer cantArticulos, DetalleNotaVenta notaVenta, Date fecha, String articulo, BigDecimal monto,
+    public void AcumulaPagosNotaCredito( Integer cantArticulos, @NotNull DetalleNotaVenta notaVenta, Date fecha, @NotNull String articulo, BigDecimal monto,
                                  Double iva, String descripcion ) {
         IngresoPorFactura ingreso = FindorCreate( pagos, articulo );
         ingreso.AcumulaPagosMarcasNotasCredito( cantArticulos, notaVenta, monto, iva, fecha, articulo, descripcion );
@@ -102,14 +104,14 @@ public class IngresoPorVendedor {
         totalPagosIva = new BigDecimal( totalPagos.doubleValue()/( 1+iva ) );
     }
 
-    public void AcumulaArticulosNotaCredito( Integer cantArticulos, DetalleNotaVenta notaVenta, Date fecha, String articulo, BigDecimal monto,
+    public void AcumulaArticulosNotaCredito( Integer cantArticulos, @NotNull DetalleNotaVenta notaVenta, Date fecha, @NotNull String articulo, BigDecimal monto,
                                          Double iva, String descripcion ) {
         IngresoPorFactura ingreso = FindorCreate( pagos, articulo );
         ingreso.AcumulaArticulosMarcasNotasCredito( cantArticulos, notaVenta, monto, iva, fecha, articulo, descripcion );
         contador = contador.subtract( new BigDecimal(notaVenta.getCantidadFac()) );
     }
 
-    public void AcumulaOptometrista( NotaVenta venta, BigDecimal total,
+    public void AcumulaOptometrista( @NotNull NotaVenta venta, BigDecimal total,
                                      Integer noFacturas1, Double iva ) {
         facturas = noFacturas1;
         //totalPagos = total;
@@ -125,7 +127,7 @@ public class IngresoPorVendedor {
         contador = contador.add( new BigDecimal( 1 ) );
     }
 
-    public void AcumulaCanOptometrista( NotaVenta venta,
+    public void AcumulaCanOptometrista( @NotNull NotaVenta venta,
                                      Integer noFacturas1, Double iva ) {
         for(Pago pago : venta.getPagos()){
             if(!pago.getIdFPago().trim().startsWith(TAG_CUPON)){
@@ -136,7 +138,7 @@ public class IngresoPorVendedor {
         ingreso.AcumulaVentasCanOpto( venta );
     }
 
-    public void AcumulaOptometristaMayor( NotaVenta venta, Integer factura ) {
+    public void AcumulaOptometristaMayor( @NotNull NotaVenta venta, Integer factura ) {
         totalPagos = totalPagos.add( venta.getVentaNeta() );
         facturas = factura;
         checkMaxSale( pagos, venta );
@@ -174,8 +176,9 @@ public class IngresoPorVendedor {
         return totalDevoluciones;
     }
 
+    @Nullable
     protected IngresoPorFactura FindOrCreate(
-            List<IngresoPorFactura> lstIngresos, String idFactura ) {
+            @NotNull List<IngresoPorFactura> lstIngresos, String idFactura ) {
         IngresoPorFactura found = null;
 
         for ( IngresoPorFactura ingresos : lstIngresos ) {
@@ -210,8 +213,9 @@ public class IngresoPorVendedor {
         return promedio;
     }
 
+    @Nullable
     protected IngresoPorFactura FindorCreate(
-            List<IngresoPorFactura> lstIngresos, String articulo ) {
+            @NotNull List<IngresoPorFactura> lstIngresos, @NotNull String articulo ) {
         IngresoPorFactura found = null;
 
         for ( IngresoPorFactura ingresos : lstIngresos ) {
@@ -295,8 +299,8 @@ public class IngresoPorVendedor {
         this.porcentaje = porcentaje;
     }
 
-    protected void checkMaxSale( List<IngresoPorFactura> lstIngresos,
-                                 NotaVenta venta ) {
+    protected void checkMaxSale( @NotNull List<IngresoPorFactura> lstIngresos,
+                                 @NotNull NotaVenta venta ) {
         IngresoPorFactura ingresos = new IngresoPorFactura( venta.getFactura() );
         lstIngresos.add( ingresos );
         if ( lstIngresos.get( 0 ).getMontoPago().compareTo( venta.getVentaNeta() ) < 0 ) {

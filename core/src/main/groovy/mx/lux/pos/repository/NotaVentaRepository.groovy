@@ -3,9 +3,9 @@ package mx.lux.pos.repository
 import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.repository.custom.NotaVentaRepositoryCustom
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.querydsl.QueryDslPredicateExecutor
-import org.springframework.data.jpa.repository.Modifying
 import org.springframework.transaction.annotation.Transactional
 
 @Transactional( readOnly = true )

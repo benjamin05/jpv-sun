@@ -1,5 +1,6 @@
 package mx.lux.pos.service.business
 
+import mx.lux.pos.model.*
 import mx.lux.pos.repository.TipoTransInvRepository
 import mx.lux.pos.repository.TransInvDetalleRepository
 import mx.lux.pos.repository.TransInvRepository
@@ -9,7 +10,6 @@ import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.time.DateUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import mx.lux.pos.model.*
 
 @Component
 class InventorySearch {

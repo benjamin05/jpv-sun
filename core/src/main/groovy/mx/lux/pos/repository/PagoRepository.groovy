@@ -2,12 +2,11 @@ package mx.lux.pos.repository
 
 import mx.lux.pos.model.Pago
 import mx.lux.pos.repository.custom.PagoRepositoryCustom
-
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.querydsl.QueryDslPredicateExecutor
 import org.springframework.data.jpa.repository.Modifying
-import org.springframework.transaction.annotation.Transactional
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.querydsl.QueryDslPredicateExecutor
+import org.springframework.transaction.annotation.Transactional
 
 @Transactional( readOnly = true )
 interface PagoRepository extends JpaRepository<Pago, Integer>, QueryDslPredicateExecutor<Pago>, PagoRepositoryCustom {

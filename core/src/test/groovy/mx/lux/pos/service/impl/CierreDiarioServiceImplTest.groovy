@@ -1,8 +1,8 @@
 package mx.lux.pos.service.impl
 
 import mx.lux.pos.model.CierreDiario
-import spock.lang.Specification
 import mx.lux.pos.repository.*
+import spock.lang.Specification
 
 class CierreDiarioServiceImplTest extends Specification {
 

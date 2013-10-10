@@ -4,9 +4,11 @@ import com.mysema.query.BooleanBuilder
 import com.mysema.query.types.OrderSpecifier
 import com.mysema.query.types.Predicate
 import groovy.util.logging.Slf4j
-import mx.lux.pos.repository.impl.RepositoryFactory
+import mx.lux.pos.model.*
+import mx.lux.pos.repository.*
 import mx.lux.pos.service.CancelacionService
 import mx.lux.pos.service.NotaVentaService
+import mx.lux.pos.service.business.Registry
 import mx.lux.pos.util.CustomDateUtils
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.time.DateUtils
@@ -14,11 +16,6 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 import javax.annotation.Resource
-
-import mx.lux.pos.model.*
-import mx.lux.pos.repository.*
-import mx.lux.pos.service.business.Registry
-import java.text.NumberFormat
 
 @Slf4j
 @Service('cancelacionService')
@@ -455,10 +452,12 @@ class CancelacionServiceImpl implements CancelacionService {
     @Transactional
     Jb actualizaJb( String idFactura ){
       log.debug( 'actualizaJb( )' )
-      Jb jb = jbRepository.findOne( idFactura )
+      NotaVenta nota = notaVentaRepository.findOne( idFactura )
+      Jb jb = jbRepository.findOne( nota != null ? nota.factura.trim(): '' )
       if( jb != null ){
         jb.estado = TAG_JB_CANCELADA
-        jb = jbRepository.saveAndFlush( jb )
+        jbRepository.save( jb )
+        jbRepository.flush()
       }
       return jb
     }
@@ -475,14 +474,16 @@ class CancelacionServiceImpl implements CancelacionService {
       }
 
       JbTrack jbTrack = new JbTrack()
-      jbTrack.rx = idFactura.trim()
+      jbTrack.rx = nota.factura.trim()
       jbTrack.estado = TAG_JB_CANCELADA
       jbTrack.emp = lstModificaciones.size() > 0 ? lstModificaciones.first().idEmpleado : ''
       jbTrack.obs = ''
+      jbTrack.id_mod = '0'
       jbTrack.id_viaje = null
       jbTrack.fecha = new Date()
 
-      jbTrack = jbTrackRepository.saveAndFlush( jbTrack )
+      jbTrackRepository.save( jbTrack )
+      jbTrackRepository.flush()
       return jbTrack
     }
 
@@ -495,7 +496,7 @@ class CancelacionServiceImpl implements CancelacionService {
       QJbLlamada llamada = QJbLlamada.jbLlamada
       JbLlamada jbLlamada = jbLlamadaRepository.findOne( llamada.rx.eq(nota != null ? nota.factura : '') )
       if(jbLlamada != null ){
-        jbLlamadaRepository.delete( jbLlamada )
+        jbLlamadaRepository.delete( jbLlamada.rx )
       }
     }
 
@@ -505,9 +506,9 @@ class CancelacionServiceImpl implements CancelacionService {
     log.debug( "generaAcuses()" )
     Parametro idSuc = parametroRepository.findOne( TipoParametro.ID_SUCURSAL.value )
     NotaVenta notaVenta = notaVentaRepository.findOne( idFactura )
-    QNotaFactura nota = QNotaFactura.notaFactura
-    NotaFactura notaFactura = notaFacturaRepository.findOne( nota.ticket.eq(idSuc.valor.trim()+'-'+idFactura.trim()) )
-    if( notaFactura != null ){
+    /*QNotaFactura nota = QNotaFactura.notaFactura
+    NotaFactura notaFactura = notaFacturaRepository.findOne( nota.ticket.eq(idSuc.valor.trim()+'-'+notaVenta.factura.trim()) )
+    if( notaFactura != null ){*/
         Acuse acuse = new Acuse()
         acuse.idTipo = TAG_NOTA_FACTURA_CANCELACION
         try {
@@ -528,28 +529,28 @@ class CancelacionServiceImpl implements CancelacionService {
         } catch ( Exception e ) {
             log.error( e.getMessage() )
         }
-    }
+    //}
 
     Boolean acuseCanApart = false
     for(DetalleNotaVenta det : notaVenta.detalles){
       if( TAG_GENERICO_ARMAZON.equalsIgnoreCase(det.articulo.idGenerico.trim()) ){
         if( TAG_SURTE_PINO.equalsIgnoreCase(det.surte.trim()) ){
           if( det.notaVenta.fechaEntrega == null ){
-              Acuse acuse = new Acuse()
-              acuse.idTipo = TAG_DETALLES_CANCELACION
+              Acuse acuse1 = new Acuse()
+              acuse1.idTipo = TAG_DETALLES_CANCELACION
               try {
-                  acuse = acuseRepository.saveAndFlush( acuse )
-                  log.debug( String.format( 'Acuse: (%d) %s -> %s', acuse.id, acuse.idTipo, acuse.contenido ) )
+                  acuse1 = acuseRepository.saveAndFlush( acuse1 )
+                  log.debug( String.format( 'Acuse: (%d) %s -> %s', acuse1.id, acuse1.idTipo, acuse1.contenido ) )
               } catch ( Exception e ) {
                   log.error( e.getMessage() )
               }
-              acuse.contenido = String.format( 'id_sucVal=%s|', String.format( '%d', notaVenta.idSucursal ) )
-              acuse.contenido += String.format( 'facturaVal=%s|', notaVenta.factura.trim() )
-              acuse.contenido += String.format( 'id_acuseVal=%s|', String.format( '%d', acuse.id ) )
-              acuse.fechaCarga = new Date()
+              acuse1.contenido = String.format( 'id_sucVal=%s|', String.format( '%d', notaVenta.idSucursal ) )
+              acuse1.contenido += String.format( 'facturaVal=%s|', notaVenta.factura.trim() )
+              acuse1.contenido += String.format( 'id_acuseVal=%s|', String.format( '%d', acuse1.id ) )
+              acuse1.fechaCarga = new Date()
               try {
-                  acuse = acuseRepository.saveAndFlush( acuse )
-                  log.debug( String.format( 'Acuse: (%d) %s -> %s', acuse.id, acuse.idTipo, acuse.contenido ) )
+                  acuse1 = acuseRepository.saveAndFlush( acuse1 )
+                  log.debug( String.format( 'Acuse: (%d) %s -> %s', acuse1.id, acuse1.idTipo, acuse1.contenido ) )
               } catch ( Exception e ) {
                   log.error( e.getMessage() )
               }

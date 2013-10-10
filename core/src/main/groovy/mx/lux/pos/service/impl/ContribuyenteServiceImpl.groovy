@@ -13,8 +13,8 @@ import org.apache.commons.lang3.StringUtils
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-import java.util.regex.Pattern
 import javax.annotation.Resource
+import java.util.regex.Pattern
 
 @Slf4j
 @Service( 'contribuyenteService' )

@@ -7,7 +7,6 @@ import mx.lux.pos.repository.PrecioRepository
 import spock.lang.Specification
 
 import static mx.lux.pos.assertions.Assert.assertArticuloEquals
-import org.springframework.test.context.ContextConfiguration
 
 class ArticuloServiceImplTest extends Specification {
 

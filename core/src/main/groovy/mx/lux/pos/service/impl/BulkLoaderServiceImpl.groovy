@@ -1,10 +1,10 @@
 package mx.lux.pos.service.impl
 
+import mx.lux.pos.model.DetalleNotaVenta
+import mx.lux.pos.model.NotaVenta
+import mx.lux.pos.model.Pago
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import mx.lux.pos.model.NotaVenta
-import mx.lux.pos.model.DetalleNotaVenta
-import mx.lux.pos.model.Pago
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

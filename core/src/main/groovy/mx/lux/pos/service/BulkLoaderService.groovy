@@ -1,7 +1,7 @@
 package mx.lux.pos.service
 
-import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.model.DetalleNotaVenta
+import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.model.Pago
 
 interface BulkLoaderService {

@@ -1,22 +1,21 @@
 package mx.lux.pos.service.impl
 
-import java.sql.Date as SQLdate
-
+import mx.lux.pos.model.InvAdjustSheet
 import mx.lux.pos.model.InvTrDetRequest
 import mx.lux.pos.model.InvTrRequest
 import mx.lux.pos.model.TransInv
 import mx.lux.pos.service.ArticuloService
 import mx.lux.pos.service.InventarioService
 import mx.lux.pos.service.NotaVentaService
+import mx.lux.pos.service.io.InventoryAdjustFile
 import mx.lux.pos.util.TransInvFilter
 import org.apache.commons.lang3.time.DateUtils
 import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
-import java.text.SimpleDateFormat
 import javax.annotation.Resource
-import mx.lux.pos.service.io.InventoryAdjustFile
-import mx.lux.pos.model.InvAdjustSheet
+import java.sql.Date as SQLdate
+import java.text.SimpleDateFormat
 
 @ContextConfiguration('classpath:spring-config.xml')
 class InventarioServiceIntegration extends Specification {

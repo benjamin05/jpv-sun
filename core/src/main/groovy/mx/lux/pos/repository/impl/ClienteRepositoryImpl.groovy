@@ -1,16 +1,11 @@
 package mx.lux.pos.repository.impl
 
-import java.util.Date;
-import java.util.List;
-
 import com.mysema.query.jpa.JPQLQuery
 import com.mysema.query.types.Predicate
 import mx.lux.pos.model.Cliente
-import mx.lux.pos.model.Devolucion;
 import mx.lux.pos.model.QCliente
 import mx.lux.pos.repository.custom.ClienteRepositoryCustom
-
-import org.apache.commons.lang.time.DateUtils;
+import org.apache.commons.lang.time.DateUtils
 import org.apache.commons.lang3.StringUtils
 import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport
 

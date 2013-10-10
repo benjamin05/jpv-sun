@@ -1098,12 +1098,18 @@ class OrderController {
         surteOption.add(surte)
         String s = generico?.surte
         StringTokenizer st = new StringTokenizer(s.trim(), ",")
-        Iterator its = st.iterator()
-        while (its.hasNext()) {
+        //Iterator its = st.iterator()
+        String[] its = s.trim().split(',')
+        for(int i=0;i<its.length;i++){
+          if( !surte.equalsIgnoreCase(its[i]) ){
+            surteOption.add(its[i])
+          }
+        }
+        /*while (its.hasNext()) {
             if (!its.next().toString().trim().equals(surte)) {
                 surteOption.add(its.next().toString())
             }
-        }
+        }*/
 
         return surteOption
     }
@@ -1407,4 +1413,8 @@ class OrderController {
     }
 
 
+    static Boolean validReusoTicket( String ticket, Integer idArticulo ){
+      Boolean ticketValido = notaVentaService.ticketReusoValido( ticket, idArticulo )
+      return ticketValido
+    }
 }

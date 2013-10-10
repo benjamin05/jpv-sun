@@ -2,10 +2,10 @@ package mx.lux.pos.service.impl
 
 import com.mysema.query.types.OrderSpecifier
 import com.mysema.query.types.Predicate
-import mx.lux.pos.service.NotaVentaService
-import spock.lang.Specification
 import mx.lux.pos.model.*
 import mx.lux.pos.repository.*
+import mx.lux.pos.service.NotaVentaService
+import spock.lang.Specification
 
 import static mx.lux.pos.assertions.Assert.*
 

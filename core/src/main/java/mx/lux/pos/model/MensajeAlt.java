@@ -1,5 +1,7 @@
 package mx.lux.pos.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -59,7 +61,7 @@ public class MensajeAlt implements Serializable {
         this.texto = texto;
     }
 
-    public int compareTo( MensajeAlt mensajealt ) {
+    public int compareTo( @NotNull MensajeAlt mensajealt ) {
         int result = this.getId().compareTo( mensajealt.getId() );
         if( result == 0) result = this.getIdioma().compareToIgnoreCase( mensajealt.getIdioma() );
         return result;

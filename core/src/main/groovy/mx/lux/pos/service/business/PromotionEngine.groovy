@@ -1,13 +1,9 @@
 package mx.lux.pos.service.business
 
-import mx.lux.pos.model.Descuento
-import mx.lux.pos.model.NotaVenta
-import mx.lux.pos.model.PromotionAvailable
-import mx.lux.pos.model.PromotionModel
+import mx.lux.pos.model.*
 import mx.lux.pos.repository.impl.RepositoryFactory
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.math.NumberUtils
-import mx.lux.pos.model.PromotionDiscount
 
 class PromotionEngine {
 

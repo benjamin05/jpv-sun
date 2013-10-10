@@ -1,11 +1,13 @@
 package mx.lux.pos.model;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.*;
+import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -24,6 +26,7 @@ public class QOrdenPromDet extends EntityPathBase<OrdenPromDet> {
 
     public final NumberPath<java.math.BigDecimal> descuentoPorcentaje = createNumber("descuentoPorcentaje", java.math.BigDecimal.class);
 
+    @NotNull
     public final QDetalleNotaVenta detalleNotaVenta;
 
     public final DateTimePath<java.util.Date> fechaMod = createDateTime("fechaMod", java.util.Date.class);
@@ -44,15 +47,15 @@ public class QOrdenPromDet extends EntityPathBase<OrdenPromDet> {
         this(OrdenPromDet.class, forVariable(variable), INITS);
     }
 
-    public QOrdenPromDet(PathMetadata<?> metadata) {
+    public QOrdenPromDet(@NotNull PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QOrdenPromDet(PathMetadata<?> metadata, PathInits inits) {
+    public QOrdenPromDet(PathMetadata<?> metadata, @NotNull PathInits inits) {
         this(OrdenPromDet.class, metadata, inits);
     }
 
-    public QOrdenPromDet(Class<? extends OrdenPromDet> type, PathMetadata<?> metadata, PathInits inits) {
+    public QOrdenPromDet(Class<? extends OrdenPromDet> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
         super(type, metadata, inits);
         this.detalleNotaVenta = inits.isInitialized("detalleNotaVenta") ? new QDetalleNotaVenta(forProperty("detalleNotaVenta"), inits.get("detalleNotaVenta")) : null;
     }

@@ -1,11 +1,6 @@
 package mx.lux.pos.model;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateUtils;
-
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Date;
 
 @Entity

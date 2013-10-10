@@ -1,7 +1,7 @@
 package mx.lux.pos.service.impl
 
-import spock.lang.Specification
 import org.springframework.test.context.ContextConfiguration
+import spock.lang.Specification
 
 @ContextConfiguration('classpath:spring-config.xml')
 class IOServiceIntegration extends Specification {

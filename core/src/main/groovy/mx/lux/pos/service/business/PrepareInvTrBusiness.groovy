@@ -1,5 +1,6 @@
 package mx.lux.pos.service.business
 
+import mx.lux.pos.model.*
 import mx.lux.pos.repository.ParametroRepository
 import mx.lux.pos.service.ArticuloService
 import mx.lux.pos.service.InventarioService
@@ -8,7 +9,6 @@ import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.time.DateUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import mx.lux.pos.model.*
 
 @Component
 class PrepareInvTrBusiness {

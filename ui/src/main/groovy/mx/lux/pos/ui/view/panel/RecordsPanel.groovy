@@ -3,8 +3,7 @@ package mx.lux.pos.ui.view.panel
 import groovy.swing.SwingBuilder
 import net.miginfocom.swing.MigLayout
 
-import javax.swing.JPanel
-import javax.swing.JTextField
+import javax.swing.*
 import javax.swing.border.TitledBorder
 
 class RecordsPanel extends JPanel {

@@ -4,6 +4,8 @@ import com.mysema.query.BooleanBuilder
 import com.mysema.query.types.OrderSpecifier
 import com.mysema.query.types.Predicate
 import groovy.util.logging.Slf4j
+import mx.lux.pos.model.*
+import mx.lux.pos.repository.*
 import mx.lux.pos.repository.impl.RepositoryFactory
 import mx.lux.pos.service.NotaVentaService
 import mx.lux.pos.service.business.EliminarNotaVentaTask
@@ -15,9 +17,6 @@ import org.springframework.transaction.annotation.Transactional
 
 import javax.annotation.Resource
 
-import mx.lux.pos.model.*
-import mx.lux.pos.repository.*
-
 @Slf4j
 @Service( 'notaVentaService' )
 @Transactional( readOnly = true )
@@ -27,6 +26,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
   private static final String TAG_SURTE_SUCURSAL = 'S'
   private static final String TAG_GENERICOS_INVENTARIABLES = 'A,E'
   private static final String TAG_TIPO_NOTA_VENTA = 'F'
+  private static final String TAG_NOTA_CANCELADA = 'T'
 
   @Resource
   private NotaVentaRepository notaVentaRepository
@@ -570,4 +570,24 @@ class NotaVentaServiceImpl implements NotaVentaService {
     log.debug( "guardando idImpuesto ${impuesto.idImpuesto} a factura: ${impuesto.idFactura}" )
     facturasImpuestosRepository.flush()
   }
+
+
+
+  @Override
+  Boolean ticketReusoValido( String ticket, Integer idArticulo ){
+    QNotaVenta nv = QNotaVenta.notaVenta
+    NotaVenta nota = notaVentaRepository.findOne( nv.factura.eq(ticket.trim()).and(nv.sFactura.eq(TAG_NOTA_CANCELADA)) )
+    Articulo articulo = articuloRepository.findOne( idArticulo )
+    Boolean valid = false
+    if( nota != null && articulo != null ){
+      for(DetalleNotaVenta det : nota.detalles){
+        if(det.idArticulo == articulo.id){
+          valid = true
+        }
+      }
+    }
+    return valid
+  }
+
+
 }

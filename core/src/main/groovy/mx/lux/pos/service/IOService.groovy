@@ -1,7 +1,6 @@
 package mx.lux.pos.service
 
 import mx.lux.pos.model.Acuse
-import mx.lux.pos.model.TransInv
 
 public interface IOService {
 

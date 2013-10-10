@@ -5,17 +5,16 @@ import mx.lux.pos.ui.controller.CustomerController
 import mx.lux.pos.ui.controller.InvoiceController
 import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.controller.TaxpayerController
+import mx.lux.pos.ui.model.*
 import mx.lux.pos.ui.view.dialog.SuggestedTaxpayersDialog
 import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
 
-import java.awt.Color
-import java.awt.event.ActionEvent
-import javax.swing.border.TitledBorder
-
-import mx.lux.pos.ui.model.*
-
 import javax.swing.*
+import javax.swing.border.TitledBorder
+import java.awt.*
+import java.awt.event.ActionEvent
+import java.util.List
 
 class InvoicePanel extends JPanel {
 

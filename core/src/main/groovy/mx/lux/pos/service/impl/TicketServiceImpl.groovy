@@ -1,14 +1,16 @@
 package mx.lux.pos.service.impl
 
-import mx.lux.pos.util.CustomDateUtils as MyDateUtils
-
 import com.ibm.icu.text.RuleBasedNumberFormat
 import com.mysema.query.BooleanBuilder
 import groovy.util.logging.Slf4j
+import mx.lux.pos.model.*
+import mx.lux.pos.repository.*
 import mx.lux.pos.repository.impl.RepositoryFactory
+import mx.lux.pos.service.*
 import mx.lux.pos.service.business.InventorySearch
 import mx.lux.pos.service.business.Registry
 import mx.lux.pos.util.CustomDateUtils
+import mx.lux.pos.util.CustomDateUtils as MyDateUtils
 import mx.lux.pos.util.MoneyUtils
 import org.apache.commons.lang.WordUtils
 import org.apache.commons.lang3.StringUtils
@@ -20,18 +22,11 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.velocity.VelocityEngineUtils
 
-import java.awt.image.BufferedImage
+import javax.annotation.Resource
 import java.text.DateFormat
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
-import javax.annotation.Resource
-
-import mx.lux.pos.model.*
-import mx.lux.pos.repository.*
-import mx.lux.pos.service.*
-import java.text.DecimalFormat
-import org.apache.commons.lang.math.NumberUtils
-import java.math.RoundingMode
 
 @Slf4j
 @Service( 'ticketService' )

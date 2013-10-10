@@ -1,8 +1,8 @@
 package mx.lux.pos.service.impl
 
-import spock.lang.Specification
-import mx.lux.pos.service.io.PromotionsAdapter
 import mx.lux.pos.service.business.PromotionImportTask
+import mx.lux.pos.service.io.PromotionsAdapter
+import spock.lang.Specification
 
 class PromotionsAdapterTest extends Specification {
 

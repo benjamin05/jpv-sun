@@ -1,9 +1,9 @@
 package mx.lux.pos.service
 
-import mx.lux.pos.model.PromotionAvailable
-import mx.lux.pos.model.PromotionModel
 import mx.lux.pos.model.Promocion
+import mx.lux.pos.model.PromotionAvailable
 import mx.lux.pos.model.PromotionDiscount
+import mx.lux.pos.model.PromotionModel
 
 interface PromotionService {
 

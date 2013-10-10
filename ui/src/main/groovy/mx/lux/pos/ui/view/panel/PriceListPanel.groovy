@@ -10,9 +10,7 @@ import mx.lux.pos.ui.view.dialog.ValidatePriceListDialog
 import mx.lux.pos.ui.view.renderer.DateCellRenderer
 import net.miginfocom.swing.MigLayout
 
-import javax.swing.JOptionPane
-import javax.swing.JPanel
-import javax.swing.ListSelectionModel
+import javax.swing.*
 
 class PriceListPanel {
 

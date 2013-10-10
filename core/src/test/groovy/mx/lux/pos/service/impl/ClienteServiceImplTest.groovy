@@ -4,8 +4,8 @@ import mx.lux.pos.model.Cliente
 import mx.lux.pos.model.ClientePais
 import mx.lux.pos.model.Parametro
 import mx.lux.pos.model.TipoParametro
-import spock.lang.Specification
 import mx.lux.pos.repository.*
+import spock.lang.Specification
 
 import static mx.lux.pos.assertions.Assert.assertClienteEquals
 

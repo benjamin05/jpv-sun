@@ -1,8 +1,8 @@
 package mx.lux.pos.model
 
-import spock.lang.Specification
 import mx.lux.pos.util.StringList
 import org.apache.commons.lang3.time.DateUtils
+import spock.lang.Specification
 
 class ArticuloSunglassAdapterTest extends Specification {
 

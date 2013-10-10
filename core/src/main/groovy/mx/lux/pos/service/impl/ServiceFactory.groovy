@@ -1,8 +1,8 @@
 package mx.lux.pos.service.impl
 
+import mx.lux.pos.service.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import mx.lux.pos.service.*
 
 @Component
 class ServiceFactory {

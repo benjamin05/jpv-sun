@@ -1,24 +1,18 @@
 package mx.lux.pos.ui.view.panel
 
+import mx.lux.pos.model.InvAdjustSheet
 import mx.lux.pos.model.Shipment
 import mx.lux.pos.ui.controller.InvTrController
-import mx.lux.pos.ui.model.InvTr
-import mx.lux.pos.ui.model.InvTrViewMode
+import mx.lux.pos.ui.model.*
 import mx.lux.pos.ui.model.adapter.InvTrAdapter
 import mx.lux.pos.ui.view.component.NavigationBar.Command
 import mx.lux.pos.ui.view.component.NavigationBarListener
+import mx.lux.pos.ui.view.driver.*
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+import javax.swing.*
 import java.awt.event.MouseListener
-import javax.swing.SwingUtilities
-
-import mx.lux.pos.ui.view.driver.*
-import mx.lux.pos.model.InvAdjustSheet
-import mx.lux.pos.ui.model.Session
-import mx.lux.pos.ui.model.SessionItem
-import javax.swing.JOptionPane
-import mx.lux.pos.ui.model.Branch
 
 // Separates ui mask and ui behavior
 //   ui mask defined in InvTrPanel

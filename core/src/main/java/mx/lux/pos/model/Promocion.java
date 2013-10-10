@@ -2,6 +2,7 @@ package mx.lux.pos.model;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -350,7 +351,7 @@ public class Promocion implements Serializable, Comparable<Promocion> {
     }
 
     // Entity
-    public int compareTo( Promocion pPromocion ) {
+    public int compareTo( @NotNull Promocion pPromocion ) {
         int result = this.getPrioridad().compareTo( pPromocion.getPrioridad() );
         if ( result == 0 ) result = this.getDescripcion().compareToIgnoreCase( pPromocion.getDescripcion() );
         return result;

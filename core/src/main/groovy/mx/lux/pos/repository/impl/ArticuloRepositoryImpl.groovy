@@ -5,7 +5,6 @@ import com.mysema.query.types.Predicate
 import mx.lux.pos.model.Articulo
 import mx.lux.pos.model.QArticulo
 import mx.lux.pos.repository.custom.ArticuloRepositoryCustom
-
 import org.apache.commons.lang3.StringUtils
 import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport
 

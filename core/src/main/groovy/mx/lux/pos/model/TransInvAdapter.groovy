@@ -1,10 +1,10 @@
 package mx.lux.pos.model
 
+import mx.lux.pos.util.StringList
 import org.apache.commons.lang3.StringUtils
 
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import mx.lux.pos.util.StringList
 
 @Singleton
 class TransInvAdapter {

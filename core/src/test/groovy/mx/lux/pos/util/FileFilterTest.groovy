@@ -1,8 +1,9 @@
 package mx.lux.pos.util
 
-import spock.lang.Specification
-import java.util.regex.Pattern
 import org.apache.commons.lang.StringUtils
+import spock.lang.Specification
+
+import java.util.regex.Pattern
 
 class FileFilterTest extends Specification {
 

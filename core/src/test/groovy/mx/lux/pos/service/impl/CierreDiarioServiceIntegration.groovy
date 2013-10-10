@@ -1,15 +1,14 @@
 package mx.lux.pos.service.impl
 
-import spock.lang.Specification
-import org.springframework.test.context.ContextConfiguration
-import mx.lux.pos.util.CustomDateUtils
-import mx.lux.pos.service.CierreDiarioService
-import mx.lux.pos.service.NotaVentaService
+import mx.lux.pos.model.CierreDiario
+import mx.lux.pos.repository.CierreDiarioRepository
 import mx.lux.pos.repository.NotaVentaRepository
 import mx.lux.pos.repository.impl.RepositoryFactory
+import mx.lux.pos.service.CierreDiarioService
+import mx.lux.pos.util.CustomDateUtils
 import org.apache.commons.lang3.time.DateUtils
-import mx.lux.pos.repository.CierreDiarioRepository
-import mx.lux.pos.model.CierreDiario
+import org.springframework.test.context.ContextConfiguration
+import spock.lang.Specification
 
 @ContextConfiguration( 'classpath:spring-config.xml' )
 class CierreDiarioServiceIntegration extends Specification {

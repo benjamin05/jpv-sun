@@ -1,11 +1,13 @@
 package mx.lux.pos.model;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.*;
+import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -26,6 +28,7 @@ public class QResumenDiario extends EntityPathBase<ResumenDiario> {
 
     public final DateTimePath<java.util.Date> fechaMod = createDateTime("fechaMod", java.util.Date.class);
 
+    @NotNull
     public final QFormaPago formaPago;
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
@@ -38,6 +41,7 @@ public class QResumenDiario extends EntityPathBase<ResumenDiario> {
 
     public final StringPath plan = createString("plan");
 
+    @NotNull
     public final QTerminal terminal;
 
     public final StringPath tipo = createString("tipo");
@@ -48,15 +52,15 @@ public class QResumenDiario extends EntityPathBase<ResumenDiario> {
         this(ResumenDiario.class, forVariable(variable), INITS);
     }
 
-    public QResumenDiario(PathMetadata<?> metadata) {
+    public QResumenDiario(@NotNull PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QResumenDiario(PathMetadata<?> metadata, PathInits inits) {
+    public QResumenDiario(PathMetadata<?> metadata, @NotNull PathInits inits) {
         this(ResumenDiario.class, metadata, inits);
     }
 
-    public QResumenDiario(Class<? extends ResumenDiario> type, PathMetadata<?> metadata, PathInits inits) {
+    public QResumenDiario(Class<? extends ResumenDiario> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
         super(type, metadata, inits);
         this.formaPago = inits.isInitialized("formaPago") ? new QFormaPago(forProperty("formaPago")) : null;
         this.terminal = inits.isInitialized("terminal") ? new QTerminal(forProperty("terminal"), inits.get("terminal")) : null;

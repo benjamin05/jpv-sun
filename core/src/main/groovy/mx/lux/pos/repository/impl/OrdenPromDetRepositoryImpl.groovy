@@ -3,12 +3,10 @@ package mx.lux.pos.repository.impl
 import com.mysema.query.jpa.JPQLQuery
 import com.mysema.query.types.Predicate
 import mx.lux.pos.model.OrdenPromDet
-import mx.lux.pos.model.QNotaFactura
-import mx.lux.pos.repository.custom.NotaFacturaRepositoryCustom
+import mx.lux.pos.model.QOrdenPromDet
+import mx.lux.pos.repository.custom.OrdenPromDetRepositoryCustom
 import org.apache.commons.lang.time.DateUtils
 import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport
-import mx.lux.pos.repository.custom.OrdenPromDetRepositoryCustom
-import mx.lux.pos.model.QOrdenPromDet
 
 class OrdenPromDetRepositoryImpl extends QueryDslRepositorySupport implements OrdenPromDetRepositoryCustom {
   

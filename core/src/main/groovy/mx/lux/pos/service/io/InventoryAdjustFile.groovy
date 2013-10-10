@@ -1,12 +1,12 @@
 package mx.lux.pos.service.io
 
-import mx.lux.pos.service.business.Registry
-import mx.lux.pos.service.impl.ServiceFactory
+import mx.lux.pos.model.FileFormat
+import mx.lux.pos.model.InvAdjustLine
+import mx.lux.pos.model.InvAdjustSheet
 import mx.lux.pos.util.StringList
 import mx.lux.pos.util.SunglassUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import mx.lux.pos.model.*
 
 class InventoryAdjustFile {
 

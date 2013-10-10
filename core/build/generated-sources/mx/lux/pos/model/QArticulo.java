@@ -1,11 +1,13 @@
 package mx.lux.pos.model;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.*;
+import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -30,10 +32,12 @@ public class QArticulo extends EntityPathBase<Articulo> {
 
     public final StringPath descripcionColor = createString("descripcionColor");
 
+    @NotNull
     public final QExistencia existencia;
 
     public final DateTimePath<java.util.Date> fechaMod = createDateTime("fechaMod", java.util.Date.class);
 
+    @NotNull
     public final QGenerico generico;
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
@@ -62,6 +66,7 @@ public class QArticulo extends EntityPathBase<Articulo> {
 
     public final NumberPath<java.math.BigDecimal> precioO = createNumber("precioO", java.math.BigDecimal.class);
 
+    @NotNull
     public final QPrecio precios;
 
     public final StringPath proveedor = createString("proveedor");
@@ -76,15 +81,15 @@ public class QArticulo extends EntityPathBase<Articulo> {
         this(Articulo.class, forVariable(variable), INITS);
     }
 
-    public QArticulo(PathMetadata<?> metadata) {
+    public QArticulo(@NotNull PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QArticulo(PathMetadata<?> metadata, PathInits inits) {
+    public QArticulo(PathMetadata<?> metadata, @NotNull PathInits inits) {
         this(Articulo.class, metadata, inits);
     }
 
-    public QArticulo(Class<? extends Articulo> type, PathMetadata<?> metadata, PathInits inits) {
+    public QArticulo(Class<? extends Articulo> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
         super(type, metadata, inits);
         this.existencia = inits.isInitialized("existencia") ? new QExistencia(forProperty("existencia")) : null;
         this.generico = inits.isInitialized("generico") ? new QGenerico(forProperty("generico")) : null;

@@ -171,14 +171,17 @@ class CancellationDialog extends JDialog {
             }
         }
         if(item.id != null && surte.equalsIgnoreCase(TAG_SURTE_SUCURSAL)){
+            CancellationController.updateJb( order.id )
             CancellationController.printMaterialReturn( order.id )
             CancellationController.printMaterialReception( order.id )
         } else if(item.id != null && surte.equalsIgnoreCase(TAG_SURTE_PINO)){
             if(CancellationController.verificaPino(order.id) ){
-                CancellationController.printPinoNotStocked(order.id)
-            } else {
+                CancellationController.updateJb(order.id)
                 CancellationController.printMaterialReturn( order.id )
                 CancellationController.printMaterialReception( order.id )
+            } else {
+                CancellationController.printPinoNotStocked(order.id)
+                CancellationController.updateJb(order.id)
             }
         }
     }

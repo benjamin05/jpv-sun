@@ -1,9 +1,9 @@
 package mx.lux.pos.service.impl
 
-import spock.lang.Shared
-import spock.lang.Specification
 import mx.lux.pos.model.*
 import mx.lux.pos.repository.*
+import spock.lang.Shared
+import spock.lang.Specification
 
 import static mx.lux.pos.assertions.Assert.*
 

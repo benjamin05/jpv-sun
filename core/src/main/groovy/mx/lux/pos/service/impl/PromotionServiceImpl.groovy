@@ -1,28 +1,16 @@
 package mx.lux.pos.service.impl
 
-import mx.lux.pos.model.Descuento
-import mx.lux.pos.model.NotaVenta
-import mx.lux.pos.model.Parametro
-import mx.lux.pos.model.PromotionAvailable
-import mx.lux.pos.model.PromotionModel
-import mx.lux.pos.model.TipoParametro
-import mx.lux.pos.repository.DescuentoRepository
-import mx.lux.pos.repository.NotaVentaRepository
-import mx.lux.pos.repository.ParametroRepository
-import mx.lux.pos.repository.PromocionRepository
-import mx.lux.pos.repository.SucursalRepository
+import mx.lux.pos.model.*
+import mx.lux.pos.repository.*
 import mx.lux.pos.service.PromotionService
+import mx.lux.pos.service.business.*
 import mx.lux.pos.service.io.PromotionsAdapter
-import mx.lux.pos.model.Promocion
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 import javax.annotation.Resource
-
-import mx.lux.pos.service.business.*
-import mx.lux.pos.model.PromotionDiscount
 
 @Service( 'promotionService' )
 @Transactional( readOnly = true )

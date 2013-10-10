@@ -1,5 +1,7 @@
 package mx.lux.pos.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.math.BigDecimal;
 
 public class VentasPorDiaGenericos {
@@ -10,6 +12,7 @@ public class VentasPorDiaGenericos {
     private BigDecimal genMontoDescuento;
     private Integer genContadorArt;
 
+    @NotNull
     BigDecimal porcentaje = new BigDecimal( 100 );
 
     /*public VentasPorDiaGenericos( String generico ) {

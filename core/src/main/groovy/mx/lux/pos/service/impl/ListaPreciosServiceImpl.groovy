@@ -1,7 +1,8 @@
 package mx.lux.pos.service.impl
 
-import groovy.sql.Sql
 import groovy.util.logging.Slf4j
+import mx.lux.pos.model.*
+import mx.lux.pos.repository.*
 import mx.lux.pos.repository.impl.RepositoryFactory
 import mx.lux.pos.service.ListaPreciosService
 import mx.lux.pos.service.business.Registry
@@ -12,9 +13,6 @@ import org.springframework.transaction.annotation.Transactional
 
 import javax.annotation.Resource
 import javax.sql.DataSource
-
-import mx.lux.pos.model.*
-import mx.lux.pos.repository.*
 
 @Slf4j
 @Service( 'listaPreciosService' )

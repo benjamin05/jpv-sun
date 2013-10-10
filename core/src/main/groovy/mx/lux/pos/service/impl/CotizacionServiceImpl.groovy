@@ -1,6 +1,8 @@
 package mx.lux.pos.service.impl
 
 import groovy.util.logging.Slf4j
+import mx.lux.pos.model.*
+import mx.lux.pos.repository.*
 import mx.lux.pos.repository.impl.RepositoryFactory
 import mx.lux.pos.service.CotizacionService
 import mx.lux.pos.service.business.Registry
@@ -9,9 +11,6 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 import javax.annotation.Resource
-
-import mx.lux.pos.model.*
-import mx.lux.pos.repository.*
 
 @Slf4j
 @Service( 'cotizacionService' )

@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Type;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -176,7 +177,7 @@ public class ResumenDiario implements Serializable, Comparable<ResumenDiario> {
     }
 
     // Identidades
-    public int compareTo( ResumenDiario rd ){
+    public int compareTo( @NotNull ResumenDiario rd ){
         return this.getIdTerminal().compareToIgnoreCase(rd.getIdTerminal());
     }
 }

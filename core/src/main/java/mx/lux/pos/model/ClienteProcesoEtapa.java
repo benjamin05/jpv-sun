@@ -1,8 +1,7 @@
 package mx.lux.pos.model;
 
 import org.apache.commons.lang3.StringUtils;
-
-
+import org.jetbrains.annotations.NotNull;
 
 
 public enum ClienteProcesoEtapa {
@@ -22,10 +21,11 @@ public enum ClienteProcesoEtapa {
         return this.value.equals( StringUtils.trimToEmpty( pEtapa ).toLowerCase() );
     }
 
-    public boolean equals( ClienteProceso pCliente ) {
+    public boolean equals( @NotNull ClienteProceso pCliente ) {
         return this.equals( pCliente.getEtapa() );
     }
 
+    @NotNull
     public static ClienteProcesoEtapa parse( String pParseValue ) {
 
 

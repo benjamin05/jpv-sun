@@ -2,10 +2,10 @@ package mx.lux.pos.repository.impl
 
 import com.mysema.query.jpa.JPQLQuery
 import com.mysema.query.types.Predicate
+import mx.lux.pos.model.*
 import mx.lux.pos.repository.custom.PlanRepositoryCustom
 import org.apache.commons.lang3.StringUtils
 import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport
-import mx.lux.pos.model.*
 
 class PlanRepositoryImpl extends QueryDslRepositorySupport implements PlanRepositoryCustom {
 

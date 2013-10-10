@@ -1,12 +1,11 @@
 package mx.lux.pos.util
 
-import java.sql.Date as SQLdate
-
 import mx.lux.pos.model.TransInv
 import mx.lux.pos.model.TransInvDetalle
 import spock.lang.Shared
 import spock.lang.Specification
 
+import java.sql.Date as SQLdate
 import java.text.SimpleDateFormat
 
 class TransInvFilterTest extends Specification {

@@ -1,10 +1,13 @@
 package mx.lux.pos.service.impl
 
 import groovy.util.logging.Slf4j
+import mx.lux.pos.model.*
+import mx.lux.pos.repository.*
 import mx.lux.pos.service.CierreDiarioService
 import mx.lux.pos.service.business.EliminarNotaVentaTask
 import mx.lux.pos.service.business.InventorySearch
 import mx.lux.pos.service.business.Registry
+import mx.lux.pos.service.io.ArchiveTask
 import mx.lux.pos.util.CustomDateUtils
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.time.DateUtils
@@ -14,14 +17,9 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.velocity.VelocityEngineUtils
 import org.springframework.util.Assert
 
-import java.text.SimpleDateFormat
 import javax.annotation.Resource
-
-import mx.lux.pos.model.*
-import mx.lux.pos.repository.*
-import mx.lux.pos.service.io.ArchiveTask
-import java.math.RoundingMode
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 
 @Slf4j
 @Service( 'cierreDiarioService' )

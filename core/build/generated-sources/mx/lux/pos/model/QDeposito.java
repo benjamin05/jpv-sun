@@ -1,11 +1,13 @@
 package mx.lux.pos.model;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.*;
+import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -20,6 +22,7 @@ public class QDeposito extends EntityPathBase<Deposito> {
 
     public static final QDeposito deposito = new QDeposito("deposito");
 
+    @NotNull
     public final QEmpleado empleado;
 
     public final DateTimePath<java.util.Date> fechaCierre = createDateTime("fechaCierre", java.util.Date.class);
@@ -48,15 +51,15 @@ public class QDeposito extends EntityPathBase<Deposito> {
         this(Deposito.class, forVariable(variable), INITS);
     }
 
-    public QDeposito(PathMetadata<?> metadata) {
+    public QDeposito(@NotNull PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QDeposito(PathMetadata<?> metadata, PathInits inits) {
+    public QDeposito(PathMetadata<?> metadata, @NotNull PathInits inits) {
         this(Deposito.class, metadata, inits);
     }
 
-    public QDeposito(Class<? extends Deposito> type, PathMetadata<?> metadata, PathInits inits) {
+    public QDeposito(Class<? extends Deposito> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
         super(type, metadata, inits);
         this.empleado = inits.isInitialized("empleado") ? new QEmpleado(forProperty("empleado"), inits.get("empleado")) : null;
     }

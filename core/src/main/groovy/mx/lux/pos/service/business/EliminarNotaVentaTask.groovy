@@ -1,20 +1,10 @@
 package mx.lux.pos.service.business
 
+import mx.lux.pos.model.Modificacion
+import mx.lux.pos.repository.*
+import mx.lux.pos.repository.impl.RepositoryFactory
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import mx.lux.pos.model.NotaVenta
-import mx.lux.pos.repository.impl.RepositoryFactory
-import mx.lux.pos.repository.NotaVentaRepository
-import mx.lux.pos.repository.DetalleNotaVentaRepository
-import mx.lux.pos.model.DetalleNotaVenta
-import mx.lux.pos.repository.PagoRepository
-import mx.lux.pos.model.Pago
-import mx.lux.pos.repository.OrdenPromRepository
-import mx.lux.pos.model.OrdenProm
-import mx.lux.pos.repository.OrdenPromDetRepository
-import mx.lux.pos.model.OrdenPromDet
-import mx.lux.pos.model.Modificacion
-import mx.lux.pos.repository.ModificacionRepository
 
 class EliminarNotaVentaTask {
 

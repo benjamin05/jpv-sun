@@ -1,6 +1,7 @@
 package mx.lux.pos.service.impl
 
 import groovy.util.logging.Slf4j
+import mx.lux.pos.model.Feature
 import mx.lux.pos.model.Funcionalidad
 import mx.lux.pos.repository.FuncionalidadRepository
 import mx.lux.pos.service.FuncionalidadService
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 import javax.annotation.Resource
-import mx.lux.pos.model.Feature
 
 @Slf4j
 @Service( "funcionalidadService" )

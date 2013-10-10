@@ -1,6 +1,7 @@
 package mx.lux.pos.model;
 
 import org.apache.commons.lang.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -41,7 +42,7 @@ public class DetalleIngresoPorDia {
         fecha = new Date();
     }
 
-    public void AcumulaPagos(List<Pago> lstPagos, BigDecimal ventaTotal, Boolean cancelada) {
+    public void AcumulaPagos(@NotNull List<Pago> lstPagos, BigDecimal ventaTotal, Boolean cancelada) {
         for (Pago pago : lstPagos) {
             if (pago.getIdFPago().equalsIgnoreCase("EFM")) {
                 pagoEf = pagoEf.add(pago.getMonto());
@@ -77,7 +78,7 @@ public class DetalleIngresoPorDia {
     }
 
 
-    public void AcumulaPagosCierre(List<Pago> lstPagos, BigDecimal ventaTotal, Date fecha, String totalDolares) {
+    public void AcumulaPagosCierre(@NotNull List<Pago> lstPagos, BigDecimal ventaTotal, Date fecha, String totalDolares) {
         NumberFormat formatter = new DecimalFormat("$#,##0.00");
         this.fecha = fecha;
         for (Pago pago : lstPagos) {
@@ -112,7 +113,7 @@ public class DetalleIngresoPorDia {
     }
 
 
-    public void AcumulaDevolucionesCierre(Devolucion devolucion, BigDecimal ventaTotal, Date fecha, String totalDolares) {
+    public void AcumulaDevolucionesCierre(@NotNull Devolucion devolucion, BigDecimal ventaTotal, Date fecha, String totalDolares) {
         NumberFormat formatter = new DecimalFormat("$#,##0.00");
         this.fecha = fecha;
         if (devolucion.getIdFormaPago().equalsIgnoreCase("EFM")) {

@@ -1,9 +1,9 @@
 package mx.lux.pos.service.impl
 
-import org.springframework.core.io.ClassPathResource
-import spock.lang.Specification
 import mx.lux.pos.model.*
 import mx.lux.pos.repository.*
+import org.springframework.core.io.ClassPathResource
+import spock.lang.Specification
 
 import static mx.lux.pos.assertions.Assert.assertComprobanteEquals
 import static mx.lux.pos.assertions.Assert.assertDetalleComprobanteEquals

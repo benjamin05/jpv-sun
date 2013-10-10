@@ -1,11 +1,13 @@
 package mx.lux.pos.model;
 
-import static com.mysema.query.types.PathMetadataFactory.*;
-
-import com.mysema.query.types.*;
+import com.mysema.query.types.PathMetadata;
 import com.mysema.query.types.path.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
+
+import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -22,6 +24,7 @@ public class QNotaVenta extends EntityPathBase<NotaVenta> {
 
     public final StringPath cantLente = createString("cantLente");
 
+    @NotNull
     public final QCliente cliente;
 
     public final StringPath codigo_lente = createString("codigo_lente");
@@ -32,8 +35,10 @@ public class QNotaVenta extends EntityPathBase<NotaVenta> {
 
     public final StringPath empEntrego = createString("empEntrego");
 
+    @NotNull
     public final QEmpleado empleado;
 
+    @NotNull
     public final QExamen examen;
 
     public final StringPath factura = createString("factura");
@@ -94,12 +99,14 @@ public class QNotaVenta extends EntityPathBase<NotaVenta> {
 
     public final NumberPath<Integer> receta = createNumber("receta", Integer.class);
 
+    @NotNull
     public final QReceta rx;
 
     public final StringPath sFactura = createString("sFactura");
 
     public final StringPath sucDest = createString("sucDest");
 
+    @NotNull
     public final QSucursal sucursal;
 
     public final NumberPath<java.math.BigDecimal> sumaPagos = createNumber("sumaPagos", java.math.BigDecimal.class);
@@ -132,15 +139,15 @@ public class QNotaVenta extends EntityPathBase<NotaVenta> {
         this(NotaVenta.class, forVariable(variable), INITS);
     }
 
-    public QNotaVenta(PathMetadata<?> metadata) {
+    public QNotaVenta(@NotNull PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QNotaVenta(PathMetadata<?> metadata, PathInits inits) {
+    public QNotaVenta(PathMetadata<?> metadata, @NotNull PathInits inits) {
         this(NotaVenta.class, metadata, inits);
     }
 
-    public QNotaVenta(Class<? extends NotaVenta> type, PathMetadata<?> metadata, PathInits inits) {
+    public QNotaVenta(Class<? extends NotaVenta> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
         super(type, metadata, inits);
         this.cliente = inits.isInitialized("cliente") ? new QCliente(forProperty("cliente"), inits.get("cliente")) : null;
         this.empleado = inits.isInitialized("empleado") ? new QEmpleado(forProperty("empleado"), inits.get("empleado")) : null;

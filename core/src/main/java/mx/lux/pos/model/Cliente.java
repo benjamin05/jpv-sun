@@ -3,8 +3,8 @@ package mx.lux.pos.model;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -206,6 +206,7 @@ public class Cliente implements Serializable {
     @Column( name = "hist_cli" )
     private String histCli;
 
+    @Nullable
     @ManyToOne
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumns( {
@@ -213,6 +214,7 @@ public class Cliente implements Serializable {
             @JoinColumn( name = "id_localidad", referencedColumnName = "id_localidad", insertable = false, updatable = false ) } )
     private Municipio municipio;
 
+    @Nullable
     @OneToOne
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "id_cliente", insertable = false, updatable = false )
@@ -689,6 +691,7 @@ public class Cliente implements Serializable {
         this.histCli = histCli;
     }
 
+    @Nullable
     public Municipio getMunicipio() {
         return municipio;
     }
@@ -697,6 +700,7 @@ public class Cliente implements Serializable {
         this.municipio = municipio;
     }
 
+    @Nullable
     public ClientePais getClientePais() {
         return clientePais;
     }

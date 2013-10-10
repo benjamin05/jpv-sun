@@ -1,17 +1,13 @@
 package mx.lux.pos.ui.view.panel
 
 import groovy.swing.SwingBuilder
-import java.awt.event.ActionEvent
-import javax.swing.JCheckBox
-import javax.swing.JList
-import javax.swing.JPanel;
-import javax.swing.JScrollPane
-import javax.swing.JTextField;
-import javax.swing.border.TitledBorder
-
-import mx.lux.pos.ui.view.dialog.DoubleListsDialog;
+import mx.lux.pos.ui.view.dialog.DoubleListsDialog
 import mx.lux.pos.ui.view.dialog.ObservationsDialog
 import net.miginfocom.swing.MigLayout
+
+import javax.swing.*
+import javax.swing.border.TitledBorder
+import java.awt.event.ActionEvent
 
 class Background extends JPanel {
 
