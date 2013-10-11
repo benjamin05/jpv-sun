@@ -1,7 +1,7 @@
 package mx.lux.pos.ui.view.verifier
 
-import java.awt.Color
 import javax.swing.*
+import java.awt.*
 
 class IsSelectedVerifier extends InputVerifier {
 

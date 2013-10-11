@@ -2,13 +2,8 @@ package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
 import mx.lux.pos.model.FormaContacto
-import mx.lux.pos.model.Jb
-import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.model.TipoContacto
-import mx.lux.pos.ui.controller.ContactController
 import mx.lux.pos.ui.controller.CustomerController
-import mx.lux.pos.ui.model.Customer
-import mx.lux.pos.ui.model.UpperCaseDocument
 import net.miginfocom.swing.MigLayout
 
 import javax.swing.*

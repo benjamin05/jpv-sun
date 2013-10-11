@@ -1,18 +1,16 @@
 package mx.lux.pos.ui.view.dialog.dailyclose
 
 import groovy.swing.SwingBuilder
+import mx.lux.pos.ui.MainWindow
 import mx.lux.pos.ui.controller.ComboBoxController
 import mx.lux.pos.ui.controller.DailyCloseController
 import mx.lux.pos.ui.model.Terminal
 import net.miginfocom.swing.MigLayout
 
+import javax.swing.*
+import java.awt.*
 import java.awt.event.ActionEvent
-import javax.swing.JButton
-import javax.swing.JComboBox
-import javax.swing.JDialog
-import javax.swing.JOptionPane
-import java.awt.Point
-import mx.lux.pos.ui.MainWindow
+import java.util.List
 
 class TerminalCloseDialog extends JDialog {
 

@@ -1,13 +1,11 @@
 package mx.lux.pos.model;
 
-import com.mysema.query.types.PathMetadata;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.*;
 import com.mysema.query.types.path.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -24,7 +22,6 @@ public class QTerminal extends EntityPathBase<Terminal> {
 
     public final StringPath afiliacion = createString("afiliacion");
 
-    @NotNull
     public final QBancoDeposito bancoDeposito;
 
     public final StringPath descripcion = createString("descripcion");
@@ -39,22 +36,21 @@ public class QTerminal extends EntityPathBase<Terminal> {
 
     public final BooleanPath promocion = createBoolean("promocion");
 
-    @NotNull
     public final QSucursal sucursal;
 
     public QTerminal(String variable) {
         this(Terminal.class, forVariable(variable), INITS);
     }
 
-    public QTerminal(@NotNull PathMetadata<?> metadata) {
+    public QTerminal(PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QTerminal(PathMetadata<?> metadata, @NotNull PathInits inits) {
+    public QTerminal(PathMetadata<?> metadata, PathInits inits) {
         this(Terminal.class, metadata, inits);
     }
 
-    public QTerminal(Class<? extends Terminal> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
+    public QTerminal(Class<? extends Terminal> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.bancoDeposito = inits.isInitialized("bancoDeposito") ? new QBancoDeposito(forProperty("bancoDeposito")) : null;
         this.sucursal = inits.isInitialized("sucursal") ? new QSucursal(forProperty("sucursal"), inits.get("sucursal")) : null;

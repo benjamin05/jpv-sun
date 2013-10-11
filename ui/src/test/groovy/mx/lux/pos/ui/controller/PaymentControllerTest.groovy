@@ -2,11 +2,11 @@ package mx.lux.pos.ui.controller
 
 import mx.lux.pos.model.Pago
 import mx.lux.pos.model.TipoPago
+import mx.lux.pos.service.*
 import mx.lux.pos.ui.model.Payment
 import mx.lux.pos.ui.model.PaymentType
 import spock.lang.Shared
 import spock.lang.Specification
-import mx.lux.pos.service.*
 
 import static mx.lux.pos.ui.assertions.Assert.assertPaymentEquals
 

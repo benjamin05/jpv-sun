@@ -4,11 +4,10 @@ import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.model.Taxpayer
 import net.miginfocom.swing.MigLayout
 
-import java.awt.Component
+import javax.swing.*
+import java.awt.*
 import java.awt.event.MouseEvent
-import javax.swing.JDialog
-import javax.swing.ListSelectionModel
-import javax.swing.SwingUtilities
+import java.util.List
 
 class SuggestedTaxpayersDialog extends JDialog {
 

@@ -1,19 +1,16 @@
 package mx.lux.pos.ui.view.dialog
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import groovy.swing.SwingBuilder
-import java.awt.Font
-import java.awt.BorderLayout
-import javax.swing.BorderFactory
-import javax.swing.JComponent
-import net.miginfocom.swing.MigLayout
+import mx.lux.pos.ui.controller.OpenSalesController
 import mx.lux.pos.ui.resources.UI_Standards
-import javax.swing.JDialog
-import javax.swing.JTextField
+import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.math.NumberUtils
-import mx.lux.pos.ui.controller.OpenSalesController
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
+import javax.swing.*
+import java.awt.*
 
 class EffectiveRateDialog extends JDialog {
 

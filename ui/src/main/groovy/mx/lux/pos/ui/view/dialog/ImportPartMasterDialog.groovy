@@ -2,19 +2,15 @@ package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.MainWindow
-import mx.lux.pos.ui.model.FileList
+import mx.lux.pos.ui.controller.IOController
+import mx.lux.pos.ui.model.file.FileFilteredList
+import mx.lux.pos.ui.resources.ServiceManager
 import mx.lux.pos.ui.resources.UI_Standards
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-import javax.swing.BorderFactory
-import javax.swing.JButton
-import javax.swing.JDialog
-import javax.swing.JTextArea
+import javax.swing.*
 import java.awt.*
-import mx.lux.pos.ui.controller.IOController
-import mx.lux.pos.ui.model.file.FileFilteredList
-import mx.lux.pos.ui.resources.ServiceManager
 
 class ImportPartMasterDialog extends JDialog {
 

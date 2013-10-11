@@ -2,7 +2,7 @@ package mx.lux.pos.ui.model.adapter
 
 import mx.lux.pos.model.Generico
 
-import javax.swing.ComboBoxModel
+import javax.swing.*
 import javax.swing.event.ListDataListener
 
 class GenreListModelAdapter implements ComboBoxModel {

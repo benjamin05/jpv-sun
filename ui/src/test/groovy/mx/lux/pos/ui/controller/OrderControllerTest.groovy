@@ -4,9 +4,9 @@ import mx.lux.pos.model.Articulo
 import mx.lux.pos.model.DetalleNotaVenta
 import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.model.Pago
-import spock.lang.Specification
 import mx.lux.pos.service.*
 import mx.lux.pos.ui.model.*
+import spock.lang.Specification
 
 import static mx.lux.pos.ui.assertions.Assert.assertOrderEquals
 

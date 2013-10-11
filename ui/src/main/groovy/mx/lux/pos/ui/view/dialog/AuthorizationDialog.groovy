@@ -6,12 +6,10 @@ import mx.lux.pos.ui.model.UpperCaseDocument
 import mx.lux.pos.ui.model.User
 import net.miginfocom.swing.MigLayout
 
-import java.awt.Color
-import java.awt.Component
-import java.awt.Font
+import javax.swing.*
+import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.event.KeyEvent
-import javax.swing.*
 
 class AuthorizationDialog extends JDialog {
 

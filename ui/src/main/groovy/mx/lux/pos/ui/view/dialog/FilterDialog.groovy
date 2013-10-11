@@ -5,12 +5,10 @@ import mx.lux.pos.ui.resources.UI_Standards
 import mx.lux.pos.ui.view.verifier.DateVerifier
 import net.miginfocom.swing.MigLayout
 
-import java.awt.BorderLayout
+import javax.swing.*
+import java.awt.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import javax.swing.ButtonGroup
-import javax.swing.JDialog
-import javax.swing.JRadioButton
 
 class FilterDialog extends JDialog {
 

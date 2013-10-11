@@ -3,21 +3,17 @@ package mx.lux.pos.ui.view.dialog
 import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.controller.CustomerController
 import mx.lux.pos.ui.controller.FeatureController
-
+import mx.lux.pos.ui.model.*
 import mx.lux.pos.ui.view.panel.CustomerPanel
 import mx.lux.pos.ui.view.panel.RXPanel
 import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
 
-import java.awt.Component
-import java.awt.Dimension
-import java.awt.Point
+import javax.swing.*
+import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.event.ItemEvent
-
-import mx.lux.pos.ui.model.*
-
-import javax.swing.*
+import java.util.List
 
 class CustomerDialog extends JDialog {
 

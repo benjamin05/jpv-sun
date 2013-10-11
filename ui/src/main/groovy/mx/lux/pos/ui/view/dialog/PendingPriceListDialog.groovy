@@ -6,7 +6,7 @@ import mx.lux.pos.ui.model.PriceList
 import mx.lux.pos.ui.view.renderer.MoneyCellRenderer
 import net.miginfocom.swing.MigLayout
 
-import java.awt.Component
+import java.awt.*
 
 class PendingPriceListDialog {
 

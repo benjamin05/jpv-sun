@@ -7,13 +7,12 @@ import mx.lux.pos.ui.view.dialog.DiscountDialog
 import mx.lux.pos.ui.view.driver.PromotionDriver
 import mx.lux.pos.ui.view.renderer.MoneyCellRenderer
 
-import java.awt.BorderLayout
-import java.awt.Font
-import java.awt.event.MouseEvent
+import javax.swing.*
 import javax.swing.event.TableModelEvent
 import javax.swing.event.TableModelListener
 import javax.swing.table.AbstractTableModel
-import javax.swing.*
+import java.awt.*
+import java.awt.event.MouseEvent
 
 class OrderViewSample extends JPanel implements TableModelListener {
   

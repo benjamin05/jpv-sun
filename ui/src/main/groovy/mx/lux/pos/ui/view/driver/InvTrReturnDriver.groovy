@@ -3,16 +3,13 @@ package mx.lux.pos.ui.view.driver
 import mx.lux.pos.ui.model.InvTrSku
 import mx.lux.pos.ui.model.adapter.InvTrAdapter
 import mx.lux.pos.ui.resources.UI_Standards
+import mx.lux.pos.ui.view.dialog.InvTrReturnDialog
 import mx.lux.pos.ui.view.panel.InvTrView
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-import javax.swing.JOptionPane
-import mx.lux.pos.ui.controller.InvTrController
-import mx.lux.pos.ui.view.dialog.InvTrReturnDialog
-
-import java.util.regex.Pattern
+import javax.swing.*
 
 class InvTrReturnDriver extends InvTrDriver {
 

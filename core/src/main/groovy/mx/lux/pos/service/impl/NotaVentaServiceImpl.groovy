@@ -578,13 +578,23 @@ class NotaVentaServiceImpl implements NotaVentaService {
     QNotaVenta nv = QNotaVenta.notaVenta
     NotaVenta nota = notaVentaRepository.findOne( nv.factura.eq(ticket.trim()).and(nv.sFactura.eq(TAG_NOTA_CANCELADA)) )
     Articulo articulo = articuloRepository.findOne( idArticulo )
-    Boolean valid = false
+    Boolean validTicket = false
+    Boolean validPorDev = false
+    Boolean valid
     if( nota != null && articulo != null ){
       for(DetalleNotaVenta det : nota.detalles){
         if(det.idArticulo == articulo.id){
-          valid = true
+          validTicket = true
         }
       }
+      for(Pago pago : nota.pagos){
+        if(pago.porDevolver.compareTo(BigDecimal.ZERO) > 0){
+          validPorDev = true
+        }
+      }
+    }
+    if( validTicket && validPorDev ){
+      valid = true
     }
     return valid
   }

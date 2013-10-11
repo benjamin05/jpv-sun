@@ -4,20 +4,19 @@ import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.controller.AccessController
 import mx.lux.pos.ui.controller.OrderController
+import mx.lux.pos.ui.model.*
 import mx.lux.pos.ui.view.renderer.DateCellRenderer
 import mx.lux.pos.ui.view.renderer.MoneyCellRenderer
 import net.miginfocom.swing.MigLayout
 
-import java.awt.Component
+import javax.swing.*
+import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.event.KeyEvent
 import java.awt.event.MouseEvent
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-
-import mx.lux.pos.ui.model.*
-
-import javax.swing.*
+import java.util.List
 
 class OrderSearchDialog extends JDialog {
 

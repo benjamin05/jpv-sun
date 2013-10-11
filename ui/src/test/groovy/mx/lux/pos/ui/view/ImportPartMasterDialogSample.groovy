@@ -1,16 +1,14 @@
 package mx.lux.pos.ui.view
 
-import javax.swing.JFrame
 import groovy.swing.SwingBuilder
-import javax.swing.JPanel
+import mx.lux.pos.ui.controller.IOController
 import mx.lux.pos.ui.controller.OpenSalesController
-import java.awt.BorderLayout
 import mx.lux.pos.ui.resources.UI_Standards
-import javax.swing.SwingUtilities
 import org.springframework.context.ApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext
-import mx.lux.pos.ui.controller.ItemController
-import mx.lux.pos.ui.controller.IOController
+
+import javax.swing.*
+import java.awt.*
 
 class ImportPartMasterDialogSample extends JFrame {
 

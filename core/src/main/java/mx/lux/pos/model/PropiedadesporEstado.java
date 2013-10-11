@@ -1,7 +1,5 @@
 package mx.lux.pos.model;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -21,7 +19,7 @@ public class PropiedadesporEstado {
 		saldo = BigDecimal.ZERO;
 	}
 
-	public void AcumulaPropiedades( @NotNull Trabajo trabajo ){
+	public void AcumulaPropiedades( Trabajo trabajo ){
 		fecha = trabajo.getFechaVenta();
 		tipo = trabajo.getJbTipo();
 		contactos = trabajo.getNumLlamada();
@@ -29,7 +27,7 @@ public class PropiedadesporEstado {
 		material = trabajo.getMaterial();
 	}
 	
-	public void AcumulaTrabajos( @NotNull TrabajoTrack trabajo ){
+	public void AcumulaTrabajos( TrabajoTrack trabajo ){
 		fecha = trabajo.getFecha();
 		factura = trabajo.getId();
 		material = trabajo.getTrabajo().getMaterial();

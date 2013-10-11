@@ -1,25 +1,17 @@
 package mx.lux.pos.ui.controller
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-import mx.lux.pos.ui.view.dialog.InvOhTicketDialog
-import mx.lux.pos.ui.view.dialog.*
-import mx.lux.pos.model.InvOhSummary
-import mx.lux.pos.ui.resources.ServiceManager
-import mx.lux.pos.ui.model.Invoice
-import org.apache.commons.lang3.StringUtils
-import mx.lux.pos.ui.model.User
+import groovy.util.logging.Slf4j
+import mx.lux.pos.model.CotizaDet
+import mx.lux.pos.model.Cotizacion
+import mx.lux.pos.model.InstitucionIc
+import mx.lux.pos.service.CotizacionService
+import mx.lux.pos.ui.model.Quote
 import mx.lux.pos.ui.model.Session
 import mx.lux.pos.ui.model.SessionItem
-import mx.lux.pos.model.Comprobante
-import mx.lux.pos.ui.model.*
-import groovy.util.logging.Slf4j
+import mx.lux.pos.ui.model.User
+import mx.lux.pos.ui.resources.ServiceManager
+import mx.lux.pos.ui.view.dialog.QuoteDialog
 import org.springframework.stereotype.Component
-import mx.lux.pos.model.Cotizacion
-import mx.lux.pos.service.CotizacionService
-import mx.lux.pos.service.ConvenioService
-import mx.lux.pos.model.*
-import mx.lux.pos.ui.model.adapter.AgreementAdapter
 
 @Slf4j
 @Component

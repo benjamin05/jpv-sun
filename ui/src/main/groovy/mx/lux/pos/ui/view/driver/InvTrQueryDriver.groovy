@@ -1,11 +1,11 @@
 package mx.lux.pos.ui.view.driver
 
+import mx.lux.pos.model.InvTrType
+import mx.lux.pos.model.TransInv
 import mx.lux.pos.model.TransInvDetalle
 import mx.lux.pos.ui.model.adapter.InvTrAdapter
 import mx.lux.pos.ui.view.panel.InvTrView
 import org.apache.commons.lang3.StringUtils
-import mx.lux.pos.model.TransInv
-import mx.lux.pos.model.InvTrType
 
 class InvTrQueryDriver extends InvTrDriver {
 

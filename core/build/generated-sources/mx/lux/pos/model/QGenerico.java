@@ -1,13 +1,11 @@
 package mx.lux.pos.model;
 
-import com.mysema.query.types.Path;
-import com.mysema.query.types.PathMetadata;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.*;
 import com.mysema.query.types.path.*;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -40,7 +38,7 @@ public class QGenerico extends EntityPathBase<Generico> {
         super(Generico.class, forVariable(variable));
     }
 
-    public QGenerico(@NotNull Path<? extends Generico> entity) {
+    public QGenerico(Path<? extends Generico> entity) {
         super(entity.getType(), entity.getMetadata());
     }
 

@@ -1,23 +1,19 @@
 package mx.lux.pos.ui.view.dialog
 
-import javax.swing.JDialog
+import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
+import mx.lux.pos.ui.controller.CustomerController
+import mx.lux.pos.ui.model.Customer
+import mx.lux.pos.ui.model.UpperCaseDocument
+import mx.lux.pos.ui.resources.UI_Standards
+import net.miginfocom.swing.MigLayout
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.awt.BorderLayout
-import net.miginfocom.swing.MigLayout
-import mx.lux.pos.ui.model.UpperCaseDocument
-import javax.swing.JTextField
-import java.awt.Dimension
-import javax.swing.ListSelectionModel
-import mx.lux.pos.ui.model.Customer
-import groovy.model.DefaultTableModel
-import mx.lux.pos.ui.resources.UI_Standards
-import java.awt.Point
-import mx.lux.pos.ui.controller.CustomerController
+
+import javax.swing.*
+import java.awt.*
 import java.awt.event.MouseEvent
-import javax.swing.JButton
-import javax.swing.JTable
+import java.util.List
 
 class CustomerBrowserDialog extends JDialog {
 

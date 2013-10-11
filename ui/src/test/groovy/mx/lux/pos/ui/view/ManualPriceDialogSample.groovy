@@ -1,17 +1,12 @@
 package mx.lux.pos.ui.view
 
 import groovy.swing.SwingBuilder
-import mx.lux.pos.ui.controller.OpenSalesController
-import mx.lux.pos.ui.resources.UI_Standards
-import org.springframework.context.ApplicationContext
-import org.springframework.context.support.ClassPathXmlApplicationContext
-
-import java.awt.BorderLayout
-import javax.swing.JFrame
-import javax.swing.JPanel
-import javax.swing.SwingUtilities
-import mx.lux.pos.ui.view.dialog.ManualPriceDialog
 import mx.lux.pos.ui.model.Item
+import mx.lux.pos.ui.resources.UI_Standards
+import mx.lux.pos.ui.view.dialog.ManualPriceDialog
+
+import javax.swing.*
+import java.awt.*
 
 class ManualPriceDialogSample extends JFrame {
 

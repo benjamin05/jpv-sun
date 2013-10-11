@@ -4,12 +4,9 @@ import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.resources.UI_Standards
 import net.miginfocom.swing.MigLayout
 
-import java.awt.BorderLayout
-import javax.swing.ButtonGroup
-import javax.swing.JDialog
-import javax.swing.JList
-import javax.swing.JScrollPane
+import javax.swing.*
 import javax.swing.border.TitledBorder
+import java.awt.*
 
 class DoubleListsDialog extends JDialog {
 

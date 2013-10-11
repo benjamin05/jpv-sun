@@ -2,7 +2,7 @@ package mx.lux.pos.ui.model.adapter
 
 import org.apache.commons.lang3.StringUtils
 
-import javax.swing.ComboBoxModel
+import javax.swing.*
 import javax.swing.event.ListDataListener
 
 class BrandListModelAdapter implements ComboBoxModel {

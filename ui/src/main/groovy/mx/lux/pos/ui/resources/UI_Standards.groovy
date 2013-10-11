@@ -1,10 +1,8 @@
 package mx.lux.pos.ui.resources
 
-import java.awt.Color
+import javax.swing.*
 import javax.swing.text.JTextComponent
-import java.awt.Dimension
-import javax.swing.JOptionPane
-import java.awt.Component
+import java.awt.*
 
 class UI_Standards {
 

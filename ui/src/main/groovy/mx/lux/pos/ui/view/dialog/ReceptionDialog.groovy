@@ -1,10 +1,9 @@
 package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
-import javax.swing.JComboBox
-import javax.swing.JDialog
-import javax.swing.JTextField
 import net.miginfocom.swing.MigLayout
+
+import javax.swing.*
 
 class ReceptionDialog extends JDialog {
 

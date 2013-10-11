@@ -1,8 +1,6 @@
 package mx.lux.pos.model;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,7 +22,6 @@ public class TipoTransInv implements Serializable {
     @Column( name = "tipo_mov" )
     private String tipoMov;
 
-    @Nullable
     @Transient
     private TipoMov tipoMovObj;
 
@@ -51,7 +48,7 @@ public class TipoTransInv implements Serializable {
         return this.descripcion;
     }
 
-    public void setDescripcion( @NotNull String pDescripcion ) {
+    public void setDescripcion( String pDescripcion ) {
         this.descripcion = pDescripcion.trim();
     }
 
@@ -63,7 +60,6 @@ public class TipoTransInv implements Serializable {
         this.tipoMov = StringUtils.trimToEmpty( pTipoMov ).toUpperCase();
     }
 
-    @Nullable
     public TipoMov getTipoMovObj() {
         return tipoMovObj;
     }

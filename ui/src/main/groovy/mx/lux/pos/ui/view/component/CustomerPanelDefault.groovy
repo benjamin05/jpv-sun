@@ -1,16 +1,12 @@
 package mx.lux.pos.ui.view.component
 
-import net.miginfocom.swing.MigLayout
-import mx.lux.pos.ui.model.GenderType
-import mx.lux.pos.ui.model.UpperCaseDocument
+import mx.lux.pos.ui.model.*
 import mx.lux.pos.ui.view.verifier.NotEmptyVerifier
-import mx.lux.pos.ui.model.Contact
-import mx.lux.pos.ui.model.ContactType
-import javax.swing.JComboBox
-import javax.swing.JSpinner
-import java.awt.BorderLayout
-import mx.lux.pos.ui.model.Titles
-import javax.swing.JTextField
+import net.miginfocom.swing.MigLayout
+
+import javax.swing.*
+import java.awt.*
+import java.util.List
 
 class CustomerPanelDefault extends CustomerPanel {
 

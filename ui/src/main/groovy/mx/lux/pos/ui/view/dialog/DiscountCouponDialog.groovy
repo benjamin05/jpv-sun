@@ -1,7 +1,6 @@
 package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
-import mx.lux.pos.model.Descuento
 import mx.lux.pos.model.DescuentoClave
 import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.model.ICorporateKeyVerifier

@@ -2,16 +2,15 @@ package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.controller.CustomerController
+import mx.lux.pos.ui.model.*
 import mx.lux.pos.ui.view.verifier.NotEmptyVerifier
 import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
 
-import java.awt.Component
-import java.awt.event.ActionEvent
-
-import mx.lux.pos.ui.model.*
-
 import javax.swing.*
+import java.awt.*
+import java.awt.event.ActionEvent
+import java.util.List
 
 class ForeignCustomerDialog extends JDialog {
 

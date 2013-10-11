@@ -7,10 +7,8 @@ import mx.lux.pos.ui.view.panel.InvTrView
 import org.springframework.context.ApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext
 
-import java.awt.BorderLayout
-import javax.swing.JFrame
-import javax.swing.JPanel
-import javax.swing.SwingUtilities
+import javax.swing.*
+import java.awt.*
 
 class InvTicketSample extends JFrame {
 

@@ -4,11 +4,9 @@ import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.view.renderer.MoneyCellRenderer
 
-import java.awt.BorderLayout
-import javax.swing.BorderFactory
-import javax.swing.JFrame
-import javax.swing.ListSelectionModel
-import javax.swing.SwingUtilities
+import javax.swing.*
+import java.awt.*
+import java.util.List
 
 class PromotionEditorSample extends JFrame {
 

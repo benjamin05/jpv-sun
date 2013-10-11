@@ -1,5 +1,6 @@
 package mx.lux.pos.ui.controller
 
+import mx.lux.pos.model.*
 import mx.lux.pos.service.CancelacionService
 import mx.lux.pos.service.TicketService
 import mx.lux.pos.ui.model.Refund
@@ -7,7 +8,6 @@ import mx.lux.pos.ui.model.Session
 import mx.lux.pos.ui.model.SessionItem
 import mx.lux.pos.ui.model.User
 import spock.lang.Specification
-import mx.lux.pos.model.*
 
 import static mx.lux.pos.ui.assertions.Assert.assertRefundEquals
 

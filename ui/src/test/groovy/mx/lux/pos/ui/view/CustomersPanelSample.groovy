@@ -2,10 +2,7 @@ package mx.lux.pos.ui.view
 
 import groovy.swing.SwingBuilder
 
-import javax.swing.JFrame
-import javax.swing.JMenuItem
-import javax.swing.JPanel
-import javax.swing.SwingUtilities
+import javax.swing.*
 
 class CustomersPanelSample extends JFrame {
 

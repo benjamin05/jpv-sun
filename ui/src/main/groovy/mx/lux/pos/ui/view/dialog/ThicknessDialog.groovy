@@ -1,13 +1,11 @@
 package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
-import javax.swing.JComboBox
-import javax.swing.JDialog
-import javax.swing.JTextField
-import javax.swing.border.TitledBorder
 import net.miginfocom.swing.MigLayout
-import java.awt.BorderLayout
-import java.awt.Font
+
+import javax.swing.*
+import javax.swing.border.TitledBorder
+import java.awt.*
 
 class ThicknessDialog extends JDialog {
 

@@ -1,13 +1,11 @@
 package mx.lux.pos.model;
 
-import com.mysema.query.types.PathMetadata;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.*;
 import com.mysema.query.types.path.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -24,12 +22,10 @@ public class QModificacion extends EntityPathBase<Modificacion> {
 
     public final StringPath causa = createString("causa");
 
-    @NotNull
     public final QCausaCancelacion causaCancelacion;
 
     public final SetPath<Devolucion, QDevolucion> devolucion = this.<Devolucion, QDevolucion>createSet("devolucion", Devolucion.class, QDevolucion.class);
 
-    @NotNull
     public final QEmpleado empleado;
 
     public final DateTimePath<java.util.Date> fecha = createDateTime("fecha", java.util.Date.class);
@@ -40,16 +36,12 @@ public class QModificacion extends EntityPathBase<Modificacion> {
 
     public final StringPath idFactura = createString("idFactura");
 
-    @NotNull
     public final QModificacionCan modificacionCan;
 
-    @NotNull
     public final QModificacionImp modificacionImp;
 
-    @NotNull
     public final QModificacionPag modificacionPag;
 
-    @NotNull
     public final QNotaVenta notaVenta;
 
     public final StringPath observaciones = createString("observaciones");
@@ -60,15 +52,15 @@ public class QModificacion extends EntityPathBase<Modificacion> {
         this(Modificacion.class, forVariable(variable), INITS);
     }
 
-    public QModificacion(@NotNull PathMetadata<?> metadata) {
+    public QModificacion(PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QModificacion(PathMetadata<?> metadata, @NotNull PathInits inits) {
+    public QModificacion(PathMetadata<?> metadata, PathInits inits) {
         this(Modificacion.class, metadata, inits);
     }
 
-    public QModificacion(Class<? extends Modificacion> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
+    public QModificacion(Class<? extends Modificacion> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.causaCancelacion = inits.isInitialized("causaCancelacion") ? new QCausaCancelacion(forProperty("causaCancelacion")) : null;
         this.empleado = inits.isInitialized("empleado") ? new QEmpleado(forProperty("empleado"), inits.get("empleado")) : null;

@@ -1,8 +1,8 @@
 package mx.lux.pos.ui.view.driver
 
 import mx.lux.pos.model.IPromotionAvailable
-import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.model.PromotionAvailable
+import mx.lux.pos.model.PromotionDiscount
 import mx.lux.pos.model.PromotionModel
 import mx.lux.pos.service.PromotionService
 import mx.lux.pos.service.business.PromotionCommit
@@ -15,12 +15,9 @@ import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-import javax.swing.JComponent
-import javax.swing.JOptionPane
-import javax.swing.SwingUtilities
+import javax.swing.*
 import javax.swing.event.TableModelEvent
 import javax.swing.event.TableModelListener
-import mx.lux.pos.model.PromotionDiscount
 
 class PromotionDriver implements TableModelListener, ICorporateKeyVerifier {
 

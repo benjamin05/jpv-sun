@@ -1,26 +1,15 @@
 package mx.lux.pos.ui.controller
 
 import groovy.util.logging.Slf4j
-
-import mx.lux.pos.model.Receta
-import mx.lux.pos.model.ClienteProceso
-import mx.lux.pos.model.Estado
-import mx.lux.pos.ui.view.dialog.CustomerActiveSelectionDialog
-import mx.lux.pos.ui.view.dialog.EditRxDialog
-import mx.lux.pos.ui.view.dialog.OrderActiveSelectionDialog
-import mx.lux.pos.model.Paises
-import org.apache.commons.lang3.StringUtils
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
 import mx.lux.pos.model.*
 import mx.lux.pos.service.*
 import mx.lux.pos.ui.model.*
-import mx.lux.pos.ui.view.dialog.NewCustomerAndRxDialog
-import mx.lux.pos.ui.view.dialog.SingleCustomerDialog
-import mx.lux.pos.ui.view.dialog.CustomerBrowserDialog
+import mx.lux.pos.ui.view.dialog.*
+import org.apache.commons.lang3.StringUtils
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 
-import javax.swing.JOptionPane
-import java.text.NumberFormat
+import javax.swing.*
 
 @Slf4j
 @Component

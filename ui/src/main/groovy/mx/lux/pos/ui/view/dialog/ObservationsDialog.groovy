@@ -4,9 +4,8 @@ import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.resources.UI_Standards
 import net.miginfocom.swing.MigLayout
 
-import java.awt.BorderLayout
-import javax.swing.JDialog
-import javax.swing.JTextField
+import javax.swing.*
+import java.awt.*
 
 class ObservationsDialog extends JDialog {
 

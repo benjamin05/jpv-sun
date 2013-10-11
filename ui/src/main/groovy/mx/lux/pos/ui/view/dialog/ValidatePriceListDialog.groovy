@@ -5,7 +5,7 @@ import mx.lux.pos.ui.controller.PriceListController
 import mx.lux.pos.ui.model.PriceList
 import net.miginfocom.swing.MigLayout
 
-import java.awt.Component
+import java.awt.*
 
 class ValidatePriceListDialog {
 

@@ -2,34 +2,24 @@ package mx.lux.pos.ui
 
 import groovy.swing.SwingBuilder
 import mx.lux.pos.service.PromotionService
-import mx.lux.pos.ui.model.Branch
-import mx.lux.pos.ui.model.Order
-import mx.lux.pos.ui.model.Session
-import mx.lux.pos.ui.model.SessionItem
-import mx.lux.pos.ui.model.User
-import mx.lux.pos.ui.resources.ServiceManager
+import mx.lux.pos.service.business.Registry
+import mx.lux.pos.ui.controller.*
+import mx.lux.pos.ui.model.*
 import mx.lux.pos.ui.view.action.ExitAction
 import mx.lux.pos.ui.view.dialog.ChangePasswordDialog
 import mx.lux.pos.ui.view.dialog.CustomerSearchDialog
 import mx.lux.pos.ui.view.dialog.EntregaTrabajoDialog
-import mx.lux.pos.ui.view.dialog.PartClassDialog
+import mx.lux.pos.ui.view.panel.*
 import net.miginfocom.swing.MigLayout
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.context.ApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext
 
+import javax.swing.*
+import java.awt.*
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
-
-import mx.lux.pos.ui.controller.*
-import mx.lux.pos.ui.view.panel.*
-
-import java.awt.*
-import javax.swing.*
-import mx.lux.pos.service.business.Registry
-import mx.lux.pos.model.TipoParametro
-
 import java.text.SimpleDateFormat
 
 class MainWindow extends JFrame implements KeyListener {

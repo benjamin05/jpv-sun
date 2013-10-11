@@ -2,13 +2,12 @@ package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.model.Item
-import java.awt.Component
 import net.miginfocom.swing.MigLayout
-import javax.swing.ListSelectionModel
-import mx.lux.pos.ui.view.renderer.MoneyCellRenderer
+
+import javax.swing.*
+import java.awt.*
 import java.awt.event.MouseEvent
-import javax.swing.SwingUtilities
-import javax.swing.JDialog
+import java.util.List
 
 class SuggestedConveniosDialog extends JDialog {
 

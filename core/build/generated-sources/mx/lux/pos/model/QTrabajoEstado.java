@@ -1,14 +1,11 @@
 package mx.lux.pos.model;
 
-import com.mysema.query.types.Path;
-import com.mysema.query.types.PathMetadata;
-import com.mysema.query.types.path.EntityPathBase;
-import com.mysema.query.types.path.StringPath;
-import org.jetbrains.annotations.NotNull;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.*;
+import com.mysema.query.types.path.*;
 
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -31,7 +28,7 @@ public class QTrabajoEstado extends EntityPathBase<TrabajoEstado> {
         super(TrabajoEstado.class, forVariable(variable));
     }
 
-    public QTrabajoEstado(@NotNull Path<? extends TrabajoEstado> entity) {
+    public QTrabajoEstado(Path<? extends TrabajoEstado> entity) {
         super(entity.getType(), entity.getMetadata());
     }
 

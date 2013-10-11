@@ -1,15 +1,11 @@
 package mx.lux.pos.model;
 
-import com.mysema.query.types.Path;
-import com.mysema.query.types.PathMetadata;
-import com.mysema.query.types.path.EntityPathBase;
-import com.mysema.query.types.path.NumberPath;
-import com.mysema.query.types.path.StringPath;
-import org.jetbrains.annotations.NotNull;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.*;
+import com.mysema.query.types.path.*;
 
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -34,7 +30,7 @@ public class QRetorno extends EntityPathBase<Retorno> {
         super(Retorno.class, forVariable(variable));
     }
 
-    public QRetorno(@NotNull Path<? extends Retorno> entity) {
+    public QRetorno(Path<? extends Retorno> entity) {
         super(entity.getType(), entity.getMetadata());
     }
 

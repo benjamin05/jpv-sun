@@ -10,9 +10,7 @@ import mx.lux.pos.ui.model.InvTrViewMode
 import mx.lux.pos.ui.model.adapter.InvTrAdapter
 import mx.lux.pos.ui.resources.ServiceManager
 import mx.lux.pos.ui.resources.UI_Standards
-import mx.lux.pos.ui.view.driver.InvTrDriver
 import mx.lux.pos.ui.view.panel.InvTrView
-import org.apache.commons.lang.StringUtils
 
 class InvTrInBoundDriver extends InvTrDriver {
 

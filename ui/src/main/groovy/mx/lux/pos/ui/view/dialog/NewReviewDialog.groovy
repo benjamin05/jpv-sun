@@ -1,11 +1,10 @@
 package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
-import javax.swing.JCheckBox
-import javax.swing.JDialog
-import javax.swing.JTextField
-import javax.swing.border.TitledBorder
 import net.miginfocom.swing.MigLayout
+
+import javax.swing.*
+import javax.swing.border.TitledBorder
 
 class NewReviewDialog extends JDialog {
 

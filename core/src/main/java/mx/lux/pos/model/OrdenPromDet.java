@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Type;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -152,7 +151,7 @@ public class OrdenPromDet implements Serializable, Comparable<OrdenPromDet> {
     }
 
     // Entity
-    public int compareTo( @NotNull OrdenPromDet pOrdenPromDet ) {
+    public int compareTo( OrdenPromDet pOrdenPromDet ) {
         int result = this.getIdFactura().compareTo( pOrdenPromDet.getIdFactura() );
         if ( result == 0 ) {
             result = this.getIdPromocion().compareTo( pOrdenPromDet.getIdPromocion() );

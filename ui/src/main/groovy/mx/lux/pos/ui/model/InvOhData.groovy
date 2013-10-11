@@ -1,16 +1,11 @@
 package mx.lux.pos.ui.model
 
-import mx.lux.pos.model.Articulo
-import mx.lux.pos.model.Precio
-import mx.lux.pos.model.Generico
-import mx.lux.pos.model.InvOhDet
-import mx.lux.pos.model.InvOhSummary
+import mx.lux.pos.model.*
 import mx.lux.pos.ui.controller.ItemController
 import mx.lux.pos.ui.resources.ServiceManager
 import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.text.NumberFormat
 
 class InvOhData {
 

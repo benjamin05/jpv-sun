@@ -1,13 +1,11 @@
 package mx.lux.pos.ui.view.dialog
 
-import java.awt.event.ActionEvent
-import java.util.List;
-
 import groovy.swing.SwingBuilder
-import javax.swing.JDialog
-import javax.swing.JTextField;
-import javax.swing.border.TitledBorder
 import net.miginfocom.swing.MigLayout
+
+import javax.swing.*
+import javax.swing.border.TitledBorder
+import java.awt.event.ActionEvent
 
 class ContactLensesDialog extends JDialog {
 

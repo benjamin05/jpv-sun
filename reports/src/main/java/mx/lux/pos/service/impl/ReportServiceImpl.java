@@ -9,8 +9,6 @@ import mx.lux.pos.service.business.Registry;
 import mx.lux.pos.service.business.ReportBusiness;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -20,8 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.io.File;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -30,77 +26,77 @@ import java.util.*;
 public class ReportServiceImpl implements ReportService {
 
     private static Logger log = LoggerFactory.getLogger( ReportServiceImpl.class );
-    @NotNull
+    
     private static String CIERRE_DIARIO = "reports/Cierre_Diario.jrxml";
-    @NotNull
+    
     private static String INGRESOS_POR_SUCURSAL = "reports/Ingresos_Sucursal.jrxml";
-    @NotNull
+    
     private static String INGRESOS_POR_VENDEDOR_RESUMIDO = "reports/Ingresos_Vendedor_Resumido.jrxml";
-    @NotNull
+    
     private static String INGRESOS_POR_VENDEDOR_COMPLETO = "reports/Ingresos_Vendedor_Completo.jrxml";
-    @NotNull
+    
     private static String VENTAS = "reports/Ventas.jrxml";
-    @NotNull
+    
     private static String CUPONES = "reports/Cupones.jrxml";
-    @NotNull
+    
     private static String VENTAS_MASVISION = "reports/Ventas_MasVision.jrxml";
-    @NotNull
+    
     private static String VENTAS_COMPLETO = "reports/Ventas_Completo.jrxml";
-    @NotNull
+    
     private static String VENTAS_POR_VENDEDOR_COMPLETO = "reports/Venta_Por_Vendedor_Completo.jrxml";
-    @NotNull
+    
     private static String VENTAS_POR_VENDEDOR_RESUMIDO = "reports/Venta_Por_Vendedor_Resumido.jrxml";
-    @NotNull
+    
     private static String TRABAJOS_SIN_ENTREGAR = "reports/Trabajos_Sin_Entregar.jrxml";
-    @NotNull
+    
     private static String CANCELACIONES_RESUMIDO = "reports/Cancelaciones.jrxml";
-    @NotNull
+    
     private static String CANCELACIONES_COMPLETO = "reports/Cancelaciones_Completo.jrxml";
-    @NotNull
+    
     private static String VENTA_POR_LINEA_FACTURA = "reports/Venta_Por_Linea.jrxml";
-    @NotNull
+    
     private static String VENTA_POR_LINEA_ARTICULO = "reports/Venta_Por_Linea_Articulo.jrxml";
-    @NotNull
+    
     private static String VENTA_POR_MARCA = "reports/Ventas_Por_Marca.jrxml";
-    @NotNull
+    
     private static String VENTA_POR_VENDEDOR_MARCA = "reports/Ventas_Por_Vendedor_Por_Marca.jrxml";
-    @NotNull
+    
     private static String EXISTENCIAS_POR_MARCA = "reports/Existencias_Por_Marca.jrxml";
-    @NotNull
+    
     private static String EXISTENCIAS_POR_MARCA_RESUMIDO = "reports/Existencias_Por_Marca_Resumido.jrxml";
-    @NotNull
+    
     private static String EXISTENCIAS_POR_ARTICULO = "reports/Existencias_Por_Articulo.jrxml";
-    @NotNull
+    
     private static String CONTROL_DE_TRABAJOS = "reports/Control_de_Trabajos.jrxml";
-    @NotNull
+    
     private static String TRABAJOS_ENTREGADOS = "reports/Trabajos_Entregados.jrxml";
-    @NotNull
+    
     private static String TRABAJOS_ENTREGADOS_POR_EMPLEADO = "reports/Trabajos_Entregados_Por_Empleado.jrxml";
-    @NotNull
+    
     private static String FACTURAS_FISCALES = "reports/Facturas_Fiscales.jrxml";
-    @NotNull
+    
     private static String DESCUENTOS = "reports/Descuentos.jrxml";
-    @NotNull
+    
     private static String PROMOCIONES_APLICADAS = "reports/Promociones.jrxml";
-    @NotNull
+    
     private static String PAGOS = "reports/Pagos.jrxml";
-    @NotNull
+    
     private static String COTIZACIONES = "reports/Cotizaciones.jrxml";
-    @NotNull
+    
     private static String EXAMENES_RESUMIDO = "reports/Examenes.jrxml";
-    @NotNull
+    
     private static String EXAMENES_COMPLETO = "reports/Examenes_Completo.jrxml";
-    @NotNull
+    
     private static String VENTAS_POR_OPTOMETRISTA_COMPLETO = "reports/Ventas_Por_Optometrista_Completo.jrxml";
-    @NotNull
+    
     private static String VENTAS_POR_OPTOMETRISTA_RESUMIDO = "reports/Ventas_Por_Optometrista_Resumido.jrxml";
-    @NotNull
+    
     private static String PROMOCIONES = "reports/Lista_de_Promociones.jrxml";
-    @NotNull
+    
     private static String KARDEX = "reports/Kardex.jrxml";
-    @NotNull
+    
     private static String VENTAS_DEL_DIA = "reports/Ventas_Del_Dia.jrxml";
-    @NotNull
+    
     private static String INGRESOS_POR_PERIODO = "reports/Ingresos_Por_Periodo.jrxml";
 
     @Resource
@@ -152,9 +148,9 @@ public class ReportServiceImpl implements ReportService {
     private PrecioRepository precioRepository;
 
 
-    @Nullable
+    
     @Override
-    public String obtenerReporteCierreDiario( @Nullable Date fecha ) {
+    public String obtenerReporteCierreDiario(  Date fecha ) {
         log.info( "obtenerReporteCierreDiario" );
 
         if ( fecha != null ) {
@@ -265,9 +261,9 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     @Override
-    public String obtenerReporteIngresosXSucursal( @Nullable Date fechaInicio, @Nullable Date fechaFin ) {
+    public String obtenerReporteIngresosXSucursal(  Date fechaInicio,  Date fechaFin ) {
         log.info( "obtenerReporteIngresosXSucursal()" );
 
         if ( fechaInicio != null && fechaFin != null ) {
@@ -306,8 +302,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
-    public String obtenerReporteVentas( @Nullable Date fechaInicio, @Nullable Date fechaFin ) {
+    
+    public String obtenerReporteVentas(  Date fechaInicio,  Date fechaFin ) {
         log.info( "obtenerReporteVentas()" );
 
         if ( fechaInicio != null && fechaFin != null ) {
@@ -341,8 +337,8 @@ public class ReportServiceImpl implements ReportService {
 
 
 
-    @Nullable
-    public String obtenerReporteVentasporVendedorCompleto( @Nullable Date fechaInicio, @Nullable Date fechaFin ) {
+    
+    public String obtenerReporteVentasporVendedorCompleto(  Date fechaInicio,  Date fechaFin ) {
         log.info( "obtenerReporteVentasporVendedorCompleto()" );
 
         if ( fechaInicio != null && fechaFin != null ) {
@@ -374,7 +370,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteTrabajosSinEntregar() {
         log.info( "obtenerReporteTrabajosSinEntregar()" );
 
@@ -434,7 +430,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteCancelacionesResumido( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteCancelacionesResumido()" );
 
@@ -464,7 +460,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteCancelacionesCompleto( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteCancelacionesCompleto()" );
 
@@ -492,7 +488,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteVentasporLineaFactura( Date fechaInicio, Date fechaFin, String articulo, boolean gogle, boolean oftalmico, boolean todo ) {
         log.info( "obtenerReporteVentasporLineaFactura()" );
 
@@ -508,7 +504,7 @@ public class ReportServiceImpl implements ReportService {
                 modificacion.idFactura.asc() );
         Collections.sort( lstArticulos, new Comparator<NotaVenta>() {
             @Override
-            public int compare( @NotNull NotaVenta o1, @NotNull NotaVenta o2 ) {
+            public int compare(  NotaVenta o1,  NotaVenta o2 ) {
                 return o1.getFactura().compareToIgnoreCase( o2.getFactura() );
             }
         } );
@@ -549,7 +545,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteVentasporLineaArticulo( Date fechaInicio, Date fechaFin, String articulo, boolean gogle, boolean oftalmico, boolean todo ) {
         log.info( "obtenerReporteVentasporLineaArticulo()" );
 
@@ -562,7 +558,7 @@ public class ReportServiceImpl implements ReportService {
         List<FacturasPorEmpleado> lstArticulos = reportBusiness.obtenerVentasLineaporArticulos( fechaInicio, fechaFin, articulo, gogle, oftalmico, todo );
         Collections.sort( lstArticulos, new Comparator<FacturasPorEmpleado>() {
             @Override
-            public int compare( @NotNull FacturasPorEmpleado o1, @NotNull FacturasPorEmpleado o2 ) {
+            public int compare(  FacturasPorEmpleado o1,  FacturasPorEmpleado o2 ) {
                 return o1.getIdArticulo().compareTo( o2.getIdArticulo() );
             }
         } );
@@ -590,8 +586,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
-    public String obtenerReporteVentasMarca( Date fechaInicio, Date fechaFin, @NotNull String marca, boolean noMostrarArticulos, boolean gogle, boolean oftalmico, boolean todo ) {
+    
+    public String obtenerReporteVentasMarca( Date fechaInicio, Date fechaFin,  String marca, boolean noMostrarArticulos, boolean gogle, boolean oftalmico, boolean todo ) {
         log.info( "obtenerReporteVentasMarca()" );
 
         File report = new File( System.getProperty( "java.io.tmpdir" ), "Ventas-Por-Marca.html" );
@@ -627,7 +623,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteVentasVendedorporMarca( Date fechaInicio, Date fechaFin, String marca, boolean mostrarArticulos, boolean gogle, boolean oftalmico, boolean todo ) {
         log.info( "obtenerReporteVentasVendedorporMarca()" );
 
@@ -649,7 +645,7 @@ public class ReportServiceImpl implements ReportService {
         }
         Collections.sort(lstVentas, new Comparator<IngresoPorVendedor>() {
             @Override
-            public int compare(@NotNull IngresoPorVendedor o1, @NotNull IngresoPorVendedor o2) {
+            public int compare( IngresoPorVendedor o1,  IngresoPorVendedor o2) {
                 return o1.getIdEmpleado().compareTo(o2.getIdEmpleado());
             }
         });
@@ -672,7 +668,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteExistenciasporMarca( String marca, boolean gogle, boolean oftalmico, boolean todo ) {
         log.info( "obtenerReporteExistenciasporMarca()" );
 
@@ -683,7 +679,7 @@ public class ReportServiceImpl implements ReportService {
         List<FacturasPorEmpleado> lstArticulos = reportBusiness.obtenerExistenciasporMarcaCompleto( marca, gogle, oftalmico, todo );
         Collections.sort( lstArticulos, new Comparator<FacturasPorEmpleado>() {
             @Override
-            public int compare(@NotNull FacturasPorEmpleado o1, @NotNull FacturasPorEmpleado o2) {
+            public int compare( FacturasPorEmpleado o1,  FacturasPorEmpleado o2) {
                 return o1.getMarca().compareTo(o2.getMarca());
             }
         });
@@ -701,7 +697,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteExistenciasporMarcaResumido( String marca, boolean gogle, boolean oftalmico, boolean todo ) {
         log.info( "obtenerReporteExistenciasporMarcaResumido()" );
 
@@ -729,7 +725,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteExistenciasporArticulo( String marca, String descripcion, String color ) {
         log.info( "obtenerReporteExistenciasporArticulo()" );
 
@@ -762,7 +758,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteControldeTrabajos( boolean retenidos, boolean porEnviar, boolean pino, boolean sucursal, boolean todos, boolean factura, boolean fechaPromesa ) {
         log.info( "obtenerReporteControldeTrabajos()" );
 
@@ -785,7 +781,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteTrabajosEntregados( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteTrabajosEntregados()" );
 
@@ -812,7 +808,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteTrabajosEntregadosporEmpleado( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteTrabajosEntregadosporEmpleado()" );
 
@@ -839,7 +835,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteVentasCompleto( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteVentasCompleto()" );
 
@@ -913,7 +909,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteFacturasFiscales( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteFacturasFiscales()" );
 
@@ -943,7 +939,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteDescuentos( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteDescuentos()" );
 
@@ -973,7 +969,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReportePromocionesAplicadas( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReportePromociones()" );
 
@@ -1001,7 +997,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReportePagos( Date fechaInicio, Date fechaFin, String formaPago, String factura ) {
         log.info( "obtenerReportePagos()" );
 
@@ -1029,7 +1025,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteCotizaciones( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteCotizaciones()" );
 
@@ -1069,7 +1065,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteExamenesResumido( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteExamenesResumido()" );
 
@@ -1097,7 +1093,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteExamenesCompleto( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteExamenesCompleto()" );
 
@@ -1148,7 +1144,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteVentasporOptometrista( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteVentasporOptometrista()" );
 
@@ -1176,7 +1172,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteVentasporOptometristaResumido( Date fechaInicio, Date fechaFin, boolean todoTipo, boolean referido, boolean rx,
                                                                boolean lux, boolean todaVenta, boolean primera, boolean mayor, boolean resumen ) {
         log.info( "obtenerReporteVentasporOptometrista()" );
@@ -1204,7 +1200,7 @@ public class ReportServiceImpl implements ReportService {
         return null;
     }
 
-    @Nullable
+    
     public String obtenerReportePromociones( Date fechaImpresion ) {
         log.info( "obtenerReportePromociones()" );
         log.info( "fecha::", fechaImpresion );
@@ -1228,8 +1224,8 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
-    public String obtenerReporteDeKardex( @NotNull String article, Date fechaInicio, Date fechaFin ) {
+    
+    public String obtenerReporteDeKardex(  String article, Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteDeKardex" );
 
         File report = new File( System.getProperty( "java.io.tmpdir" ), "Kardex-Por-SKU.html" );
@@ -1300,7 +1296,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteDeVentasDelDiaActual( Date fechaVentas, Boolean artPrecioMayorCero ) {
         log.debug( "obtenerReporteDeVentasDelDiaActual()" );
         File report = new File( System.getProperty( "java.io.tmpdir" ), "Ventas-del-dia.html" );
@@ -1375,7 +1371,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteDeIngresosPorPeriodo( Date dateStart, Date dateEnd ) {
         log.debug( "obtenerReporteDeIngresosPorPeriodo()" );
         File report = new File( System.getProperty( "java.io.tmpdir" ), "Ventas-del-dia.html" );
@@ -1402,7 +1398,7 @@ public class ReportServiceImpl implements ReportService {
 
 
 
-    @Nullable
+    
     public String obtenerReporteVentasMasVision( Date fechaInicio, Date fechaFin ) {
         log.info( "obtenerReporteVentasMasVision()" );
 
@@ -1445,7 +1441,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteDescuentosMasVision( Date fechaInicio, Date fechaFin, String key ) {
         log.info( "obtenerReporteDescuentos()" );
 
@@ -1480,7 +1476,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
 
-    @Nullable
+    
     public String obtenerReporteDeCupones( Date dateStart, Date dateEnd ){
       log.info( "obtenerReporteDeCupones()" );
 

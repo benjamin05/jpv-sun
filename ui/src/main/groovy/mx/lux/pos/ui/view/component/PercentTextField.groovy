@@ -4,12 +4,10 @@ import mx.lux.pos.ui.resources.UI_Standards
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.math.NumberUtils
 
+import javax.swing.*
 import java.awt.event.FocusAdapter
 import java.awt.event.FocusEvent
 import java.awt.event.FocusListener
-import javax.swing.InputVerifier
-import javax.swing.JComponent
-import javax.swing.JTextField
 
 class PercentTextField extends JTextField {
 

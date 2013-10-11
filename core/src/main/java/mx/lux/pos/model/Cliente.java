@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.validator.constraints.NotBlank;
-import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -111,7 +110,7 @@ public class Cliente implements Serializable {
     @Column( name = "email_cli" )
     private String email;
 
-    @NotNull
+    
     @Size( max = 1 )
     @Column( name = "s_usa_anteojos", length = 1, nullable = false )
     private String sUsaAnteojos = "N";
@@ -123,21 +122,21 @@ public class Cliente implements Serializable {
     @Column( name = "id_atendio", length = 12 )
     private String idAtendio;
 
-    @NotNull
+    
     @Column( name = "id_sync", length = 1, nullable = false )
     private String idSync = "1";
 
-    @NotNull
+    
     @Temporal( TemporalType.TIMESTAMP )
     @Column( name = "fecha_mod", nullable = false )
     private Date fechaModificado;
 
-    @NotNull
+    
     @Size( max = 13 )
     @Column( name = "id_mod", length = 13, nullable = false )
     private String idModificado = "0";
 
-    @NotNull
+    
     @Column( name = "id_sucursal", nullable = false )
     private Integer idSucursal;
 
@@ -185,11 +184,11 @@ public class Cliente implements Serializable {
     @Column( name = "fecha_imp" )
     private Date fechaImp;
 
-    @NotNull
+    
     @Column( name = "mod_imp", nullable = false )
     private boolean modImp;
 
-    @NotNull
+    
     @Column( name = "calif", nullable = false )
     private Integer calif = 0;
 
@@ -206,7 +205,6 @@ public class Cliente implements Serializable {
     @Column( name = "hist_cli" )
     private String histCli;
 
-    @Nullable
     @ManyToOne
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumns( {
@@ -214,7 +212,6 @@ public class Cliente implements Serializable {
             @JoinColumn( name = "id_localidad", referencedColumnName = "id_localidad", insertable = false, updatable = false ) } )
     private Municipio municipio;
 
-    @Nullable
     @OneToOne
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "id_cliente", insertable = false, updatable = false )
@@ -691,7 +688,6 @@ public class Cliente implements Serializable {
         this.histCli = histCli;
     }
 
-    @Nullable
     public Municipio getMunicipio() {
         return municipio;
     }
@@ -700,7 +696,6 @@ public class Cliente implements Serializable {
         this.municipio = municipio;
     }
 
-    @Nullable
     public ClientePais getClientePais() {
         return clientePais;
     }

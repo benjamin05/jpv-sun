@@ -1,16 +1,9 @@
 package mx.lux.pos.ui.view.component
 
-import mx.lux.pos.ui.model.ContactType
-import mx.lux.pos.ui.model.GenderType
 import mx.lux.pos.ui.model.UpperCaseDocument
-import mx.lux.pos.ui.view.verifier.NotEmptyVerifier
 import net.miginfocom.swing.MigLayout
 
-import java.awt.BorderLayout
-import javax.swing.JComboBox
-import javax.swing.JSpinner
-import javax.swing.JTextField
-import javax.swing.JPanel
+import javax.swing.*
 
 class CustomerPanelForeign extends CustomerPanelStatistics {
 

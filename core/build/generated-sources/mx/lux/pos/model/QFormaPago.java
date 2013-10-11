@@ -1,13 +1,11 @@
 package mx.lux.pos.model;
 
-import com.mysema.query.types.Path;
-import com.mysema.query.types.PathMetadata;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.*;
 import com.mysema.query.types.path.*;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -52,7 +50,7 @@ public class QFormaPago extends EntityPathBase<FormaPago> {
         super(FormaPago.class, forVariable(variable));
     }
 
-    public QFormaPago(@NotNull Path<? extends FormaPago> entity) {
+    public QFormaPago(Path<? extends FormaPago> entity) {
         super(entity.getType(), entity.getMetadata());
     }
 

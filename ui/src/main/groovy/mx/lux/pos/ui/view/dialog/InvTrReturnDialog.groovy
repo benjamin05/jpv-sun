@@ -1,21 +1,14 @@
 package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
-import mx.lux.pos.ui.model.ICorporateKeyVerifier
-import mx.lux.pos.ui.resources.UI_Standards
 import mx.lux.pos.ui.model.InvTr
+import mx.lux.pos.ui.resources.UI_Standards
 import mx.lux.pos.ui.view.component.NumericTextField
-import mx.lux.pos.ui.view.component.PercentTextField
 import net.miginfocom.swing.MigLayout
-
-import java.awt.BorderLayout
-import java.awt.Font
-import java.awt.event.FocusAdapter
-import java.awt.event.FocusEvent
-import java.awt.event.FocusListener
-import javax.swing.*
-import java.awt.Point
 import org.apache.commons.lang3.StringUtils
+
+import javax.swing.*
+import java.awt.*
 
 class InvTrReturnDialog extends JDialog {
 

@@ -1,11 +1,8 @@
 package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
-import mx.lux.pos.ui.controller.DailyCloseController
-import mx.lux.pos.ui.resources.UI_Standards
 import mx.lux.pos.ui.view.verifier.DateVerifier
 import net.miginfocom.swing.MigLayout
-import org.apache.commons.lang3.time.DateUtils
 
 import javax.swing.*
 import java.awt.*

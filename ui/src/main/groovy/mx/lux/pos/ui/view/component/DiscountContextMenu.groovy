@@ -3,9 +3,8 @@ package mx.lux.pos.ui.view.component
 import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.view.driver.PromotionDriver
 
+import javax.swing.*
 import java.awt.event.MouseEvent
-import javax.swing.JMenuItem
-import javax.swing.JPopupMenu
 
 class DiscountContextMenu extends JPopupMenu {
 

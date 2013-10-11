@@ -1,14 +1,13 @@
 package mx.lux.pos.ui.controller
 
 import groovy.util.logging.Slf4j
+import mx.lux.pos.model.*
 import mx.lux.pos.service.CancelacionService
 import mx.lux.pos.service.TicketService
-import mx.lux.pos.ui.resources.ServiceManager
+import mx.lux.pos.ui.model.*
 import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import mx.lux.pos.model.*
-import mx.lux.pos.ui.model.*
 
 @Slf4j
 @Component

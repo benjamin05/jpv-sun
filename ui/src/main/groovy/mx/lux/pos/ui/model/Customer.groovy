@@ -3,11 +3,10 @@ package mx.lux.pos.ui.model
 import groovy.beans.Bindable
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
-import mx.lux.pos.model.Cliente
-import org.apache.commons.lang3.StringUtils
 import groovy.util.logging.Slf4j
-import com.sun.java.swing.plaf.motif.MotifInternalFrameTitlePane
+import mx.lux.pos.model.Cliente
 import mx.lux.pos.model.Titulo
+import org.apache.commons.lang3.StringUtils
 
 @Slf4j
 @Bindable

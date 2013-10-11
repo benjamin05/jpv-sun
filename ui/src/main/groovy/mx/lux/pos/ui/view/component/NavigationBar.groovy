@@ -4,8 +4,7 @@ import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.resources.ImageLibrary
 import net.miginfocom.swing.MigLayout
 
-import javax.swing.JButton
-import javax.swing.JPanel
+import javax.swing.*
 
 class NavigationBar extends JPanel {
   private static final String TXT_DEFAULT = "New"

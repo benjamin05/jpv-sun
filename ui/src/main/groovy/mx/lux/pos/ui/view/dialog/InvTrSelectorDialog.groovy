@@ -12,14 +12,9 @@ import org.apache.commons.lang3.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-import java.awt.BorderLayout
-import javax.swing.BorderFactory
-import javax.swing.JDialog
-import javax.swing.JTable
-import javax.swing.JTextField
+import javax.swing.*
 import javax.swing.table.AbstractTableModel
-import java.awt.Point
-import java.awt.Dimension
+import java.awt.*
 
 class InvTrSelectorDialog extends JDialog {
 

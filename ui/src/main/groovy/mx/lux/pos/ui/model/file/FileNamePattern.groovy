@@ -1,16 +1,14 @@
 package mx.lux.pos.ui.model.file
 
-import mx.lux.pos.util.CustomDateUtils
+import mx.lux.pos.ui.controller.SettingsController
 import org.apache.commons.lang3.StringUtils
+import org.apache.commons.lang3.time.DateUtils
 
+import java.text.DateFormat
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import org.apache.commons.lang3.time.DateUtils
-import java.text.ParseException
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import mx.lux.pos.ui.resources.ServiceManager
-import mx.lux.pos.ui.controller.SettingsController
 
 class FileNamePattern {
 

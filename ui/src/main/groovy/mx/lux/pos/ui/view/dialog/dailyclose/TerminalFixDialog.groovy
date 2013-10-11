@@ -3,15 +3,15 @@ package mx.lux.pos.ui.view.dialog.dailyclose
 import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.controller.DailyCloseController
-import mx.lux.pos.ui.model.Payment
-import net.miginfocom.swing.MigLayout
-
-import java.awt.event.ActionEvent
-import java.awt.event.MouseEvent
-import javax.swing.*
 import mx.lux.pos.ui.model.Branch
+import mx.lux.pos.ui.model.Payment
 import mx.lux.pos.ui.model.Session
 import mx.lux.pos.ui.model.SessionItem
+import net.miginfocom.swing.MigLayout
+
+import javax.swing.*
+import java.awt.event.ActionEvent
+import java.awt.event.MouseEvent
 
 class TerminalFixDialog extends JDialog {
 

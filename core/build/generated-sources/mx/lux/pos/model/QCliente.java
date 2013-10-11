@@ -1,13 +1,11 @@
 package mx.lux.pos.model;
 
-import com.mysema.query.types.PathMetadata;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.*;
 import com.mysema.query.types.path.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -30,7 +28,6 @@ public class QCliente extends EntityPathBase<Cliente> {
 
     public final NumberPath<Integer> calif = createNumber("calif", Integer.class);
 
-    @NotNull
     public final QClientePais clientePais;
 
     public final StringPath codigo = createString("codigo");
@@ -87,7 +84,6 @@ public class QCliente extends EntityPathBase<Cliente> {
 
     public final BooleanPath modImp = createBoolean("modImp");
 
-    @NotNull
     public final QMunicipio municipio;
 
     public final StringPath nombre = createString("nombre");
@@ -132,15 +128,15 @@ public class QCliente extends EntityPathBase<Cliente> {
         this(Cliente.class, forVariable(variable), INITS);
     }
 
-    public QCliente(@NotNull PathMetadata<?> metadata) {
+    public QCliente(PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QCliente(PathMetadata<?> metadata, @NotNull PathInits inits) {
+    public QCliente(PathMetadata<?> metadata, PathInits inits) {
         this(Cliente.class, metadata, inits);
     }
 
-    public QCliente(Class<? extends Cliente> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
+    public QCliente(Class<? extends Cliente> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.clientePais = inits.isInitialized("clientePais") ? new QClientePais(forProperty("clientePais")) : null;
         this.municipio = inits.isInitialized("municipio") ? new QMunicipio(forProperty("municipio"), inits.get("municipio")) : null;

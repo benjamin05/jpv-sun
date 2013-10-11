@@ -2,10 +2,8 @@ package mx.lux.pos.ui.view
 
 import groovy.swing.SwingBuilder
 
-import java.awt.CardLayout
-import javax.swing.JFrame
-import javax.swing.JPanel
-import javax.swing.SwingUtilities
+import javax.swing.*
+import java.awt.*
 
 class PromotionViewSample extends JFrame {
 

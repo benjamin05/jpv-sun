@@ -2,22 +2,17 @@ package mx.lux.pos.ui.view.dialog
 
 import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
-import mx.lux.pos.model.ClienteProceso
 import mx.lux.pos.model.FormaContacto
 import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.ui.controller.ContactController
-import mx.lux.pos.ui.model.OrderActive
 import mx.lux.pos.ui.resources.UI_Standards
 import net.miginfocom.swing.MigLayout
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import javax.swing.*
-import javax.swing.table.TableRowSorter
 import java.awt.*
 import java.util.List
-
-
 
 class ContactClientDialog extends JDialog {
 

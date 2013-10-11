@@ -3,8 +3,7 @@ package mx.lux.pos.ui.view.component
 import mx.lux.pos.ui.model.adapter.StringAdapter
 import mx.lux.pos.ui.resources.UI_Standards
 
-import javax.swing.JComboBox
-import javax.swing.SwingUtilities
+import javax.swing.*
 import javax.swing.text.JTextComponent
 import java.awt.event.*
 

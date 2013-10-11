@@ -1,7 +1,6 @@
 package mx.lux.pos.model;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -132,7 +131,7 @@ public class CotizaDet implements Serializable, Comparable<CotizaDet> {
     }
 
     // Identity Methods
-    public int compareTo(@NotNull CotizaDet pDet) {
+    public int compareTo(CotizaDet pDet) {
         int result = this.getIdCotiza().compareTo(pDet.getIdCotiza());
         if (result == 0) {
             result = this.getSku().compareTo(pDet.getSku());

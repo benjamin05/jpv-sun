@@ -2,8 +2,6 @@ package mx.lux.pos.model;
 
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -80,7 +78,7 @@ public class MonedaDetalle implements Serializable, Comparable<MonedaDetalle> {
     }
 
     // Identity
-    public int compareTo( @NotNull MonedaDetalle pMonedaDet ) {
+    public int compareTo( MonedaDetalle pMonedaDet ) {
         int result = this.getIdMoneda().compareTo( pMonedaDet.getIdMoneda() );
         if ( result == 0 ) {
             result = -1 * this.getFechaActiva().compareTo( pMonedaDet.getFechaActiva() );
@@ -101,7 +99,7 @@ public class MonedaDetalle implements Serializable, Comparable<MonedaDetalle> {
         return result;
     }
 
-    public boolean equals( @Nullable String pIdMoneda, @Nullable Date pFechaActiva ) {
+    public boolean equals( String pIdMoneda, Date pFechaActiva ) {
         boolean result = false;
         if ( ( pIdMoneda != null ) && ( pFechaActiva != null ) ) {
             result = this.getIdMoneda().equals( StringUtils.trimToEmpty( pIdMoneda ).toUpperCase() )

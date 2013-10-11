@@ -1,13 +1,11 @@
 package mx.lux.pos.model;
 
-import com.mysema.query.types.Path;
-import com.mysema.query.types.PathMetadata;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.*;
 import com.mysema.query.types.path.*;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -46,7 +44,7 @@ public class QCondicionIcGener extends EntityPathBase<CondicionIcGener> {
         super(CondicionIcGener.class, forVariable(variable));
     }
 
-    public QCondicionIcGener(@NotNull Path<? extends CondicionIcGener> entity) {
+    public QCondicionIcGener(Path<? extends CondicionIcGener> entity) {
         super(entity.getType(), entity.getMetadata());
     }
 

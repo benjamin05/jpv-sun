@@ -2,21 +2,13 @@ package mx.lux.pos.ui.controller
 
 import groovy.util.logging.Slf4j
 import mx.lux.pos.model.Cliente
-import mx.lux.pos.model.Empleado
 import mx.lux.pos.model.FormaContacto
 import mx.lux.pos.model.Jb
 import mx.lux.pos.model.TipoContacto
 import mx.lux.pos.repository.TipoContactoRepository
 import mx.lux.pos.service.ClienteService
-import mx.lux.pos.service.EmpleadoService
 import mx.lux.pos.service.JbService
-import mx.lux.pos.service.SucursalService
 import mx.lux.pos.service.impl.FormaContactoService
-import mx.lux.pos.ui.model.Branch
-import mx.lux.pos.ui.model.Session
-import mx.lux.pos.ui.model.SessionItem
-import mx.lux.pos.ui.model.User
-import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 

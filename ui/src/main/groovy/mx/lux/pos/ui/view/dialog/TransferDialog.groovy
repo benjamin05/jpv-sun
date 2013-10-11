@@ -5,17 +5,15 @@ import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.controller.CancellationController
 import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.controller.PaymentController
+import mx.lux.pos.ui.model.*
 import mx.lux.pos.ui.view.renderer.MoneyCellRenderer
 import net.miginfocom.swing.MigLayout
 
-import java.awt.Color
-import java.awt.Component
+import javax.swing.*
+import java.awt.*
 import java.awt.event.ActionEvent
 import java.text.NumberFormat
-
-import mx.lux.pos.ui.model.*
-
-import javax.swing.*
+import java.util.List
 
 class TransferDialog extends JDialog {
 

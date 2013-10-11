@@ -6,11 +6,8 @@ import mx.lux.pos.ui.model.DealType
 import mx.lux.pos.ui.model.UpperCaseDocument
 import net.miginfocom.swing.MigLayout
 
-import java.awt.Component
-import javax.swing.JComboBox
-import javax.swing.JDialog
-import javax.swing.JLabel
-import javax.swing.JTextField
+import javax.swing.*
+import java.awt.*
 
 class DealDialog extends JDialog {
 

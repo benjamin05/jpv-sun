@@ -1,8 +1,8 @@
 package mx.lux.pos.ui.controller
 
+import mx.lux.pos.ui.resources.ServiceManager
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import mx.lux.pos.ui.resources.ServiceManager
 
 class SettingsController {
 

@@ -1,10 +1,6 @@
 package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
-import mx.lux.pos.ui.controller.OrderController
-import mx.lux.pos.ui.model.Branch
-import mx.lux.pos.ui.model.Session
-import mx.lux.pos.ui.model.SessionItem
 import net.miginfocom.swing.MigLayout
 
 import javax.swing.*

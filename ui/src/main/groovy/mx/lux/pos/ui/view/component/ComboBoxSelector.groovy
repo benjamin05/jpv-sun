@@ -2,7 +2,7 @@ package mx.lux.pos.ui.view.component
 
 import mx.lux.pos.ui.model.adapter.StringAdapter
 
-import javax.swing.JComboBox
+import javax.swing.*
 
 class ComboBoxSelector<T extends Object> {
   

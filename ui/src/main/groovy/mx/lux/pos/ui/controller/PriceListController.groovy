@@ -12,9 +12,6 @@ import mx.lux.pos.ui.model.PriceListLoadType
 import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import mx.lux.pos.model.Parametro
-import mx.lux.pos.model.TipoParametro
-import mx.lux.pos.model.Sucursal
 
 @Slf4j
 @Component

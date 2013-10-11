@@ -1,15 +1,11 @@
 package mx.lux.pos.model;
 
-import com.mysema.query.types.PathMetadata;
-import com.mysema.query.types.path.EntityPathBase;
-import com.mysema.query.types.path.PathInits;
-import com.mysema.query.types.path.StringPath;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.*;
+import com.mysema.query.types.path.*;
 
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -26,29 +22,27 @@ public class QRelacionPlan extends EntityPathBase<RelacionPlan> {
 
     public final StringPath activo = createString("activo");
 
-    @NotNull
     public final QBancoDeposito bancoDeposito;
 
     public final StringPath idBanco = createString("idBanco");
 
     public final StringPath idPlan = createString("idPlan");
 
-    @NotNull
     public final QPlan plan;
 
     public QRelacionPlan(String variable) {
         this(RelacionPlan.class, forVariable(variable), INITS);
     }
 
-    public QRelacionPlan(@NotNull PathMetadata<?> metadata) {
+    public QRelacionPlan(PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QRelacionPlan(PathMetadata<?> metadata, @NotNull PathInits inits) {
+    public QRelacionPlan(PathMetadata<?> metadata, PathInits inits) {
         this(RelacionPlan.class, metadata, inits);
     }
 
-    public QRelacionPlan(Class<? extends RelacionPlan> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
+    public QRelacionPlan(Class<? extends RelacionPlan> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.bancoDeposito = inits.isInitialized("bancoDeposito") ? new QBancoDeposito(forProperty("bancoDeposito")) : null;
         this.plan = inits.isInitialized("plan") ? new QPlan(forProperty("plan")) : null;

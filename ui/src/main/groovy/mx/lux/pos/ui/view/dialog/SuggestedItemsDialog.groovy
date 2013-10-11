@@ -1,27 +1,17 @@
 package mx.lux.pos.ui.view.dialog
 
+import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.model.Item
+import mx.lux.pos.ui.resources.UI_Standards
 import mx.lux.pos.ui.view.renderer.MoneyCellRenderer
 
-import java.awt.Component
-import java.awt.event.MouseEvent
-import javax.swing.JDialog
-import javax.swing.ListSelectionModel
-import javax.swing.SwingUtilities
-import java.awt.Dimension
-import javax.swing.JCheckBox
-import groovy.model.DefaultTableModel
-import java.awt.BorderLayout
-import javax.swing.BorderFactory
-import mx.lux.pos.ui.resources.UI_Standards
-import javax.swing.JLabel
-import javax.swing.SwingConstants
-import java.awt.event.ComponentListener
-import javax.swing.JTable
-import javax.swing.event.ListSelectionListener
+import javax.swing.*
 import javax.swing.event.ListSelectionEvent
-import java.awt.FontMetrics
+import javax.swing.event.ListSelectionListener
+import java.awt.*
+import java.awt.event.MouseEvent
+import java.util.List
 
 class SuggestedItemsDialog extends JDialog {
 

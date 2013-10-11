@@ -13,13 +13,12 @@ import mx.lux.pos.ui.view.driver.PromotionDriver
 import mx.lux.pos.ui.view.renderer.MoneyCellRenderer
 import net.miginfocom.swing.MigLayout
 
-import java.awt.BorderLayout
-import java.awt.Color
-import java.awt.Dimension
+import javax.swing.*
+import java.awt.*
 import java.awt.event.MouseEvent
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import javax.swing.*
+import java.util.List
 
 class PromotionDrivenPanelSample extends JFrame implements IPromotionDrivenPanel {
 

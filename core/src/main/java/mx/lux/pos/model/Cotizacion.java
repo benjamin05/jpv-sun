@@ -3,7 +3,6 @@ package mx.lux.pos.model;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -196,7 +195,7 @@ public class Cotizacion implements Serializable, Comparable<Cotizacion> {
     }
 
     // Identity
-    public int compareTo( @NotNull Cotizacion pCotizacion ) {
+    public int compareTo( Cotizacion pCotizacion ) {
         return this.getIdCotiza().compareTo( pCotizacion.getIdCotiza() );
     }
 

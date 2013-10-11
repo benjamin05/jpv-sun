@@ -1,7 +1,5 @@
 package mx.lux.pos.ui.model
 
-import mx.lux.pos.ui.controller.OrderController
-
 enum OperationType {
   DEFAULT( 'Público General' ),
   NEW( 'Cliente Nuevo' ),

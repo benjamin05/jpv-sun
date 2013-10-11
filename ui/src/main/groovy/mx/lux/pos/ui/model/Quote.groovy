@@ -1,11 +1,10 @@
 package mx.lux.pos.ui.model
 
 import groovy.beans.Bindable
-import groovy.transform.ToString
 import groovy.transform.EqualsAndHashCode
-import mx.lux.pos.model.Comprobante
-import mx.lux.pos.model.Cotizacion
+import groovy.transform.ToString
 import mx.lux.pos.model.CotizaDet
+import mx.lux.pos.model.Cotizacion
 
 @Bindable
 @ToString

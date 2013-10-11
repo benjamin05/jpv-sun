@@ -2,7 +2,6 @@ package mx.lux.pos.model;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -84,7 +83,7 @@ public class Apertura {
     }
 
     // Identity
-    public int compareTo( @NotNull Apertura pApertura ) {
+    public int compareTo(  Apertura pApertura ) {
         return this.getFechaApertura().compareTo( pApertura.getFechaApertura() );
     }
 

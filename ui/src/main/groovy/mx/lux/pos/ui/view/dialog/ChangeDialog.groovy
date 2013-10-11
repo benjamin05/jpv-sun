@@ -1,19 +1,14 @@
 package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
+import mx.lux.pos.model.MensajesPorParametro
+import mx.lux.pos.ui.controller.PaymentController
 import mx.lux.pos.ui.resources.UI_Standards
 import net.miginfocom.swing.MigLayout
 
-import java.awt.BorderLayout
-import javax.swing.ButtonGroup
-import javax.swing.JDialog
-import javax.swing.JList
-import javax.swing.JScrollPane
-import javax.swing.border.TitledBorder
-import javax.swing.JLabel
+import javax.swing.*
+import java.awt.*
 import java.text.NumberFormat
-import mx.lux.pos.ui.controller.PaymentController
-import mx.lux.pos.model.MensajesPorParametro
 
 class ChangeDialog extends JDialog {
 

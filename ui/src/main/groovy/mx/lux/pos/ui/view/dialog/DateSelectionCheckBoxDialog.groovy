@@ -6,13 +6,10 @@ import mx.lux.pos.ui.view.verifier.DateVerifier
 import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.time.DateUtils
 
-import java.awt.BorderLayout
+import javax.swing.*
+import java.awt.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import javax.swing.JDialog
-import javax.swing.JTextField
-import javax.swing.JComboBox
-import javax.swing.JCheckBox
 
 class DateSelectionCheckBoxDialog extends JDialog {
 

@@ -1,7 +1,5 @@
 package mx.lux.pos.model;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -42,14 +40,14 @@ public class TipoDescuento {
         rxSinVenta = 0;
     }
 
-    public void AcumulaDescuento(@NotNull Descuento descuentos) {
+    public void AcumulaDescuento(Descuento descuentos) {
         idEmpleado = descuentos.getIdEmpleado();
         empleado = descuentos.getNotaVenta().getEmpleado().getNombreCompleto();
         descuento = descuentos.getPorcentaje();
         noConvenio = descuentos.getNotaVenta().getIdConvenio();
     }
 
-    public void AcumulaPago(@NotNull Pago pagos, BancoEmisor banco, Boolean esPagoDolares) {
+    public void AcumulaPago(Pago pagos, BancoEmisor banco, Boolean esPagoDolares) {
         fecha = pagos.getFecha();
         importe = pagos.getMonto();
         claveP = pagos.geteTipoPago().getF1().equalsIgnoreCase(DOLARES_RECIBIDOS) ? "" : pagos.getClave();
@@ -69,11 +67,11 @@ public class TipoDescuento {
         }
     }
 
-    public void AcumulaBanco(@NotNull BancoEmisor banco) {
+    public void AcumulaBanco(BancoEmisor banco) {
         idBancoEmi = banco.getDescripcion();
     }
 
-    public void AcumulaExamenes(@NotNull Examen examen, @NotNull Receta receta) {
+    public void AcumulaExamenes(Examen examen, Receta receta) {
         fecha = examen.getFechaAlta();
         paciente = examen.getCliente().getNombreCompleto();
         if( receta.getNotaVenta() != null && receta.getNotaVenta().getFactura().length() > 0 ){

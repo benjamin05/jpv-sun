@@ -9,11 +9,11 @@ import mx.lux.pos.ui.view.verifier.NotEmptyVerifier
 import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
 
-import java.awt.Component
-import java.awt.Font
+import javax.swing.*
+import java.awt.*
 import java.awt.event.ItemEvent
 import java.text.NumberFormat
-import javax.swing.*
+import java.util.List
 
 class EditDepositDialog extends JDialog {
 

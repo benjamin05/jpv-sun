@@ -1,7 +1,5 @@
 package mx.lux.pos.model;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Date;
 
 public class KardexPorArticulo {
@@ -18,7 +16,7 @@ public class KardexPorArticulo {
     private String tipoTransaccion;
     private String empleado;
 
-    public KardexPorArticulo( @NotNull TransInvDetalle transInvDetalle, String idFactura ) {
+    public KardexPorArticulo( TransInvDetalle transInvDetalle, String idFactura ) {
 
         fecha = transInvDetalle.getTransInv().getFecha();
         folio = transInvDetalle.getIdTipoTrans()+"."+transInvDetalle.getFolio().toString();

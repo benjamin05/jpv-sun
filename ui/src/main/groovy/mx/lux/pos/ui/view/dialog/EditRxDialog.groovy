@@ -1,26 +1,18 @@
 package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
-import mx.lux.pos.ui.model.Rx
 import mx.lux.pos.model.Receta
-import net.miginfocom.swing.MigLayout
-
-import javax.swing.JTextArea
-import java.awt.Component
-import javax.swing.JDialog
-import javax.swing.JPanel
-import javax.swing.JTextField
-import javax.swing.JLabel
-import javax.swing.JScrollPane
-import org.apache.commons.lang3.StringUtils
 import mx.lux.pos.ui.controller.CustomerController
-
-import java.awt.Dimension
-import java.awt.event.FocusListener
-import java.awt.event.FocusEvent
-import javax.swing.JComboBox
-import javax.swing.JOptionPane
+import mx.lux.pos.ui.model.Rx
 import mx.lux.pos.ui.model.UpperCaseDocument
+import net.miginfocom.swing.MigLayout
+import org.apache.commons.lang3.StringUtils
+
+import javax.swing.*
+import java.awt.*
+import java.awt.event.FocusEvent
+import java.awt.event.FocusListener
+import java.util.List
 
 class EditRxDialog extends JDialog {
 

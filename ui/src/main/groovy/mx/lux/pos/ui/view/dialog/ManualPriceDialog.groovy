@@ -1,28 +1,21 @@
 package mx.lux.pos.ui.view.dialog
 
-import javax.swing.JDialog
+import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.model.Item
+import mx.lux.pos.ui.resources.UI_Standards
+import mx.lux.pos.ui.view.component.NumericTextField
+import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
+import org.apache.commons.lang3.math.NumberUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import groovy.swing.SwingBuilder
-import java.awt.BorderLayout
-import javax.swing.BorderFactory
-import javax.swing.JComponent
-import net.miginfocom.swing.MigLayout
-import mx.lux.pos.ui.resources.UI_Standards
-import java.awt.Point
-import java.awt.Dimension
-import javax.swing.JTextField
-import org.apache.commons.lang3.math.NumberUtils
-import javax.swing.JTextArea
-import java.awt.Color
+
+import javax.swing.*
+import javax.swing.border.Border
+import java.awt.*
 import java.awt.event.FocusAdapter
 import java.awt.event.FocusEvent
 import java.awt.event.FocusListener
-import javax.swing.border.Border
-import mx.lux.pos.ui.view.component.NumericTextField
-import javax.swing.SwingUtilities
 
 class ManualPriceDialog extends JDialog {
 

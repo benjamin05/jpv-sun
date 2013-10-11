@@ -1,23 +1,15 @@
 package mx.lux.pos.ui.controller
 
 import groovy.util.logging.Slf4j
-import mx.lux.pos.repository.AcuseRepository
-import mx.lux.pos.repository.AcusesTipoRepository
-import mx.lux.pos.repository.DescuentoClaveRepository
-import mx.lux.pos.repository.GenericoRepository
-import mx.lux.pos.repository.JbLlamadaRepository
-import mx.lux.pos.repository.JbNotasRepository
-import mx.lux.pos.repository.JbRepository
-import mx.lux.pos.repository.JbServiciosRepository
-import mx.lux.pos.repository.ParametroRepository
-import mx.lux.pos.repository.PrecioRepository
-import mx.lux.pos.repository.TmpServiciosRepository
+import mx.lux.pos.model.*
+import mx.lux.pos.repository.*
+import mx.lux.pos.service.*
 import mx.lux.pos.service.business.Registry
 import mx.lux.pos.ui.MainWindow
+import mx.lux.pos.ui.model.*
 import mx.lux.pos.ui.resources.ServiceManager
 import mx.lux.pos.ui.view.dialog.ContactClientDialog
 import mx.lux.pos.ui.view.dialog.ContactDialog
-
 import mx.lux.pos.ui.view.dialog.ManualPriceDialog
 import mx.lux.pos.ui.view.panel.OrderPanel
 import org.apache.commons.lang.NumberUtils
@@ -25,23 +17,12 @@ import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
-import javax.swing.JDialog
-import javax.swing.JOptionPane
-import javax.swing.JPanel
-
-import mx.lux.pos.model.*
-import mx.lux.pos.service.*
-import mx.lux.pos.ui.model.*
-
+import javax.swing.*
 import java.text.SimpleDateFormat
-import java.util.concurrent.Callable
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
-import java.util.concurrent.TimeoutException
-
-
 
 @Slf4j
 @Component

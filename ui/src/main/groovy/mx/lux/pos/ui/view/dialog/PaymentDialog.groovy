@@ -4,23 +4,19 @@ import groovy.swing.SwingBuilder
 import mx.lux.pos.model.Pago
 import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.controller.PaymentController
+import mx.lux.pos.ui.model.*
 import mx.lux.pos.ui.view.panel.ShowOrderPanel
 import mx.lux.pos.ui.view.verifier.IsSelectedVerifier
 import mx.lux.pos.ui.view.verifier.NotEmptyVerifier
 import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
 
-import java.awt.Color
-import java.awt.Component
-import java.awt.Font
+import javax.swing.*
+import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.event.ItemEvent
 import java.text.NumberFormat
-
-import mx.lux.pos.ui.model.*
-
-import javax.swing.*
-import mx.lux.pos.ui.view.panel.OrderPanel
+import java.util.List
 
 class PaymentDialog extends JDialog {
 

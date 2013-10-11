@@ -1,13 +1,11 @@
 package mx.lux.pos.model;
 
-import com.mysema.query.types.PathMetadata;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.*;
 import com.mysema.query.types.path.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -26,17 +24,14 @@ public class QPago extends EntityPathBase<Pago> {
 
     public final BooleanPath confirmado = createBoolean("confirmado");
 
-    @NotNull
     public final QEmpleado empleado;
 
-    @NotNull
     public final QTipoPago eTipoPago;
 
     public final DateTimePath<java.util.Date> fecha = createDateTime("fecha", java.util.Date.class);
 
     public final DateTimePath<java.util.Date> fechaModificacion = createDateTime("fechaModificacion", java.util.Date.class);
 
-    @NotNull
     public final QFormaPago formaPago;
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
@@ -67,12 +62,10 @@ public class QPago extends EntityPathBase<Pago> {
 
     public final NumberPath<java.math.BigDecimal> monto = createNumber("monto", java.math.BigDecimal.class);
 
-    @NotNull
     public final QNotaVenta notaVenta;
 
     public final StringPath parcialidad = createString("parcialidad");
 
-    @NotNull
     public final QPlan plan;
 
     public final NumberPath<java.math.BigDecimal> porDevolver = createNumber("porDevolver", java.math.BigDecimal.class);
@@ -81,10 +74,8 @@ public class QPago extends EntityPathBase<Pago> {
 
     public final StringPath referenciaPago = createString("referenciaPago");
 
-    @NotNull
     public final QSucursal sucursal;
 
-    @NotNull
     public final QTerminal terminal;
 
     public final StringPath tipoPago = createString("tipoPago");
@@ -93,15 +84,15 @@ public class QPago extends EntityPathBase<Pago> {
         this(Pago.class, forVariable(variable), INITS);
     }
 
-    public QPago(@NotNull PathMetadata<?> metadata) {
+    public QPago(PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QPago(PathMetadata<?> metadata, @NotNull PathInits inits) {
+    public QPago(PathMetadata<?> metadata, PathInits inits) {
         this(Pago.class, metadata, inits);
     }
 
-    public QPago(Class<? extends Pago> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
+    public QPago(Class<? extends Pago> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.empleado = inits.isInitialized("empleado") ? new QEmpleado(forProperty("empleado"), inits.get("empleado")) : null;
         this.eTipoPago = inits.isInitialized("eTipoPago") ? new QTipoPago(forProperty("eTipoPago")) : null;

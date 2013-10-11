@@ -1,8 +1,6 @@
 package mx.lux.pos.model;
 
 import org.apache.commons.lang.StringUtils;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -38,7 +36,6 @@ public class IngresoPorFactura {
     private Date fechaCancelacion;
     private Integer modId;
     private Integer existencia;
-    @Nullable
     private Set<DetalleNotaVenta> lstDetalles;
     private BigDecimal contador;
     private String paciente;
@@ -110,7 +107,7 @@ public class IngresoPorFactura {
         fechaPago = fecha;
     }
 
-    public void AcumulaCancelacionesSinIva( @NotNull BigDecimal pago, Date fecha, BigDecimal montoIva, Integer piezas ) {
+    public void AcumulaCancelacionesSinIva(  BigDecimal pago, Date fecha, BigDecimal montoIva, Integer piezas ) {
         montoPagoSinIVA = pago.negate();
         acumulaPago = (acumulaPago.add( pago )).negate();
         montoPagoIVA = (acumulaPago.add( acumulaPago.multiply( montoIva ) )).negate();
@@ -156,7 +153,7 @@ public class IngresoPorFactura {
         montoDevolucion = montoDevolucion.add( devolucion );
     }
 
-    public void AcumulaFacturas( @NotNull Modificacion modificacion ) {
+    public void AcumulaFacturas(  Modificacion modificacion ) {
         montoPago = modificacion.getNotaVenta().getVentaNeta();
         fechaPago = modificacion.getNotaVenta().getFechaHoraFactura();
         fechaCancelacion = modificacion.getFecha();
@@ -178,7 +175,7 @@ public class IngresoPorFactura {
         factTransf = factTransf.replaceFirst( ", ", "" );
     }
 
-    public void AcumulaMarca( @NotNull Articulo articulo, @NotNull Precio precio ) {
+    public void AcumulaMarca(  Articulo articulo,  Precio precio ) {
         idArticulo = articulo.getId();
         marca = articulo.getArticulo();
         this.color = articulo.getCodigoColor();
@@ -188,13 +185,13 @@ public class IngresoPorFactura {
         this.existencia = articulo.getCantExistencia();
     }
 
-    public void AcumulaMarcaResumido( @NotNull Articulo articulo ) {
+    public void AcumulaMarcaResumido(  Articulo articulo ) {
         marca = articulo.getMarca();
         this.existencia = existencia+articulo.getCantExistencia();
     }
 
 
-    public void AcumulaMarcas( boolean mostrarArticulos, String idArticulo, @NotNull DetalleNotaVenta notaVenta, @NotNull BigDecimal importe, Double iva, Date fecha, String articulo, String descripcion ) {
+    public void AcumulaMarcas( boolean mostrarArticulos, String idArticulo,  DetalleNotaVenta notaVenta,  BigDecimal importe, Double iva, Date fecha, String articulo, String descripcion ) {
         fechaPago = fecha;
         marca = articulo;
         montoPago = montoPago.add( importe.multiply( new BigDecimal(notaVenta.getCantidadFac()) ) );
@@ -217,7 +214,7 @@ public class IngresoPorFactura {
         this.mostrarArticulos = mostrarArticulos;
     }
 
-    public void AcumulaMarcasCan( @NotNull DetalleNotaVenta detalles, String idArticulo, @NotNull BigDecimal importe, Double iva, Date fecha, String articulo, String descripcion ) {
+    public void AcumulaMarcasCan(  DetalleNotaVenta detalles, String idArticulo,  BigDecimal importe, Double iva, Date fecha, String articulo, String descripcion ) {
         fechaPago = fecha;
         marca = articulo;
         montoPago = montoPago.subtract( importe.multiply( new BigDecimal(detalles.getCantidadFac()) ) );
@@ -229,7 +226,7 @@ public class IngresoPorFactura {
         contador = contador.subtract( new BigDecimal(detalles.getCantidadFac()) );
     }
 
-    public void AcumulaPagosMarcasNotasCredito( Integer cantArticulos, @NotNull DetalleNotaVenta notaVenta, BigDecimal importe, Double iva, Date fecha, String articulo, String descripcion ) {
+    public void AcumulaPagosMarcasNotasCredito( Integer cantArticulos,  DetalleNotaVenta notaVenta, BigDecimal importe, Double iva, Date fecha, String articulo, String descripcion ) {
         fechaPago = fecha;
         marca = articulo;
         montoPago = montoPago.subtract( notaVenta.getPrecioUnitFinal().multiply(new BigDecimal(notaVenta.getCantidadFac())) );
@@ -238,11 +235,11 @@ public class IngresoPorFactura {
         acumulaPagoIva = acumulaPagoIva.add( montoPagoIVA );
     }
 
-    public void AcumulaArticulosMarcasNotasCredito( Integer cantArticulos, @NotNull DetalleNotaVenta notaVenta, BigDecimal importe, Double iva, Date fecha, String articulo, String descripcion ) {
+    public void AcumulaArticulosMarcasNotasCredito( Integer cantArticulos,  DetalleNotaVenta notaVenta, BigDecimal importe, Double iva, Date fecha, String articulo, String descripcion ) {
         contador = contador.subtract( new BigDecimal(notaVenta.getCantidadFac()) );
     }
 
-    public void AcumulaVentasOpto( @NotNull NotaVenta venta ) {
+    public void AcumulaVentasOpto(  NotaVenta venta ) {
         for(DetalleNotaVenta det : venta.getDetalles()){
           //lstArticulos.add( det );
           articulos =  articulos + ", " + det.getArticulo().getArticulo().trim();
@@ -261,7 +258,7 @@ public class IngresoPorFactura {
     }
 
 
-    public void AcumulaVentasCanOpto( @NotNull NotaVenta venta ) {
+    public void AcumulaVentasCanOpto(  NotaVenta venta ) {
         for(DetalleNotaVenta det : venta.getDetalles()){
             lstArticulos.add( det );
         }
@@ -277,7 +274,7 @@ public class IngresoPorFactura {
         paciente = venta.getCliente().getNombreCompleto();
     }
 
-    public void AcumulaVentasOptoMayor( @NotNull NotaVenta venta ) {
+    public void AcumulaVentasOptoMayor(  NotaVenta venta ) {
         fechaPago = venta.getFechaHoraFactura();
         idFactura = venta.getFactura();
         //montoPago = venta.getVentaNeta();
@@ -341,7 +338,7 @@ public class IngresoPorFactura {
         this.modId = modId;
     }
 
-    @Nullable
+    
     public Set<DetalleNotaVenta> getLstDetalles() {
         return lstDetalles;
     }

@@ -1,13 +1,12 @@
 package mx.lux.pos.ui.view.component
 
-import javax.swing.JPanel
-import mx.lux.pos.ui.model.Customer
 import groovy.swing.SwingBuilder
+import mx.lux.pos.ui.model.Customer
+import mx.lux.pos.ui.model.CustomerType
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import groovy.model.DefaultTableModel
-import mx.lux.pos.ui.model.Rx
-import mx.lux.pos.ui.model.CustomerType
+
+import javax.swing.*
 
 abstract class CustomerPanel extends JPanel implements IView {
 

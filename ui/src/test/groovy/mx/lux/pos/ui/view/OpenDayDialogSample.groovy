@@ -1,21 +1,16 @@
 package mx.lux.pos.ui.view
 
 import groovy.swing.SwingBuilder
-import mx.lux.pos.ui.view.dialog.NoSaleDialog
+import mx.lux.pos.ui.controller.OpenSalesController
 import mx.lux.pos.ui.model.Customer
 import mx.lux.pos.ui.model.Rx
-
-import javax.swing.JPanel
-import javax.swing.JFrame
-
-import java.awt.BorderLayout
 import mx.lux.pos.ui.resources.UI_Standards
-import javax.swing.SwingUtilities
-import mx.lux.pos.ui.controller.OpenSalesController
+import mx.lux.pos.ui.view.dialog.NoSaleDialog
 import org.springframework.context.ApplicationContext
 import org.springframework.context.support.ClassPathXmlApplicationContext
 
-import java.awt.event.MouseEvent
+import javax.swing.*
+import java.awt.*
 
 class OpenDayDialogSample extends JFrame {
 

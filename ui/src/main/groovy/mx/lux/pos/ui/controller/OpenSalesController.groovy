@@ -1,13 +1,14 @@
 package mx.lux.pos.ui.controller
 
+import mx.lux.pos.model.Apertura
+import mx.lux.pos.model.MonedaDetalle
+import mx.lux.pos.ui.resources.ServiceManager
+import mx.lux.pos.ui.view.dialog.EffectiveRateDialog
+import mx.lux.pos.ui.view.dialog.OpenSalesDayDialog
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import javax.swing.JDialog
-import mx.lux.pos.ui.view.dialog.OpenSalesDayDialog
-import mx.lux.pos.ui.view.dialog.EffectiveRateDialog
-import mx.lux.pos.ui.resources.ServiceManager
-import mx.lux.pos.model.MonedaDetalle
-import mx.lux.pos.model.Apertura
+
+import javax.swing.*
 
 class OpenSalesController {
 

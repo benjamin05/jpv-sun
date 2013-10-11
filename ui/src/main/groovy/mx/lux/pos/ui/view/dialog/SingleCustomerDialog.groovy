@@ -1,27 +1,17 @@
 package mx.lux.pos.ui.view.dialog
 
-import mx.lux.pos.ui.view.panel.RXPanel
-
-import javax.swing.JDialog
+import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.model.Customer
+import mx.lux.pos.ui.model.CustomerType
 import mx.lux.pos.ui.model.Rx
+import mx.lux.pos.ui.resources.UI_Standards
+import mx.lux.pos.ui.view.component.*
+import mx.lux.pos.ui.view.panel.RXPanel
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import groovy.swing.SwingBuilder
-import java.awt.Component
-import java.awt.Dimension
-import java.awt.Point
-import mx.lux.pos.ui.view.component.CustomerPanel
 
-import javax.swing.JTabbedPane
-import java.awt.BorderLayout
-import mx.lux.pos.ui.resources.UI_Standards
-
-import mx.lux.pos.ui.view.component.IView
-import mx.lux.pos.ui.view.component.CustomerPanelDefault
-import mx.lux.pos.ui.view.component.CustomerPanelForeign
-import mx.lux.pos.ui.view.component.CustomerPanelStatistics
-import mx.lux.pos.ui.model.CustomerType
+import javax.swing.*
+import java.awt.*
 
 class SingleCustomerDialog extends JDialog implements IView {
 

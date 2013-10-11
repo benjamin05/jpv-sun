@@ -1,12 +1,12 @@
 package mx.lux.pos.ui.controller
 
 import groovy.util.logging.Slf4j
-import mx.lux.pos.service.business.Registry
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
 import mx.lux.pos.model.*
 import mx.lux.pos.service.*
+import mx.lux.pos.service.business.Registry
 import mx.lux.pos.ui.model.*
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Component
 
 import java.text.NumberFormat
 

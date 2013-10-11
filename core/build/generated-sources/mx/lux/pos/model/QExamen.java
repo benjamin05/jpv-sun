@@ -1,13 +1,11 @@
 package mx.lux.pos.model;
 
-import com.mysema.query.types.PathMetadata;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.*;
 import com.mysema.query.types.path.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -26,7 +24,6 @@ public class QExamen extends EntityPathBase<Examen> {
 
     public final StringPath avSaOiLejosEx = createString("avSaOiLejosEx");
 
-    @NotNull
     public final QCliente cliente;
 
     public final StringPath di_od = createString("di_od");
@@ -111,15 +108,15 @@ public class QExamen extends EntityPathBase<Examen> {
         this(Examen.class, forVariable(variable), INITS);
     }
 
-    public QExamen(@NotNull PathMetadata<?> metadata) {
+    public QExamen(PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QExamen(PathMetadata<?> metadata, @NotNull PathInits inits) {
+    public QExamen(PathMetadata<?> metadata, PathInits inits) {
         this(Examen.class, metadata, inits);
     }
 
-    public QExamen(Class<? extends Examen> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
+    public QExamen(Class<? extends Examen> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.cliente = inits.isInitialized("cliente") ? new QCliente(forProperty("cliente"), inits.get("cliente")) : null;
     }

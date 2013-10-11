@@ -4,10 +4,10 @@ import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.controller.CustomerController
 import mx.lux.pos.ui.resources.UI_Standards
 import net.miginfocom.swing.MigLayout
-import java.awt.BorderLayout
 
 import javax.swing.*
-import java.awt.Component
+import java.awt.*
+import java.util.List
 
 class CountryCustomerDialog extends JDialog {
 

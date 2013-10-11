@@ -1,7 +1,6 @@
 package mx.lux.pos.model;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,7 +23,7 @@ public class GrupoArticulo implements Serializable, Comparable<GrupoArticulo> {
     @Column( name = "descripcion" )
     private String descripcion;
 
-    @NotNull
+    
     @Transient
     private Set<GrupoArticuloDet> articuloSet = new HashSet<GrupoArticuloDet>();
 
@@ -51,7 +50,7 @@ public class GrupoArticulo implements Serializable, Comparable<GrupoArticulo> {
         this.descripcion = StringUtils.trimToEmpty( pDescripcion );
     }
 
-    @NotNull
+    
     public Set<GrupoArticuloDet> getArticuloSet() {
         return articuloSet;
     }
@@ -65,14 +64,14 @@ public class GrupoArticulo implements Serializable, Comparable<GrupoArticulo> {
         this.getArticuloSet().add( pArticuloDet );
     }
 
-    public void add( @NotNull List<GrupoArticuloDet> pListaArticuloDet ) {
+    public void add(  List<GrupoArticuloDet> pListaArticuloDet ) {
         for ( GrupoArticuloDet det : pListaArticuloDet ) {
             this.add( det );
         }
     }
 
     // Entity
-    public int compareTo( @NotNull GrupoArticulo pGrupoArticulo ) {
+    public int compareTo(  GrupoArticulo pGrupoArticulo ) {
         return this.getDescripcion().compareToIgnoreCase( pGrupoArticulo.getDescripcion() );
     }
 

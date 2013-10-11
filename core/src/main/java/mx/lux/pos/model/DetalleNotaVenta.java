@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Type;
-import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -79,13 +78,11 @@ public class DetalleNotaVenta implements Serializable {
     @Column( name = "precio_conv" )
     private BigDecimal precioConv;
 
-    @Nullable
     @ManyToOne
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "id_tipo_detalle", insertable = false, updatable = false )
     private TipoDetalle tipoDetalle;
 
-    @Nullable
     @ManyToOne
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "id_articulo", insertable = false, updatable = false )
@@ -96,7 +93,6 @@ public class DetalleNotaVenta implements Serializable {
     @JoinColumn( name = "id_factura", insertable = false, updatable = false )
     private NotaVenta notaVenta;
 
-    @Nullable
     @ManyToOne
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "id_sucursal", insertable = false, updatable = false )
@@ -261,7 +257,7 @@ public class DetalleNotaVenta implements Serializable {
         this.precioConv = precioConv;
     }
 
-    @Nullable
+    
     public TipoDetalle getTipoDetalle() {
         return tipoDetalle;
     }
@@ -270,7 +266,6 @@ public class DetalleNotaVenta implements Serializable {
         this.tipoDetalle = tipoDetalle;
     }
 
-    @Nullable
     public Articulo getArticulo() {
         return articulo;
     }
@@ -279,7 +274,6 @@ public class DetalleNotaVenta implements Serializable {
         this.articulo = articulo;
     }
 
-    @Nullable
     public Sucursal getSucursal() {
         return sucursal;
     }

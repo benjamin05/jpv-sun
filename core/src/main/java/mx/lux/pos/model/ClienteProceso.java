@@ -1,7 +1,6 @@
 package mx.lux.pos.model;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -118,7 +117,7 @@ public class ClienteProceso implements Comparable<ClienteProceso> {
     }
 
     // Identity
-    public int compareTo( @NotNull ClienteProceso pCliente ) {
+    public int compareTo(  ClienteProceso pCliente ) {
         return this.getIdCliente().compareTo( pCliente.getIdCliente() );
     }
 

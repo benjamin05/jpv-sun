@@ -1,7 +1,7 @@
 package mx.lux.pos.ui.view.driver
 
 import mx.lux.pos.model.Articulo
-import mx.lux.pos.model.ShipmentLine
+import mx.lux.pos.model.InvAdjustLine
 import mx.lux.pos.model.TransInv
 import mx.lux.pos.service.ArticuloService
 import mx.lux.pos.service.InventarioService
@@ -9,9 +9,7 @@ import mx.lux.pos.ui.model.InvTrViewMode
 import mx.lux.pos.ui.model.adapter.InvTrAdapter
 import mx.lux.pos.ui.resources.ServiceManager
 import mx.lux.pos.ui.view.panel.InvTrView
-import mx.lux.pos.model.InvAdjustLine
 import org.apache.commons.lang3.StringUtils
-import mx.lux.pos.ui.controller.InvTrController
 
 class InvTrFileAdjustDriver extends InvTrDriver {
 

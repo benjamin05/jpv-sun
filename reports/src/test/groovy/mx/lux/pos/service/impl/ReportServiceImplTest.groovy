@@ -1,10 +1,10 @@
 package mx.lux.pos.service.impl
 
+import mx.lux.pos.model.*
+import mx.lux.pos.repository.*
 import mx.lux.pos.service.SucursalService
 import mx.lux.pos.service.business.ReportBusiness
 import spock.lang.Specification
-import mx.lux.pos.model.*
-import mx.lux.pos.repository.*
 
 class ReportServiceImplTest extends Specification {
 

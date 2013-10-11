@@ -1,7 +1,6 @@
 package mx.lux.pos.model;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,7 +48,7 @@ public class Mensaje implements Serializable {
         this.texto = StringUtils.trimToEmpty( texto );
     }
 
-    public int compareTo( @NotNull Mensaje mensaje ) {
+    public int compareTo( Mensaje mensaje ) {
         int result = this.getId().compareTo( mensaje.getId() );
         if( result == 0) result = this.getClave().compareToIgnoreCase( mensaje.getClave() );
         return result;

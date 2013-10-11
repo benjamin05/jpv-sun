@@ -5,10 +5,8 @@ import mx.lux.pos.ui.resources.UI_Standards
 import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
 
-import java.awt.BorderLayout
-import java.awt.Font
 import javax.swing.*
-import java.awt.Point
+import java.awt.*
 
 class PartClassDialog extends JDialog {
 

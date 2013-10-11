@@ -1,18 +1,10 @@
 package mx.lux.pos.ui.controller
 
-import mx.lux.pos.model.Articulo
-import mx.lux.pos.model.InvTrRequest
-import mx.lux.pos.model.Shipment
-import mx.lux.pos.model.ShipmentLine
-import mx.lux.pos.model.Sucursal
-import mx.lux.pos.model.TransInv
+import mx.lux.pos.model.*
 import mx.lux.pos.service.ArticuloService
 import mx.lux.pos.service.InventarioService
-import mx.lux.pos.service.SucursalService
+import mx.lux.pos.service.business.Registry
 import mx.lux.pos.ui.model.InvTrViewMode
-import mx.lux.pos.ui.model.Session
-import mx.lux.pos.ui.model.SessionItem
-import mx.lux.pos.ui.model.User
 import mx.lux.pos.ui.model.adapter.InvTrFilter
 import mx.lux.pos.ui.model.adapter.RequestAdapter
 import mx.lux.pos.ui.resources.ServiceManager
@@ -25,13 +17,7 @@ import org.apache.commons.lang.StringUtils
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-import javax.annotation.Resource
-import javax.swing.JDialog
-import javax.swing.JFileChooser
-import javax.swing.JOptionPane
-import javax.swing.SwingUtilities
-import mx.lux.pos.model.InvAdjustSheet
-import mx.lux.pos.service.business.Registry
+import javax.swing.*
 
 class InvTrController {
 

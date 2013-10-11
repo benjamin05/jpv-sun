@@ -1,21 +1,19 @@
 package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
-import mx.lux.pos.model.Parametro
-import mx.lux.pos.model.TipoParametro
 import mx.lux.pos.ui.controller.ItemController
 import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.model.Item
 import mx.lux.pos.ui.model.Order
 import mx.lux.pos.ui.model.OrderItem
 import mx.lux.pos.ui.model.SurteSwitch
+import mx.lux.pos.ui.resources.UI_Standards
 import mx.lux.pos.ui.view.panel.OrderPanel
 import net.miginfocom.swing.MigLayout
 
 import javax.swing.*
 import java.awt.*
 import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
 import java.awt.event.ItemEvent
 import java.awt.event.ItemListener
 import java.util.List
@@ -71,28 +69,20 @@ class ItemDialog extends JDialog implements ItemListener{
         location: parent.locationOnScreen,
         resizable: true,
         modal: true,
+        preferredSize: [ 350, 190 ],
         pack: true,
-        layout: new MigLayout( 'wrap 6', '[fill,grow]20[fill]20[fill]20[fill,grow]' )
+        layout: new MigLayout( 'wrap 3', '[fill]20[fill]20[]' )
     ) {
-      label()
-        label( )
       label( 'Artículo' )
       label( 'Cantidad' )
       label('Surte', visible: surteVisible )
-      label()
-
-
-        label()
-        label()
       label( tmpOrderItem.item?.name )
       quantity = spinner( model: spinnerNumberModel( minimum: 1, stepSize: 1, value: tmpOrderItem.quantity ) )
-        surte = comboBox( items: surteOption, visible: surteVisible )
-        surte.addItemListener( this )
-        label()
-        lblTicket = label( text: 'Ticket:', visible: false, constraints: 'hidemode 3' )
-        txtTicket = textField( visible: false, constraints: 'span 5' )
-        lblTicketInvalid = label( text: 'Ticket o armazon invalido', visible: false, constraints: 'span' )
-
+      surte = comboBox( items: surteOption, visible: surteVisible )
+      surte.addItemListener( this )
+      lblTicket = label( text: 'Ticket:', visible: false, constraints: 'hidemode 3' )
+      txtTicket = textField( visible: false, constraints: 'span,hidemode 3' )
+      lblTicketInvalid = label( text: 'Ticket o armazon invalido', visible: false, constraints: 'span,hidemode 3', foreground: UI_Standards.WARNING_FOREGROUND )
 
       panel( layout: new MigLayout( 'right', '[fill,100!]' ), constraints: 'span' ) {
         button( 'Borrar', actionPerformed: doDelete )
@@ -179,14 +169,20 @@ class ItemDialog extends JDialog implements ItemListener{
         dispose()
       } else if( txtTicket.visible && !ticketValido ){
         lblTicketInvalid.visible = true
+        source.enabled = true
       }
   }
 
     @Override
     void itemStateChanged(ItemEvent e) {
         if( TAG_REUSO.equalsIgnoreCase(e.item.toString().trim()) ){
-            lblTicket.visible = true
-            txtTicket.visible = true
+          lblTicket.visible = true
+          txtTicket.visible = true
+          txtTicket.text = ''
+        } else {
+          lblTicket.visible = false
+          txtTicket.visible = false
+          lblTicketInvalid.visible = false
         }
     }
 }

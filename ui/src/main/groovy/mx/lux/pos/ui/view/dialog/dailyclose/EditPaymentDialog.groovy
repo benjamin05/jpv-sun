@@ -8,13 +8,10 @@ import mx.lux.pos.ui.model.Plan
 import mx.lux.pos.ui.model.Terminal
 import net.miginfocom.swing.MigLayout
 
+import javax.swing.*
 import java.awt.event.ActionEvent
 import java.awt.event.ItemEvent
 import java.text.NumberFormat
-import javax.swing.JButton
-import javax.swing.JComboBox
-import javax.swing.JDialog
-import javax.swing.JOptionPane
 
 class EditPaymentDialog extends JDialog {
 

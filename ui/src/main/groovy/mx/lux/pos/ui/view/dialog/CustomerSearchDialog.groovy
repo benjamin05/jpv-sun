@@ -10,10 +10,11 @@ import mx.lux.pos.ui.model.UpperCaseDocument
 import mx.lux.pos.ui.view.renderer.DateCellRenderer
 import net.miginfocom.swing.MigLayout
 
-import java.awt.Component
+import javax.swing.*
+import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.event.MouseEvent
-import javax.swing.*
+import java.util.List
 
 class CustomerSearchDialog extends JDialog {
 

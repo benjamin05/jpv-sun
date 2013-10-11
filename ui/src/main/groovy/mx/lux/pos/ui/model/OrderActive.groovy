@@ -1,8 +1,8 @@
 package mx.lux.pos.ui.model
 
-import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.model.Cliente
 import mx.lux.pos.model.DetalleNotaVenta
+import mx.lux.pos.model.NotaVenta
 import org.apache.commons.lang3.StringUtils
 
 class OrderActive implements Comparable<OrderActive> {

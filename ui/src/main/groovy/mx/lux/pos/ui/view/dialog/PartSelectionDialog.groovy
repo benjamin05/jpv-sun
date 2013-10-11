@@ -1,20 +1,16 @@
 package mx.lux.pos.ui.view.dialog
 
-import java.awt.BorderLayout
-import java.awt.Color
-
-import javax.swing.*
-import javax.swing.table.AbstractTableModel
-
 import groovy.swing.SwingBuilder
-
-import org.apache.poi.hssf.record.formula.functions.T
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-
 import mx.lux.pos.model.Articulo
 import mx.lux.pos.ui.model.adapter.PartAdapter
 import mx.lux.pos.ui.resources.UI_Standards
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
+import javax.swing.*
+import javax.swing.table.AbstractTableModel
+import java.awt.*
+import java.util.List
 
 class PartSelectionDialog extends JDialog {
   // Constants

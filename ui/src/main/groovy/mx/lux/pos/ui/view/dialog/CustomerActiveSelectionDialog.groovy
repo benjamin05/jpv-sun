@@ -1,36 +1,18 @@
 package mx.lux.pos.ui.view.dialog
 
-import mx.lux.pos.ui.controller.CustomerController
-import net.miginfocom.swing.MigLayout
-import org.hibernate.dialect.JDataStoreDialect
-import javax.swing.JDialog
-import mx.lux.pos.model.ClienteProceso
-import groovy.swing.factory.SwingBorderFactory
+import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
+import mx.lux.pos.model.ClienteProceso
+import mx.lux.pos.ui.controller.CustomerController
+import mx.lux.pos.ui.resources.UI_Standards
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-import javax.swing.JOptionPane
-import javax.swing.JTextField
-import javax.swing.SwingUtilities
+import javax.swing.*
 import javax.swing.table.TableRowSorter
-import java.awt.BorderLayout
-import javax.swing.BorderFactory
-import mx.lux.pos.model.TransInv
-import mx.lux.pos.ui.model.adapter.InvTrAdapter
-import javax.swing.table.AbstractTableModel
-import javax.swing.ListSelectionModel
-import mx.lux.pos.ui.resources.UI_Standards
-import javax.swing.JButton
-import groovy.model.DefaultTableModel
-
-import java.awt.Color
-import java.awt.Dimension
-import java.awt.Point
-import javax.swing.JLabel
-import javax.swing.JTable
-import javax.swing.RowFilter
-import java.awt.event.MouseEvent;
+import java.awt.*
+import java.awt.event.MouseEvent
+import java.util.List;
 
 class CustomerActiveSelectionDialog extends JDialog {
 

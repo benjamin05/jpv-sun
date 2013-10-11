@@ -1,26 +1,16 @@
 package mx.lux.pos.ui.view.dialog
 
-import javax.swing.JDialog
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-import mx.lux.pos.ui.model.InvOhData
-import mx.lux.pos.ui.model.adapter.GenreListModelAdapter
-import mx.lux.pos.ui.model.adapter.BrandListModelAdapter
-import javax.swing.JComboBox
-import javax.swing.JLabel
 import groovy.swing.SwingBuilder
-import java.awt.Font
-import javax.swing.JComponent
-import java.awt.BorderLayout
-import javax.swing.BorderFactory
-import net.miginfocom.swing.MigLayout
-import javax.swing.SwingConstants
-import java.awt.Color
-import mx.lux.pos.ui.resources.UI_Standards
 import mx.lux.pos.ui.controller.OpenSalesController
+import mx.lux.pos.ui.resources.UI_Standards
+import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
 import org.apache.commons.lang3.math.NumberUtils
-import javax.swing.JTextField
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+
+import javax.swing.*
+import java.awt.*
 
 class OpenSalesDayDialog extends JDialog {
 

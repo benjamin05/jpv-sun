@@ -2,6 +2,7 @@ package mx.lux.pos.ui.view.dialog.dailyclose
 
 import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
+import mx.lux.pos.ui.MainWindow
 import mx.lux.pos.ui.controller.DailyCloseController
 import mx.lux.pos.ui.model.DailyClose
 import mx.lux.pos.ui.model.Deposit
@@ -11,14 +12,12 @@ import mx.lux.pos.ui.view.renderer.DateCellRenderer
 import mx.lux.pos.ui.view.renderer.MoneyCellRenderer
 import net.miginfocom.swing.MigLayout
 
+import javax.swing.*
+import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.event.MouseEvent
 import java.text.NumberFormat
-import javax.swing.*
-import mx.lux.pos.ui.MainWindow
-import java.awt.Point
-import mx.lux.pos.ui.resources.UI_Standards
-import javax.swing.border.TitledBorder
+import java.util.List
 
 class DailyCloseDepositsDialog extends JDialog {
 

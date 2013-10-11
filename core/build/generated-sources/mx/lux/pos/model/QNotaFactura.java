@@ -1,15 +1,11 @@
 package mx.lux.pos.model;
 
-import com.mysema.query.types.Path;
-import com.mysema.query.types.PathMetadata;
-import com.mysema.query.types.path.DateTimePath;
-import com.mysema.query.types.path.EntityPathBase;
-import com.mysema.query.types.path.StringPath;
-import org.jetbrains.annotations.NotNull;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.*;
+import com.mysema.query.types.path.*;
 
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -94,7 +90,7 @@ public class QNotaFactura extends EntityPathBase<NotaFactura> {
         super(NotaFactura.class, forVariable(variable));
     }
 
-    public QNotaFactura(@NotNull Path<? extends NotaFactura> entity) {
+    public QNotaFactura(Path<? extends NotaFactura> entity) {
         super(entity.getType(), entity.getMetadata());
     }
 

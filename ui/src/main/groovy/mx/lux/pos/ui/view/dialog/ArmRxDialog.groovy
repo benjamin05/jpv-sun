@@ -5,12 +5,10 @@ import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.model.Order
 import net.miginfocom.swing.MigLayout
 
-
 import javax.swing.*
 import java.awt.*
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
-
 
 class ArmRxDialog extends JDialog {
 

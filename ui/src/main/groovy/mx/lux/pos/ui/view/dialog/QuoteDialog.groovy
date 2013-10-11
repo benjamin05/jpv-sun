@@ -14,11 +14,12 @@ import mx.lux.pos.ui.view.component.ComboBoxHintSelector
 import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
 
-import java.awt.Dimension
-import java.text.NumberFormat
-import javax.swing.border.TitledBorder
-import java.awt.event.*
 import javax.swing.*
+import javax.swing.border.TitledBorder
+import java.awt.*
+import java.awt.event.*
+import java.text.NumberFormat
+import java.util.List
 
 class QuoteDialog extends JDialog implements ItemListener, FocusListener {
 

@@ -4,10 +4,7 @@ import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.resources.UI_Standards
 import net.miginfocom.swing.MigLayout
 
-import javax.swing.ButtonGroup
-import javax.swing.JDialog
-import javax.swing.JList
-import javax.swing.JScrollPane
+import javax.swing.*
 import javax.swing.border.TitledBorder
 
 class SingleListDialog extends JDialog {

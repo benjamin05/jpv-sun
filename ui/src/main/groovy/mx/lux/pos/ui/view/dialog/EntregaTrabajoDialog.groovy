@@ -3,15 +3,12 @@ package mx.lux.pos.ui.view.dialog
 import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.model.Branch
-import mx.lux.pos.ui.model.Order
 import mx.lux.pos.ui.model.Session
 import mx.lux.pos.ui.model.SessionItem
 import net.miginfocom.swing.MigLayout
 
 import javax.swing.*
 import java.awt.*
-import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
 
 class EntregaTrabajoDialog extends JDialog {
 

@@ -1,16 +1,11 @@
 package mx.lux.pos.model;
 
-import com.mysema.query.types.PathMetadata;
-import com.mysema.query.types.path.EntityPathBase;
-import com.mysema.query.types.path.NumberPath;
-import com.mysema.query.types.path.PathInits;
-import com.mysema.query.types.path.StringPath;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.*;
+import com.mysema.query.types.path.*;
 
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -25,7 +20,6 @@ public class QMunicipio extends EntityPathBase<Municipio> {
 
     public static final QMunicipio municipio = new QMunicipio("municipio");
 
-    @NotNull
     public final QEstado estado;
 
     public final NumberPath<Integer> id = createNumber("id", Integer.class);
@@ -48,15 +42,15 @@ public class QMunicipio extends EntityPathBase<Municipio> {
         this(Municipio.class, forVariable(variable), INITS);
     }
 
-    public QMunicipio(@NotNull PathMetadata<?> metadata) {
+    public QMunicipio(PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QMunicipio(PathMetadata<?> metadata, @NotNull PathInits inits) {
+    public QMunicipio(PathMetadata<?> metadata, PathInits inits) {
         this(Municipio.class, metadata, inits);
     }
 
-    public QMunicipio(Class<? extends Municipio> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
+    public QMunicipio(Class<? extends Municipio> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.estado = inits.isInitialized("estado") ? new QEstado(forProperty("estado")) : null;
     }

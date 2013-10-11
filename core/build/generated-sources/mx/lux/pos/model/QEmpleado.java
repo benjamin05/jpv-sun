@@ -1,13 +1,11 @@
 package mx.lux.pos.model;
 
-import com.mysema.query.types.PathMetadata;
+import static com.mysema.query.types.PathMetadataFactory.*;
+
+import com.mysema.query.types.*;
 import com.mysema.query.types.path.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Generated;
-
-import static com.mysema.query.types.PathMetadataFactory.forVariable;
 
 
 /**
@@ -44,22 +42,21 @@ public class QEmpleado extends EntityPathBase<Empleado> {
 
     public final StringPath passwd = createString("passwd");
 
-    @NotNull
     public final QSucursal sucursal;
 
     public QEmpleado(String variable) {
         this(Empleado.class, forVariable(variable), INITS);
     }
 
-    public QEmpleado(@NotNull PathMetadata<?> metadata) {
+    public QEmpleado(PathMetadata<?> metadata) {
         this(metadata, metadata.isRoot() ? INITS : PathInits.DEFAULT);
     }
 
-    public QEmpleado(PathMetadata<?> metadata, @NotNull PathInits inits) {
+    public QEmpleado(PathMetadata<?> metadata, PathInits inits) {
         this(Empleado.class, metadata, inits);
     }
 
-    public QEmpleado(Class<? extends Empleado> type, PathMetadata<?> metadata, @NotNull PathInits inits) {
+    public QEmpleado(Class<? extends Empleado> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.sucursal = inits.isInitialized("sucursal") ? new QSucursal(forProperty("sucursal"), inits.get("sucursal")) : null;
     }

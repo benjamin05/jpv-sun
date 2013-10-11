@@ -1,14 +1,10 @@
 package mx.lux.pos.ui.view.dialog
 
-import groovy.swing.SwingBuilder;
-
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JDialog
-import javax.swing.JTextField;
-import javax.swing.border.TitledBorder
+import groovy.swing.SwingBuilder
 import net.miginfocom.swing.MigLayout
-import mx.lux.pos.ui.resources.ImageLibrary
+
+import javax.swing.*
+import javax.swing.border.TitledBorder
 
 class ContactLensesRegisterDialog extends JDialog {
 

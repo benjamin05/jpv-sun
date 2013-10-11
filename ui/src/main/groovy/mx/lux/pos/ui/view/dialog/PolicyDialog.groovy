@@ -1,13 +1,10 @@
 package mx.lux.pos.ui.view.dialog
 
-import javax.swing.JDialog
 import groovy.swing.SwingBuilder
 import net.miginfocom.swing.MigLayout
-import javax.swing.JTextField
+
+import javax.swing.*
 import javax.swing.border.TitledBorder
-import javax.swing.JCheckBox
-import javax.swing.ButtonGroup
-import javax.swing.JRadioButton
 import java.awt.event.ActionEvent
 
 /**

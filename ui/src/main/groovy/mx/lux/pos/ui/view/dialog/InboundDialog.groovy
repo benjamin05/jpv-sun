@@ -2,20 +2,10 @@ package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.resources.UI_Standards
-import mx.lux.pos.ui.view.verifier.DateVerifier
 import net.miginfocom.swing.MigLayout
-import org.apache.commons.lang3.time.DateUtils
 
-import javax.swing.InputVerifier
-import javax.swing.JComponent
-import javax.swing.JOptionPane
-import java.awt.BorderLayout
-import java.awt.event.FocusEvent
-import java.awt.event.FocusListener
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import javax.swing.JDialog
-import javax.swing.JTextField
+import javax.swing.*
+import java.awt.*
 
 class InboundDialog extends JDialog {
 

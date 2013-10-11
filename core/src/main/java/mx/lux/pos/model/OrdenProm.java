@@ -2,7 +2,6 @@ package mx.lux.pos.model;
 
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.annotations.Type;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -37,7 +36,6 @@ public class OrdenProm implements Serializable, Comparable<OrdenProm> {
     @Column( name = "fecha_mod" )
     private Date fechaMod;
 
-    @NotNull
     @Transient
     private Set<OrdenPromDet> ordenPromDetSet = new HashSet<OrdenPromDet>();
 
@@ -106,7 +104,7 @@ public class OrdenProm implements Serializable, Comparable<OrdenProm> {
         fechaMod = pFechaMod;
     }
 
-    @NotNull
+    
     public Set<OrdenPromDet> getOrdenPromDetSet() {
         return ordenPromDetSet;
     }
@@ -120,14 +118,14 @@ public class OrdenProm implements Serializable, Comparable<OrdenProm> {
         this.ordenPromDetSet.add( det );
     }
 
-    public void add( @NotNull List<OrdenPromDet> pListaOrdenPromDet ) {
+    public void add( List<OrdenPromDet> pListaOrdenPromDet ) {
         for ( OrdenPromDet det : pListaOrdenPromDet ) {
             this.add( det );
         }
     }
 
     // Entity
-    public int compareTo( @NotNull OrdenProm pOrdenProm ) {
+    public int compareTo( OrdenProm pOrdenProm ) {
         int result = this.getIdFactura().compareTo( pOrdenProm.getIdFactura() );
         if ( result == 0 )
             result = this.getIdPromocion().compareTo( pOrdenProm.getIdPromocion() );

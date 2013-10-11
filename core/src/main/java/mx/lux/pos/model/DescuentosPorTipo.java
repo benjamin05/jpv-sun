@@ -2,8 +2,6 @@ package mx.lux.pos.model;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -37,7 +35,7 @@ public class DescuentosPorTipo {
         rxSinVenta = 0;
     }
 
-    public void AcumulaDescuentos(@NotNull Descuento descuento, Integer contador) {
+    public void AcumulaDescuentos( Descuento descuento, Integer contador) {
         totalDesc = contador;
         if (descuento.getNotaVenta() != null) {
             TipoDescuento descu = FindOrCreate(descuentos, descuento.getNotaVenta().getFactura());
@@ -45,7 +43,7 @@ public class DescuentosPorTipo {
         }
     }
 
-    public void AcumulaTipoPagos(@NotNull Pago pago, BancoEmisor banco, String descPago, Boolean esPagoDolares) {
+    public void AcumulaTipoPagos( Pago pago, BancoEmisor banco, String descPago, Boolean esPagoDolares) {
         descTipoPago = descPago;
         TipoDescuento descu = FindOrCreate(descuentos, pago.getNotaVenta().getFactura());
         descu.AcumulaPago(pago, banco, esPagoDolares);
@@ -60,12 +58,12 @@ public class DescuentosPorTipo {
         }
     }
 
-    public void AcumulaBanco(@NotNull BancoEmisor banco) {
+    public void AcumulaBanco( BancoEmisor banco) {
         TipoDescuento descu = FindOrCreate(descuentos, banco.getDescripcion());
         descu.AcumulaBanco(banco);
     }
 
-    public void AcumulaEmpleados(@NotNull Examen examen, Integer contador, @NotNull Receta receta) {
+    public void AcumulaEmpleados( Examen examen, Integer contador,  Receta receta) {
         Date fecha = DateUtils.truncate(receta.getFechaReceta(), Calendar.DAY_OF_MONTH);
         TipoDescuento descu = FindOrCreateDate(descuentos, receta.getIdCliente(), fecha );
         descu.AcumulaExamenes(examen, receta);
@@ -88,8 +86,7 @@ public class DescuentosPorTipo {
     }
 
 
-    @Nullable
-    protected TipoDescuento FindOrCreate(@NotNull List<TipoDescuento> lstDescuentos, String idFactura) {
+    protected TipoDescuento FindOrCreate( List<TipoDescuento> lstDescuentos, String idFactura) {
         TipoDescuento found = null;
 
         for (TipoDescuento desc : lstDescuentos) {
@@ -106,8 +103,7 @@ public class DescuentosPorTipo {
     }
 
 
-    @Nullable
-    protected TipoDescuento FindOrCreateDate( @NotNull List<TipoDescuento> lstDescuentos, Integer idCliente, Date fecha ) {
+    protected TipoDescuento FindOrCreateDate(  List<TipoDescuento> lstDescuentos, Integer idCliente, Date fecha ) {
         TipoDescuento found = null;
 
         for (TipoDescuento desc : lstDescuentos) {

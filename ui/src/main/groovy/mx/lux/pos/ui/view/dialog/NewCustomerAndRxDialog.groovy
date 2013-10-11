@@ -5,20 +5,13 @@ import mx.lux.pos.ui.controller.CustomerController
 import mx.lux.pos.ui.controller.FeatureController
 import mx.lux.pos.ui.model.Customer
 import mx.lux.pos.ui.resources.UI_Standards
-import mx.lux.pos.ui.view.panel.RXPanel
 import mx.lux.pos.ui.view.panel.CustomerPanel
+import mx.lux.pos.ui.view.panel.RXPanel
 
-import javax.swing.JPanel
-import javax.swing.SwingUtilities
+import javax.swing.*
 import javax.swing.event.ChangeEvent
 import javax.swing.event.ChangeListener
-import java.awt.BorderLayout
-import java.awt.Component
-import java.awt.Point
-import javax.swing.JDialog
-import javax.swing.JTabbedPane
-import java.awt.Dimension
-import java.awt.event.MouseEvent
+import java.awt.*
 
 class NewCustomerAndRxDialog extends JDialog {
 

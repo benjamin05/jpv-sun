@@ -7,12 +7,11 @@ import mx.lux.pos.ui.view.component.NumericTextField
 import mx.lux.pos.ui.view.component.PercentTextField
 import net.miginfocom.swing.MigLayout
 
-import java.awt.BorderLayout
-import java.awt.Font
+import javax.swing.*
+import java.awt.*
 import java.awt.event.FocusAdapter
 import java.awt.event.FocusEvent
 import java.awt.event.FocusListener
-import javax.swing.*
 
 class DiscountDialog extends JDialog {
 

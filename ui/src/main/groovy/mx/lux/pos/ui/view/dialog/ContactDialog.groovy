@@ -7,13 +7,10 @@ import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.ui.controller.ContactController
 import mx.lux.pos.ui.controller.CustomerController
 import mx.lux.pos.ui.model.UpperCaseDocument
-import mx.lux.pos.ui.resources.UI_Standards
 import net.miginfocom.swing.MigLayout
 
 import javax.swing.*
-import java.awt.BorderLayout
 import java.awt.event.ItemEvent
-
 
 class ContactDialog extends JDialog {
 

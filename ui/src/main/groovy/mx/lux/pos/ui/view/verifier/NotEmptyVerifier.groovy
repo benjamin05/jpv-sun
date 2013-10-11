@@ -2,8 +2,8 @@ package mx.lux.pos.ui.view.verifier
 
 import org.apache.commons.lang3.StringUtils
 
-import java.awt.Color
 import javax.swing.*
+import java.awt.*
 
 class NotEmptyVerifier extends InputVerifier {
 

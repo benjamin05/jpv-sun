@@ -2,8 +2,8 @@ package mx.lux.pos.ui.view.renderer
 
 import mx.lux.pos.ui.model.Item
 
-import java.text.NumberFormat
 import javax.swing.table.DefaultTableCellRenderer
+import java.text.NumberFormat
 
 class MoneyCellRenderer extends DefaultTableCellRenderer {
 

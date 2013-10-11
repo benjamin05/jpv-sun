@@ -1,8 +1,8 @@
 package mx.lux.pos.ui.model
 
 import groovy.beans.Bindable
-import groovy.transform.ToString
 import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
 import mx.lux.pos.model.InstitucionIc
 
 @Bindable

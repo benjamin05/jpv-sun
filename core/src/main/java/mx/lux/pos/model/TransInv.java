@@ -2,7 +2,6 @@ package mx.lux.pos.model;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -83,7 +82,7 @@ public class TransInv implements Serializable, Comparable<TransInv> {
         return idTipoTrans;
     }
 
-    public void setIdTipoTrans( @NotNull String idTipoTrans ) {
+    public void setIdTipoTrans(  String idTipoTrans ) {
         this.idTipoTrans = idTipoTrans.trim().toUpperCase();
         for ( TransInvDetalle det : this.getTrDet() ) {
             det.setIdTipoTrans( this.getIdTipoTrans() );
@@ -129,7 +128,7 @@ public class TransInv implements Serializable, Comparable<TransInv> {
         return referencia;
     }
 
-    public void setReferencia( @NotNull String referencia ) {
+    public void setReferencia(  String referencia ) {
         this.referencia = referencia.trim().toUpperCase();
     }
 
@@ -137,7 +136,7 @@ public class TransInv implements Serializable, Comparable<TransInv> {
         return observaciones;
     }
 
-    public void setObservaciones( @NotNull String observaciones ) {
+    public void setObservaciones(  String observaciones ) {
         this.observaciones = observaciones.trim();
     }
 
@@ -145,7 +144,7 @@ public class TransInv implements Serializable, Comparable<TransInv> {
         return idEmpleado;
     }
 
-    public void setIdEmpleado( @NotNull String idEmpleado ) {
+    public void setIdEmpleado(  String idEmpleado ) {
         this.idEmpleado = idEmpleado.trim().toUpperCase();
     }
 
@@ -171,7 +170,7 @@ public class TransInv implements Serializable, Comparable<TransInv> {
     }
 
     // Entity integriy
-    public int compareTo( @NotNull TransInv pTrans ) {
+    public int compareTo(  TransInv pTrans ) {
         return ( -1 * fechaMod.compareTo( pTrans.fechaMod ) );
     }
 

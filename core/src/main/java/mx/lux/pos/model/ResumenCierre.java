@@ -1,7 +1,6 @@
 package mx.lux.pos.model;
 
 import org.apache.commons.lang.StringUtils;
-import org.jetbrains.annotations.Nullable;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -114,7 +113,6 @@ public class ResumenCierre {
         this.totalDolares = totalDolares;
     }
 
-    @Nullable
     protected DetalleIngresoPorDia FindOrCreate(List<DetalleIngresoPorDia> lstIngresos, String idFactura) {
         DetalleIngresoPorDia found = null;
 

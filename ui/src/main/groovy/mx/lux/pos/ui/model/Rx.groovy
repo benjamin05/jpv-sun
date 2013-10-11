@@ -3,12 +3,11 @@ package mx.lux.pos.ui.model
 import groovy.beans.Bindable
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
-import mx.lux.pos.model.CierreDiario
 import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.model.Receta
-//import sun.swing.StringUIClientPropertyKey
 import org.apache.commons.lang.StringUtils
 
+//import sun.swing.StringUIClientPropertyKey
 @Bindable
 @ToString
 @EqualsAndHashCode
