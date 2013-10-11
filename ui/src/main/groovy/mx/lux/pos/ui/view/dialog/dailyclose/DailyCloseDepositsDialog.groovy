@@ -122,7 +122,7 @@ class DailyCloseDepositsDialog extends JDialog {
               fetchDeposits()
             }
         )
-        button( text: 'Archivos Maestro', visible: !dailyClose.isOpen(), actionPerformed: generateFiles, constraints: 'hidemode 3' )
+        button( text: 'Archivos Maestro', visible: false, actionPerformed: generateFiles, constraints: 'hidemode 3' )
       }
 
       scrollPane( border: titledBorder( title: 'Observaciones' ) ) {

@@ -1285,6 +1285,7 @@ public class ReportServiceImpl implements ReportService {
         parametros.put( "sucursal", sucursal.getNombre() );
         parametros.put( "articuloSku", articulo.getId() != null ? articulo.getId() : 0 );
         parametros.put( "articuloArticulo", articulo.getArticulo() != null ? articulo.getArticulo() : "" );
+        parametros.put( "articuloColor", articulo.getCodigoColor() != null ? articulo.getCodigoColor() : "" );
         parametros.put( "articuloDescripcion", articulo.getDescripcion() != null ? articulo.getDescripcion() : "" );
         parametros.put( "articuloPrecio", precio );
         parametros.put( "lstKardex", lstKardex );
