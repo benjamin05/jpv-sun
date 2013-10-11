@@ -49,6 +49,7 @@ class RepositoryFactory {
   private static AcusesTipoRepository acusesTipoRepository
   private static JbServiciosRepository jbServiciosRepository
   private static JbNotasRepository jbNotasRepository
+  private static RemesasRepository pRemesasRepository
 
 
   @Autowired
@@ -92,7 +93,8 @@ class RepositoryFactory {
           DescuentoClaveRepository pDescuentoClaveRepository,
           AcusesTipoRepository pAcusesTipoRepository,
           JbServiciosRepository pJbServiciosRepository,
-          JbNotasRepository pJbNotasRepository
+          JbNotasRepository pJbNotasRepository,
+          RemesasRepository remesasRepository
 
   ) {
     customerCatalog = pClienteRepository
@@ -137,6 +139,7 @@ class RepositoryFactory {
       acusesTipoRepository = pAcusesTipoRepository
       jbServiciosRepository  = pJbServiciosRepository
       jbNotasRepository  = pJbNotasRepository
+      pRemesasRepository = remesasRepository
   }
 
     static JbNotasRepository getJbNotasRepository() {
@@ -318,5 +321,9 @@ class RepositoryFactory {
 
     static DescuentoClaveRepository getDescuentoClaveRepository() {
         return descuentoClaveRepository
+    }
+
+    static RemesasRepository getRemittanceRepository() {
+        return pRemesasRepository
     }
 }

@@ -26,6 +26,8 @@ class IOServiceImpl implements IOService {
   private static final String TAG_ACK_REMITTANCES = 'REM'
   private static final String TAG_ACK_ADJUST = AckType.MODIF_VENTA
 
+  private static final String TAG_ESTADO_REM_CARGADA = 'cargado'
+
   private static IOServiceImpl instance
 
   private Logger logger = LoggerFactory.getLogger( this.getClass() )
@@ -263,7 +265,7 @@ class IOServiceImpl implements IOService {
 
 
   @Transactional
-  void logRemittanceNotification( String idTipoTrans, Integer folio ) {
+  void logRemittanceNotification( String idTipoTrans, Integer folio, String codigo ) {
       TransInvRepository transactionRep = RepositoryFactory.inventoryMaster
       TipoTransInvRepository tipoTransactionRep = RepositoryFactory.trTypes
       QTipoTransInv tipoTrans = QTipoTransInv.tipoTransInv
@@ -281,12 +283,13 @@ class IOServiceImpl implements IOService {
               logger.error( e.getMessage() )
           }
           String referencia = transInv.referencia.substring(0,6)
+          String tipo = transInv.referencia.substring( transInv.referencia.length()-1 )
           println referencia
           //acuse.contenido = String.format( 'ImporteVal=%s|', URLEncoder.encode( String.format( '%.2f', order.ventaNeta ), 'UTF-8' ) )
-          acuse.contenido = String.format( 'sistemaVal=%s|', 'A' )
+          acuse.contenido = String.format( 'sistemaVal=%s|', tipo.trim() )
           acuse.contenido += String.format( 'id_sucVal=%s|', transInv.sucursal.toString().trim() )
           acuse.contenido += String.format( 'horaVal=%s|', CustomDateUtils.format(transInv.fechaMod, 'HH:mm') )
-          acuse.contenido += String.format( 'doctoVal=%s|', String.format( '%s%s', 'I', referencia ) )
+          acuse.contenido += String.format( 'doctoVal=%s|', String.format( '%s%s', codigo, referencia ) )
           acuse.contenido += String.format( 'id_acuseVal=%s|', String.format( '%d', acuse.id ) )
           acuse.contenido += String.format( 'transaVal=%s|', String.format( '%s', referencia ) )
           try {
@@ -297,4 +300,40 @@ class IOServiceImpl implements IOService {
           }
       }
   }
+
+
+  void updateRemesa( String idTipoTrans ){
+      TransInvRepository transactionRep = RepositoryFactory.inventoryMaster
+      TipoTransInvRepository tipoTransactionRep = RepositoryFactory.trTypes
+      QTipoTransInv tipoTrans = QTipoTransInv.tipoTransInv
+      TipoTransInv tipoTransInv = tipoTransactionRep.findOne( idTipoTrans )
+      QTransInv trans = QTransInv.transInv
+      TransInv transInv = transactionRep.findOne(trans.idTipoTrans.eq(idTipoTrans).and(trans.folio.eq(tipoTransInv.ultimoFolio)))
+      if ( transInv != null ) {
+        RemesasRepository repo = RepositoryFactory.remittanceRepository
+        QRemesas rem = QRemesas.remesas
+        Remesas remesa = repo.findOne( rem.clave.eq(transInv.referencia.trim()) )
+        if(remesa != null){
+          remesa.estado = TAG_ESTADO_REM_CARGADA
+          remesa.fecha_carga = new Date()
+          remesa = repo.save( remesa )
+          repo.flush()
+
+          Integer idSuc = Registry.currentSite
+          ParametroRepository repoParam = RepositoryFactory.registry
+          String rutaPorEnviar = Registry.archivePath.trim()
+          File file = new File( "${rutaPorEnviar}/4.${idSuc}.REM.${remesa.clave}.ACU" )
+          PrintStream strOut = new PrintStream( file )
+          StringBuffer sb = new StringBuffer()
+          sb.append("${idSuc}|REM|${remesa.docto}|")
+          sb.append( "\n" )
+          sb.append("${remesa.fecha_carga.format('dd/MM/yyyy')}|${remesa.fecha_carga.format('HH:mm')}|${remesa.docto.trim()}${remesa.letra.trim()}|${remesa.sistema}|")
+          strOut.println sb.toString()
+          strOut.close()
+          logger.debug(file.absolutePath)
+        }
+      }
+  }
+
+
 }

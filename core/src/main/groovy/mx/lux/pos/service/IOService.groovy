@@ -44,6 +44,8 @@ public interface IOService {
 
   void saveActualDate( String date )
 
-    void logRemittanceNotification( String idTipoTrans, Integer folio )
+  void logRemittanceNotification( String idTipoTrans, Integer folio, String codigo )
+
+  void updateRemesa( String idTipoTrans )
 
 }
