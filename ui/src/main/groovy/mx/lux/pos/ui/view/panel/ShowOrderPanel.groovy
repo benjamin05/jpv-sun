@@ -8,6 +8,7 @@ import mx.lux.pos.ui.controller.AccessController
 import mx.lux.pos.ui.controller.CancellationController
 import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.model.IPromotion
+import mx.lux.pos.ui.model.OperationType
 import mx.lux.pos.ui.model.Order
 import mx.lux.pos.ui.model.OrderItem
 import mx.lux.pos.ui.model.Payment

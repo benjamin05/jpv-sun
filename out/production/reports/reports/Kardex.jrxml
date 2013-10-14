@@ -21,6 +21,7 @@
 	</parameter>
 	<parameter name="existenciaInicial" class="java.lang.Integer"/>
 	<parameter name="existenciaActual" class="java.lang.Integer"/>
+	<parameter name="articuloColor" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -100,21 +101,21 @@
 	<detail>
 		<band height="137" splitType="Stretch">
 			<textField>
-				<reportElement uuid="2b364db0-7a73-420f-b58d-f3c1c11584c0" x="25" y="20" width="52" height="14"/>
+				<reportElement uuid="2b364db0-7a73-420f-b58d-f3c1c11584c0" x="4" y="20" width="52" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{articuloSku}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="e63d9425-95b9-4ee9-b545-ba87eb317d71" x="77" y="20" width="113" height="14"/>
+				<reportElement uuid="e63d9425-95b9-4ee9-b545-ba87eb317d71" x="56" y="20" width="113" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{articuloArticulo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="eec075d2-5929-4cd0-878e-f1a77e51c383" x="193" y="20" width="266" height="14"/>
+				<reportElement uuid="eec075d2-5929-4cd0-878e-f1a77e51c383" x="245" y="20" width="214" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans"/>
 				</textElement>
@@ -136,21 +137,21 @@
 				<subreportExpression><![CDATA["reports/Kardex_Detalle.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement uuid="85736524-5358-439c-9804-ca21dde8c22d" x="25" y="6" width="52" height="14"/>
+				<reportElement uuid="85736524-5358-439c-9804-ca21dde8c22d" x="4" y="6" width="52" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SKU]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="10004fc3-f0ee-4656-a3d7-305019c13b50" x="77" y="6" width="113" height="14"/>
+				<reportElement uuid="10004fc3-f0ee-4656-a3d7-305019c13b50" x="56" y="6" width="113" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Artículo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="c6ee7e6c-52a0-4ff6-a075-8ca56591e6cc" x="193" y="6" width="266" height="14"/>
+				<reportElement uuid="c6ee7e6c-52a0-4ff6-a075-8ca56591e6cc" x="245" y="6" width="214" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
@@ -190,6 +191,20 @@
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{existenciaActual}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="833f77c6-b201-4747-a1d8-ac7c3dc6b44e" x="169" y="6" width="76" height="14"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Color]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="771c83ab-a25b-4d82-bc9f-d11f65214413" x="169" y="20" width="76" height="14"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{articuloColor}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
