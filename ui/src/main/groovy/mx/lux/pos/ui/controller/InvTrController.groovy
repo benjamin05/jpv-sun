@@ -163,8 +163,8 @@ class InvTrController {
   protected String confirmaEntrada(InvTrViewMode viewMode, InvTrView pView){
       String url = Registry.getURLConfirmacion( viewMode.trType.idTipoTrans );
       if( TAG_REMESA.equalsIgnoreCase(viewMode.trType.idTipoTrans.trim()) ){
-        ServiceManager.getIoServices().logRemittanceNotification( viewMode.trType.idTipoTrans.trim(), viewMode.trType.ultimoFolio+1, pView.data.receiptDocument.code  )
-        ServiceManager.getIoServices().updateRemesa( viewMode.trType.idTipoTrans.trim() )
+        Remesas remesa = ServiceManager.getIoServices().updateRemesa( viewMode.trType.idTipoTrans.trim() )
+        ServiceManager.getIoServices().logRemittanceNotification( viewMode.trType.idTipoTrans.trim(), viewMode.trType.ultimoFolio+1, pView.data.receiptDocument.code, remesa )
       } else if ( StringUtils.trimToNull( url ) != null ) {
         String variable = pView.data.claveCodificada + ">" + pView.data.postTrType.ultimoFolio
         url += String.format( '?arg=%s', URLEncoder.encode( String.format( '%s', variable ), 'UTF-8' ) )

@@ -26,6 +26,7 @@ class ComprobanteServiceImpl implements ComprobanteService {
   private static final String TAG_GENERICO_C = 'C'
   private static final String TAG_GENERICO_H = 'H'
   private static final String TAG_GENERICO_E = 'E'
+  private static final String TAG_MONTAJE = 'MONTAJE'
 
   @Resource
   private ComprobanteRepository comprobanteRepository
@@ -310,6 +311,7 @@ class ComprobanteServiceImpl implements ComprobanteService {
           BigDecimal precioUnidad = BigDecimal.ZERO
           Boolean genericoA = false
           Boolean genericoB = false
+          Boolean montaje = false
           for(DetalleNotaVenta det : detallesVenta){
             if(det.articulo.idGenerico.equalsIgnoreCase(TAG_GENERICO_A)){
                 genericoA = true
@@ -317,9 +319,12 @@ class ComprobanteServiceImpl implements ComprobanteService {
             } else if(det.articulo.idGenerico.equalsIgnoreCase(TAG_GENERICO_B)){
                 genericoB = true
                 precioUnidad = precioUnidad.add(det.precioUnitFinal)
+            } else if(det.articulo.articulo.trim().equalsIgnoreCase(TAG_MONTAJE)){
+                montaje = true
+                precioUnidad = precioUnidad.add(det.precioUnitFinal)
             }
 
-            if(genericoA && genericoB){
+            if((genericoA && genericoB) || (genericoB && montaje)){
               genericoAyB = true
             }
           }
@@ -342,7 +347,7 @@ class ComprobanteServiceImpl implements ComprobanteService {
                     BigDecimal priceUnit = precioUnitario
                     BigDecimal amount = importe
                     println genericoAyB
-                    if(genericoAyB || articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
+                    if(genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
                         idArticulo = 'ANTEOJO'
                         article = ''
                         idGenerico = 'ANTEOJO'
@@ -352,8 +357,8 @@ class ComprobanteServiceImpl implements ComprobanteService {
                         amount = total
                     } else if(!genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_A)){
                         descripcion = 'ARMAZON'
-                    /*} else if(!genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
-                        descripcion = 'LENTE GRADUADO'*/
+                    } else if(!genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
+                        descripcion = 'LENTE GRADUADO'
                     } else if(articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_C) || articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_H)){
                         descripcion = 'LENTES DE CONTACTO'
                     } else if(articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_E)){

@@ -265,7 +265,7 @@ class IOServiceImpl implements IOService {
 
 
   @Transactional
-  void logRemittanceNotification( String idTipoTrans, Integer folio, String codigo ) {
+  void logRemittanceNotification( String idTipoTrans, Integer folio, String codigo, Remesas remesa ) {
       TransInvRepository transactionRep = RepositoryFactory.inventoryMaster
       TipoTransInvRepository tipoTransactionRep = RepositoryFactory.trTypes
       QTipoTransInv tipoTrans = QTipoTransInv.tipoTransInv
@@ -289,9 +289,9 @@ class IOServiceImpl implements IOService {
           acuse.contenido = String.format( 'sistemaVal=%s|', tipo.trim() )
           acuse.contenido += String.format( 'id_sucVal=%s|', transInv.sucursal.toString().trim() )
           acuse.contenido += String.format( 'horaVal=%s|', CustomDateUtils.format(transInv.fechaMod, 'HH:mm') )
-          acuse.contenido += String.format( 'doctoVal=%s|', String.format( '%s%s', codigo, referencia ) )
+          acuse.contenido += String.format( 'doctoVal=%s|', String.format( '%s%s', remesa.idDocto.trim() ) )
           acuse.contenido += String.format( 'id_acuseVal=%s|', String.format( '%d', acuse.id ) )
-          acuse.contenido += String.format( 'transaVal=%s|', String.format( '%s', referencia ) )
+          acuse.contenido += String.format( 'transaVal=%s|', String.format( '%s', remesa.docto.trim() ) )
           try {
               acuse = acuses.saveAndFlush( acuse )
               logger.debug( String.format( 'Acuse: (%d) %s -> %s', acuse.id, acuse.idTipo, acuse.contenido ) )
@@ -302,7 +302,8 @@ class IOServiceImpl implements IOService {
   }
 
 
-  void updateRemesa( String idTipoTrans ){
+  Remesas updateRemesa( String idTipoTrans ){
+      Remesas remesa = new Remesas()
       TransInvRepository transactionRep = RepositoryFactory.inventoryMaster
       TipoTransInvRepository tipoTransactionRep = RepositoryFactory.trTypes
       QTipoTransInv tipoTrans = QTipoTransInv.tipoTransInv
@@ -312,7 +313,7 @@ class IOServiceImpl implements IOService {
       if ( transInv != null ) {
         RemesasRepository repo = RepositoryFactory.remittanceRepository
         QRemesas rem = QRemesas.remesas
-        Remesas remesa = repo.findOne( rem.clave.eq(transInv.referencia.trim()) )
+        remesa = repo.findOne( rem.clave.eq(transInv.referencia.trim()) )
         if(remesa != null){
           remesa.estado = TAG_ESTADO_REM_CARGADA
           remesa.fecha_carga = new Date()
@@ -333,6 +334,7 @@ class IOServiceImpl implements IOService {
           logger.debug(file.absolutePath)
         }
       }
+    return remesa
   }
 
 

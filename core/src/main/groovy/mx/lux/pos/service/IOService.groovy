@@ -1,6 +1,7 @@
 package mx.lux.pos.service
 
 import mx.lux.pos.model.Acuse
+import mx.lux.pos.model.Remesas
 
 public interface IOService {
 
@@ -44,8 +45,8 @@ public interface IOService {
 
   void saveActualDate( String date )
 
-  void logRemittanceNotification( String idTipoTrans, Integer folio, String codigo )
+  void logRemittanceNotification( String idTipoTrans, Integer folio, String codigo, Remesas remesa )
 
-  void updateRemesa( String idTipoTrans )
+  Remesas updateRemesa( String idTipoTrans )
 
 }
