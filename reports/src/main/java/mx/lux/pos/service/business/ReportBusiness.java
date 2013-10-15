@@ -1482,13 +1482,15 @@ public class ReportBusiness {
         if( articulos.size() == 1){
             articulo = articulos.get(0);
         }
-        for( TransInv movimiento : lstTransInvDate ){
-            TransInvDetalle transInvSku = ( TransInvDetalle ) transInvDetalleRepository.findOne( transInvDet.idTipoTrans.eq(movimiento.getIdTipoTrans()).
-                    and( transInvDet.folio.eq( movimiento.getFolio() )).and( transInvDet.sku.eq(articulo.getId() != null ? articulo.getId() : 0) ) );
-            if( transInvSku != null ){
-                lstMovimientos.add( transInvSku );
+        //if( articulo != null ){
+            for( TransInv movimiento : lstTransInvDate ){
+                TransInvDetalle transInvSku = ( TransInvDetalle ) transInvDetalleRepository.findOne( transInvDet.idTipoTrans.eq(movimiento.getIdTipoTrans()).
+                        and( transInvDet.folio.eq( movimiento.getFolio() )).and( transInvDet.sku.eq(articulo.getId() != null ? articulo.getId() : 0) ) );
+                if( transInvSku != null ){
+                    lstMovimientos.add( transInvSku );
+                }
             }
-        }
+        //}
 
         Integer exisActual = articulo.getCantExistencia() != null ? articulo.getCantExistencia() : 0;
         Integer saldoInicio = 0;

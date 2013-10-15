@@ -82,7 +82,7 @@ class InvoiceController {
           }
         }
         if(hasRx){
-          receta = "RX: OD- ${notaVenta.rx.odEsfR} ${notaVenta.rx.odCilR} ${notaVenta.rx.odAdcR} OI- ${notaVenta.rx.oiEjeR} ${notaVenta.rx.oiCilR} ${notaVenta.rx.oiAdcR}"
+          receta = "RX: OD- ${notaVenta.rx.odEsfR} ${notaVenta.rx.odCilR.trim()} ${notaVenta.rx.odAdcR.trim()} OI- ${notaVenta.rx.oiEjeR.trim()} ${notaVenta.rx.oiCilR.trim()} ${notaVenta.rx.oiAdcR.trim()}"
         }
       }
       Comprobante comprobante = new Comprobante(
