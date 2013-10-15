@@ -116,6 +116,7 @@ class CancellationDialog extends JDialog {
 
   private boolean cancelOrder( ) {
       if ( CancellationController.cancelOrder( order.id, reasonField.selectedItem as String, commentsField.text ) ) {
+          CancellationController.updateJb( order.id )
           CancellationController.generatedAcuses( order.id )
           CancellationController.printCancellationPlan( order.id )
           return true
@@ -176,21 +177,21 @@ class CancellationDialog extends JDialog {
             }
         }
         if(item.id != null && surte.equalsIgnoreCase(TAG_SURTE_SUCURSAL)){
-            CancellationController.updateJb( order.id )
+            //CancellationController.updateJb( order.id )
             CancellationController.printMaterialReturn( order.id )
             CancellationController.printMaterialReception( order.id )
         } else if(item.id != null && surte.equalsIgnoreCase(TAG_SURTE_PINO)){
           if( order.deliveryDate == null ){
             if(CancellationController.verificaPino(order.id) ){
-                CancellationController.updateJb(order.id)
+                //CancellationController.updateJb(order.id)
                 CancellationController.printMaterialReturn( order.id )
                 CancellationController.printMaterialReception( order.id )
             } else {
                 CancellationController.printPinoNotStocked(order.id)
-                CancellationController.updateJb(order.id)
+                //CancellationController.updateJb(order.id)
             }
           } else {
-              CancellationController.updateJb(order.id)
+              //CancellationController.updateJb(order.id)
               CancellationController.printMaterialReturn( order.id )
               CancellationController.printMaterialReception( order.id )
           }

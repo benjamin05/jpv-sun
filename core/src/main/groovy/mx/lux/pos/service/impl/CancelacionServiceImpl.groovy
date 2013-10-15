@@ -479,7 +479,7 @@ class CancelacionServiceImpl implements CancelacionService {
       jbTrack.rx = nota.factura.trim()
       jbTrack.estado = TAG_JB_CANCELADA
       jbTrack.emp = lstModificaciones.size() > 0 ? lstModificaciones.first().idEmpleado : ''
-      jbTrack.obs = ''
+      jbTrack.obs = lstModificaciones.first().causa.trim()
       jbTrack.id_mod = '0'
       jbTrack.id_viaje = null
       jbTrack.fecha = new Date()
