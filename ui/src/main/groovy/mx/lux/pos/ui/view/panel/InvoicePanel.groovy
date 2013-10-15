@@ -247,6 +247,7 @@ class InvoicePanel extends JPanel {
     if ( orderTmp?.id ) {
       if ( !orderTmp.due ) {
         if( TAG_CANCELADO.compareToIgnoreCase(orderTmp.status) ){
+          if( OrderController.amountvalid( txtTicket.text ) ){
         order = orderTmp
         txtTicket.enabled = false
         if ( CustomerType.FOREIGN.equals( orderTmp.customer?.type ) ) {
@@ -256,6 +257,13 @@ class InvoicePanel extends JPanel {
         }
         Invoice invoceTmp = InvoiceController.findInvoiceByTicket( txtTicket.text )
         fillInvoiceFields( invoceTmp )
+          } else {
+              sb.optionPane(
+                      message: "Ticket sin monto",
+                      messageType: JOptionPane.ERROR_MESSAGE
+              ).createDialog( this, 'No se puede facturar ticket' )
+                      .show()
+          }
         } else {
           sb.optionPane(
               message: "Ticket cancelado",

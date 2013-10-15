@@ -135,7 +135,7 @@ class CancellationDialog extends JDialog {
         String orderDate = order.date.format(DATE_FORMAT)
         String currentDate = new Date().format(DATE_FORMAT)
         if(!currentDate.trim().equalsIgnoreCase(orderDate.trim())){
-          printCancellationNotToday(order, )
+          printCancellationNotToday(order )
         }
         dispose()
       }
@@ -180,6 +180,7 @@ class CancellationDialog extends JDialog {
             CancellationController.printMaterialReturn( order.id )
             CancellationController.printMaterialReception( order.id )
         } else if(item.id != null && surte.equalsIgnoreCase(TAG_SURTE_PINO)){
+          if( order.deliveryDate == null ){
             if(CancellationController.verificaPino(order.id) ){
                 CancellationController.updateJb(order.id)
                 CancellationController.printMaterialReturn( order.id )
@@ -188,6 +189,11 @@ class CancellationDialog extends JDialog {
                 CancellationController.printPinoNotStocked(order.id)
                 CancellationController.updateJb(order.id)
             }
+          } else {
+              CancellationController.updateJb(order.id)
+              CancellationController.printMaterialReturn( order.id )
+              CancellationController.printMaterialReception( order.id )
+          }
         }
     }
 }

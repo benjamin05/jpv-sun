@@ -24,6 +24,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
 
   private static final String DATE_TIME_FORMAT = 'dd-MM-yyyy HH:mm:ss'
   private static final String TAG_SURTE_SUCURSAL = 'S'
+  private static final String TAG_PAGO_CUPON = 'C'
   private static final String TAG_GENERICOS_INVENTARIABLES = 'A,E'
   private static final String TAG_TIPO_NOTA_VENTA = 'F'
   private static final String TAG_NOTA_CANCELADA = 'T'
@@ -598,6 +599,36 @@ class NotaVentaServiceImpl implements NotaVentaService {
     }
     return valid
   }
+
+
+
+  @Override
+  Boolean montoValidoFacturacion( String ticketComp ){
+    log.debug( "montoValidoFacturacion( )" )
+    Boolean esValido = true
+    BigDecimal montoTotal = BigDecimal.ZERO
+    BigDecimal montoCupones = BigDecimal.ZERO
+    String[] ticketTmp = ticketComp.split("-")
+    String ticket = ''
+    if(ticketTmp.length >= 2){
+      ticket = ticketTmp[1]
+    }
+    QNotaVenta nv = QNotaVenta.notaVenta
+    NotaVenta nota = notaVentaRepository.findOne( nv.factura.eq(ticket.trim()) )
+    if(nota != null){
+      for(Pago pago : nota.pagos){
+        montoTotal = montoTotal.add(pago.monto)
+        if(pago.idFPago.trim().startsWith(TAG_PAGO_CUPON)){
+          montoCupones = montoCupones.add(pago.monto)
+        }
+      }
+      if(montoTotal.subtract(montoCupones) == 0){
+        esValido = false
+      }
+    }
+    return esValido
+  }
+
 
 
 }

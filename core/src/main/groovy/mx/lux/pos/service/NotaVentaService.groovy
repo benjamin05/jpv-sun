@@ -49,4 +49,6 @@ interface NotaVentaService {
   void registraImpuestoPorFactura( NotaVenta notaVenta )
 
   Boolean ticketReusoValido( String ticket, Integer idArticulo )
+
+  Boolean montoValidoFacturacion( String ticket )
 }

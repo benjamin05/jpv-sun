@@ -207,6 +207,8 @@ class RefundDialog extends JDialog {
                       .show()
           }
       } else if(item.id != null && surte.equalsIgnoreCase(TAG_SURTE_PINO)){
+        Order order = OrderController.findOrderByIdOrder( orderId.trim() )
+        if( order.deliveryDate == null ){
           if(CancellationController.verificaPino(orderId) ){
             CancellationController.updateJb(orderId)
             CancellationController.printMaterialReturn( orderId )
@@ -215,6 +217,11 @@ class RefundDialog extends JDialog {
             CancellationController.printPinoNotStocked(orderId)
             CancellationController.updateJb(orderId)
           }
+        } else {
+          CancellationController.updateJb(orderId)
+          CancellationController.printMaterialReturn( orderId )
+          CancellationController.printMaterialReception( orderId )
+        }
           if(CancellationController.refundPaymentsCreditFromOrder( orderId, creditRefunds )){
               CancellationController.printOrderCancellation( orderId )
               dispose()

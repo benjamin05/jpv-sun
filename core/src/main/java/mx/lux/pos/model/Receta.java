@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Entity
 @Table( name = "receta", schema = "public" )
-public class Receta implements Serializable {
+public class    Receta implements Serializable {
 
     private static final long serialVersionUID = -3539764397838488807L;
 

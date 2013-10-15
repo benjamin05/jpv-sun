@@ -1398,4 +1398,11 @@ class OrderController {
       Boolean ticketValido = notaVentaService.ticketReusoValido( ticket, idArticulo )
       return ticketValido
     }
+
+
+    static Boolean amountvalid( String factura ){
+      log.debug( "amountvalid( )" )
+      Boolean montoValido = notaVentaService.montoValidoFacturacion( factura )
+      return montoValido
+    }
 }

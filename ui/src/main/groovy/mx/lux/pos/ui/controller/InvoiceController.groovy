@@ -3,8 +3,11 @@ package mx.lux.pos.ui.controller
 import groovy.util.logging.Slf4j
 import mx.lux.pos.model.Comprobante
 import mx.lux.pos.model.Contribuyente
+import mx.lux.pos.model.DetalleNotaVenta
+import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.service.ComprobanteService
 import mx.lux.pos.service.ContribuyenteService
+import mx.lux.pos.service.NotaVentaService
 import mx.lux.pos.service.TicketService
 import mx.lux.pos.ui.model.Invoice
 import mx.lux.pos.ui.model.Session
@@ -24,16 +27,21 @@ class InvoiceController {
   private static ComprobanteService comprobanteService
   private static ContribuyenteService contribuyenteService
   private static TicketService ticketService
+  private static NotaVentaService notaVentaService
+
+  private static final String TAG_GENERICO_B = 'B'
 
   @Autowired
   InvoiceController(
       ComprobanteService comprobanteService,
       ContribuyenteService contribuyenteService,
-      TicketService ticketService
+      TicketService ticketService,
+      NotaVentaService notaVentaService
   ) {
     this.comprobanteService = comprobanteService
     this.contribuyenteService = contribuyenteService
     this.ticketService = ticketService
+    this.notaVentaService = notaVentaService
   }
 
   static Invoice getInvoice( String invoiceId ) {
@@ -64,6 +72,19 @@ class InvoiceController {
     log.info( "solicitando invoice para el ticket: ${invoice?.ticket}" )
     if ( StringUtils.isNotBlank( invoice?.ticket ) && StringUtils.isNotBlank( invoice?.orderId ) ) {
       User user = Session.get( SessionItem.USER ) as User
+      Boolean hasRx = false
+      String receta = ''
+      NotaVenta notaVenta = notaVentaService.obtenerNotaVenta( invoice.orderId )
+      if(notaVenta != null){
+        for(DetalleNotaVenta det : notaVenta.detalles){
+          if(det.articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
+            hasRx = true
+          }
+        }
+        if(hasRx){
+          receta = "RX: OD- ${notaVenta.rx.odEsfR} ${notaVenta.rx.odCilR} ${notaVenta.rx.odAdcR} OI- ${notaVenta.rx.oiEjeR} ${notaVenta.rx.oiCilR} ${notaVenta.rx.oiAdcR}"
+        }
+      }
       Comprobante comprobante = new Comprobante(
           rfc: invoice.rfc,
           ticket: invoice.ticket,
@@ -80,7 +101,7 @@ class InvoiceController {
           email: invoice.email,
           rx: invoice.rx ?: '0',
           paciente: invoice.patient ?: '0',
-          observaciones: invoice.comments
+          observaciones: receta
       )
       comprobante = comprobanteService.registrarComprobante( comprobante )
       if ( comprobante?.id ) {

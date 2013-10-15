@@ -431,11 +431,13 @@ class CancelacionServiceImpl implements CancelacionService {
 
       try{
         URL url = "${urlValida}?${contenido}".toURL()
-        //String response = urlValida.toURL().text
+        sleep(1000)
+        url = "${urlValida}?${contenido}".toURL()
         String respuesta = url.text?.find( /<XX>\s*(.*)\s*<\/XX>/ ) {m, r -> return r}
+
         String[] valores = respuesta.split(/\|/)
         if(valores.length >=2){
-          if(!valores[1].toString().trim().equalsIgnoreCase('0')){
+          if(!valores[1].toString().trim().contains('0')){
             surtioPino = true
           }
         }
