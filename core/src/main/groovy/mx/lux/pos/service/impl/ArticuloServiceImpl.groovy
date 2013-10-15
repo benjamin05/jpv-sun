@@ -326,8 +326,10 @@ class ArticuloServiceImpl implements ArticuloService {
       }
     }
     if( articulo != null ){
-      if(paquetes.contains(articulo.articulo.trim())){
-        esPaquete = true
+      for(int i = 0;i<paquete.length;i++){
+        if(paquete[i].equalsIgnoreCase(articulo.articulo.trim())){
+            esPaquete = true
+        }
       }
     }
     for(Articulo art : lstArticulo){

@@ -2,21 +2,25 @@ package mx.lux.pos.ui.view.dialog
 
 import groovy.swing.SwingBuilder
 import mx.lux.pos.ui.controller.CancellationController
+import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.controller.PaymentController
-import mx.lux.pos.ui.model.Payment
-import mx.lux.pos.ui.model.Refund
+import mx.lux.pos.ui.model.*
 import mx.lux.pos.ui.view.renderer.MoneyCellRenderer
 import net.miginfocom.swing.MigLayout
 import org.apache.commons.lang3.StringUtils
 
-import java.awt.Component
+import javax.swing.*
+import java.awt.*
 import java.awt.event.ActionEvent
 import java.text.NumberFormat
-import javax.swing.*
+import java.util.List
 
 class RefundDialog extends JDialog {
 
   private static final String DATE_FORMAT = 'dd-MM-yyyy'
+  private static final String GENERICO_ARMAZON = 'A'
+  private static final String TAG_SURTE_SUCURSAL = 'S'
+  private static final String TAG_SURTE_PINO = 'P'
 
   private SwingBuilder sb
   private String orderId
@@ -157,17 +161,83 @@ class RefundDialog extends JDialog {
       payments.each { Payment pmt ->
         creditRefunds.put( pmt?.id, pmt?.refundMethod )
       }
-      if ( CancellationController.refundPaymentsCreditFromOrder( orderId, creditRefunds ) ) {
-        CancellationController.printOrderCancellation( orderId )
-        dispose()
+      Order orderCom = OrderController.findOrderByIdOrder(payments.first().order)
+      String orderDate = orderCom.date.format(DATE_FORMAT)
+      String currentDate = new Date().format(DATE_FORMAT)
+      if(currentDate.trim().equalsIgnoreCase(orderDate.trim())){
+        if ( CancellationController.refundPaymentsCreditFromOrder( orderId, creditRefunds ) ) {
+            CancellationController.printOrderCancellation( orderId )
+            dispose()
+        } else {
+            sb.optionPane(
+                    message: 'Ocurrio un error al registrar devoluciones',
+                    messageType: JOptionPane.ERROR_MESSAGE
+            ).createDialog( this, 'No se registran devoluciones' )
+                    .show()
+        }
       } else {
-        sb.optionPane(
-            message: 'Ocurrio un error al registrar devoluciones',
-            messageType: JOptionPane.ERROR_MESSAGE
-        ).createDialog( this, 'No se registran devoluciones' )
-            .show()
+          printCancellationNotToday( orderCom, creditRefunds )
       }
     }
     source.enabled = true
   }
+
+
+  private def printCancellationNotToday(Order orderCom, Map<Integer, String> creditRefunds){
+      Item item = new Item()
+      String surte = ''
+      for(OrderItem i : orderCom.items){
+          if(i.item.type.trim().equalsIgnoreCase(GENERICO_ARMAZON)){
+              surte = i.delivers.trim()
+              item = i.item
+          }
+      }
+      if(item.id != null && surte.equalsIgnoreCase(TAG_SURTE_SUCURSAL)){
+          if(CancellationController.refundPaymentsCreditFromOrder( orderId, creditRefunds )){
+              CancellationController.updateJb( orderId )
+              CancellationController.printMaterialReturn( orderId )
+              CancellationController.printMaterialReception( orderId )
+              CancellationController.printOrderCancellation( orderId )
+              dispose()
+          } else {
+              sb.optionPane(
+                      message: 'Ocurrio un error al registrar devoluciones',
+                      messageType: JOptionPane.ERROR_MESSAGE
+              ).createDialog( this, 'No se registran devoluciones' )
+                      .show()
+          }
+      } else if(item.id != null && surte.equalsIgnoreCase(TAG_SURTE_PINO)){
+          if(CancellationController.verificaPino(orderId) ){
+            CancellationController.updateJb(orderId)
+            CancellationController.printMaterialReturn( orderId )
+            CancellationController.printMaterialReception( orderId )
+          } else {
+            CancellationController.printPinoNotStocked(orderId)
+            CancellationController.updateJb(orderId)
+          }
+          if(CancellationController.refundPaymentsCreditFromOrder( orderId, creditRefunds )){
+              CancellationController.printOrderCancellation( orderId )
+              dispose()
+          } else {
+              sb.optionPane(
+                      message: 'Ocurrio un error al registrar devoluciones',
+                      messageType: JOptionPane.ERROR_MESSAGE
+              ).createDialog( this, 'No se registran devoluciones' )
+                      .show()
+          }
+      } else if( item.id == null ){
+          if(CancellationController.refundPaymentsCreditFromOrder( orderId, creditRefunds )){
+              CancellationController.printOrderCancellation( orderId )
+              dispose()
+          } else {
+              sb.optionPane(
+                      message: 'Ocurrio un error al registrar devoluciones',
+                      messageType: JOptionPane.ERROR_MESSAGE
+              ).createDialog( this, 'No se registran devoluciones' )
+                      .show()
+          }
+      }
+  }
+
+
 }
