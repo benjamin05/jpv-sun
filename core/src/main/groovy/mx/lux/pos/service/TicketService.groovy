@@ -47,4 +47,6 @@ interface TicketService {
   void imprimeRecepcionMaterial( String idNotaVenta )
 
   void imprimePinoNoSurtido( String idNotaVenta )
+
+  void imprimeTicketReuso( String idNotaVenta )
 }

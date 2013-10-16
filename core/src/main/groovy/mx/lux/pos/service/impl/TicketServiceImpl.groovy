@@ -1982,4 +1982,57 @@ class TicketServiceImpl implements TicketService {
   }
 
 
+
+
+
+    @Override
+    void imprimeTicketReuso( String idNotaVenta ){
+        log.debug('imprimeTicketReuso( )')
+        NotaVenta nota = notaVentaRepository.findOne(idNotaVenta)
+        Integer idSuc = Registry.currentSite
+        Sucursal sucursal = sucursalRepository.findOne(idSuc)
+        String factOri = ''
+        def lstArticulos = []
+        List<Articulo> articulos = new ArrayList<>()
+        for(DetalleNotaVenta detalle : nota.detalles){
+            if(detalle.articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_ARMAZON)){
+                articulos.add(detalle.articulo)
+                def artTmp = [
+                        articulo: detalle.articulo.articulo,
+                        cantidad: detalle.cantidadFac
+                ]
+                lstArticulos.add( artTmp )
+            }
+        }
+        for(Pago payment : nota.pagos){
+          if(payment.referenciaPago){
+            NotaVenta notaOri = notaVentaRepository.findOne(payment.referenciaPago.trim())
+            if(notaOri != null){
+              factOri = notaOri.factura
+            }
+          }
+        }
+
+        if(nota != null){
+            def datos = [ nombre_ticket: "ticket-reuso",
+                    fecha: new Date().format('dd/MM/yyyy'),
+                    hora: new Date().format('HH:mm:ss'),
+                    sucursal: sucursal.nombre+' ['+sucursal.id+']',
+                    facturaOriginal: factOri,
+                    factura: nota.factura,
+                    idSoi: nota.id,
+                    idSucursal: idSuc,
+                    gerente: sucursal.gerente?.nombreCompleto(),
+                    armazones: articulos.first(),
+                    articulos: lstArticulos
+            ]
+            this.imprimeTicket( 'template/ticket-reuso.vm', datos )
+        } else {
+            log.debug( String.format( 'Nota (%s) not found.', idNotaVenta ) )
+        }
+    }
+
+
+
+
 }

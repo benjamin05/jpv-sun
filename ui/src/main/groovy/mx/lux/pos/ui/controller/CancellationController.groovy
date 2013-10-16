@@ -179,6 +179,7 @@ class CancellationController {
       if(results.size() > 0 && isReuso){
         ticketService.imprimeRegresoMaterial( results.first().id )
         ticketService.imprimeRecepcionMaterial( results.first().id )
+        ticketService.imprimeTicketReuso( results.first().id )
       }
     } else {
       log.warn( 'no se imprimen cancelaciones a partir de orden, parametros invalidos' )
