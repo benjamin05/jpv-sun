@@ -43,19 +43,20 @@ public class DetalleIngresoPorDia {
 
     public void AcumulaPagos( List<Pago> lstPagos, BigDecimal ventaTotal, Boolean cancelada) {
         for (Pago pago : lstPagos) {
-            if (pago.getIdFPago().equalsIgnoreCase("EFM")) {
+            if (pago.getIdFPago().equalsIgnoreCase("EF")) {
                 pagoEf = pagoEf.add(pago.getMonto());
             } else if (pago.getIdFPago().equalsIgnoreCase("EFD")) {
                 pagoEfUs = pagoEfUs.add(pago.getMonto());
-            } else if (pago.getIdFPago().equalsIgnoreCase("TCM") || pago.getIdFormaPago().equalsIgnoreCase("TDM")) {
+            } else if (pago.getIdFPago().equalsIgnoreCase("TC") || pago.getIdFormaPago().equalsIgnoreCase("TD")) {
                 pagoTN = pagoTN.add(pago.getMonto());
             } else if (pago.getIdFPago().equalsIgnoreCase("TCD") || pago.getIdFormaPago().equalsIgnoreCase("TDD")) {
                 pagoTD = pagoTD.add(pago.getMonto());
             } else if (pago.getIdFPago().equalsIgnoreCase("TR")) {
                 pagoTR = pagoTR.add(pago.getMonto());
-            } else if (!pago.getIdFPago().equalsIgnoreCase("EFM") && !pago.getIdFPago().equalsIgnoreCase("EFD")
-                    && !pago.getIdFPago().equalsIgnoreCase("TCM") && !pago.getIdFPago().equalsIgnoreCase("TDM")
-                    && !pago.getIdFPago().equalsIgnoreCase("TCD") && !pago.getIdFPago().equalsIgnoreCase("TDD")) {
+            } else if (!pago.getIdFPago().equalsIgnoreCase("EF") && !pago.getIdFPago().equalsIgnoreCase("EFD")
+                    && !pago.getIdFPago().equalsIgnoreCase("TC") && !pago.getIdFPago().equalsIgnoreCase("TD")
+                    && !pago.getIdFPago().equalsIgnoreCase("TCD") && !pago.getIdFPago().equalsIgnoreCase("TDD")
+                    && !pago.getIdFPago().equalsIgnoreCase("TR")) {
                 pagoOtros = pagoOtros.add(pago.getMonto());
             }
             montoTotal = montoTotal.add(pago.getMonto());
@@ -81,20 +82,21 @@ public class DetalleIngresoPorDia {
         NumberFormat formatter = new DecimalFormat("$#,##0.00");
         this.fecha = fecha;
         for (Pago pago : lstPagos) {
-            if (pago.getIdFPago().equalsIgnoreCase("EFM")) {
+            if (pago.getIdFPago().equalsIgnoreCase("EF")) {
                 pagoEf = pagoEf.add(pago.getMonto());
             } else if (pago.getIdFPago().equalsIgnoreCase("EFD")) {
                 pagoEfUs = pagoEfUs.add(pago.getMonto());
                 pagoTDConDolares = String.format("%s (%s)", formatter.format(pagoEfUs.doubleValue()), pago.getIdPlan());
-            } else if (pago.getIdFPago().equalsIgnoreCase("TCM") || pago.getIdFormaPago().equalsIgnoreCase("TDM")) {
+            } else if (pago.getIdFPago().equalsIgnoreCase("TC") || pago.getIdFormaPago().equalsIgnoreCase("TD")) {
                 pagoTN = pagoTN.add(pago.getMonto());
             } else if (pago.getIdFPago().equalsIgnoreCase("TCD") || pago.getIdFormaPago().equalsIgnoreCase("TDD")) {
                 pagoTD = pagoTD.add(pago.getMonto());
             } else if (pago.getIdFPago().equalsIgnoreCase("TR")) {
                 pagoTR = pagoTR.add(pago.getMonto());
-            } else if (!pago.getIdFPago().equalsIgnoreCase("EFM") && !pago.getIdFPago().equalsIgnoreCase("EFD")
-                    && !pago.getIdFPago().equalsIgnoreCase("TCM") && !pago.getIdFPago().equalsIgnoreCase("TDM")
-                    && !pago.getIdFPago().equalsIgnoreCase("TCD") && !pago.getIdFPago().equalsIgnoreCase("TDD")) {
+            } else if (!pago.getIdFPago().equalsIgnoreCase("EF") && !pago.getIdFPago().equalsIgnoreCase("EFD")
+                    && !pago.getIdFPago().equalsIgnoreCase("TC") && !pago.getIdFPago().equalsIgnoreCase("TD")
+                    && !pago.getIdFPago().equalsIgnoreCase("TCD") && !pago.getIdFPago().equalsIgnoreCase("TDD")
+                    && !pago.getIdFPago().equalsIgnoreCase("TR")) {
                 pagoOtros = pagoOtros.add(pago.getMonto());
             }
             montoTotal = montoTotal.add(pago.getMonto());
@@ -115,20 +117,21 @@ public class DetalleIngresoPorDia {
     public void AcumulaDevolucionesCierre( Devolucion devolucion, BigDecimal ventaTotal, Date fecha, String totalDolares) {
         NumberFormat formatter = new DecimalFormat("$#,##0.00");
         this.fecha = fecha;
-        if (devolucion.getIdFormaPago().equalsIgnoreCase("EFM")) {
+        if (devolucion.getIdFormaPago().equalsIgnoreCase("EF")) {
             pagoEf = pagoEf.add(devolucion.getMonto());
         } else if (devolucion.getPago().getIdFPago().equalsIgnoreCase("EFD")) {
             pagoEfUs = pagoEfUs.add(devolucion.getMonto());
             pagoTDConDolares = String.format("%s", formatter.format(pagoEfUs.doubleValue()));
-        } else if (devolucion.getPago().getIdFPago().equalsIgnoreCase("TCM") || devolucion.getPago().getIdFormaPago().equalsIgnoreCase("TDM")) {
+        } else if (devolucion.getPago().getIdFPago().equalsIgnoreCase("TC") || devolucion.getPago().getIdFormaPago().equalsIgnoreCase("TD")) {
             pagoTN = pagoTN.add(devolucion.getMonto());
         } else if (devolucion.getPago().getIdFPago().equalsIgnoreCase("TCD") || devolucion.getPago().getIdFormaPago().equalsIgnoreCase("TDD")) {
             pagoTD = pagoTD.add(devolucion.getMonto());
         } else if (devolucion.getPago().getIdFPago().equalsIgnoreCase("TR")) {
             pagoTR = pagoTR.add(devolucion.getMonto());
-        } else if (!devolucion.getPago().getIdFPago().equalsIgnoreCase("EFM") && !devolucion.getPago().getIdFPago().equalsIgnoreCase("EFD")
-                && !devolucion.getPago().getIdFPago().equalsIgnoreCase("TCM") && !devolucion.getPago().getIdFPago().equalsIgnoreCase("TDM")
-                && !devolucion.getPago().getIdFPago().equalsIgnoreCase("TCD") && !devolucion.getPago().getIdFPago().equalsIgnoreCase("TDD")) {
+        } else if (!devolucion.getPago().getIdFPago().equalsIgnoreCase("EF") && !devolucion.getPago().getIdFPago().equalsIgnoreCase("EFD")
+                && !devolucion.getPago().getIdFPago().equalsIgnoreCase("TC") && !devolucion.getPago().getIdFPago().equalsIgnoreCase("TD")
+                && !devolucion.getPago().getIdFPago().equalsIgnoreCase("TCD") && !devolucion.getPago().getIdFPago().equalsIgnoreCase("TDD")
+                && !devolucion.getPago().getIdFPago().equalsIgnoreCase("TR")) {
             pagoOtros = pagoOtros.add(devolucion.getMonto());
         }
         montoTotal = montoTotal.add(devolucion.getMonto());
