@@ -261,7 +261,7 @@ class InvoicePanel extends JPanel {
               sb.optionPane(
                       message: "Ticket sin monto",
                       messageType: JOptionPane.ERROR_MESSAGE
-              ).createDialog( this, 'No se puede facturar ticket' )
+              ).createDialog( this, 'No existe monto a facturar' )
                       .show()
           }
         } else {

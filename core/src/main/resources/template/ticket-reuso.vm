@@ -18,7 +18,7 @@ ${COLUMNAS}
 
                 #SET_STYLE(${FUENTE_B} 0 ${DOBLE_ALTURA} 0 0)#INICIO_NEGRITAS()DETALLES #FIN_NEGRITAS()${LF}
 #ALINEAR_IZQUIERDA()#SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 ${SUBRAYADO})${COL_DET_0}CANT.${COL_DET_0_5}CODIGO${CR}
-#SET_STYLE(${FUENTE_B} 0 0 0 0)#foreach( $articulo in $articulos )${COL_DET_0}${articulo.cantidad}${COL_DET_0_5}${articulo.articulo}#end${LF}
+#SET_STYLE(${FUENTE_B} 0 0 0 0)#foreach( $articulo in $articulos )${COL_DET_0}${articulo.cantidad}${COL_DET_0_5}${articulo.articulo}${COL_DET_1_5}${articulo.tipo}#end${LF}
 
 
 #SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 0)            ___________________________

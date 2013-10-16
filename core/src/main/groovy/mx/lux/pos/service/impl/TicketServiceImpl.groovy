@@ -426,10 +426,22 @@ class TicketServiceImpl implements TicketService {
                   surte: artArmazon?.surte
 
           ]
-                println('RecetaObservaciones: '+rx?.observacionesR)
-                println('FacturaObservaciones: ' +notaVenta?.observacionesNv )
+          Modificacion mod = new Modificacion()
+          mod.idFactura = ''
+          mod.causa = ''
+          for(Pago payment : notaVenta.pagos){
+            if(payment.referenciaPago.trim()){
+              NotaVenta nvOrigen = notaVentaRepository.findOne( payment.referenciaPago.trim() )
+              if(nvOrigen != null){
+                List<Modificacion> modificaciones = modificacionRepository.findByIdFactura( nvOrigen.id.trim() )
+                if(modificaciones.size() > 0){
+                  mod = modificaciones.first()
+                }
+              }
+            }
+          }
           def coment = [
-                 cometRx:rx?.observacionesR,
+                 cometRx:mod.notaVenta.factura+" "+mod.causa.trim()+" "+rx?.observacionesR,
                  cometFactura: notaVenta?.observacionesNv,
                  conSaldo:'',
                  regresoClases:'',
@@ -1999,7 +2011,8 @@ class TicketServiceImpl implements TicketService {
                 articulos.add(detalle.articulo)
                 def artTmp = [
                         articulo: detalle.articulo.articulo,
-                        cantidad: detalle.cantidadFac
+                        cantidad: detalle.cantidadFac,
+                        tipo: detalle.idTipoDetalle.trim()
                 ]
                 lstArticulos.add( artTmp )
             }

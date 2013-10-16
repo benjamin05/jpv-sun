@@ -171,7 +171,7 @@ class CancellationController {
       NotaVenta nv = notaVentaService.obtenerNotaVenta( orderId )
       if(nv != null){
         for(DetalleNotaVenta det : nv.detalles){
-          if( det.surte.trim().equalsIgnoreCase(TAG_REUSO) ){
+          if( TAG_REUSO.equalsIgnoreCase(det?.surte?.trim()) ){
             isReuso = true
           }
         }

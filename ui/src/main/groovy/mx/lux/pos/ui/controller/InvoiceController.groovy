@@ -82,7 +82,19 @@ class InvoiceController {
           }
         }
         if(hasRx){
-          receta = "RX: OD- ${notaVenta.rx.odEsfR} ${notaVenta.rx.odCilR.trim()} ${notaVenta.rx.odAdcR.trim()} OI- ${notaVenta.rx.oiEjeR.trim()} ${notaVenta.rx.oiCilR.trim()} ${notaVenta.rx.oiAdcR.trim()}"
+          String odEsfR = notaVenta.rx.odEsfR.replace('+','')
+          odEsfR = notaVenta.rx.odEsfR.replace('-','')
+          String odCilR = notaVenta.rx.odCilR.replace('+','')
+          odCilR = notaVenta.rx.odCilR.replace('-','')
+          String odAdcR = notaVenta.rx.odAdcR.replace('+','')
+          odAdcR = notaVenta.rx.odAdcR.replace('-','')
+          String oiEsfR = notaVenta.rx.oiEsfR.replace('+','')
+          oiEsfR = notaVenta.rx.oiEsfR.replace('-','')
+          String oiCilR = notaVenta.rx.oiCilR.replace('+','')
+          oiCilR = notaVenta.rx.oiCilR.replace('-','')
+          String oiAdcR = notaVenta.rx.oiAdcR.replace('+','')
+          oiAdcR = notaVenta.rx.oiAdcR.replace('-','')
+          receta = "RX: OD- ${odEsfR.trim()} ${odCilR.trim()} ${odAdcR.trim()} OI- ${oiEsfR.trim()} ${oiCilR.trim()} ${oiAdcR.trim()}"
         }
       }
       Comprobante comprobante = new Comprobante(
