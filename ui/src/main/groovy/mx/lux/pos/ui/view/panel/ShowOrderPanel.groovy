@@ -8,6 +8,7 @@ import mx.lux.pos.ui.controller.AccessController
 import mx.lux.pos.ui.controller.CancellationController
 import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.model.IPromotion
+import mx.lux.pos.ui.model.Item
 import mx.lux.pos.ui.model.OperationType
 import mx.lux.pos.ui.model.Order
 import mx.lux.pos.ui.model.OrderItem
@@ -62,6 +63,11 @@ class ShowOrderPanel extends JPanel {
   private List<IPromotion> lstPromociones = new ArrayList<IPromotion>()
   private JScrollPane pago
   private Pago pagoN
+
+  private static final String DATE_FORMAT = 'dd-MM-yyyy'
+  private static final String GENERICO_ARMAZON = 'A'
+  private static final String TAG_SURTE_SUCURSAL = 'S'
+  private static final String TAG_SURTE_PINO = 'P'
 
 
   ShowOrderPanel( ) {
@@ -289,6 +295,7 @@ class ShowOrderPanel extends JPanel {
     source.enabled = false
     CancellationController.resetValuesofCancellation( order.id )
     CancellationController.printOrderCancellation( order.id )
+    printCancellationNotToday( order )
     source.enabled = true
   }
 
@@ -396,6 +403,21 @@ class ShowOrderPanel extends JPanel {
 
 
        // }
+    }
+
+
+
+    private def printCancellationNotToday(Order orderCom){
+        Item item = new Item()
+        for(OrderItem i : orderCom.items){
+            if(i.item.type.trim().equalsIgnoreCase(GENERICO_ARMAZON)){
+                item = i.item
+            }
+        }
+        if(item.id != null){
+            CancellationController.printMaterialReturn( order.id )
+            CancellationController.printMaterialReception( order.id )
+        }
     }
 
 
