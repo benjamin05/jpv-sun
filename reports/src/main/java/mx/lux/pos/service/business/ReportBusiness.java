@@ -1858,6 +1858,28 @@ public class ReportBusiness {
 
     }
 
+
+
+    public List<ResumenCierre> obtenerSaldosCierreDiario( Date fechaInicio, Date fechaFin ){
+        List<ResumenCierre> lstIngresos = new ArrayList<ResumenCierre>();
+        QNotaVenta nota = QNotaVenta.notaVenta;
+        List<NotaVenta> lstNotasVentas = ( List<NotaVenta> ) notaVentaRepository.findAll( nota.fechaHoraFactura.between(fechaInicio, fechaFin).
+                and( nota.factura.isNotEmpty() ).and(nota.factura.isNotNull()).and(nota.sFactura.ne(TAG_CANCELADO)), nota.fechaHoraFactura.asc() );
+        for( NotaVenta notaVenta : lstNotasVentas ){
+          BigDecimal saldo = notaVenta.getVentaNeta().subtract(notaVenta.getSumaPagos());
+          if( BigDecimal.ZERO.compareTo(saldo) < 0){
+            List<Pago> lstPagos = new ArrayList<Pago>(notaVenta.getPagos());
+            if( lstPagos.size() > 0 ){
+              ResumenCierre ingreso = FindOrCreateCierreDiario(lstIngresos, notaVenta.getFechaHoraFactura());
+              ingreso.acumulaIngresosPorDia(notaVenta);
+            }
+          }
+        }
+
+        return lstIngresos;
+
+    }
+
     
     public List<ResumenCierre> obtenerDevolucionesCierreDiario( Date fechaInicio, Date fechaFin ){
         List<ResumenCierre> lstIngresos = new ArrayList<ResumenCierre>();

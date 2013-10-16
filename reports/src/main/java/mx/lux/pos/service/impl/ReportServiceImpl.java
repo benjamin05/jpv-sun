@@ -163,6 +163,7 @@ public class ReportServiceImpl implements ReportService {
 
             Sucursal sucursal = sucursalService.obtenSucursalActual();
             List<ResumenCierre> lstPagos = reportBusiness.obtenerVentasCierreDiario( fechaInicio, fechaFin );
+            List<ResumenCierre> lstSaldos = reportBusiness.obtenerSaldosCierreDiario( fechaInicio, fechaFin );
             List<ResumenCierre> lstDevoluciones = reportBusiness.obtenerDevolucionesCierreDiario( fechaInicio, fechaFin );
             Parametro ivaVigenteParam = parametroRepository.findOne( TipoParametro.IVA_VIGENTE.getValue() );
             Impuesto iva = impuestoRepository.findOne( ivaVigenteParam.getValor() );
@@ -230,6 +231,7 @@ public class ReportServiceImpl implements ReportService {
             parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
             parametros.put( "fechaCierre", new SimpleDateFormat( "dd/MM/yyyy" ).format( fecha ) );
             parametros.put( "lstPagos", lstPagos );
+            parametros.put( "lstSaldos", lstSaldos );
             parametros.put( "lstDevoluciones", lstDevoluciones );
 
             parametros.put( "totalFacturas", totalFacturas );
