@@ -44,6 +44,7 @@ class MainWindow extends JFrame implements KeyListener {
     private JPanel priceListPanel
     private JPanel invoicePanel
     private JToolBar infoBar
+    Boolean openSoi
     private JLabel userLabel
     private JLabel branchLabel
     private JLabel versionLabel
@@ -100,6 +101,7 @@ class MainWindow extends JFrame implements KeyListener {
     MainWindow( ) {
         instance = this
         this.addKeyListener( this )
+        openSoi = true
         sb = new SwingBuilder()
         buildUI()
     }
@@ -628,6 +630,7 @@ class MainWindow extends JFrame implements KeyListener {
     }
 
     void requestLogout( ) {
+        openSoi = false
         AccessController.logOut()
         infoBar.visible = false
         mainPanel.remove( orderPanel )
@@ -640,9 +643,10 @@ class MainWindow extends JFrame implements KeyListener {
         dailyClosePanel = null
         priceListPanel = null
         invoicePanel = null
+        logInPanel = new LogInPanel( doForwardToDefaultPanel, version )
+        mainPanel.layout.show( mainPanel, 'logInPanel' )
         Runtime garbage = Runtime.getRuntime();
         garbage.gc();
-        mainPanel.layout.show( mainPanel, 'logInPanel' )
     }
 
 

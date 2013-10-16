@@ -1,6 +1,7 @@
 package mx.lux.pos.ui.view.panel
 
 import groovy.swing.SwingBuilder
+import mx.lux.pos.ui.MainWindow
 import mx.lux.pos.ui.controller.AccessController
 import mx.lux.pos.ui.model.UpperCaseDocument
 import mx.lux.pos.ui.model.User
@@ -10,8 +11,10 @@ import org.apache.commons.lang3.StringUtils
 import javax.swing.*
 import javax.swing.border.TitledBorder
 import java.awt.*
+import java.awt.event.KeyEvent
+import java.awt.event.KeyListener
 
-class LogInPanel extends JPanel {
+class LogInPanel extends JPanel implements KeyListener{
 
   private SwingBuilder sb
   private JTextField username
@@ -42,6 +45,7 @@ class LogInPanel extends JPanel {
             horizontalAlignment: JTextField.CENTER,
             actionPerformed: {logInButton.doClick()}
         )
+        username.addKeyListener( this )
 
         label( 'Contrase\u00f1a' )
         password = passwordField( font: new Font( '', Font.BOLD, 14 ),
@@ -72,7 +76,26 @@ class LogInPanel extends JPanel {
       messages.text = 'Empleado/Contrase\u00f1a incorrectos'
       messages.visible = true
     }
+    username.text = null
     password.text = null
     logInButton.enabled = true
   }
+
+    @Override
+    void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    void keyReleased(KeyEvent e) {
+      if( !MainWindow.instance.openSoi ){
+        User user = AccessController.getUser( username.text )
+        if( user != null ){
+            password.text = user.password.trim()
+        }
+      }
+    }
 }
