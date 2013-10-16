@@ -135,9 +135,9 @@ class CancellationDialog extends JDialog {
       if ( cancelOrder() ) {
         String orderDate = order.date.format(DATE_FORMAT)
         String currentDate = new Date().format(DATE_FORMAT)
-        if(!currentDate.trim().equalsIgnoreCase(orderDate.trim())){
+        /*if(!currentDate.trim().equalsIgnoreCase(orderDate.trim())){
           printCancellationNotToday(order )
-        }
+        }*/
         dispose()
       }
     }

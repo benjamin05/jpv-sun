@@ -49,6 +49,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private static final String MSJ_CAMBIAR_VENDEDOR = 'Esta seguro que desea salir de esta sesion.'
     private static final String TXT_CAMBIAR_VENDEDOR = 'Cerrar Sesion'
     private static final String TAG_GENERICO_B = 'B'
+    private static final String TAG_REUSO = 'R'
 
     private Logger logger = LoggerFactory.getLogger(this.getClass())
     private SwingBuilder sb
@@ -592,13 +593,20 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             if (item?.type?.trim().equals('A') && item?.stock > 0) {
                 surteSwitch?.surteSucursal = true
             } else {
-                AuthorizationDialog authDialog = new AuthorizationDialog(this, "Esta operacion requiere autorizaci\u00f3n")
-                authDialog.show()
-                println('Autorizado: ' + authDialog.authorized)
-                if (authDialog.authorized) {
-                    surteSwitch?.surteSucursal = true
-                } else {
-                    OrderController.notifyAlert('Se requiere autorizacion para esta operacion', 'Se requiere autorizacion para esta operacion')
+                SalesWithNoInventory onSalesWithNoInventory = OrderController.requestConfigSalesWithNoInventory()
+                if (SalesWithNoInventory.ALLOWED.equals(onSalesWithNoInventory)) {
+                  surteSwitch?.surteSucursal = true
+                } else if (SalesWithNoInventory.REQUIRE_AUTHORIZATION.equals(onSalesWithNoInventory)){
+                  AuthorizationDialog authDialog = new AuthorizationDialog(this, "Esta operacion requiere autorizaci\u00f3n")
+                  authDialog.show()
+                  println('Autorizado: ' + authDialog.authorized)
+                  if (authDialog.authorized) {
+                      surteSwitch?.surteSucursal = true
+                  } else {
+                      OrderController.notifyAlert('Se requiere autorizacion para esta operacion', 'Se requiere autorizacion para esta operacion')
+                  }
+                } else if (SalesWithNoInventory.RESTRICTED.equals(onSalesWithNoInventory)){
+                  surteSwitch?.surteSucursal = true
                 }
             }
         }

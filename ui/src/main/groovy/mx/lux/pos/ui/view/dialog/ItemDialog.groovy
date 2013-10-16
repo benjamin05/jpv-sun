@@ -150,21 +150,21 @@ class ItemDialog extends JDialog implements ItemListener{
     println('Seleccionado: '+surte.selectedItem?.toString())
     Boolean ticketValido = OrderController.validReusoTicket( txtTicket.text.trim(), orderItem.item.id )
       if( txtTicket.visible && ticketValido ){
-        SurteSwitch surteSwitch = OrderController.surteCallWS(order?.branch, orderItem?.item, 'S',order)
-        surteSwitch = surteSu(orderItem?.item,surteSwitch)
-        if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
+        //SurteSwitch surteSwitch = OrderController.surteCallWS(order?.branch, orderItem?.item, 'S',order)
+        //surteSwitch = surteSu(orderItem?.item,surteSwitch)
+        //if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
             OrderController.removeOrderItemFromOrder( order.id, orderItem )
             OrderController.addOrderItemToOrder( order.id, tmpOrderItem, surte.selectedItem?.toString() )
-        }
+        //}
         source.enabled = true
         dispose()
       } else if( !txtTicket.visible ){
-        SurteSwitch surteSwitch = OrderController.surteCallWS(order?.branch, orderItem?.item, 'S',order)
+        /*SurteSwitch surteSwitch = OrderController.surteCallWS(order?.branch, orderItem?.item, 'S',order)
         surteSwitch = surteSu(orderItem?.item,surteSwitch)
-        if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {
+        if (surteSwitch?.agregaArticulo == true && surteSwitch?.surteSucursal == true) {*/
             OrderController.removeOrderItemFromOrder( order.id, orderItem )
             OrderController.addOrderItemToOrder( order.id, tmpOrderItem, surte.selectedItem?.toString() )
-        }
+        //}
         source.enabled = true
         dispose()
       } else if( txtTicket.visible && !ticketValido ){

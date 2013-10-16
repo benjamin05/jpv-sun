@@ -3,6 +3,7 @@ package mx.lux.pos.ui.controller
 import groovy.util.logging.Slf4j
 import mx.lux.pos.model.*
 import mx.lux.pos.service.CancelacionService
+import mx.lux.pos.service.NotaVentaService
 import mx.lux.pos.service.TicketService
 import mx.lux.pos.ui.model.*
 import org.apache.commons.lang3.StringUtils
@@ -15,10 +16,14 @@ class CancellationController {
 
   private static CancelacionService cancelacionService
   private static TicketService ticketService
+  private static NotaVentaService notaVentaService
 
-  @Autowired CancellationController( CancelacionService cancelacionService, TicketService ticketService ) {
+  private static final String TAG_REUSO = 'R'
+
+  @Autowired CancellationController( CancelacionService cancelacionService, TicketService ticketService, NotaVentaService notaVentaService ) {
     this.cancelacionService = cancelacionService
     this.ticketService = ticketService
+    this.notaVentaService = notaVentaService
   }
 
   static List<String> findAllCancellationReasons( ) {
@@ -161,6 +166,19 @@ class CancellationController {
       List<NotaVenta> results = cancelacionService.listarNotasVentaOrigenDeNotaVenta( orderId )
       results?.each { NotaVenta tmp ->
         ticketService.imprimeCancelacion( tmp?.id )
+      }
+      Boolean isReuso = false
+      NotaVenta nv = notaVentaService.obtenerNotaVenta( orderId )
+      if(nv != null){
+        for(DetalleNotaVenta det : nv.detalles){
+          if( det.surte.trim().equalsIgnoreCase(TAG_REUSO) ){
+            isReuso = true
+          }
+        }
+      }
+      if(results.size() > 0 && isReuso){
+        ticketService.imprimeRegresoMaterial( results.first().id )
+        ticketService.imprimeRecepcionMaterial( results.first().id )
       }
     } else {
       log.warn( 'no se imprimen cancelaciones a partir de orden, parametros invalidos' )
