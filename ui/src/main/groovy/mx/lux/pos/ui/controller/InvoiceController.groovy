@@ -83,17 +83,17 @@ class InvoiceController {
         }
         if(hasRx){
           String odEsfR = notaVenta.rx.odEsfR.replace('+','')
-          odEsfR = notaVenta.rx.odEsfR.replace('-','')
+          odEsfR = odEsfR.replace('-','')
           String odCilR = notaVenta.rx.odCilR.replace('+','')
-          odCilR = notaVenta.rx.odCilR.replace('-','')
+          odCilR = odCilR.replace('-','')
           String odAdcR = notaVenta.rx.odAdcR.replace('+','')
-          odAdcR = notaVenta.rx.odAdcR.replace('-','')
+          odAdcR = odAdcR.replace('-','')
           String oiEsfR = notaVenta.rx.oiEsfR.replace('+','')
-          oiEsfR = notaVenta.rx.oiEsfR.replace('-','')
+          oiEsfR = oiEsfR.replace('-','')
           String oiCilR = notaVenta.rx.oiCilR.replace('+','')
-          oiCilR = notaVenta.rx.oiCilR.replace('-','')
+          oiCilR = oiCilR.replace('-','')
           String oiAdcR = notaVenta.rx.oiAdcR.replace('+','')
-          oiAdcR = notaVenta.rx.oiAdcR.replace('-','')
+          oiAdcR = oiAdcR.replace('-','')
           receta = "RX: OD- ${odEsfR.trim()} ${odCilR.trim()} ${odAdcR.trim()} OI- ${oiEsfR.trim()} ${oiCilR.trim()} ${oiAdcR.trim()}"
         }
       }

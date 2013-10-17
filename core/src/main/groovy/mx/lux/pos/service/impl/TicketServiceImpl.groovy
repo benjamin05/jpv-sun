@@ -430,18 +430,20 @@ class TicketServiceImpl implements TicketService {
           mod.idFactura = ''
           mod.causa = ''
           for(Pago payment : notaVenta.pagos){
-            if(payment.referenciaPago.trim()){
+            if(payment.referenciaPago.trim().length() > 0){
               NotaVenta nvOrigen = notaVentaRepository.findOne( payment.referenciaPago.trim() )
               if(nvOrigen != null){
                 List<Modificacion> modificaciones = modificacionRepository.findByIdFactura( nvOrigen.id.trim() )
                 if(modificaciones.size() > 0){
                   mod = modificaciones.first()
+                } else {
+                  mod = null
                 }
               }
             }
           }
           def coment = [
-                 cometRx:mod.notaVenta.factura+" "+mod.causa.trim()+" "+rx?.observacionesR,
+                 cometRx:mod != null ? mod.notaVenta.factura : ""+" "+mod != null ? mod.causa.trim() : ""+" "+rx?.observacionesR,
                  cometFactura: notaVenta?.observacionesNv,
                  conSaldo:'',
                  regresoClases:'',

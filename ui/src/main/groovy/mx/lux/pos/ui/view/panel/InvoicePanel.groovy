@@ -259,9 +259,9 @@ class InvoicePanel extends JPanel {
         fillInvoiceFields( invoceTmp )
           } else {
               sb.optionPane(
-                      message: "Ticket sin monto",
+                      message: "No existe monto a facturar",
                       messageType: JOptionPane.ERROR_MESSAGE
-              ).createDialog( this, 'No existe monto a facturar' )
+              ).createDialog( this, 'Ticket sin monto' )
                       .show()
           }
         } else {
