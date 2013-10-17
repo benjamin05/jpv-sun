@@ -127,7 +127,6 @@ class CancelacionServiceImpl implements CancelacionService {
                 if(currentDate.trim().equalsIgnoreCase(orderDate.trim())){
                   if (!ServiceFactory.inventory.solicitarTransaccionDevolucion(notaVenta)) {
                       log.warn("no se registra el movimiento, error al registrar devolucion")
-                      modificacion.id = null
                   }
                 }
                 return modificacion

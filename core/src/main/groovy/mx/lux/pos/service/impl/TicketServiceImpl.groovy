@@ -2002,6 +2002,7 @@ class TicketServiceImpl implements TicketService {
     @Override
     void imprimeTicketReuso( String idNotaVenta ){
         log.debug('imprimeTicketReuso( )')
+        NotaVenta notaNueva = new NotaVenta()
         NotaVenta nota = notaVentaRepository.findOne(idNotaVenta)
         Integer idSuc = Registry.currentSite
         Sucursal sucursal = sucursalRepository.findOne(idSuc)
@@ -2019,13 +2020,10 @@ class TicketServiceImpl implements TicketService {
                 lstArticulos.add( artTmp )
             }
         }
-        for(Pago payment : nota.pagos){
-          if(payment.referenciaPago){
-            NotaVenta notaOri = notaVentaRepository.findOne(payment.referenciaPago.trim())
-            if(notaOri != null){
-              factOri = notaOri.factura
-            }
-          }
+        QPago pay = QPago.pago
+        List<Pago> pagosTransf = pagoRepository.findAll( pay.referenciaPago.eq(nota.id.trim()) )
+        if( pagosTransf.size() > 0 ){
+          notaNueva = notaVentaRepository.findOne(pagosTransf.first().idFactura.trim())
         }
 
         if(nota != null){
@@ -2033,9 +2031,9 @@ class TicketServiceImpl implements TicketService {
                     fecha: new Date().format('dd/MM/yyyy'),
                     hora: new Date().format('HH:mm:ss'),
                     sucursal: sucursal.nombre+' ['+sucursal.id+']',
-                    facturaOriginal: factOri,
-                    factura: nota.factura,
-                    idSoi: nota.id,
+                    facturaOriginal: nota.factura.trim(),
+                    factura: notaNueva.factura,
+                    idSoi: notaNueva.id,
                     idSucursal: idSuc,
                     gerente: sucursal.gerente?.nombreCompleto(),
                     armazones: articulos.first(),
