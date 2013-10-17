@@ -443,7 +443,7 @@ class TicketServiceImpl implements TicketService {
             }
           }
           def coment = [
-                 cometRx:mod != null ? mod.notaVenta.factura : ""+" "+mod != null ? mod.causa.trim() : ""+" "+rx?.observacionesR,
+                 cometRx:mod != null && mod.id != null ? mod.notaVenta.factura : ""+" "+mod != null && mod.id != null ? mod.causa.trim() : ""+" "+rx?.observacionesR,
                  cometFactura: notaVenta?.observacionesNv,
                  conSaldo:'',
                  regresoClases:'',

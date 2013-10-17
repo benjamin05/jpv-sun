@@ -25,6 +25,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
   private static final String DATE_TIME_FORMAT = 'dd-MM-yyyy HH:mm:ss'
   private static final String TAG_SURTE_SUCURSAL = 'S'
   private static final String TAG_PAGO_CUPON = 'C'
+  private static final String TAG_REUSO = 'R'
   private static final String TAG_GENERICOS_INVENTARIABLES = 'A,E'
   private static final String TAG_TIPO_NOTA_VENTA = 'F'
   private static final String TAG_NOTA_CANCELADA = 'T'
@@ -657,6 +658,25 @@ class NotaVentaServiceImpl implements NotaVentaService {
           }
       }
       return lstNotasVentas
+  }
+
+
+  @Override
+  NotaVenta buscarNotasReuso( String idFactura ) {
+    log.debug( "buscarNotasReuso( )" )
+    NotaVenta nota = new NotaVenta()
+    NotaVenta notas = notaVentaRepository.findOne( idFactura )
+    QPago pay = QPago.pago
+    List<Pago> lstPagos = pagoRepository.findAll( pay.referenciaPago.eq(notas.id.trim()) )
+    if( lstPagos.size() > 0 ){
+      NotaVenta notaTmp = lstPagos.first().notaVenta
+      for(DetalleNotaVenta det : notaTmp.detalles){
+        if(TAG_REUSO.equalsIgnoreCase(det.surte.trim())){
+          nota = notaTmp
+        }
+      }
+    }
+    return nota != null && nota.id != null ? nota : null
   }
 
 

@@ -147,8 +147,13 @@ class DailyCloseController {
           }
           if( CancellationController.refundPaymentsCreditFromOrder( nota.id, creditRefunds ) ){
             CancellationController.printOrderCancellation( nota.id )
-            CancellationController.printMaterialReturn( nota.id )
-            CancellationController.printMaterialReception( nota.id )
+            NotaVenta notasReuso = notaVentaService.buscarNotasReuso( nota.id )
+            if(notasReuso != null){
+              CancellationController.printReUse( notasReuso.id )
+            } else {
+              CancellationController.printMaterialReturn( nota.id )
+              CancellationController.printMaterialReception( nota.id )
+            }
           }
           payments = new ArrayList<Pago>()
       }
