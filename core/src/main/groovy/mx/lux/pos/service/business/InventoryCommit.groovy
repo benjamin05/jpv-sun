@@ -17,6 +17,7 @@ class InventoryCommit {
   private static final String TXT_TR_TYPE_RETURN_DESC = 'Devolucion de Venta'
   private static final String TXT_TR_TYPE_RETURNXO_DESC = 'Devolucion ajena a Tienda'
   private static final String TXT_TR_TYPE_SALE_DESC = 'Salida por Venta'
+  private static final String TAG_DEVOLUCION = 'DEVOLUCION'
 
   private static Logger log = LoggerFactory.getLogger( InventoryCommit.class )
 
@@ -52,7 +53,13 @@ class InventoryCommit {
         ServiceFactory.partMaster.registrarListaArticulos( list )
          println('Transaccion Folio: '+ pTrMstr?.folio)
         // Register Transactions
-        RepositoryFactory.inventoryMaster.save( pTrMstr )
+        if(TAG_DEVOLUCION.compareToIgnoreCase(pTrMstr.idTipoTrans)){
+          if( pTrMstr.trDet.size() > 0 ){
+            RepositoryFactory.inventoryMaster.save( pTrMstr )
+          }
+        } else {
+          RepositoryFactory.inventoryMaster.save( pTrMstr )
+        }
         for ( TransInvDetalle det in pTrMstr.trDet ) {
           RepositoryFactory.inventoryDetail.save( det )
         }

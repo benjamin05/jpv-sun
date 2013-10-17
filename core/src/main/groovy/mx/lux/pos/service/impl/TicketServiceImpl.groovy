@@ -442,8 +442,10 @@ class TicketServiceImpl implements TicketService {
               }
             }
           }
+          String factCanc = mod != null && mod.id != null ? mod.notaVenta.factura : ""
+          String causa = mod != null && mod.id != null ? mod.causa.trim() : ""
           def coment = [
-                 cometRx:mod != null && mod.id != null ? mod.notaVenta.factura : ""+" "+mod != null && mod.id != null ? mod.causa.trim() : ""+" "+rx?.observacionesR,
+                 cometRx:factCanc+" "+causa+" "+rx?.observacionesR,
                  cometFactura: notaVenta?.observacionesNv,
                  conSaldo:'',
                  regresoClases:'',

@@ -16,6 +16,10 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 import javax.annotation.Resource
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
+import java.util.concurrent.Future
+import java.util.concurrent.TimeUnit
 
 @Slf4j
 @Service('cancelacionService')
@@ -428,22 +432,35 @@ class CancelacionServiceImpl implements CancelacionService {
       String urlValida = Registry.URLValidSP
       String contenido = "id_suc=${nota.idSucursal}&factura=${nota.factura}&id_acuse=${nota.factura}"
 
-      try{
-        URL url = "${urlValida}?${contenido}".toURL()
-        sleep(1000)
-        url = "${urlValida}?${contenido}".toURL()
-        String respuesta = url.text?.find( /<XX>\s*(.*)\s*<\/XX>/ ) {m, r -> return r}
-        String[] valores = respuesta.split(/\|/)
-        if(valores.length >=2){
-          if(!valores[1].toString().trim().contains('0')){
-            surtioPino = true
-          }
+      ExecutorService executor = Executors.newFixedThreadPool(1)
+      String respuesta = ""
+      int timeoutSecs = 15
+      final Future<?> future = executor.submit(new Runnable() {
+          public void run() {
+              try{
+                  URL url = "${urlValida}?${contenido}".toURL()
+                  sleep(1000)
+                  url = "${urlValida}?${contenido}".toURL()
+                  respuesta = url.text?.find( /<XX>\s*(.*)\s*<\/XX>/ ) {m, r -> return r}
+                  String[] valores = respuesta.split(/\|/)
+                  if(valores.length >=2){
+                      if(!valores[1].toString().trim().contains('0')){
+                          surtioPino = true
+                      }
+                  }
+              } catch (Exception e){
+                  println( e )
+              }
+            }
+        })
+        try {
+            future.get(timeoutSecs, TimeUnit.SECONDS)
+        } catch (Exception e) {
+            future.cancel(true)
+            respuesta = ''
+            log.warn("encountered problem while doing some work", e)
         }
-        println "Respuesta surtio pino: ${respuesta}"
-      } catch (Exception e){
-        println( e )
-      }
-
+      println "Respuesta surtio pino: ${respuesta}"
       return surtioPino
     }
 
