@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Cierre_Diario" language="groovy" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="8e8dd722-c4f6-4cbe-bcc2-458e5d219dc7">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="88"/>
+	<property name="ireport.y" value="136"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -134,7 +134,7 @@
 			</line>
 			<staticText>
 				<reportElement uuid="d42638e4-c227-4238-b2c0-dff4ae1dc748" positionType="Float" x="14" y="85" width="113" height="17" isRemoveLineWhenBlank="true">
-					<printWhenExpression><![CDATA[$P{isSunglass}.compareTo( false ) == 0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$P{lstSaldos}.size() > 0]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="14"/>
@@ -143,7 +143,7 @@
 			</staticText>
 			<line>
 				<reportElement uuid="a9924022-d4ae-4c2b-8b34-096cd3ae87c8" positionType="Float" x="14" y="84" width="113" height="1" isRemoveLineWhenBlank="true">
-					<printWhenExpression><![CDATA[$P{isSunglass}.compareTo( false ) == 0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$P{lstSaldos}.size() > 0]]></printWhenExpression>
 				</reportElement>
 				<graphicElement>
 					<pen lineStyle="Dashed"/>
@@ -151,7 +151,7 @@
 			</line>
 			<line>
 				<reportElement uuid="59ebd6e7-a02b-40a3-affa-87a41d0634fc" positionType="Float" x="14" y="102" width="113" height="1" isRemoveLineWhenBlank="true">
-					<printWhenExpression><![CDATA[$P{isSunglass}.compareTo( false ) == 0]]></printWhenExpression>
+					<printWhenExpression><![CDATA[$P{lstSaldos}.size() > 0]]></printWhenExpression>
 				</reportElement>
 				<graphicElement>
 					<pen lineStyle="Dashed"/>
@@ -203,7 +203,7 @@
 			</subreport>
 			<subreport>
 				<reportElement uuid="42a87563-06c6-4604-86e3-06b36017c0cd" positionType="Float" x="0" y="193" width="576" height="17"/>
-				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{lstSaldos})]]></dataSourceExpression>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{lstDevoluciones})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["reports/CierreDiario_Pagos.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
@@ -327,7 +327,7 @@
 			</textField>
 			<subreport>
 				<reportElement uuid="07417007-4b36-47ce-aeb4-ffa8d62ef514" positionType="Float" x="0" y="110" width="575" height="17"/>
-				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{lstPagos})]]></dataSourceExpression>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{lstSaldos})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["reports/CierreDiario_Pagos.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
