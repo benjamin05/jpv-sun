@@ -51,4 +51,7 @@ interface NotaVentaService {
   Boolean ticketReusoValido( String ticket, Integer idArticulo )
 
   Boolean montoValidoFacturacion( String ticket )
+
+  List<NotaVenta> obtenerDevolucionesPendientes( Date fecha )
+
 }
