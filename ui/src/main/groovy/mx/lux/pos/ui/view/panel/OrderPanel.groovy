@@ -553,9 +553,20 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             List<String> sources = CancellationController.findSourceOrdersWithCredit(newOrderId)
             if (sources?.any()) {
                 new RefundDialog(this, sources.first()).show()
-                CancellationController.printReUse( newOrderId )
+                Boolean reuse = CancellationController.printReUse( newOrderId )
+                if( !reuse ){
+                  CancellationController.printMaterialReception( sources.first() )
+                  CancellationController.printMaterialReturn( sources.first() )
+                }
             } else {
-                CancellationController.printCancellationsFromOrder(newOrderId)
+                Boolean reuse = CancellationController.printCancellationsFromOrder(newOrderId)
+                if( !reuse ){
+                  String idSource = CancellationController.findSourceOrder( newOrderId )
+                  if( idSource.trim().length() > 0 ){
+                      CancellationController.printMaterialReception( idSource )
+                      CancellationController.printMaterialReturn( idSource )
+                  }
+                }
             }
         }
     }

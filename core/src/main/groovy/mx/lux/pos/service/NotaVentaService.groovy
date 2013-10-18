@@ -56,4 +56,6 @@ interface NotaVentaService {
 
   NotaVenta buscarNotasReuso( String idFactura )
 
+  NotaVenta obtenerNotaVentaOrigen( String idNotaVenta )
+
 }

@@ -160,7 +160,8 @@ class CancellationController {
     }
   }
 
-  static void printCancellationsFromOrder( String orderId ) {
+  static Boolean printCancellationsFromOrder( String orderId ) {
+    Boolean reuso = false
     log.info( "imprimiendo cancelaciones a partir de orden id: ${orderId}" )
     if ( StringUtils.isNotBlank( orderId ) ) {
       List<NotaVenta> results = cancelacionService.listarNotasVentaOrigenDeNotaVenta( orderId )
@@ -177,6 +178,7 @@ class CancellationController {
         }
       }
       if(results.size() > 0 && isReuso){
+        reuso = true
         ticketService.imprimeRegresoMaterial( results.first().id )
         ticketService.imprimeRecepcionMaterial( results.first().id )
         ticketService.imprimeTicketReuso( results.first().id )
@@ -184,6 +186,7 @@ class CancellationController {
     } else {
       log.warn( 'no se imprimen cancelaciones a partir de orden, parametros invalidos' )
     }
+    return reuso
   }
 
   static void refreshOrder( Order order ) {
@@ -272,7 +275,8 @@ class CancellationController {
     cancelacionService.generaAcuses( orderId )
   }
 
-  static void printReUse( String orderId ){
+  static Boolean printReUse( String orderId ){
+    Boolean reuse = false
     if ( StringUtils.isNotBlank( orderId ) ) {
       List<NotaVenta> results = cancelacionService.listarNotasVentaOrigenDeNotaVenta( orderId )
       Boolean isReuso = false
@@ -285,12 +289,22 @@ class CancellationController {
           }
       }
       if( results.size() > 0 && isReuso ){
+        reuse = true
         ticketService.imprimeRegresoMaterial( results.first().id )
         ticketService.imprimeRecepcionMaterial( results.first().id )
         ticketService.imprimeTicketReuso( results.first().id )
       }
+      return reuse
     }
   }
+
+
+  static String findSourceOrder( String orderId ) {
+    log.debug( "findSourceOrder( )" )
+    NotaVenta notaOrig = notaVentaService.obtenerNotaVentaOrigen( orderId )
+    return notaOrig != null ? notaOrig.id : ''
+  }
+
 
 
 
