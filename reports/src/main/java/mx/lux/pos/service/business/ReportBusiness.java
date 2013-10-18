@@ -235,9 +235,9 @@ public class ReportBusiness {
                 notaVenta.idEmpleado.asc(), notaVenta.fechaHoraFactura.asc() );
 
         IngresoPorVendedor ingreso = agregaRegistros(lstVentas);
-
-
-        lstIngresos.add(ingreso);
+        if( ingreso != null ){
+          lstIngresos.add(ingreso);
+        }
             }
         }
 
@@ -259,10 +259,7 @@ public class ReportBusiness {
 
                         articulos =  detalle.getArticulo().getArticulo()  + "," + articulos;
                     }
-
-
                 }
-
                 IngresoPorFactura ingresoPorFactura = new IngresoPorFactura(venta.getFactura());
                 ingresoPorFactura.setTotal(venta.getVentaNeta());
                 ingresoPorFactura.setFechaPago(venta.getFechaHoraFactura());
@@ -276,11 +273,8 @@ public class ReportBusiness {
                             cupon = pago.getMonto();
                         }
                     }
-                   
                 }
-
                 String cuponString = "";
-
                if(cupon != null){
                    System.out.println(cupon.equals( new BigDecimal(0)));
                 if(cupon.equals( new BigDecimal(0))){
@@ -288,29 +282,17 @@ public class ReportBusiness {
                 }  else{
                     cuponString = cupon.toString();
                 }
-
                }
-
                 ingresoPorFactura.setSumaMonto(venta.getVentaTotal().subtract(cupon));
-
-
-
                 ingresoPorFactura.setColor(cuponString);
-
                 ingresoPorFacturas.add(ingresoPorFactura);
-
-
-
             }
             nVenta=venta;
         }
 
-
-
-
         IngresoPorVendedor ingreso = new  IngresoPorVendedor();
-        ingreso.setIdEmpleado(nVenta.getIdEmpleado());
-        ingreso.setNombre(nVenta.getEmpleado().getNombreCompleto());
+        ingreso.setIdEmpleado(nVenta.getIdEmpleado() != null ? nVenta.getIdEmpleado() : "");
+        ingreso.setNombre(nVenta.getEmpleado() != null ? nVenta.getEmpleado().getNombreCompleto() : "");
         ingreso.setPagos(ingresoPorFacturas);
 
         return ingreso;

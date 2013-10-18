@@ -1496,6 +1496,12 @@ public class ReportServiceImpl implements ReportService {
       BigDecimal ivaTasa = new BigDecimal( iva.getTasa() ).divide( new BigDecimal( 100 ) );
 
       List<VentasPorDia> lstCupones = reportBusiness.obtenerVentasPorCupones( dateStart, dateEnd );
+      Collections.sort( lstCupones, new Comparator<VentasPorDia>() {
+          @Override
+          public int compare(VentasPorDia o1, VentasPorDia o2) {
+              return o1.getFactura().compareToIgnoreCase(o2.getFactura());
+          }
+      });
 
       Map<String, Object> parametros = new HashMap<String, Object>();
       parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
