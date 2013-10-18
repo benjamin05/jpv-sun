@@ -553,6 +553,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             List<String> sources = CancellationController.findSourceOrdersWithCredit(newOrderId)
             if (sources?.any()) {
                 new RefundDialog(this, sources.first()).show()
+                CancellationController.printReUse( newOrderId )
             } else {
                 CancellationController.printCancellationsFromOrder(newOrderId)
             }

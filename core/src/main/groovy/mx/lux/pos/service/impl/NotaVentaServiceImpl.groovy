@@ -25,6 +25,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
   private static final String DATE_TIME_FORMAT = 'dd-MM-yyyy HH:mm:ss'
   private static final String TAG_SURTE_SUCURSAL = 'S'
   private static final String TAG_PAGO_CUPON = 'C'
+  private static final String TAG_REUSO = 'R'
   private static final String TAG_GENERICOS_INVENTARIABLES = 'A,E'
   private static final String TAG_TIPO_NOTA_VENTA = 'F'
   private static final String TAG_NOTA_CANCELADA = 'T'
@@ -49,6 +50,9 @@ class NotaVentaServiceImpl implements NotaVentaService {
 
   @Resource
   private ParametroRepository parametroRepository
+
+  @Resource
+  private ModificacionRepository modificacionRepository
 
   @Resource
   private FacturasImpuestosRepository facturasImpuestosRepository
@@ -627,6 +631,52 @@ class NotaVentaServiceImpl implements NotaVentaService {
       }
     }
     return esValido
+  }
+
+
+  @Override
+  List<NotaVenta> obtenerDevolucionesPendientes( Date fecha ) {
+      log.info( "obteniendo pagos del dia: ${fecha}" )
+      Date fechaInicio = DateUtils.truncate( fecha, Calendar.DAY_OF_MONTH );
+      Date fechaFin = new Date( DateUtils.ceiling( fecha, Calendar.DAY_OF_MONTH ).getTime() - 1 );
+      List<NotaVenta> lstNotasVentas = new ArrayList<NotaVenta>()
+      QModificacion mod = QModificacion.modificacion
+      List<Modificacion> lstModificaciones = modificacionRepository.findAll( mod.fecha.between(fechaInicio, fechaFin).
+              and(mod.tipo.equalsIgnoreCase('can')))
+      for(Modificacion modificacion : lstModificaciones){
+          NotaVenta notaVenta = notaVentaRepository.findOne( modificacion.idFactura )
+          if(notaVenta != null){
+              Boolean pendiente = false
+              for(Pago pago : notaVenta.pagos){
+                  if( pago.porDevolver.compareTo(BigDecimal.ZERO) > 0){
+                      pendiente = true
+                  }
+              }
+              if(pendiente){
+                  lstNotasVentas.add(notaVenta)
+              }
+          }
+      }
+      return lstNotasVentas
+  }
+
+
+  @Override
+  NotaVenta buscarNotasReuso( String idFactura ) {
+    log.debug( "buscarNotasReuso( )" )
+    NotaVenta nota = new NotaVenta()
+    NotaVenta notas = notaVentaRepository.findOne( idFactura )
+    QPago pay = QPago.pago
+    List<Pago> lstPagos = pagoRepository.findAll( pay.referenciaPago.eq(notas.id.trim()) )
+    if( lstPagos.size() > 0 ){
+      NotaVenta notaTmp = lstPagos.first().notaVenta
+      for(DetalleNotaVenta det : notaTmp.detalles){
+        if(TAG_REUSO.equalsIgnoreCase(det.surte.trim())){
+          nota = notaTmp
+        }
+      }
+    }
+    return nota != null && nota.id != null ? nota : null
   }
 
 

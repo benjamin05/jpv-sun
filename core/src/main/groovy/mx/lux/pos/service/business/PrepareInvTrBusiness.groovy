@@ -151,7 +151,7 @@ class PrepareInvTrBusiness {
     request.reference = pNotaVenta.id
 
     for ( DetalleNotaVenta det in pNotaVenta.detalles ) {
-      if ( parts.validarArticulo( det.idArticulo ) ) {
+      if ( parts.validarArticulo( det.idArticulo ) && parts.validarArticuloSurte( det ) ) {
         request.skuList.add( new InvTrDetRequest( det.idArticulo, det.cantidadFac.intValue() ) )
       }
     }

@@ -82,7 +82,19 @@ class InvoiceController {
           }
         }
         if(hasRx){
-          receta = "RX: OD- ${notaVenta.rx.odEsfR} ${notaVenta.rx.odCilR.trim()} ${notaVenta.rx.odAdcR.trim()} OI- ${notaVenta.rx.oiEjeR.trim()} ${notaVenta.rx.oiCilR.trim()} ${notaVenta.rx.oiAdcR.trim()}"
+          String odEsfR = notaVenta.rx.odEsfR.replace('+','')
+          odEsfR = odEsfR.replace('-','')
+          String odCilR = notaVenta.rx.odCilR.replace('+','')
+          odCilR = odCilR.replace('-','')
+          String odAdcR = notaVenta.rx.odAdcR.replace('+','')
+          odAdcR = odAdcR.replace('-','')
+          String oiEsfR = notaVenta.rx.oiEsfR.replace('+','')
+          oiEsfR = oiEsfR.replace('-','')
+          String oiCilR = notaVenta.rx.oiCilR.replace('+','')
+          oiCilR = oiCilR.replace('-','')
+          String oiAdcR = notaVenta.rx.oiAdcR.replace('+','')
+          oiAdcR = oiAdcR.replace('-','')
+          receta = "RX: OD- ${odEsfR.trim()} ${odCilR.trim()} ${odAdcR.trim()} OI- ${oiEsfR.trim()} ${oiCilR.trim()} ${oiAdcR.trim()}"
         }
       }
       Comprobante comprobante = new Comprobante(

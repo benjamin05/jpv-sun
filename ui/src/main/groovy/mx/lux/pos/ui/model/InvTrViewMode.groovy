@@ -46,7 +46,7 @@ class InvTrViewMode {
       INBOUND = new InvTrViewMode( inventory.obtenerTipoTransaccionEntradaAlmacen() )
       FILE_ADJUST.trType = inventory.obtenerTipoTransaccionAjuste()
       //list.addAll( [QUERY, ISSUE, RECEIPT, ADJUST, RETURN, OUTBOUND,INBOUND, FILE_ADJUST] )
-      list.addAll( [QUERY, RECEIPT, ISSUE, ADJUST] )
+      list.addAll( [QUERY, RECEIPT, ISSUE, ADJUST, FILE_ADJUST] )
     }
     return list
   }

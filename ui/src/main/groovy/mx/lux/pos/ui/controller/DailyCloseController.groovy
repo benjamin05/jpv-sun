@@ -20,6 +20,7 @@ class DailyCloseController {
   private static BancoService bancoService
   private static PagoService pagoService
   private static PromotionService promotionService
+  private static NotaVentaService notaVentaService
 
   @Autowired DailyCloseController(
       CierreDiarioService cierreDiarioService,
@@ -27,7 +28,8 @@ class DailyCloseController {
       EmpleadoService empleadoService,
       BancoService bancoService,
       PagoService pagoService,
-      PromotionService promotionService
+      PromotionService promotionService,
+      NotaVentaService notaVentaService
   ) {
     this.cierreDiarioService = cierreDiarioService
     this.ticketService = ticketService
@@ -35,6 +37,7 @@ class DailyCloseController {
     this.bancoService = bancoService
     this.pagoService = pagoService
     this.promotionService = promotionService
+    this.notaVentaService = notaVentaService
   }
 
   static List<DailyClose> findWithStatusOpened( ) {
@@ -131,6 +134,30 @@ class DailyCloseController {
 
   static boolean closeDailyClose( Date closeDate, String observations ) {
     try {
+      Map<Integer, String> creditRefunds = [ : ]
+      List<Pago> payments = new ArrayList<Pago>()
+      List<NotaVenta> notas = notaVentaService.obtenerDevolucionesPendientes( closeDate )
+      for(NotaVenta nota : notas){
+          creditRefunds = new HashMap<>()
+          for(Pago payment : nota.pagos){
+              payments.add( payment )
+          }
+          payments.each { Pago pmt ->
+              creditRefunds.put( pmt?.id, 'ORIGINAL' )
+          }
+          if( CancellationController.refundPaymentsCreditFromOrder( nota.id, creditRefunds ) ){
+            CancellationController.printOrderCancellation( nota.id )
+            NotaVenta notasReuso = notaVentaService.buscarNotasReuso( nota.id )
+            if(notasReuso != null){
+              CancellationController.printReUse( notasReuso.id )
+            } else {
+              CancellationController.printMaterialReturn( nota.id )
+              CancellationController.printMaterialReception( nota.id )
+            }
+          }
+          payments = new ArrayList<Pago>()
+      }
+      cierreDiarioService.cargarDatosCierreDiario( closeDate )
       cierreDiarioService.cerrarCierreDiario( closeDate, observations )
       User user = Session.get( SessionItem.USER ) as User
       Empleado employee = empleadoService.obtenerEmpleado( user.username )

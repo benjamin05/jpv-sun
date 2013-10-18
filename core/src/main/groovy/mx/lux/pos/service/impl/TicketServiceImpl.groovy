@@ -426,10 +426,26 @@ class TicketServiceImpl implements TicketService {
                   surte: artArmazon?.surte
 
           ]
-                println('RecetaObservaciones: '+rx?.observacionesR)
-                println('FacturaObservaciones: ' +notaVenta?.observacionesNv )
+          Modificacion mod = new Modificacion()
+          mod.idFactura = ''
+          mod.causa = ''
+          for(Pago payment : notaVenta.pagos){
+            if(payment.referenciaPago.trim().length() > 0){
+              NotaVenta nvOrigen = notaVentaRepository.findOne( payment.referenciaPago.trim() )
+              if(nvOrigen != null){
+                List<Modificacion> modificaciones = modificacionRepository.findByIdFactura( nvOrigen.id.trim() )
+                if(modificaciones.size() > 0){
+                  mod = modificaciones.first()
+                } else {
+                  mod = null
+                }
+              }
+            }
+          }
+          String factCanc = mod != null && mod.id != null ? mod.notaVenta.factura : ""
+          String causa = mod != null && mod.id != null ? mod.causa.trim() : ""
           def coment = [
-                 cometRx:rx?.observacionesR,
+                 cometRx:factCanc+" "+causa+" "+rx?.observacionesR,
                  cometFactura: notaVenta?.observacionesNv,
                  conSaldo:'',
                  regresoClases:'',
@@ -1980,6 +1996,58 @@ class TicketServiceImpl implements TicketService {
           log.debug( String.format( 'Nota (%s) not found.', idNotaVenta ) )
       }
   }
+
+
+
+
+
+    @Override
+    void imprimeTicketReuso( String idNotaVenta ){
+        log.debug('imprimeTicketReuso( )')
+        NotaVenta notaNueva = new NotaVenta()
+        NotaVenta nota = notaVentaRepository.findOne(idNotaVenta)
+        Integer idSuc = Registry.currentSite
+        Sucursal sucursal = sucursalRepository.findOne(idSuc)
+        String factOri = ''
+        def lstArticulos = []
+        List<Articulo> articulos = new ArrayList<>()
+        for(DetalleNotaVenta detalle : nota.detalles){
+            if(detalle.articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_ARMAZON)){
+                articulos.add(detalle.articulo)
+                def artTmp = [
+                        articulo: detalle.articulo.articulo,
+                        cantidad: detalle.cantidadFac,
+                        tipo: detalle.idTipoDetalle.trim()
+                ]
+                lstArticulos.add( artTmp )
+            }
+        }
+        QPago pay = QPago.pago
+        List<Pago> pagosTransf = pagoRepository.findAll( pay.referenciaPago.eq(nota.id.trim()) )
+        if( pagosTransf.size() > 0 ){
+          notaNueva = notaVentaRepository.findOne(pagosTransf.first().idFactura.trim())
+        }
+
+        if(nota != null){
+            def datos = [ nombre_ticket: "ticket-reuso",
+                    fecha: new Date().format('dd/MM/yyyy'),
+                    hora: new Date().format('HH:mm:ss'),
+                    sucursal: sucursal.nombre+' ['+sucursal.id+']',
+                    facturaOriginal: nota.factura.trim(),
+                    factura: notaNueva.factura,
+                    idSoi: notaNueva.id,
+                    idSucursal: idSuc,
+                    gerente: sucursal.gerente?.nombreCompleto(),
+                    armazones: articulos.first(),
+                    articulos: lstArticulos
+            ]
+            this.imprimeTicket( 'template/ticket-reuso.vm', datos )
+        } else {
+            log.debug( String.format( 'Nota (%s) not found.', idNotaVenta ) )
+        }
+    }
+
+
 
 
 }

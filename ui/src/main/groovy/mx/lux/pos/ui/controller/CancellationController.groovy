@@ -171,7 +171,7 @@ class CancellationController {
       NotaVenta nv = notaVentaService.obtenerNotaVenta( orderId )
       if(nv != null){
         for(DetalleNotaVenta det : nv.detalles){
-          if( det.surte.trim().equalsIgnoreCase(TAG_REUSO) ){
+          if( TAG_REUSO.equalsIgnoreCase(det?.surte?.trim()) ){
             isReuso = true
           }
         }
@@ -179,6 +179,7 @@ class CancellationController {
       if(results.size() > 0 && isReuso){
         ticketService.imprimeRegresoMaterial( results.first().id )
         ticketService.imprimeRecepcionMaterial( results.first().id )
+        ticketService.imprimeTicketReuso( results.first().id )
       }
     } else {
       log.warn( 'no se imprimen cancelaciones a partir de orden, parametros invalidos' )
@@ -270,4 +271,27 @@ class CancellationController {
     log.info( 'generatedAcuses( )' )
     cancelacionService.generaAcuses( orderId )
   }
+
+  static void printReUse( String orderId ){
+    if ( StringUtils.isNotBlank( orderId ) ) {
+      List<NotaVenta> results = cancelacionService.listarNotasVentaOrigenDeNotaVenta( orderId )
+      Boolean isReuso = false
+      NotaVenta nv = notaVentaService.obtenerNotaVenta( orderId )
+      if(nv != null){
+          for(DetalleNotaVenta det : nv.detalles){
+              if( TAG_REUSO.equalsIgnoreCase(det?.surte?.trim()) ){
+                  isReuso = true
+              }
+          }
+      }
+      if( results.size() > 0 && isReuso ){
+        ticketService.imprimeRegresoMaterial( results.first().id )
+        ticketService.imprimeRecepcionMaterial( results.first().id )
+        ticketService.imprimeTicketReuso( results.first().id )
+      }
+    }
+  }
+
+
+
 }

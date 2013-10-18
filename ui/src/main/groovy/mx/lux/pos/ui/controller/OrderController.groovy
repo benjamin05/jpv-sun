@@ -1259,38 +1259,24 @@ class OrderController {
         String respuesta = new String()
         int timeoutSecs = 15
         final Future<?> future = executor.submit(new Runnable() {
-
             public void run() {
-
                 try {
-
-                    respuesta = callUrlMethod(url)
-
+                    URL urlResp = url.toURL()
+                    respuesta = urlResp.text?.find( /<XX>\s*(.*)\s*<\/XX>/ ) {m, r -> return r}
+                    //callUrlMethod(url)
                 } catch (Exception e) {
-
                     throw new RuntimeException(e)
-
                 }
-
             }
-
         })
-
-
         try {
-
             future.get(timeoutSecs, TimeUnit.SECONDS)
-
         } catch (Exception e) {
-
             future.cancel(true)
             respuesta = ''
             log.warn("encountered problem while doing some work", e)
-
         }
-
         return respuesta
-
     }
 
 
