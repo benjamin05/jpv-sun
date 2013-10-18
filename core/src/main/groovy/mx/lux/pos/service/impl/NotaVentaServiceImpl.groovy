@@ -29,6 +29,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
   private static final String TAG_GENERICOS_INVENTARIABLES = 'A,E'
   private static final String TAG_TIPO_NOTA_VENTA = 'F'
   private static final String TAG_NOTA_CANCELADA = 'T'
+  private static final String TAG_TRANSFERENCIA = 'TR'
 
   @Resource
   private NotaVentaRepository notaVentaRepository
@@ -679,6 +680,20 @@ class NotaVentaServiceImpl implements NotaVentaService {
     return nota != null && nota.id != null ? nota : null
   }
 
+
+  @Override
+  NotaVenta obtenerNotaVentaOrigen( String idNotaVenta ){
+    NotaVenta nota = notaVentaRepository.findOne( idNotaVenta )
+    NotaVenta notaOrigen = null
+    String idNotaOrigen = ''
+    for(Pago payment : nota.pagos){
+      if(TAG_TRANSFERENCIA.equalsIgnoreCase(payment.idFPago) && payment?.referenciaPago?.trim().length() > 0){
+        idNotaOrigen = payment?.referenciaPago?.trim()
+        notaOrigen = notaVentaRepository.findOne( idNotaOrigen )
+      }
+    }
+    return notaOrigen
+  }
 
 
 }
