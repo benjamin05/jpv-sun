@@ -100,12 +100,12 @@ public class Reimpresion implements Serializable {
         this.factura = factura;
     }
 
-    public Reimpresion(String nota, String idNota, Date fecha, String idEmpleado, String factura) {
+    /*public Reimpresion(String nota, String idNota, Date fecha, String idEmpleado, String factura) {
 
         this.nota = nota;
         this.idNota = idNota;
         this.fecha = fecha;
         this.idEmpleado = idEmpleado;
         this.factura = factura;
-    }
+    }*/
 }
