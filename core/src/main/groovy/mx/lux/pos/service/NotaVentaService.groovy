@@ -58,4 +58,7 @@ interface NotaVentaService {
 
   NotaVenta obtenerNotaVentaOrigen( String idNotaVenta )
 
+  Boolean validaSoloInventariables( String idFactura )
+
+  void insertaJbAnticipoInventariables( String idFactura )
 }

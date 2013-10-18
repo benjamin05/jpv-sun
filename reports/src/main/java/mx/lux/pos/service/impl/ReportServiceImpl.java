@@ -351,10 +351,7 @@ public class ReportServiceImpl implements ReportService {
             org.springframework.core.io.Resource template = new ClassPathResource( VENTAS_POR_VENDEDOR_COMPLETO );
             log.info( "Ruta:{}", report.getAbsolutePath() );
 
-
-
            List<IngresoPorVendedor> lstVentas = reportBusiness.obtenerVentasporVendedor( fechaInicio, fechaFin );
-
 
             Sucursal sucursal = sucursalService.obtenSucursalActual();
 

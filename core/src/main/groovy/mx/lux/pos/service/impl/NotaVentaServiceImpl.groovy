@@ -58,6 +58,12 @@ class NotaVentaServiceImpl implements NotaVentaService {
   @Resource
   private FacturasImpuestosRepository facturasImpuestosRepository
 
+  @Resource
+  private JbRepository jbRepository
+
+  @Resource
+  private JbTrackRepository jbTrackRepository
+
   @Override
   NotaVenta obtenerNotaVenta( String idNotaVenta ) {
     log.info( "obteniendo notaVenta: ${idNotaVenta}" )
@@ -694,6 +700,53 @@ class NotaVentaServiceImpl implements NotaVentaService {
     }
     return notaOrigen
   }
+
+
+  @Override
+  Boolean validaSoloInventariables( String idFactura ) {
+    log.debug( "validaSoloInventariables( )" )
+    NotaVenta nota = notaVentaRepository.findOne( idFactura )
+    Boolean esInventariable = true
+    for(DetalleNotaVenta det : nota.detalles){
+      if( !TAG_GENERICOS_INVENTARIABLES.contains(det?.articulo?.idGenerico?.trim()) ){
+        esInventariable = false
+      }
+    }
+    return esInventariable
+  }
+
+
+  @Override
+  void insertaJbAnticipoInventariables( String idFactura ){
+    log.debug( "insertaJbAnticipoInventariables( )" )
+    NotaVenta nota = notaVentaRepository.findOne( idFactura )
+    if( nota != null ){
+      Jb jb = new Jb()
+      jb.rx = nota.factura
+      jb.estado = 'RTN'
+      jb.id_cliente = nota.idCliente.toString().trim()
+      jb.emp_atendio = nota.idEmpleado
+      jb.num_llamada = 0
+      jb.saldo = nota.ventaNeta.subtract( nota.sumaPagos )
+      jb.fecha_promesa = nota.fechaPrometida
+      jb.jb_tipo = 'REF'
+      jb.id_mod = '0'
+      jb.fecha_mod = new Date()
+      jb.cliente = nota?.cliente?.nombreCompleto
+      jb.fecha_venta = nota?.fechaHoraFactura
+      jb = jbRepository.saveAndFlush( jb )
+
+      JbTrack jbTrack = new JbTrack()
+      jbTrack.rx = jb.rx
+      jbTrack.estado = 'RTN'
+      jbTrack.obs = 'TRABAJO CON SALDO'
+      jbTrack.emp = jb.emp_atendio
+      jbTrack.fecha = new Date()
+      jbTrack.id_mod = '0'
+      jbTrackRepository.saveAndFlush( jbTrack )
+    }
+  }
+
 
 
 }

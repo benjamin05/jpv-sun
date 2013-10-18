@@ -87,6 +87,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private static boolean ticketRx
     private String armazonString = null
     private Boolean activeDialogProccesCustomer = true
+    private Boolean advanceOnlyInventariable
 
 
 
@@ -94,6 +95,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         sb = new SwingBuilder()
         order = new Order()
         dioptra = new Dioptra()
+        advanceOnlyInventariable = false
         String clientesActivos = OrderController.obtieneTiposClientesActivos()
         for(OperationType customer : lstCustomers){
             if(clientesActivos.contains(customer.value)){
@@ -824,26 +826,60 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             Date diaPrometido = new Date() + diaIntervalo?.valor.toInteger()
             OrderController.savePromisedDate(order?.id, diaPrometido)
             Double pAnticipo = Registry.getAdvancePct()
-            if (order?.paid < (order?.total * pAnticipo)) {
-                AuthorizationDialog authDialog = new AuthorizationDialog(this, "Anticipo menor al permitido, esta operacion requiere autorizaci\u00f3n")
+
+            Boolean onlyInventariable = OrderController.validOnlyInventariable( order )
+            if( onlyInventariable && order?.paid < order?.total ){
+              AuthorizationDialog authDialog = new AuthorizationDialog(this, "Anticipo requiere autorizaci\u00f3n")
+              authDialog.show()
+              if (authDialog.authorized) {
+                  advanceOnlyInventariable = true
+                  validOrder = isValidOrder()
+              } else {
+                  validOrder = false
+                  sb.optionPane(
+                          message: 'Datos no validos',
+                          messageType: JOptionPane.ERROR_MESSAGE
+                  ).createDialog(this, 'No se puede registrar la venta')
+                          .show()
+              }
+            } else if (order?.paid < (order?.total * pAnticipo)) {
+                  AuthorizationDialog authDialog = new AuthorizationDialog(this, "Anticipo menor al permitido, esta operacion requiere autorizaci\u00f3n")
+                  authDialog.show()
+                  if (authDialog.authorized) {
+                      validOrder = isValidOrder()
+                  } else {
+                      validOrder = false
+                      sb.optionPane(
+                              message: 'El monto del anticipo tiene que ser minimo de: $' + (order?.total * pAnticipo),
+                              messageType: JOptionPane.ERROR_MESSAGE
+                      ).createDialog(this, 'No se puede registrar la venta')
+                              .show()
+                  }
+                } else {
+                    validOrder = isValidOrder()
+                }
+        }
+        if (validOrder) {
+            Boolean onlyInventariable = OrderController.validOnlyInventariable( order )
+            if( onlyInventariable && order?.paid < order?.total ){
+                AuthorizationDialog authDialog = new AuthorizationDialog(this, "Anticipo requiere autorizaci\u00f3n")
                 authDialog.show()
                 if (authDialog.authorized) {
-                    validOrder = isValidOrder()
+                    advanceOnlyInventariable = true
+                    doBindings()
+                    saveOrder()
                 } else {
                     validOrder = false
                     sb.optionPane(
-                            message: 'El monto del anticipo tiene que ser minimo de: $' + (order?.total * pAnticipo),
+                            message: 'Datos no validos',
                             messageType: JOptionPane.ERROR_MESSAGE
                     ).createDialog(this, 'No se puede registrar la venta')
                             .show()
                 }
             } else {
-                validOrder = isValidOrder()
+              doBindings()
+              saveOrder()
             }
-        }
-        if (validOrder) {
-            doBindings()
-            saveOrder()
         }
 
     }
@@ -863,6 +899,10 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         OrderController.creaJb(newOrder?.ticket.trim(), cSaldo)
         OrderController.validaEntrega(newOrder?.bill.trim(),newOrder?.branch?.id.toString(), true)
         OrderController.validaSurtePorGenerico( order )
+        if( advanceOnlyInventariable ){
+          OrderController.creaJbAnticipoInventariables( newOrder?.id )
+          advanceOnlyInventariable = false
+        }
         if (StringUtils.isNotBlank(newOrder?.id)) {
 
             Branch branch = Session.get(SessionItem.BRANCH) as Branch
@@ -916,12 +956,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     .show()
             return false
         }
-        if (!OrderController.isPaymentPolicyFulfilled(order)) {
-
+        /*if (!OrderController.isPaymentPolicyFulfilled(order)) {
             return false
-        }
-
-
+        }*/
         return true
     }
 

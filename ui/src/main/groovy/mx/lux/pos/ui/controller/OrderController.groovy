@@ -1391,4 +1391,18 @@ class OrderController {
       Boolean montoValido = notaVentaService.montoValidoFacturacion( factura )
       return montoValido
     }
+
+
+    static Boolean validOnlyInventariable( Order order ){
+      return notaVentaService.validaSoloInventariables( order.id )
+    }
+
+
+  static void creaJbAnticipoInventariables( String idFactura ) {
+    log.debug( "creaJbAnticipoInventariables( )" )
+    notaVentaService.insertaJbAnticipoInventariables( idFactura )
+  }
+
+
+
 }
