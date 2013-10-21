@@ -223,9 +223,32 @@ public class ReportBusiness {
     public List<IngresoPorVendedor> obtenerVentasporVendedor( Date fechaInicio, Date fechaFin ) {
 
         List<IngresoPorVendedor> lstIngresos = new ArrayList<IngresoPorVendedor>();
+        //List<IngresoPorVendedor> lstIngresosTmp = new ArrayList<IngresoPorVendedor>();
         List<String> empleados = notaVentaRepository.empleadosFechas(fechaInicio,fechaFin);
 
-        for(String empleado : empleados){
+        QNotaVenta notaVenta = QNotaVenta.notaVenta;
+        List<NotaVenta> lstVentas = ( List<NotaVenta> ) notaVentaRepository.findAll( notaVenta.factura.isNotEmpty().and( notaVenta.factura.isNotNull() ).
+                and( notaVenta.fechaHoraFactura.between( fechaInicio, fechaFin ) ).and(notaVenta.sFactura.ne("T")),
+                notaVenta.idEmpleado.asc(), notaVenta.fechaHoraFactura.asc() );
+
+        for( NotaVenta nota : lstVentas ){
+            if( !TAG_CANCELADO.equalsIgnoreCase(nota.getsFactura()) ){
+              IngresoPorVendedor venta = FindorCreate( lstIngresos, nota.getIdEmpleado() );
+              venta.AcumulaVentaPorVendedor( nota );
+          }
+        }
+
+        QModificacion modificacion = QModificacion.modificacion;
+        List<Modificacion> lstCancelaciones = (List<Modificacion>)modificacionRepository.findAll( modificacion.fecha.between(fechaInicio,fechaFin).
+                and(modificacion.notaVenta.fechaHoraFactura.notBetween(fechaInicio,fechaFin)).and(modificacion.tipo.eq("can")),
+                modificacion.notaVenta.idEmpleado.asc() );
+
+        for( Modificacion mod : lstCancelaciones ){
+            IngresoPorVendedor cancelacion = FindorCreate( lstIngresos, mod.getNotaVenta().getIdEmpleado() );
+            cancelacion.AcumulaCancelacionesPorVendedor( mod );
+        }
+
+        /*for(String empleado : empleados){
          Empleado emp = empleadoRepository.findById(empleado);
             if(emp.getIdPuesto() == 1 || emp.getIdPuesto() == 5){
 
@@ -239,8 +262,7 @@ public class ReportBusiness {
           lstIngresos.add(ingreso);
         }
             }
-        }
-
+        }*/
 
         return lstIngresos;
     }
@@ -294,7 +316,6 @@ public class ReportBusiness {
         ingreso.setIdEmpleado(nVenta.getIdEmpleado() != null ? nVenta.getIdEmpleado() : "");
         ingreso.setNombre(nVenta.getEmpleado() != null ? nVenta.getEmpleado().getNombreCompleto() : "");
         ingreso.setPagos(ingresoPorFacturas);
-
         return ingreso;
     }
 

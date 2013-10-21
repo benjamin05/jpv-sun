@@ -30,6 +30,7 @@ public class IngresoPorFactura {
     private BigDecimal acumulaPagoIva;
     private BigDecimal acumulaDevolucion;
     private BigDecimal total;
+    private BigDecimal totalCupon;
     private BigDecimal iva;
     private BigDecimal promedio;
     private Date fechaPago;
@@ -51,6 +52,7 @@ public class IngresoPorFactura {
     private static final String TAG_CANCELADO = "T";
     private static final String TAG_DEVUELTO = "d";
     private static final String TAG_TRANSFERIDO = "t";
+    private static final String TAG_CUPON = "C";
 
     public IngresoPorFactura( String idFactura ) {
         this.idFactura = idFactura;
@@ -76,6 +78,9 @@ public class IngresoPorFactura {
         factTransf = "";
         tipo = "";
         articulos = "";
+        totalCupon = BigDecimal.ZERO;
+        total = BigDecimal.ZERO;
+        descripcion = "";
     }
 
     public IngresoPorFactura( BigDecimal monto ) {
@@ -96,10 +101,41 @@ public class IngresoPorFactura {
         fechaPago = fecha;
     }
 
+    public void AcumulaVentaPorVendedor( NotaVenta nota ) {
+        fechaPago = nota.getFechaHoraFactura();
+        for(DetalleNotaVenta det : nota.getDetalles()){
+          descripcion = descripcion+","+det.getArticulo().getArticulo();
+        }
+        descripcion = descripcion.replaceFirst(",","");
+        for(Pago pago : nota.getPagos()){
+          if( !TAG_CUPON.startsWith(pago.getIdFPago()) ){
+            total = total.add(pago.getMonto());
+          } else if( TAG_CUPON.startsWith(pago.getIdFPago()) ){
+            totalCupon = totalCupon.add(pago.getMonto());
+          }
+        }
+        sumaMonto = total.subtract(totalCupon);
+    }
 
     public void AcumulaCancelaciones( BigDecimal pago, Date fecha ) {
         montoPago = montoPago.add( pago ).negate();
         fechaPago = fecha;
+    }
+
+    public void AcumulaCancelacionesPorVendedor( Modificacion modificacion ) {
+        fechaPago = modificacion.getFecha();
+        for(DetalleNotaVenta det : modificacion.getNotaVenta().getDetalles()){
+            descripcion = descripcion+","+det.getArticulo().getArticulo();
+        }
+        descripcion = descripcion.replaceFirst(",","");
+        for(Pago pago : modificacion.getNotaVenta().getPagos()){
+            if( !TAG_CUPON.startsWith(pago.getIdFPago()) ){
+                total = total.subtract(pago.getMonto());
+            } else if( TAG_CUPON.startsWith(pago.getIdFPago()) ){
+                totalCupon = totalCupon.subtract(pago.getMonto());
+            }
+        }
+        sumaMonto = total.subtract(totalCupon);
     }
 
     public void AcumulaNotasCredito( BigDecimal pago, Date fecha ) {
@@ -260,15 +296,17 @@ public class IngresoPorFactura {
 
     public void AcumulaVentasCanOpto(  NotaVenta venta ) {
         for(DetalleNotaVenta det : venta.getDetalles()){
-            lstArticulos.add( det );
+            //lstArticulos.add( det );
+            articulos =  articulos + ", " + det.getArticulo().getArticulo().trim();
         }
+        articulos = articulos.replaceFirst( ", ", "" );
         fechaPago = venta.getFechaHoraFactura();
         idFactura = venta.getFactura();
         for(Pago pago : venta.getPagos()){
             if(pago.getIdFPago().trim().startsWith("C")){
-                montoDescuento = (montoDescuento.add( pago.getMonto() )).negate();
+                montoDescuento = montoDescuento.subtract( pago.getMonto() );
             }
-            montoSinDesc = (montoSinDesc.add( pago.getMonto() )).negate();
+            montoSinDesc = montoSinDesc.subtract( pago.getMonto() );
         }
         montoConDesc = montoSinDesc.subtract(montoDescuento);
         paciente = venta.getCliente().getNombreCompleto();
@@ -561,5 +599,13 @@ public class IngresoPorFactura {
 
     public void setArticulos(String articulos) {
         this.articulos = articulos;
+    }
+
+    public BigDecimal getTotalCupon() {
+        return totalCupon;
+    }
+
+    public void setTotalCupon(BigDecimal totalCupon) {
+        this.totalCupon = totalCupon;
     }
 }

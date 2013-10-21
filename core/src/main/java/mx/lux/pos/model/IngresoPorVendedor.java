@@ -56,12 +56,18 @@ public class IngresoPorVendedor {
 
     public void AcumulaCancelaciones( String idFactura,  BigDecimal monto, Date FechaPago ) {
         IngresoPorFactura ingreso = FindOrCreate( pagos, idFactura );
-
         ingreso.AcumulaCancelaciones(new BigDecimal(monto.doubleValue()), FechaPago);
+    }
+
+    public void AcumulaCancelacionesPorVendedor( Modificacion modificacion ) {
+        IngresoPorFactura ingreso = FindOrCreate( pagos, modificacion.getNotaVenta().getFactura() );
+        ingreso.AcumulaCancelacionesPorVendedor( modificacion );
+    }
 
 
-
-
+    public void AcumulaVentaPorVendedor( NotaVenta nota ) {
+        IngresoPorFactura ingreso = FindOrCreate( pagos, nota.getFactura() );
+        ingreso.AcumulaVentaPorVendedor( nota );
     }
 
 
