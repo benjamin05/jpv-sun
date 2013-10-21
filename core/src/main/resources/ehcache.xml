@@ -74,15 +74,45 @@
     <cache name="mx.lux.pos.model.ModificacionEmp" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
     <cache name="mx.lux.pos.model.ModificacionImp" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
     <cache name="mx.lux.pos.model.ModificacionPag" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
-
-
+    <cache name="mx.lux.pos.model.Moneda" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.MonedaDetalle" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
     <cache name="mx.lux.pos.model.Municipio" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.NotaFactura" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.NotaVenta" maxElementsInMemory="3000" timeToIdleSeconds="10"/>}
+    <cache name="mx.lux.pos.model.OrdenProm" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.OrdenPromDet" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.Pago" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.PagoExterno" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.Paises" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
     <cache name="mx.lux.pos.model.Parametro" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
     <cache name="mx.lux.pos.model.Plan" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
     <cache name="mx.lux.pos.model.Precio" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.Promocion" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.PromocionesAplicadas" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.PropiedadesporEstado" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.Receta" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.Reimpresion" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
     <cache name="mx.lux.pos.model.RelacionPlan" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.Remesas" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.ResumenCierre" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.ResumenDiario" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.ResumenTerminal" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.Retorno" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.RetornoDet" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.SaldoPorEstado" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
     <cache name="mx.lux.pos.model.Sucursal" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
     <cache name="mx.lux.pos.model.Terminal" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.TipoContacto" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.TipoDescuento" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.TipoDetalle" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.TipoMov" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
     <cache name="mx.lux.pos.model.TipoPago" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.TipoTransInv" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
     <cache name="mx.lux.pos.model.Titulo" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.TmpServicios" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.Trabajo" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.TrabajoEstado" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.TrabajoTrack" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.TransInv" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
+    <cache name="mx.lux.pos.model.TransInvDetalle" maxElementsInMemory="3000" timeToIdleSeconds="10"/>
 </ehcache>

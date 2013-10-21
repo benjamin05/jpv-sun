@@ -24,7 +24,7 @@
 	<parameter name="totalVentasPin" class="java.math.BigDecimal"/>
 	<parameter name="totalSaldosPin" class="java.math.BigDecimal"/>
 	<parameter name="totalFacturasPin" class="java.math.BigDecimal"/>
-	<parameter name="totalVentasRet" class="java.lang.String"/>
+	<parameter name="totalVentasRet" class="java.math.BigDecimal"/>
 	<parameter name="totalSaldosRet" class="java.math.BigDecimal"/>
 	<parameter name="totalFacturasRet" class="java.math.BigDecimal"/>
 	<background>

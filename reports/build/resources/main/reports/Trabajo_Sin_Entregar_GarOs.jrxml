@@ -6,7 +6,6 @@
 	<field name="notaVenta.id" class="java.lang.String"/>
 	<field name="saldo" class="java.math.BigDecimal"/>
 	<field name="notaVenta.fechaHoraFactura" class="java.util.Date"/>
-	<field name="jbTipo" class="java.lang.String"/>
 	<field name="notaVenta.factura" class="java.lang.String"/>
 	<field name="notaVenta.ventaNeta" class="java.math.BigDecimal"/>
 	<background>
@@ -74,16 +73,16 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{notaVenta.fechaHoraFactura}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement uuid="a0bf0f58-af9d-4f28-8619-1d7fbbe70388" x="69" y="0" width="59" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{notaVenta.factura}]]></textFieldExpression>
 			</textField>
-			<textField pattern="$#,##0.00">
+			<textField pattern="$#,##0.00" isBlankWhenNull="true">
 				<reportElement uuid="72f9888c-3ff8-4e0b-8970-f8da297e13a0" x="183" y="0" width="70" height="14"/>
-				<textElement>
+				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{notaVenta.ventaNeta}]]></textFieldExpression>

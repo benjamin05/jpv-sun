@@ -54,8 +54,6 @@ public class QTrabajo extends EntityPathBase<Trabajo> {
 
     public final BooleanPath noLlamar = createBoolean("noLlamar");
 
-    public final QNotaVenta notaVenta;
-
     public final NumberPath<Integer> numLlamada = createNumber("numLlamada", Integer.class);
 
     public final StringPath obsExt = createString("obsExt");
@@ -91,7 +89,6 @@ public class QTrabajo extends EntityPathBase<Trabajo> {
     public QTrabajo(Class<? extends Trabajo> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.empleado = inits.isInitialized("empleado") ? new QEmpleado(forProperty("empleado"), inits.get("empleado")) : null;
-        this.notaVenta = inits.isInitialized("notaVenta") ? new QNotaVenta(forProperty("notaVenta"), inits.get("notaVenta")) : null;
         this.trabajoEstado = inits.isInitialized("trabajoEstado") ? new QTrabajoEstado(forProperty("trabajoEstado")) : null;
     }
 
