@@ -377,7 +377,7 @@ public class ReportServiceImpl implements ReportService {
         org.springframework.core.io.Resource template = new ClassPathResource( TRABAJOS_SIN_ENTREGAR );
         log.info( "Ruta:{}", report.getAbsolutePath() );
 
-        QNotaVenta venta = QNotaVenta.notaVenta;
+        /*QNotaVenta venta = QNotaVenta.notaVenta;
         List<NotaVenta> lstVentas = ( List<NotaVenta> ) notaVentaRepository.findAll( venta.fechaEntrega.isNull().
                 and( venta.sFactura.notEqualsIgnoreCase( "T" ) ).and( venta.factura.isNotNull() ).and( venta.factura.isNotEmpty() ) );
         BigDecimal ventasVenta = BigDecimal.ZERO;
@@ -392,31 +392,36 @@ public class ReportServiceImpl implements ReportService {
         BigDecimal externoSaldo = BigDecimal.ZERO;
         for ( Externo externos : lstExternos ) {
             externoSaldo = externoSaldo.add( externos.getTrabajo().getSaldo() );
-        }
+        }*/
 
         QTrabajo trabajo = QTrabajo.trabajo;
-        List<Trabajo> lstTrabajos = ( List<Trabajo> ) trabajoRepository.findAll( trabajo.jbTipo.eq( "OS" ).
-                or( trabajo.jbTipo.eq( "GAR" ) ).and( trabajo.estado.ne( "TE" ) ) );
-        BigDecimal trabajoSaldo = BigDecimal.ZERO;
-        for ( Trabajo trabajos : lstTrabajos ) {
-            trabajoSaldo = trabajoSaldo.add( trabajos.getSaldo() );
+        List<Trabajo> lstTrabajosSuc = ( List<Trabajo> ) trabajoRepository.findAll( trabajo.jbTipo.eq( "RS" ) );
+        BigDecimal trabajoSaldoSuc = BigDecimal.ZERO;
+        /*for ( Trabajo trabajos : lstTrabajosSuc ) {
+            trabajoSaldoSuc = trabajoSaldo.add( trabajos.getSaldo() );
         }
 
-        Integer totalFacturas;
-        BigDecimal totalVentas;
-        BigDecimal totalSaldos;
-        totalVentas = ventasVenta.add( trabajoSaldo );
-        totalSaldos = ventasSaldo.add( externoSaldo.add( trabajoSaldo ) );
-        totalFacturas = lstVentas.size() + lstExternos.size() + lstTrabajos.size();
+        List<Trabajo> lstTrabajosPin = ( List<Trabajo> ) trabajoRepository.findAll( trabajo.jbTipo.eq( "RS" ) );
+        BigDecimal trabajoSaldoPin = BigDecimal.ZERO;
+        for ( Trabajo trabajos : lstTrabajosSuc ) {
+            trabajoSaldo = trabajoSaldo.add( trabajos.getSaldo() );
+        }*/
+
+        Integer totalFacturas = 0;
+        BigDecimal totalVentas = BigDecimal.ZERO;
+        BigDecimal totalSaldos = BigDecimal.ZERO;
+        //totalVentas = ventasVenta.add( trabajoSaldo );
+        //totalSaldos = ventasSaldo.add( externoSaldo.add( trabajoSaldo ) );
+        //totalFacturas = lstVentas.size() + lstExternos.size() + lstTrabajos.size();
 
         Sucursal sucursal = sucursalService.obtenSucursalActual();
 
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
         parametros.put( "sucursal", sucursal.getNombre() );
-        parametros.put( "lstVentas", lstVentas );
+        //parametros.put( "lstVentas", lstVentas );
         parametros.put( "lstTrabajos", lstTrabajos );
-        parametros.put( "lstExternos", lstExternos );
+        //parametros.put( "lstExternos", lstExternos );
         parametros.put( "totalVentas", totalVentas );
         parametros.put( "totalSaldos", totalSaldos );
         parametros.put( "totalFacturas", totalFacturas );

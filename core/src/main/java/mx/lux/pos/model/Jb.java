@@ -1,12 +1,11 @@
 package mx.lux.pos.model;
 
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -94,7 +93,10 @@ public class Jb implements Serializable {
     @Column( name = "externo" )
     private String externo;
 
-
+    @ManyToOne
+    @NotFound( action = NotFoundAction.IGNORE )
+    @JoinColumn( name = "rx", referencedColumnName = "factura",insertable = false, updatable = false )
+    private NotaVenta notaVenta;
 
     public void setRx(String rx) {
         this.rx = rx;
@@ -294,5 +296,13 @@ public class Jb implements Serializable {
 
     public String getExterno() {
         return externo;
+    }
+
+    public NotaVenta getNotaVenta() {
+        return notaVenta;
+    }
+
+    public void setNotaVenta(NotaVenta notaVenta) {
+        this.notaVenta = notaVenta;
     }
 }

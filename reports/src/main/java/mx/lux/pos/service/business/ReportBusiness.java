@@ -34,6 +34,9 @@ public class ReportBusiness {
     private ExamenRepository examenRepository;
 
     @Resource
+    private JbRepository jbRepository;
+
+    @Resource
     private TipoPagoRepository tipoPagoRepository;
 
     @Resource
@@ -227,13 +230,13 @@ public class ReportBusiness {
         List<String> empleados = notaVentaRepository.empleadosFechas(fechaInicio,fechaFin);
 
         QNotaVenta notaVenta = QNotaVenta.notaVenta;
-        List<NotaVenta> lstVentas = ( List<NotaVenta> ) notaVentaRepository.findAll( notaVenta.factura.isNotEmpty().and( notaVenta.factura.isNotNull() ).
-                and( notaVenta.fechaHoraFactura.between( fechaInicio, fechaFin ) ).and(notaVenta.sFactura.ne("T")),
+        List<NotaVenta> lstVentas = ( List<NotaVenta> ) notaVentaRepository.findAll( notaVenta.factura.isNotEmpty().and(notaVenta.factura.isNotNull()).
+                and(notaVenta.fechaHoraFactura.between(fechaInicio, fechaFin)).and(notaVenta.sFactura.ne("T")),
                 notaVenta.idEmpleado.asc(), notaVenta.fechaHoraFactura.asc() );
 
         for( NotaVenta nota : lstVentas ){
             if( !TAG_CANCELADO.equalsIgnoreCase(nota.getsFactura()) ){
-              IngresoPorVendedor venta = FindorCreate( lstIngresos, nota.getIdEmpleado() );
+              IngresoPorVendedor venta = FindorCreate(lstIngresos, nota.getIdEmpleado());
               venta.AcumulaVentaPorVendedor( nota );
           }
         }
@@ -2038,6 +2041,22 @@ public class ReportBusiness {
     }
 
     return lstCupones;
+  }
+
+
+  public List<TrabajosSinEntregar> obtenerTrabajosSinEntregar( Date fechaInicio, Date fechaFin ){
+      List<TrabajosSinEntregar> lstTrabajos = new ArrayList<TrabajosSinEntregar>();
+      QJb jb = QJb.jb;
+      List<Jb> trabajos = ( List<Jb> )jbRepository.findAll(jb.notaVenta.fechaHoraFactura.isNull().
+              and(jb.estado.eq('RS').and()));
+
+      for(Jb trabajo : trabajos){
+        String linea = articulos.getIdGenerico();
+        FacturasPorEmpleado facturas = FindOorCreate( lstArticulos, linea );
+        facturas.AcumulaMarcasResumido( articulos.getMarca(), articulos );
+      }
+
+      return lstTrabajos;
   }
 
 
