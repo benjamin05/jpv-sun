@@ -118,6 +118,9 @@ public class ReportServiceImpl implements ReportService {
     private TrabajoRepository trabajoRepository;
 
     @Resource
+    private JbRepository jbRepository;
+
+    @Resource
     private ExternoRepository externoRepository;
 
     @Resource
@@ -281,7 +284,7 @@ public class ReportServiceImpl implements ReportService {
 
             fechaInicio = DateUtils.truncate( fechaInicio, Calendar.DAY_OF_MONTH );
             fechaFin = new Date( DateUtils.ceiling( fechaFin, Calendar.DAY_OF_MONTH ).getTime() - 1 );
-            List<IngresoPorDia> listaPagos = reportBusiness.obtenerIngresoporDia( fechaInicio, fechaFin );
+            List<IngresoPorDia> listaPagos = reportBusiness.obtenerIngresoporDia(fechaInicio, fechaFin);
             Sucursal sucursal = sucursalService.obtenSucursalActual();
 
             Map<String, Object> parametros = new HashMap<String, Object>();
@@ -316,7 +319,7 @@ public class ReportServiceImpl implements ReportService {
             org.springframework.core.io.Resource template = new ClassPathResource( VENTAS );
             log.info( "Ruta:{}", report.getAbsolutePath() );
 
-            List<IngresoPorDia> lstIngresos = reportBusiness.obtenerVentasporDia( fechaInicio, fechaFin );
+            List<IngresoPorDia> lstIngresos = reportBusiness.obtenerVentasporDia(fechaInicio, fechaFin);
             Sucursal sucursal = sucursalService.obtenSucursalActual();
 
             Map<String, Object> parametros = new HashMap<String, Object>();
@@ -330,7 +333,7 @@ public class ReportServiceImpl implements ReportService {
             }
 
             String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
-            log.info( "reporte:{}", reporte );
+            log.info("reporte:{}", reporte);
 
         }
         return null;
@@ -376,55 +379,92 @@ public class ReportServiceImpl implements ReportService {
         File report = new File( System.getProperty( "java.io.tmpdir" ), "Trabajos-Sin-Entregar.html" );
         org.springframework.core.io.Resource template = new ClassPathResource( TRABAJOS_SIN_ENTREGAR );
         log.info( "Ruta:{}", report.getAbsolutePath() );
-
-        /*QNotaVenta venta = QNotaVenta.notaVenta;
-        List<NotaVenta> lstVentas = ( List<NotaVenta> ) notaVentaRepository.findAll( venta.fechaEntrega.isNull().
-                and( venta.sFactura.notEqualsIgnoreCase( "T" ) ).and( venta.factura.isNotNull() ).and( venta.factura.isNotEmpty() ) );
-        BigDecimal ventasVenta = BigDecimal.ZERO;
-        BigDecimal ventasSaldo = BigDecimal.ZERO;
-        for ( NotaVenta ventas : lstVentas ) {
-            ventasVenta = ventasVenta.add( ventas.getVentaTotal() );
-            ventasSaldo = ventasSaldo.add( ventas.getVentaNeta().subtract( ventas.getSumaPagos() ) );
-        }
-
-        QExterno externo = QExterno.externo;
-        List<Externo> lstExternos = ( List<Externo> ) externoRepository.findAll( externo.fechaEntrega.isNull() );
-        BigDecimal externoSaldo = BigDecimal.ZERO;
-        for ( Externo externos : lstExternos ) {
-            externoSaldo = externoSaldo.add( externos.getTrabajo().getSaldo() );
-        }*/
-
-        QTrabajo trabajo = QTrabajo.trabajo;
-        List<Trabajo> lstTrabajosSuc = ( List<Trabajo> ) trabajoRepository.findAll( trabajo.jbTipo.eq( "RS" ) );
-        BigDecimal trabajoSaldoSuc = BigDecimal.ZERO;
-        /*for ( Trabajo trabajos : lstTrabajosSuc ) {
-            trabajoSaldoSuc = trabajoSaldo.add( trabajos.getSaldo() );
-        }
-
-        List<Trabajo> lstTrabajosPin = ( List<Trabajo> ) trabajoRepository.findAll( trabajo.jbTipo.eq( "RS" ) );
-        BigDecimal trabajoSaldoPin = BigDecimal.ZERO;
-        for ( Trabajo trabajos : lstTrabajosSuc ) {
-            trabajoSaldo = trabajoSaldo.add( trabajos.getSaldo() );
-        }*/
-
         Integer totalFacturas = 0;
         BigDecimal totalVentas = BigDecimal.ZERO;
         BigDecimal totalSaldos = BigDecimal.ZERO;
-        //totalVentas = ventasVenta.add( trabajoSaldo );
-        //totalSaldos = ventasSaldo.add( externoSaldo.add( trabajoSaldo ) );
-        //totalFacturas = lstVentas.size() + lstExternos.size() + lstTrabajos.size();
+        Integer totalFacturasSuc = 0;
+        BigDecimal totalVentasSuc = BigDecimal.ZERO;
+        BigDecimal totalSaldosSuc = BigDecimal.ZERO;
+        Integer totalFacturasPin = 0;
+        BigDecimal totalVentasPin = BigDecimal.ZERO;
+        BigDecimal totalSaldosPin = BigDecimal.ZERO;
+        Integer totalFacturasRet = 0;
+        BigDecimal totalVentasRet = BigDecimal.ZERO;
+        BigDecimal totalSaldosRet = BigDecimal.ZERO;
+
+        QJb trabajo = QJb.jb;
+        List<Jb> lstTrabajosSuc = ( List<Jb> ) jbRepository.findAll( trabajo.estado.eq( "RS" ).and( trabajo.notaVenta.factura.isNotNull() ) );
+        BigDecimal trabajoSaldoSuc = BigDecimal.ZERO;
+        for ( Jb trabajos : lstTrabajosSuc ) {
+            totalFacturas = totalFacturas+1;
+            totalFacturasSuc = totalFacturasSuc+1;
+            totalVentas = totalVentas.add(trabajos.getNotaVenta() != null ? trabajos.getNotaVenta().getVentaNeta() :BigDecimal.ZERO);
+            totalVentasSuc = totalVentasSuc.add(trabajos.getNotaVenta() != null ? trabajos.getNotaVenta().getVentaNeta() :BigDecimal.ZERO);
+            totalSaldos = totalSaldos.add(trabajos.getSaldo());
+            totalSaldosSuc = totalSaldosSuc.add(trabajos.getSaldo());
+        }
+        Collections.sort( lstTrabajosSuc, new Comparator<Jb>() {
+            @Override
+            public int compare(Jb o1, Jb o2) {
+                return (o1.getNotaVenta() != null ? o1.getNotaVenta().getFactura() : "").compareTo(o2.getNotaVenta() != null ? o2.getNotaVenta().getFactura() : "");
+            }
+        } );
+
+        List<Jb> lstTrabajosPin = ( List<Jb> ) jbRepository.findAll( trabajo.estado.eq( "EP" ).
+                or(trabajo.jb_tipo.eq( "REP" )).and( trabajo.notaVenta.factura.isNotNull() ) );
+        BigDecimal trabajoSaldoPin = BigDecimal.ZERO;
+        for ( Jb trabajos : lstTrabajosPin ) {
+            totalFacturas = totalFacturas+1;
+            totalFacturasPin = totalFacturasPin+1;
+            totalVentas = totalVentas.add(trabajos.getNotaVenta() != null ? trabajos.getNotaVenta().getVentaNeta() :BigDecimal.ZERO);
+            totalVentasPin = totalVentasPin.add(trabajos.getNotaVenta() != null ? trabajos.getNotaVenta().getVentaNeta() :BigDecimal.ZERO);
+            totalSaldos = totalSaldos.add(trabajos.getSaldo());
+            totalSaldosPin = totalVentasPin.add(trabajos.getSaldo());
+        }
+        Collections.sort( lstTrabajosPin, new Comparator<Jb>() {
+            @Override
+            public int compare(Jb o1, Jb o2) {
+                return (o1.getNotaVenta() != null ? o1.getNotaVenta().getFactura() : "").compareTo(o2.getNotaVenta() != null ? o2.getNotaVenta().getFactura() : "");
+            }
+        } );
+
+        List<Jb> lstTrabajosRet = ( List<Jb> ) jbRepository.findAll( trabajo.estado.eq( "RTN" ).and( trabajo.notaVenta.factura.isNotNull() ) );
+        BigDecimal trabajoSaldoRet = BigDecimal.ZERO;
+        for ( Jb trabajos : lstTrabajosRet ) {
+            totalFacturas = totalFacturas+1;
+            totalFacturasRet = totalFacturasRet+1;
+            totalVentas = totalVentas.add(trabajos.getNotaVenta() != null ? trabajos.getNotaVenta().getVentaNeta() :BigDecimal.ZERO);
+            totalVentasRet = totalVentasRet.add(trabajos.getNotaVenta() != null ? trabajos.getNotaVenta().getVentaNeta() :BigDecimal.ZERO);
+            totalSaldos = totalSaldos.add(trabajos.getSaldo());
+            totalSaldosRet = totalSaldosRet.add(trabajos.getSaldo());
+        }
+        Collections.sort( lstTrabajosRet, new Comparator<Jb>() {
+            @Override
+            public int compare(Jb o1, Jb o2) {
+                return (o1.getNotaVenta() != null ? o1.getNotaVenta().getFactura() : "").compareTo(o2.getNotaVenta() != null ? o2.getNotaVenta().getFactura() : "");
+            }
+        } );
 
         Sucursal sucursal = sucursalService.obtenSucursalActual();
 
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
         parametros.put( "sucursal", sucursal.getNombre() );
-        //parametros.put( "lstVentas", lstVentas );
-        parametros.put( "lstTrabajos", lstTrabajos );
-        //parametros.put( "lstExternos", lstExternos );
+        parametros.put( "lstTrabajosSuc", lstTrabajosSuc );
+        parametros.put( "lstTrabajosPin", lstTrabajosPin );
+        parametros.put( "lstTrabajosRet", lstTrabajosRet );
         parametros.put( "totalVentas", totalVentas );
         parametros.put( "totalSaldos", totalSaldos );
         parametros.put( "totalFacturas", totalFacturas );
+        parametros.put( "totalVentasSuc", totalVentasSuc );
+        parametros.put( "totalSaldosSuc", totalSaldosSuc );
+        parametros.put( "totalFacturasSuc", totalFacturasSuc );
+        parametros.put( "totalVentasPin", totalVentasPin );
+        parametros.put( "totalSaldosPin", totalSaldosPin );
+        parametros.put( "totalFacturasPin", totalFacturasPin );
+        parametros.put( "totalVentasRet", totalVentasRet );
+        parametros.put( "totalSaldosRet", totalSaldosRet );
+        parametros.put( "totalFacturasRet", totalFacturasRet );
 
         String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
         log.info( "reporte:{}", reporte );
@@ -1043,7 +1083,7 @@ public class ReportServiceImpl implements ReportService {
         Sucursal sucursal = sucursalService.obtenSucursalActual();
 
         QCotizacion cotizacion = QCotizacion.cotizacion;
-        List<Cotizaciones> lstCotizaciones = ( List<Cotizaciones> ) reportBusiness.obtenerCotizaciones( fechaInicio, fechaFin );
+        List<Cotizaciones> lstCotizaciones = ( List<Cotizaciones> ) reportBusiness.obtenerCotizaciones(fechaInicio, fechaFin);
         Integer totalCotizaciones = 0;
         Integer totalCotizacionesConVenta = 0;
         for( Cotizaciones cotiza : lstCotizaciones ){

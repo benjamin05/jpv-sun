@@ -326,5 +326,5 @@ public class Trabajo implements Serializable {
 	public void setTrabajoTrack(List<TrabajoTrack> trabajoTrack) {
 		this.trabajoTrack = trabajoTrack;
 	}
-    
+
 }

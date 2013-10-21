@@ -1720,10 +1720,8 @@ public class ReportBusiness {
         } catch ( Exception e ){}
 
         for( NotaVenta nota : lstNotasVentas ){
-            //if( !TAG_CANCELADO.equalsIgnoreCase(nota.getsFactura()) ){
-                VentasPorDia ventas = FindOrCreatePorFecha( lstVentas, nota.getFechaHoraFactura() );
-                ventas.acumulaVentasPorDia( nota, iva );
-            //}
+            VentasPorDia ventas = FindOrCreatePorFecha( lstVentas, nota.getFechaHoraFactura() );
+            ventas.acumulaVentasPorDia( nota, iva );
         }
         return lstVentas;
     }
@@ -1932,8 +1930,7 @@ public class ReportBusiness {
         List<VentasPorDia> lstVentas = new ArrayList<VentasPorDia>();
         QNotaVenta nv = QNotaVenta.notaVenta;
         List<NotaVenta> lstNotas = (List<NotaVenta>) notaVentaRepository.findAll(
-                nv.fechaHoraFactura.between(fechaInicio,fechaFin).and(nv.factura.isNotEmpty()).
-                        and(nv.sFactura.ne(TAG_CANCELADO)), nv.factura.asc() );
+                nv.fechaHoraFactura.between(fechaInicio,fechaFin).and(nv.factura.isNotEmpty()), nv.factura.asc() );
 
         QModificacion modificacion = QModificacion.modificacion;
         List<Modificacion> lstCanceladas = (List<Modificacion>) modificacionRepository.findAll(modificacion.tipo.eq(TAG_TIPO_CANCELADO).
@@ -2047,14 +2044,14 @@ public class ReportBusiness {
   public List<TrabajosSinEntregar> obtenerTrabajosSinEntregar( Date fechaInicio, Date fechaFin ){
       List<TrabajosSinEntregar> lstTrabajos = new ArrayList<TrabajosSinEntregar>();
       QJb jb = QJb.jb;
-      List<Jb> trabajos = ( List<Jb> )jbRepository.findAll(jb.notaVenta.fechaHoraFactura.isNull().
+      /*List<Jb> trabajos = ( List<Jb> )jbRepository.findAll(jb.notaVenta.fechaHoraFactura.isNull().
               and(jb.estado.eq('RS').and()));
 
       for(Jb trabajo : trabajos){
         String linea = articulos.getIdGenerico();
         FacturasPorEmpleado facturas = FindOorCreate( lstArticulos, linea );
         facturas.AcumulaMarcasResumido( articulos.getMarca(), articulos );
-      }
+      }*/
 
       return lstTrabajos;
   }

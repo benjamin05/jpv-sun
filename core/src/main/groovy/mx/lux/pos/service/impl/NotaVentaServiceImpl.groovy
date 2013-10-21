@@ -30,6 +30,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
   private static final String TAG_TIPO_NOTA_VENTA = 'F'
   private static final String TAG_NOTA_CANCELADA = 'T'
   private static final String TAG_TRANSFERENCIA = 'TR'
+  private static final String TAG_GENERICOS_B = 'B'
 
   @Resource
   private NotaVentaRepository notaVentaRepository
@@ -708,7 +709,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
     NotaVenta nota = notaVentaRepository.findOne( idFactura )
     Boolean esInventariable = true
     for(DetalleNotaVenta det : nota.detalles){
-      if( !TAG_GENERICOS_INVENTARIABLES.contains(det?.articulo?.idGenerico?.trim()) ){
+      if( TAG_GENERICOS_B.contains(det?.articulo?.idGenerico?.trim()) ){
         esInventariable = false
       }
     }
