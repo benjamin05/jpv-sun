@@ -275,7 +275,7 @@ class ComprobanteServiceImpl implements ComprobanteService {
           }
           BigDecimal total = venta.ventaNeta ? venta.ventaNeta.subtract(montoCupones): BigDecimal.ZERO
           BigDecimal subTotal = total.divide( referencia, 10, RoundingMode.CEILING ) ?: BigDecimal.ZERO
-          BigDecimal impuestos = total.subtract( subTotal )
+          BigDecimal impuestos = (total.subtract( subTotal ))
 
           Comprobante ultimo = null
           List<Comprobante> anteriores = comprobanteRepository.findByTicketOrderByFechaImpresionDesc( comprobante.ticket )
@@ -372,8 +372,8 @@ class ComprobanteServiceImpl implements ComprobanteService {
                             idGenerico: idGenerico,
                             descripcion: descripcion,
                             cantidad: quantity,
-                            precioUnitario: priceUnit,
-                            importe: amount
+                            precioUnitario: priceUnit.setScale(2, RoundingMode.CEILING),
+                            importe: amount.setScale(2, RoundingMode.CEILING)
                     )
                     if( genericoAyB && descripcion.trim().contains('ANTEOJO GRADUADO') ){
                       if( !ABinsertado ){
@@ -409,9 +409,9 @@ class ComprobanteServiceImpl implements ComprobanteService {
 
           comprobante.factura = venta.factura
           comprobante.idCliente = venta.idCliente
-          comprobante.importe = sprintf( '$%,3.2f', total ?: BigDecimal.ZERO )
-          comprobante.subtotal = subTotal
-          comprobante.impuestos = impuestos
+          comprobante.importe = total.setScale(2, RoundingMode.CEILING)
+          comprobante.subtotal = subTotal.setScale(2, RoundingMode.CEILING)
+          comprobante.impuestos = impuestos.setScale(2, RoundingMode.CEILING)
           comprobante.estatus = 'N'
           comprobante.formaPago = formaPago
           comprobante.metodoPago = "${pago?.eTipoPago?.descripcion ?: ''} ${pago?.referenciaPago ?: ''}"
