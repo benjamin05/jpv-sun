@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
 
@@ -226,46 +227,55 @@ public class ReportBusiness {
     public List<IngresoPorVendedor> obtenerVentasporVendedor( Date fechaInicio, Date fechaFin ) {
 
         List<IngresoPorVendedor> lstIngresos = new ArrayList<IngresoPorVendedor>();
+        List<IngresoPorVendedor> lstIngresosCan = new ArrayList<IngresoPorVendedor>();
         //List<IngresoPorVendedor> lstIngresosTmp = new ArrayList<IngresoPorVendedor>();
         List<String> empleados = notaVentaRepository.empleadosFechas(fechaInicio,fechaFin);
 
         QNotaVenta notaVenta = QNotaVenta.notaVenta;
         List<NotaVenta> lstVentas = ( List<NotaVenta> ) notaVentaRepository.findAll( notaVenta.factura.isNotEmpty().and(notaVenta.factura.isNotNull()).
-                and(notaVenta.fechaHoraFactura.between(fechaInicio, fechaFin)).and(notaVenta.sFactura.ne("T")),
+                and(notaVenta.fechaHoraFactura.between(fechaInicio, fechaFin)),
                 notaVenta.idEmpleado.asc(), notaVenta.fechaHoraFactura.asc() );
 
         for( NotaVenta nota : lstVentas ){
-            if( !TAG_CANCELADO.equalsIgnoreCase(nota.getsFactura()) ){
+            //if( !TAG_CANCELADO.equalsIgnoreCase(nota.getsFactura()) ){
               IngresoPorVendedor venta = FindorCreate(lstIngresos, nota.getIdEmpleado());
               venta.AcumulaVentaPorVendedor( nota );
-          }
+          //}
         }
-
+        for(IngresoPorVendedor ingreso : lstIngresos){
+          Collections.sort( ingreso.getPagos(), new Comparator<IngresoPorFactura>() {
+              @Override
+              public int compare(IngresoPorFactura o1, IngresoPorFactura o2) {
+                  return o1.getIdFactura().compareTo(o2.getIdFactura());
+              }
+          });
+        }
         QModificacion modificacion = QModificacion.modificacion;
         List<Modificacion> lstCancelaciones = (List<Modificacion>)modificacionRepository.findAll( modificacion.fecha.between(fechaInicio,fechaFin).
-                and(modificacion.notaVenta.fechaHoraFactura.notBetween(fechaInicio,fechaFin)).and(modificacion.tipo.eq("can")),
+                and(modificacion.tipo.eq("can")),
                 modificacion.notaVenta.idEmpleado.asc() );
 
         for( Modificacion mod : lstCancelaciones ){
-            IngresoPorVendedor cancelacion = FindorCreate( lstIngresos, mod.getNotaVenta().getIdEmpleado() );
+            IngresoPorVendedor cancelacion = FindorCreate( lstIngresosCan, mod.getNotaVenta().getIdEmpleado() );
             cancelacion.AcumulaCancelacionesPorVendedor( mod );
         }
 
-        /*for(String empleado : empleados){
-         Empleado emp = empleadoRepository.findById(empleado);
-            if(emp.getIdPuesto() == 1 || emp.getIdPuesto() == 5){
-
-        QNotaVenta notaVenta = QNotaVenta.notaVenta;
-        List<NotaVenta> lstVentas = ( List<NotaVenta> ) notaVentaRepository.findAll( notaVenta.factura.isNotEmpty().and( notaVenta.factura.isNotNull() ).
-                and( notaVenta.fechaHoraFactura.between( fechaInicio, fechaFin ) ).and(notaVenta.sFactura.ne("T")).and(notaVenta.idEmpleado.eq(empleado.trim())),
-                notaVenta.idEmpleado.asc(), notaVenta.fechaHoraFactura.asc() );
-
-        IngresoPorVendedor ingreso = agregaRegistros(lstVentas);
-        if( ingreso != null ){
-          lstIngresos.add(ingreso);
-        }
+        for(IngresoPorVendedor inCan : lstIngresosCan){
+            for(IngresoPorVendedor in : lstIngresos){
+              if(in.getIdEmpleado().equalsIgnoreCase(inCan.getIdEmpleado())){
+                in.getPagos().addAll(inCan.getPagos());
+              }
             }
-        }*/
+        }
+
+        for(IngresoPorVendedor ingreso : lstIngresos){
+            Collections.sort( ingreso.getPagos(), new Comparator<IngresoPorFactura>() {
+                @Override
+                public int compare(IngresoPorFactura o1, IngresoPorFactura o2) {
+                    return o1.getIdFactura().compareTo(o2.getIdFactura());
+                }
+            });
+        }
 
         return lstIngresos;
     }
@@ -1362,14 +1372,15 @@ public class ReportBusiness {
         Impuesto iva = impuestoRepository.findOne( ivaVigenteParam.getValor() );
         Double ivaTasa = iva.getTasa() / 100;
         List<IngresoPorVendedor> lstVentas = new ArrayList<IngresoPorVendedor>();
+        List<IngresoPorVendedor> lstVentasCan = new ArrayList<IngresoPorVendedor>();
 
         QNotaVenta venta = QNotaVenta.notaVenta;
         List<NotaVenta> lstVenta = ( List<NotaVenta> ) notaVentaRepository.findAll( venta.fechaHoraFactura.between( fechaInicio, fechaFin ).
-                and( venta.sFactura.ne(TAG_CANCELADO) ).and( venta.receta.isNotNull() ).and( venta.factura.isNotEmpty() ).
+                and( venta.receta.isNotNull() ).and( venta.factura.isNotEmpty() ).
                 and( venta.factura.isNotNull() ), venta.idEmpleado.asc() );
         QModificacion modificacion = QModificacion.modificacion;
         List<Modificacion> lstCancelaciones = (List<Modificacion>) modificacionRepository.findAll(modificacion.tipo.eq("can").
-                and(modificacion.fecha.between(fechaInicio, fechaFin)).and(modificacion.notaVenta.fechaHoraFactura.notBetween(fechaInicio, fechaFin)).
+                and(modificacion.fecha.between(fechaInicio, fechaFin)).
                 and(modificacion.notaVenta.receta.isNotNull()).
                 and(modificacion.notaVenta.factura.isNotNull()).and(modificacion.notaVenta.factura.isNotEmpty()));
 
@@ -1379,8 +1390,9 @@ public class ReportBusiness {
         for ( NotaVenta ventas : lstVenta ) {
             montoTotal = montoTotal.add( ventas.getVentaNeta() );
             String idEmpleado = ventas.getIdEmpleado();
-            Receta receta = recetaRepository.findOne( ventas.getReceta() );
-            if(receta.getIdOptometrista().toString().trim().equalsIgnoreCase(ventas.getIdEmpleado().trim())){
+            //Receta receta = recetaRepository.findOne( ventas.getReceta() );
+            //if(receta.getIdOptometrista().toString().trim().equalsIgnoreCase(ventas.getIdEmpleado().trim())){
+            if( ventas.getRx() != null && ventas.getIdEmpleado().trim().equalsIgnoreCase(ventas.getRx().getIdOptometrista().trim())){
               IngresoPorVendedor ingresos = FindorCreate( lstVentas, idEmpleado );
               ingresos.AcumulaOptometrista( ventas, montoTotal, totalFacturas, ivaTasa );
             }
@@ -1388,10 +1400,19 @@ public class ReportBusiness {
 
         for ( Modificacion mod : lstCancelaciones ) {
             String idEmpleado = mod.getNotaVenta().getIdEmpleado();
-            Receta receta = recetaRepository.findOne( mod.getNotaVenta().getReceta() );
-            if(receta.getIdOptometrista().toString().trim().equalsIgnoreCase(mod.getNotaVenta().getIdEmpleado().trim())){
-                IngresoPorVendedor ingresos = FindorCreate( lstVentas, idEmpleado );
+            //Receta receta = recetaRepository.findOne( mod.getNotaVenta().getReceta() );
+            //if(receta.getIdOptometrista().toString().trim().equalsIgnoreCase(mod.getNotaVenta().getIdEmpleado().trim())){
+            if( mod.getNotaVenta().getRx() != null && mod.getNotaVenta().getIdEmpleado().trim().equalsIgnoreCase(mod.getNotaVenta().getRx().getIdOptometrista().trim())){
+                IngresoPorVendedor ingresos = FindorCreate( lstVentasCan, idEmpleado );
                 ingresos.AcumulaCanOptometrista( mod.getNotaVenta(), totalFacturas, ivaTasa );
+            }
+        }
+
+        for(IngresoPorVendedor inCan : lstVentasCan){
+            for(IngresoPorVendedor in : lstVentas){
+                if(in.getIdEmpleado().equalsIgnoreCase(inCan.getIdEmpleado())){
+                    in.getPagos().addAll(inCan.getPagos());
+                }
             }
         }
 
@@ -1934,16 +1955,30 @@ public class ReportBusiness {
 
         QModificacion modificacion = QModificacion.modificacion;
         List<Modificacion> lstCanceladas = (List<Modificacion>) modificacionRepository.findAll(modificacion.tipo.eq(TAG_TIPO_CANCELADO).
-                and(modificacion.fecha.between(fechaInicio,fechaFin)).and(modificacion.notaVenta.fechaHoraFactura.notBetween(fechaInicio,fechaFin)));
+                and(modificacion.fecha.between(fechaInicio,fechaFin)));
 
         for( NotaVenta notas : lstNotas ){
-            VentasPorDia ventas = findorCreateFactura( lstVentas, notas.getFactura() );
-            ventas.acumulaVentasPorDiaMasVision( notas );
+            List<Modificacion> lstModificacion = new ArrayList<Modificacion>();
+            String modDate = "";
+            /*if(notas.getsFactura().equalsIgnoreCase(TAG_CANCELADO)){
+              lstModificacion = modificacionRepository.findByIdFactura( notas.getId() );
+              if( lstModificacion.size() > 0 ){
+                modDate = new SimpleDateFormat( "dd/MM/yyyy" ).format( lstModificacion.get(0).getFecha() );
+              }
+            }
+            String saleDate = new SimpleDateFormat( "dd/MM/yyyy" ).format( notas.getFechaHoraFactura() );
+            if( !saleDate.equalsIgnoreCase(modDate) ){*/
+              VentasPorDia ventas = findorCreateFactura( lstVentas, notas.getFactura() );
+              ventas.acumulaVentasPorDiaMasVision( notas );
+            //}
         }
-
         for( Modificacion mod : lstCanceladas){
-            VentasPorDia cancelaciones = findorCreateFactura( lstVentas, mod.getNotaVenta().getFactura() );
-            cancelaciones.acumulaCancelacionesPorDiaMasVision( mod );
+            /*String saleDate = new SimpleDateFormat( "dd/MM/yyyy" ).format( mod.getNotaVenta().getFechaHoraFactura() );
+            String modDate = new SimpleDateFormat( "dd/MM/yyyy" ).format( mod.getFecha() );
+            if( !saleDate.equalsIgnoreCase(modDate) ){*/
+              VentasPorDia cancelaciones = findorCreateFactura( lstVentas, mod.getNotaVenta().getFactura() );
+              cancelaciones.acumulaCancelacionesPorDiaMasVision( mod );
+            //}
         }
         return lstVentas;
     }

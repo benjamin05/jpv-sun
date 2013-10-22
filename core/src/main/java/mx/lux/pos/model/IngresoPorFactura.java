@@ -108,11 +108,10 @@ public class IngresoPorFactura {
         }
         descripcion = descripcion.replaceFirst(",","");
         for(Pago pago : nota.getPagos()){
-          if( !TAG_CUPON.startsWith(pago.getIdFPago()) ){
-            total = total.add(pago.getMonto());
-          } else if( TAG_CUPON.startsWith(pago.getIdFPago()) ){
+          if( pago.getIdFPago().startsWith(TAG_CUPON) ){
             totalCupon = totalCupon.add(pago.getMonto());
           }
+          total = total.add(pago.getMonto());
         }
         sumaMonto = total.subtract(totalCupon);
     }
@@ -129,11 +128,10 @@ public class IngresoPorFactura {
         }
         descripcion = descripcion.replaceFirst(",","");
         for(Pago pago : modificacion.getNotaVenta().getPagos()){
-            if( !TAG_CUPON.startsWith(pago.getIdFPago()) ){
-                total = total.subtract(pago.getMonto());
-            } else if( TAG_CUPON.startsWith(pago.getIdFPago()) ){
-                totalCupon = totalCupon.subtract(pago.getMonto());
+            if( TAG_CUPON.startsWith(pago.getIdFPago()) ){
+              totalCupon = totalCupon.subtract(pago.getMonto());
             }
+            total = total.subtract(pago.getMonto());
         }
         sumaMonto = total.subtract(totalCupon);
     }

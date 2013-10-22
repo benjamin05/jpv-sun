@@ -196,6 +196,11 @@ public class NotaVenta implements Serializable {
 
     @ManyToOne
     @NotFound( action = NotFoundAction.IGNORE )
+    @JoinColumn( name = "emp_entrego", insertable = false, updatable = false )
+    private Empleado empleadoEntrego;
+
+    @ManyToOne
+    @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "id_sucursal", insertable = false, updatable = false )
     private Sucursal sucursal;
 
@@ -681,5 +686,13 @@ public class NotaVenta implements Serializable {
 
     public void setRx(Receta rx) {
         this.rx = rx;
+    }
+
+    public Empleado getEmpleadoEntrego() {
+        return empleadoEntrego;
+    }
+
+    public void setEmpleadoEntrego(Empleado empleadoEntrego) {
+        this.empleadoEntrego = empleadoEntrego;
     }
 }

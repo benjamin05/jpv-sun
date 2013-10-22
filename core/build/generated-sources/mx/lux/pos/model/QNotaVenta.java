@@ -34,6 +34,8 @@ public class QNotaVenta extends EntityPathBase<NotaVenta> {
 
     public final QEmpleado empleado;
 
+    public final QEmpleado empleadoEntrego;
+
     public final QExamen examen;
 
     public final StringPath factura = createString("factura");
@@ -144,6 +146,7 @@ public class QNotaVenta extends EntityPathBase<NotaVenta> {
         super(type, metadata, inits);
         this.cliente = inits.isInitialized("cliente") ? new QCliente(forProperty("cliente"), inits.get("cliente")) : null;
         this.empleado = inits.isInitialized("empleado") ? new QEmpleado(forProperty("empleado"), inits.get("empleado")) : null;
+        this.empleadoEntrego = inits.isInitialized("empleadoEntrego") ? new QEmpleado(forProperty("empleadoEntrego"), inits.get("empleadoEntrego")) : null;
         this.examen = inits.isInitialized("examen") ? new QExamen(forProperty("examen"), inits.get("examen")) : null;
         this.rx = inits.isInitialized("rx") ? new QReceta(forProperty("rx"), inits.get("rx")) : null;
         this.sucursal = inits.isInitialized("sucursal") ? new QSucursal(forProperty("sucursal"), inits.get("sucursal")) : null;

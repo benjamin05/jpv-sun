@@ -23,7 +23,8 @@ class Order {
   Branch branch
   Customer customer
   String employee
-    String country
+  String country
+  String employeeDeliver
   List<OrderItem> items = [ ]
   List<Payment> payments = [ ]
   List<IPromotion> deals = [ ]
@@ -84,12 +85,13 @@ class Order {
           paid: notaVenta.sumaPagos ?: 0,
           country:notaVenta.udf2 != null ? notaVenta.udf2: '',
           employee: "${[notaVenta.idEmpleado]}${notaVenta.empleado?.nombreCompleto}",
+          employeeDeliver: "${[notaVenta?.empEntrego]}${notaVenta?.empleadoEntrego?.nombreCompleto}",
           dioptra: notaVenta.codigo_lente,
           udf2: notaVenta.udf2,
           udf3: notaVenta.udf3,
 
           fechaEntrega: notaVenta.fechaEntrega,
-          empEntrega: notaVenta.empEntrego,
+          empEntrega: "[${notaVenta.empEntrego}] ${notaVenta.empleadoEntrego != null ? notaVenta.empleadoEntrego.nombreCompleto : ""}",
 
           rx: notaVenta.receta
 

@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Trabajos_Sin_Entregar" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3aeb0ff7-b177-4089-a63e-9c0e68f93018">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="56"/>
+	<property name="ireport.y" value="117"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -83,9 +83,9 @@
 		</band>
 	</title>
 	<detail>
-		<band height="205" splitType="Stretch">
+		<band height="258" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="1eb3705f-d61a-449d-8185-68162e9429f4" positionType="Float" x="77" y="78" width="389" height="14"/>
+				<reportElement uuid="1eb3705f-d61a-449d-8185-68162e9429f4" positionType="Float" x="77" y="84" width="389" height="14"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{lstTrabajosSuc})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["reports/Trabajo_Sin_Entregar_GarOs.jasper"]]></subreportExpression>
 			</subreport>
@@ -117,37 +117,16 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalFacturas}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement uuid="fca9ea83-f891-435b-9f21-6128d1d15a23" x="77" y="50" width="100" height="14"/>
-				<textElement>
-					<font fontName="DejaVu Sans" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Recibe Sucursal]]></text>
-			</staticText>
 			<subreport>
-				<reportElement uuid="1eb3705f-d61a-449d-8185-68162e9429f4" positionType="Float" x="77" y="132" width="389" height="14"/>
+				<reportElement uuid="1eb3705f-d61a-449d-8185-68162e9429f4" positionType="Float" x="77" y="163" width="389" height="14"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{lstTrabajosPin})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["reports/Trabajo_Sin_Entregar_GarOs.jasper"]]></subreportExpression>
 			</subreport>
-			<staticText>
-				<reportElement uuid="584161e3-140c-40f6-95c4-3733026f8845" positionType="Float" x="77" y="103" width="100" height="14"/>
-				<textElement>
-					<font fontName="DejaVu Sans" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Pino]]></text>
-			</staticText>
 			<subreport>
-				<reportElement uuid="1eb3705f-d61a-449d-8185-68162e9429f4" positionType="Float" x="77" y="191" width="389" height="14"/>
+				<reportElement uuid="1eb3705f-d61a-449d-8185-68162e9429f4" positionType="Float" x="77" y="244" width="389" height="14"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{lstTrabajosRet})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["reports/Trabajo_Sin_Entregar_GarOs.jasper"]]></subreportExpression>
 			</subreport>
-			<staticText>
-				<reportElement uuid="584161e3-140c-40f6-95c4-3733026f8845" positionType="Float" x="77" y="159" width="100" height="14"/>
-				<textElement>
-					<font fontName="DejaVu Sans" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Retenidos]]></text>
-			</staticText>
 			<textField pattern="$#,##0.00">
 				<reportElement uuid="576470f1-d3bf-4110-9986-3fe472b65eae" positionType="Float" x="227" y="64" width="79" height="12"/>
 				<textElement textAlignment="Right">
@@ -163,7 +142,7 @@
 				<text><![CDATA[Total Recibe Sucursal:]]></text>
 			</staticText>
 			<textField pattern="$#,##0.00">
-				<reportElement uuid="d588e3e4-1e3c-41b3-b6fa-04e9921113e6" positionType="Float" x="306" y="64" width="79" height="12"/>
+				<reportElement uuid="d588e3e4-1e3c-41b3-b6fa-04e9921113e6" positionType="Float" x="307" y="64" width="79" height="12"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
@@ -177,56 +156,56 @@
 				<textFieldExpression><![CDATA[$P{totalFacturasSuc}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="6a8eb4ae-9c18-43b1-90db-8df91fc498d5" positionType="Float" x="77" y="117" width="73" height="12"/>
+				<reportElement uuid="6a8eb4ae-9c18-43b1-90db-8df91fc498d5" positionType="Float" x="77" y="142" width="73" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Pino:]]></text>
 			</staticText>
 			<textField pattern="$#,##0.00">
-				<reportElement uuid="1bb46a18-ff6c-47dd-b62c-24becdd3857e" positionType="Float" x="227" y="117" width="79" height="12"/>
+				<reportElement uuid="1bb46a18-ff6c-47dd-b62c-24becdd3857e" positionType="Float" x="227" y="142" width="79" height="12"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalVentasPin}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00">
-				<reportElement uuid="f11ef740-25e6-4f5d-921d-e4fb6a44079c" positionType="Float" x="306" y="117" width="79" height="12"/>
+				<reportElement uuid="f11ef740-25e6-4f5d-921d-e4fb6a44079c" positionType="Float" x="307" y="142" width="79" height="12"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalSaldosPin}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement uuid="aa8a055a-e721-4976-8776-6174de513348" positionType="Float" x="151" y="117" width="61" height="12"/>
+				<reportElement uuid="aa8a055a-e721-4976-8776-6174de513348" positionType="Float" x="151" y="142" width="61" height="12"/>
 				<textElement textAlignment="Center">
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalFacturasPin}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00">
-				<reportElement uuid="18db27bf-5864-4933-9059-04a8b10baa72" positionType="Float" x="227" y="173" width="73" height="12"/>
+				<reportElement uuid="18db27bf-5864-4933-9059-04a8b10baa72" positionType="Float" x="227" y="217" width="73" height="12"/>
 				<textElement textAlignment="Right">
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalVentasRet}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="5c316a86-3ccb-495b-8d6f-57bdfc3f18d2" positionType="Float" x="55" y="173" width="95" height="12"/>
+				<reportElement uuid="5c316a86-3ccb-495b-8d6f-57bdfc3f18d2" positionType="Float" x="55" y="217" width="95" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Retenidos:]]></text>
 			</staticText>
 			<textField pattern="$#,##0.00">
-				<reportElement uuid="662d9f27-9600-4550-9697-354bca6fc223" positionType="Float" x="300" y="173" width="79" height="12"/>
+				<reportElement uuid="662d9f27-9600-4550-9697-354bca6fc223" positionType="Float" x="302" y="217" width="84" height="12"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalSaldosRet}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="b12c9ae4-80f4-4e30-8167-c8e66b8e3d6b" positionType="Float" x="154" y="173" width="58" height="12"/>
+				<reportElement uuid="b12c9ae4-80f4-4e30-8167-c8e66b8e3d6b" positionType="Float" x="154" y="217" width="58" height="12"/>
 				<textElement textAlignment="Center">
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>

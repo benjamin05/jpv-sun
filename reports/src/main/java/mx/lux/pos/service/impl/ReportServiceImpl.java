@@ -1467,8 +1467,8 @@ public class ReportServiceImpl implements ReportService {
         for(VentasPorDia ventas : lstVentas){
           totalVentas = totalVentas.add(ventas.getMontoTotal());
           totalCupones = totalCupones.add(ventas.getMontoDescuento());
-          totalVentaNeta = totalVentaNeta.add(ventas.getMontoConDescuento());
         }
+        totalVentaNeta = totalVentas.subtract(totalCupones);
 
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );

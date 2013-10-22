@@ -89,7 +89,7 @@ class ShowOrderPanel extends JPanel {
           navigatorPanel = panel( constraints: 'skip' )
         }
 
-        panel( border: loweredEtchedBorder(), layout: new MigLayout( 'wrap 2', '[][grow,right]', '[top]' ) ) {
+        panel( border: loweredEtchedBorder(), layout: new MigLayout( 'wrap 2', '[grow][grow,right]', '[top]' ) ) {
 
           label( 'Factura' )
           bill = label()
@@ -98,7 +98,7 @@ class ShowOrderPanel extends JPanel {
           employee = label( constraints: 'span 2', maximumSize: [ 210, 30 ] )
             status = label(  foreground: UI_Standards.NORMAL_FOREGROUND, visible: false )
             fechaE = label(foreground: UI_Standards.NORMAL_FOREGROUND, visible: false )
-            empIDE = label(constraints: 'span 2,hidemode 3', maximumSize: [ 210, 30 ] ,foreground: UI_Standards.NORMAL_FOREGROUND, visible: false )
+            empIDE = label(constraints: 'span 2', maximumSize: [ 210, 30 ] ,foreground: UI_Standards.NORMAL_FOREGROUND )
 
         }
 
@@ -205,10 +205,10 @@ class ShowOrderPanel extends JPanel {
         if('T'.equalsIgnoreCase( order.status )){
             bean( status, text: 'CANCELADA',foreground: UI_Standards.WARNING_FOREGROUND,visible: bind {'T'.equalsIgnoreCase( order.status )} )
         }
-        bean( fechaE, visible: bind { order.fechaEntrega != null && !'T'.equalsIgnoreCase( order.status )} )
-        bean( fechaE, text: bind( source: order, sourceProperty: 'fechaEntrega', converter: dateConverter ) )
-        bean( empIDE, visible: bind { order.fechaEntrega != null && !'T'.equalsIgnoreCase( order.status )} )
-        bean( empIDE, text: bind( source: order, sourceProperty: 'employee' ) )
+      bean( fechaE, visible: bind { order.fechaEntrega != null && !'T'.equalsIgnoreCase( order.status )} )
+      bean( fechaE, text: bind( source: order, sourceProperty: 'fechaEntrega', converter: dateConverter ) )
+      bean( empIDE, visible: bind { order.fechaEntrega != null && !'T'.equalsIgnoreCase( order.status )} )
+      bean( empIDE, text: bind( source: order, sourceProperty: 'empEntrega' ) )
       bean( date, text: bind( source: order, sourceProperty: 'date', converter: dateConverter ) )
       bean( total, text: bind( source: order, sourceProperty: 'total', converter: currencyConverter ) )
       bean( paid, text: bind( source: order, sourceProperty: 'paid', converter: currencyConverter ) )
