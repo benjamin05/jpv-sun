@@ -242,6 +242,7 @@ public class ReportBusiness {
               venta.AcumulaVentaPorVendedor( nota );
           //}
         }
+
         for(IngresoPorVendedor ingreso : lstIngresos){
           Collections.sort( ingreso.getPagos(), new Comparator<IngresoPorFactura>() {
               @Override
@@ -1416,6 +1417,15 @@ public class ReportBusiness {
             }
         }
 
+        for(IngresoPorVendedor ing : lstVentas){
+          Collections.sort( ing.getPagos(), new Comparator<IngresoPorFactura>() {
+              @Override
+              public int compare(IngresoPorFactura o1, IngresoPorFactura o2) {
+                  return o1.getIdFactura().compareTo(o2.getIdFactura());
+              }
+          } );
+        }
+
         return lstVentas;
     }
 
@@ -1949,6 +1959,7 @@ public class ReportBusiness {
     
     public List<VentasPorDia> obtenerVentasPorPeriodoMasVision( Date fechaInicio, Date fechaFin ){
         List<VentasPorDia> lstVentas = new ArrayList<VentasPorDia>();
+        List<VentasPorDia> lstVentasCan = new ArrayList<VentasPorDia>();
         QNotaVenta nv = QNotaVenta.notaVenta;
         List<NotaVenta> lstNotas = (List<NotaVenta>) notaVentaRepository.findAll(
                 nv.fechaHoraFactura.between(fechaInicio,fechaFin).and(nv.factura.isNotEmpty()), nv.factura.asc() );
@@ -1976,10 +1987,20 @@ public class ReportBusiness {
             /*String saleDate = new SimpleDateFormat( "dd/MM/yyyy" ).format( mod.getNotaVenta().getFechaHoraFactura() );
             String modDate = new SimpleDateFormat( "dd/MM/yyyy" ).format( mod.getFecha() );
             if( !saleDate.equalsIgnoreCase(modDate) ){*/
-              VentasPorDia cancelaciones = findorCreateFactura( lstVentas, mod.getNotaVenta().getFactura() );
+              VentasPorDia cancelaciones = findorCreateFactura( lstVentasCan, mod.getNotaVenta().getFactura() );
               cancelaciones.acumulaCancelacionesPorDiaMasVision( mod );
             //}
         }
+
+        for(VentasPorDia inCan : lstVentasCan){
+            lstVentas.add( inCan );
+        }
+        Collections.sort( lstVentas, new Comparator<VentasPorDia>() {
+            @Override
+            public int compare(VentasPorDia o1, VentasPorDia o2) {
+                return o1.getFactura().compareTo(o2.getFactura());
+            }
+        } );
         return lstVentas;
     }
 
