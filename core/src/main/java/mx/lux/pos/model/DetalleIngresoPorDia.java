@@ -114,6 +114,39 @@ public class DetalleIngresoPorDia {
     }
 
 
+    public void AcumulaSaldosCierre( Pago pago, BigDecimal ventaTotal, Date fecha, String totalDolares) {
+        NumberFormat formatter = new DecimalFormat("$#,##0.00");
+        this.fecha = fecha;
+            if (pago.getIdFPago().equalsIgnoreCase("EF")) {
+                pagoEf = pagoEf.add(pago.getMonto());
+            } else if (pago.getIdFPago().equalsIgnoreCase("EFD")) {
+                pagoEfUs = pagoEfUs.add(pago.getMonto());
+                pagoTDConDolares = String.format("%s (%s)", formatter.format(pagoEfUs.doubleValue()), pago.getIdPlan());
+            } else if (pago.getIdFPago().equalsIgnoreCase("TC") || pago.getIdFormaPago().equalsIgnoreCase("TD")) {
+                pagoTN = pagoTN.add(pago.getMonto());
+            } else if (pago.getIdFPago().equalsIgnoreCase("TCD") || pago.getIdFormaPago().equalsIgnoreCase("TDD")) {
+                pagoTD = pagoTD.add(pago.getMonto());
+            } else if (pago.getIdFPago().equalsIgnoreCase("TR")) {
+                pagoTR = pagoTR.add(pago.getMonto());
+            } else if (!pago.getIdFPago().equalsIgnoreCase("EF") && !pago.getIdFPago().equalsIgnoreCase("EFD")
+                    && !pago.getIdFPago().equalsIgnoreCase("TC") && !pago.getIdFPago().equalsIgnoreCase("TD")
+                    && !pago.getIdFPago().equalsIgnoreCase("TCD") && !pago.getIdFPago().equalsIgnoreCase("TDD")
+                    && !pago.getIdFPago().equalsIgnoreCase("TR")) {
+                pagoOtros = pagoOtros.add(pago.getMonto());
+            }
+            montoTotal = montoTotal.add(pago.getMonto());
+            if (pago.getTerminal() != null) {
+                terminal = pago.getTerminal().getDescripcion();
+            }
+            plan = pago.getIdPlan();
+            if (StringUtils.trimToEmpty(pagoTDConDolares).length() <= 0) {
+                pagoTDConDolares = "$0.00";
+            }
+        this.totalDolares = totalDolares;
+        montoPago = ventaTotal;
+    }
+
+
     public void AcumulaDevolucionesCierre( Devolucion devolucion, BigDecimal ventaTotal, Date fecha, String totalDolares) {
         NumberFormat formatter = new DecimalFormat("$#,##0.00");
         this.fecha = fecha;

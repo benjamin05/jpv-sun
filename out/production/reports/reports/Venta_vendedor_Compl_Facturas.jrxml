@@ -108,7 +108,7 @@
 				</textElement>
 				<text><![CDATA[Total Neto:]]></text>
 			</staticText>
-			<textField evaluationTime="Report">
+			<textField evaluationTime="Report" pattern="$#,##0.00">
 				<reportElement uuid="0dad4c60-1881-4fda-a796-06bb7f4ff52b" x="166" y="8" width="104" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>

@@ -1898,21 +1898,17 @@ public class ReportBusiness {
     public List<ResumenCierre> obtenerSaldosCierreDiario( Date fechaInicio, Date fechaFin ){
         List<ResumenCierre> lstIngresos = new ArrayList<ResumenCierre>();
         QNotaVenta nota = QNotaVenta.notaVenta;
-        List<NotaVenta> lstNotasVentas = ( List<NotaVenta> ) notaVentaRepository.findAll( nota.fechaHoraFactura.between(fechaInicio, fechaFin).
-                and( nota.factura.isNotEmpty() ).and(nota.factura.isNotNull()).and(nota.sFactura.ne(TAG_CANCELADO)), nota.fechaHoraFactura.asc() );
-        for( NotaVenta notaVenta : lstNotasVentas ){
-          BigDecimal saldo = notaVenta.getVentaNeta().subtract(notaVenta.getSumaPagos());
-          if( BigDecimal.ZERO.compareTo(saldo) < 0){
-            List<Pago> lstPagos = new ArrayList<Pago>(notaVenta.getPagos());
-            if( lstPagos.size() > 0 ){
-              ResumenCierre ingreso = FindOrCreateCierreDiario(lstIngresos, notaVenta.getFechaHoraFactura());
-              ingreso.acumulaIngresosPorDia(notaVenta);
-            }
-          }
+        /*List<NotaVenta> lstNotasVentas = ( List<NotaVenta> ) notaVentaRepository.findAll( nota.fechaHoraFactura.between(fechaInicio, fechaFin).
+                and( nota.factura.isNotEmpty() ).and(nota.factura.isNotNull()).and(nota.sFactura.ne(TAG_CANCELADO)), nota.fechaHoraFactura.asc() );*/
+        QPago payment = QPago.pago;
+        List<Pago> lstPagos = (List<Pago>) pagoRepository.findAll(payment.fecha.between(fechaInicio,fechaFin).
+                and(payment.notaVenta.fechaHoraFactura.notBetween(fechaInicio,fechaFin)));
+        Boolean esSaldo = false;
+        for(Pago pago : lstPagos){
+          ResumenCierre ingreso = FindOrCreateCierreDiario(lstIngresos, pago.getFecha());
+          ingreso.acumulaSaldosPorDia( pago );
         }
-
         return lstIngresos;
-
     }
 
     
@@ -1920,8 +1916,8 @@ public class ReportBusiness {
         List<ResumenCierre> lstIngresos = new ArrayList<ResumenCierre>();
         List<Pago> lstPagos = new ArrayList<Pago>();
         QDevolucion dev = QDevolucion.devolucion;
-        List<Devolucion> lstDevoluciones = ( List<Devolucion> ) devolucionRepository.findAll( dev.fecha.between( fechaInicio, fechaFin ).
-                and( dev.tipo.eq( String.valueOf( "d" ) ) ), dev.idPago.asc() );
+        List<Devolucion> lstDevoluciones = ( List<Devolucion> ) devolucionRepository.findAll( dev.fecha.between( fechaInicio, fechaFin ),
+                dev.idPago.asc() );
         for( Devolucion devolucion : lstDevoluciones ){
             ResumenCierre ingreso = FindOrCreateCierreDiario( lstIngresos, fechaInicio );
             ingreso.acumulaDevolucionesPorDia( devolucion );

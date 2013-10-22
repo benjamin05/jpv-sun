@@ -11,17 +11,14 @@
 	<field name="totalCupon" class="java.math.BigDecimal"/>
 	<field name="montoPagoSinIVA" class="java.math.BigDecimal"/>
 	<field name="montoPago" class="java.math.BigDecimal"/>
-	<variable name="sumaMonto_1" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{sumaMonto}]]></variableExpression>
-	</variable>
-	<variable name="sumaMonto_2" class="java.math.BigDecimal" calculation="Sum">
-		<variableExpression><![CDATA[$F{sumaMonto}]]></variableExpression>
-	</variable>
 	<variable name="totalCupon_1" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalCupon}]]></variableExpression>
 	</variable>
 	<variable name="sumaMonto_3" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{sumaMonto}]]></variableExpression>
+	</variable>
+	<variable name="total_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{total}]]></variableExpression>
 	</variable>
 	<background>
 		<band splitType="Stretch"/>
@@ -84,23 +81,16 @@
 				<text><![CDATA[Cupon]]></text>
 			</staticText>
 			<textField evaluationTime="Report" pattern="$#,##0.00">
-				<reportElement uuid="d110562b-c7a8-4280-a375-6232c707397a" x="166" y="8" width="100" height="14"/>
-				<textElement textAlignment="Left">
-					<font fontName="DejaVu Sans" size="9"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{sumaMonto_2}]]></textFieldExpression>
-			</textField>
-			<textField evaluationTime="Report" pattern="$#,##0.00">
 				<reportElement uuid="438fbe2a-f7e3-491e-94bd-371f1bf341c0" x="345" y="9" width="81" height="13"/>
 				<textElement textAlignment="Left">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalCupon_1}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report" pattern="$#,##0.00">
 				<reportElement uuid="79a47f8c-18a6-4a7e-910e-75be5941d9fa" x="492" y="10" width="100" height="13"/>
 				<textElement textAlignment="Left">
-					<font fontName="DejaVu Sans"/>
+					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumaMonto_3}]]></textFieldExpression>
 			</textField>
@@ -118,6 +108,13 @@
 				</textElement>
 				<text><![CDATA[Total Neto:]]></text>
 			</staticText>
+			<textField evaluationTime="Report" pattern="$#,##0.00">
+				<reportElement uuid="0dad4c60-1881-4fda-a796-06bb7f4ff52b" x="166" y="8" width="104" height="14"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_1}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<detail>

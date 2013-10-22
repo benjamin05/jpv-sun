@@ -23,6 +23,8 @@ public class ResumenCierre {
     private String idFPago;
     private String tipoPago;
 
+    private static final String TAG_TIPO_PAGO = String.valueOf("l");
+
 
     public ResumenCierre(Date fecha) {
         this.factura = factura;
@@ -53,6 +55,20 @@ public class ResumenCierre {
                 }
             }
             detalle.AcumulaPagosCierre(new ArrayList<Pago>(notaVenta.getPagos()), notaVenta.getVentaTotal(), notaVenta.getFechaHoraFactura(), totalDolaresYPesos);
+        }
+        Collections.sort(lstPagos, new Comparator<DetalleIngresoPorDia>() {
+            @Override
+            public int compare(DetalleIngresoPorDia o1, DetalleIngresoPorDia o2) {
+                return o1.getFactura().compareToIgnoreCase(o2.getFactura());
+            }
+        });
+    }
+
+
+    public void acumulaSaldosPorDia(Pago pago) {
+        if (pago.getTipoPago().equalsIgnoreCase(TAG_TIPO_PAGO)) {
+            DetalleIngresoPorDia detalle = FindOrCreate(lstPagos, pago.getNotaVenta().getFactura());
+            detalle.AcumulaSaldosCierre(pago, pago.getNotaVenta().getVentaTotal(), pago.getNotaVenta().getFechaHoraFactura(), totalDolaresYPesos);
         }
         Collections.sort(lstPagos, new Comparator<DetalleIngresoPorDia>() {
             @Override
