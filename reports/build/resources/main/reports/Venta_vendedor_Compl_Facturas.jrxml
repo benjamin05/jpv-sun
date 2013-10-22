@@ -17,13 +17,19 @@
 	<variable name="sumaMonto_2" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{sumaMonto}]]></variableExpression>
 	</variable>
+	<variable name="totalCupon_1" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalCupon}]]></variableExpression>
+	</variable>
+	<variable name="sumaMonto_3" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{sumaMonto}]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="51">
 			<staticText>
-				<reportElement uuid="6bdd1efe-b1d7-4aee-ba69-3527dc990116" x="93" y="8" width="100" height="14"/>
+				<reportElement uuid="6bdd1efe-b1d7-4aee-ba69-3527dc990116" x="93" y="8" width="73" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
@@ -78,12 +84,40 @@
 				<text><![CDATA[Cupon]]></text>
 			</staticText>
 			<textField evaluationTime="Report" pattern="$#,##0.00">
-				<reportElement uuid="d110562b-c7a8-4280-a375-6232c707397a" x="263" y="8" width="100" height="14"/>
-				<textElement>
+				<reportElement uuid="d110562b-c7a8-4280-a375-6232c707397a" x="166" y="8" width="100" height="14"/>
+				<textElement textAlignment="Left">
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{sumaMonto_2}]]></textFieldExpression>
 			</textField>
+			<textField evaluationTime="Report" pattern="$#,##0.00">
+				<reportElement uuid="438fbe2a-f7e3-491e-94bd-371f1bf341c0" x="345" y="9" width="81" height="13"/>
+				<textElement textAlignment="Left">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalCupon_1}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report" pattern="$#,##0.00">
+				<reportElement uuid="79a47f8c-18a6-4a7e-910e-75be5941d9fa" x="492" y="10" width="100" height="13"/>
+				<textElement textAlignment="Left">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumaMonto_3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="6bdd1efe-b1d7-4aee-ba69-3527dc990116" x="270" y="8" width="73" height="14"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Total Cupones:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6bdd1efe-b1d7-4aee-ba69-3527dc990116" x="429" y="9" width="63" height="14"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<text><![CDATA[Total Neto:]]></text>
+			</staticText>
 		</band>
 	</title>
 	<detail>
@@ -99,7 +133,9 @@
 				<textFieldExpression><![CDATA[$F{fechaPago}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
-				<reportElement uuid="a9a38ae5-c079-4353-8b62-da9447f84e05" x="364" y="1" width="60" height="12"/>
+				<reportElement uuid="a9a38ae5-c079-4353-8b62-da9447f84e05" x="364" y="1" width="60" height="12">
+					<printWhenExpression><![CDATA[$F{total}.signum() == 1]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
@@ -109,14 +145,39 @@
 				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
-				<reportElement uuid="1fd06b98-cdea-43d8-9e08-96ce9b10cf52" x="488" y="1" width="86" height="12"/>
+				<reportElement uuid="1fd06b98-cdea-43d8-9e08-96ce9b10cf52" x="488" y="1" width="86" height="12">
+					<printWhenExpression><![CDATA[$F{total}.signum() == 1]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{sumaMonto}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$ #,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="5b2e74b7-2380-43e0-8106-b1c6d7d8a0ec" x="425" y="1" width="62" height="12"/>
+				<reportElement uuid="5b2e74b7-2380-43e0-8106-b1c6d7d8a0ec" x="425" y="1" width="62" height="12">
+					<printWhenExpression><![CDATA[$F{total}.signum() == 1]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{totalCupon}]]></textFieldExpression>
+			</textField>
+			<textField pattern="$ #,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="5b2e74b7-2380-43e0-8106-b1c6d7d8a0ec" x="426" y="1" width="62" height="12" forecolor="#FF0000">
+					<printWhenExpression><![CDATA[$F{total}.signum() == -1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{totalCupon}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement uuid="1fd06b98-cdea-43d8-9e08-96ce9b10cf52" x="489" y="1" width="86" height="12" forecolor="#FF0000">
+					<printWhenExpression><![CDATA[$F{total}.signum() == -1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{sumaMonto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement uuid="a9a38ae5-c079-4353-8b62-da9447f84e05" x="365" y="1" width="60" height="12" forecolor="#FF0000">
+					<printWhenExpression><![CDATA[$F{total}.signum() == -1]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
