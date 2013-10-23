@@ -77,9 +77,9 @@ public class Descuento implements Serializable {
     public String descripcionDescuento( ) {
         StringBuilder sb = new StringBuilder();
         if( clave != null && clave.trim() != "" ){
-            sb.append( StringUtils.trimToEmpty( descuentosClave.getClave_descuento() ) );
+            sb.append( StringUtils.trimToEmpty( descuentosClave != null ? StringUtils.trimToEmpty(descuentosClave.getClave_descuento() ) : "" ) );
             sb.append( "[ " );
-            sb.append( StringUtils.trimToEmpty( descuentosClave.getDescripcion_descuento() ) );
+            sb.append( StringUtils.trimToEmpty( descuentosClave != null ? StringUtils.trimToEmpty(descuentosClave.getDescripcion_descuento() ) : "" ) );
             sb.append( " ]" );
         } else {
             sb.append( "" );

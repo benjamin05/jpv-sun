@@ -1513,7 +1513,7 @@ public class ReportServiceImpl implements ReportService {
         Integer totalDesc = lstDescuentos.size();
         BigDecimal importeTotalDesc = BigDecimal.ZERO;
         for(Descuento desc : lstDescuentos){
-          importeTotalDesc = importeTotalDesc.add(desc.getNotaVenta().getMontoDescuento());
+          importeTotalDesc = importeTotalDesc.add(desc.getNotaVenta() != null ? desc.getNotaVenta().getMontoDescuento() : BigDecimal.ZERO);
         }
 
         Map<String, Object> parametros = new HashMap<String, Object>();
