@@ -1880,12 +1880,26 @@ public class ReportBusiness {
         List<ResumenCierre> lstIngresos = new ArrayList<ResumenCierre>();
         QNotaVenta nota = QNotaVenta.notaVenta;
         List<NotaVenta> lstNotasVentas = ( List<NotaVenta> ) notaVentaRepository.findAll( nota.fechaHoraFactura.between(fechaInicio, fechaFin).
-                and( nota.factura.isNotEmpty() ).and(nota.factura.isNotNull()).and(nota.sFactura.ne(TAG_CANCELADO)), nota.fechaHoraFactura.asc() );
+                and( nota.factura.isNotEmpty() ).and(nota.factura.isNotNull()), nota.fechaHoraFactura.asc() );
         for( NotaVenta notaVenta : lstNotasVentas ){
-            List<Pago> lstPagos = new ArrayList<Pago>(notaVenta.getPagos());
-            if( lstPagos.size() > 0 ){
+            Boolean canMismoDia = false;
+            if( notaVenta.getPagos().size() > 0 ){
+              if( notaVenta.getsFactura().trim().equalsIgnoreCase(TAG_CANCELADO) ){
+                List<Modificacion> lstModificaciones = modificacionRepository.findByIdFactura( notaVenta.getId() );
+                if(lstModificaciones.size() > 0){
+                  for(Modificacion mod : lstModificaciones){
+                    String modDate = new SimpleDateFormat( "dd/MM/yyyy" ).format( mod.getFecha() );
+                    String saleDate = new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaInicio );
+                    if( modDate.trim().equalsIgnoreCase(saleDate.trim()) ){
+                      canMismoDia = true;
+                    }
+                  }
+                }
+              }
+              if( !canMismoDia ){
                 ResumenCierre ingreso = FindOrCreateCierreDiario(lstIngresos, notaVenta.getFechaHoraFactura());
                 ingreso.acumulaIngresosPorDia(notaVenta);
+              }
             }
         }
 

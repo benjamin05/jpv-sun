@@ -203,17 +203,28 @@ public class ReportServiceImpl implements ReportService {
                     total = total.add(ingreso.getMontoTotal());
                 }
             }
+            for(ResumenCierre saldo : lstSaldos){
+              for(DetalleIngresoPorDia montoDev : saldo.getLstPagos()){
+                  totalEfectivo = totalEfectivo.add(montoDev.getPagoEf());
+                  totalTarjeta = totalTarjeta.add(montoDev.getPagoTN());
+                  totalTarjetaUSD = totalTarjetaUSD.add(montoDev.getPagoTD());
+                  totalUSDEfectivo = totalUSDEfectivo.add(montoDev.getPagoEfUs());
+                  totalTransferencia = totalTransferencia.add(montoDev.getPagoTR());
+                  totalOtros = totalOtros.add(montoDev.getPagoOtros());
+                  total = total.add(montoDev.getMontoTotal());
+              }
+            }
             for(ResumenCierre devolucion : lstDevoluciones){
                 for(DetalleIngresoPorDia montoDev : devolucion.getLstPagos()){
                     totalFacturas = totalFacturas-1;
-                    totalVenta = totalVenta.subtract(montoDev.getMontoPago());
-                    totalEfectivo = totalEfectivo.subtract(montoDev.getPagoEf());
-                    totalTarjeta = totalTarjeta.subtract(montoDev.getPagoTN());
-                    totalTarjetaUSD = totalTarjetaUSD.subtract(montoDev.getPagoTD());
-                    totalUSDEfectivo = totalUSDEfectivo.subtract(montoDev.getPagoEfUs());
-                    totalTransferencia = totalTransferencia.subtract(montoDev.getPagoTR());
-                    totalOtros = totalOtros.subtract(montoDev.getPagoOtros());
-                    total = total.subtract(montoDev.getMontoTotal());
+                    totalVenta = totalVenta.add(montoDev.getMontoPago());
+                    totalEfectivo = totalEfectivo.add(montoDev.getPagoEf());
+                    totalTarjeta = totalTarjeta.add(montoDev.getPagoTN());
+                    totalTarjetaUSD = totalTarjetaUSD.add(montoDev.getPagoTD());
+                    totalUSDEfectivo = totalUSDEfectivo.add(montoDev.getPagoEfUs());
+                    totalTransferencia = totalTransferencia.add(montoDev.getPagoTR());
+                    totalOtros = totalOtros.add(montoDev.getPagoOtros());
+                    total = total.add(montoDev.getMontoTotal());
                 }
 
             }
@@ -419,7 +430,7 @@ public class ReportServiceImpl implements ReportService {
             totalVentas = totalVentas.add(trabajos.getNotaVenta() != null ? trabajos.getNotaVenta().getVentaNeta() :BigDecimal.ZERO);
             totalVentasPin = totalVentasPin.add(trabajos.getNotaVenta() != null ? trabajos.getNotaVenta().getVentaNeta() :BigDecimal.ZERO);
             totalSaldos = totalSaldos.add(trabajos.getSaldo());
-            totalSaldosPin = totalVentasPin.add(trabajos.getSaldo());
+            totalSaldosPin = totalSaldosPin.add(trabajos.getSaldo());
         }
         Collections.sort( lstTrabajosPin, new Comparator<Jb>() {
             @Override

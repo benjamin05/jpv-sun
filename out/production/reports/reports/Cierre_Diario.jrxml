@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Cierre_Diario" language="groovy" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="8e8dd722-c4f6-4cbe-bcc2-458e5d219dc7">
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="136"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="191"/>
+	<property name="ireport.y" value="269"/>
 	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
 	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -108,13 +108,13 @@
 	<detail>
 		<band height="281" splitType="Stretch">
 			<line>
-				<reportElement uuid="c5e08dc6-eb7e-40d3-b422-06202d9f0e7e" positionType="Float" x="0" y="268" width="720" height="1" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="c5e08dc6-eb7e-40d3-b422-06202d9f0e7e" positionType="Float" x="-4" y="268" width="543" height="1" isRemoveLineWhenBlank="true"/>
 			</line>
 			<line>
-				<reportElement uuid="8b76bc59-989e-497b-86c2-cfcb16603144" positionType="Float" x="0" y="238" width="720" height="1" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="8b76bc59-989e-497b-86c2-cfcb16603144" positionType="Float" x="-3" y="238" width="542" height="1" isRemoveLineWhenBlank="true"/>
 			</line>
 			<staticText>
-				<reportElement uuid="5220a4ba-d547-4498-86ab-6ade7af30d88" style="Title" positionType="Float" x="0" y="226" width="44" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="5220a4ba-d547-4498-86ab-6ade7af30d88" style="Title" positionType="Float" x="-5" y="226" width="44" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
@@ -183,7 +183,7 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement uuid="5220a4ba-d547-4498-86ab-6ade7af30d88" style="Title" positionType="Float" x="0" y="256" width="102" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="5220a4ba-d547-4498-86ab-6ade7af30d88" style="Title" positionType="Float" x="-5" y="256" width="102" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Left" verticalAlignment="Top">
 					<font fontName="DejaVu Sans" size="8"/>
 				</textElement>
@@ -207,119 +207,91 @@
 				<subreportExpression><![CDATA["reports/CierreDiario_Pagos.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
-				<reportElement uuid="f6a5a01b-62f2-4655-9ffb-2884577751bd" positionType="Float" x="2" y="239" width="28" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="f6a5a01b-62f2-4655-9ffb-2884577751bd" positionType="Float" x="-3" y="239" width="28" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalFacturas}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="885d2ee7-492f-406b-b558-519df3ee85c7" positionType="Float" x="72" y="239" width="63" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="885d2ee7-492f-406b-b558-519df3ee85c7" positionType="Float" x="67" y="239" width="63" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalVenta}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="aa2c4d21-d01a-4bb8-8bee-9e60bfd7f424" positionType="Float" x="137" y="239" width="66" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="aa2c4d21-d01a-4bb8-8bee-9e60bfd7f424" positionType="Float" x="132" y="239" width="66" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalEfectivo}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="f3df4390-9d60-4cee-bd16-f878f335b018" positionType="Float" x="203" y="239" width="57" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="f3df4390-9d60-4cee-bd16-f878f335b018" positionType="Float" x="198" y="239" width="57" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalTarjeta}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="fd35096c-00a4-4cd1-bf1a-2f6f50e4c1f8" positionType="Float" x="260" y="239" width="91" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement textAlignment="Right">
-					<font fontName="DejaVu Sans" size="8" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{totalTarjetaUSD}]]></textFieldExpression>
-			</textField>
-			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="8dc579a2-f3ed-4d02-82be-3f4cff9e19ce" positionType="Float" x="356" y="239" width="97" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement textAlignment="Right">
-					<font fontName="DejaVu Sans" size="8" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{totalUSDEfectivo}]]></textFieldExpression>
-			</textField>
-			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="79556768-44b5-4889-91eb-9b556cc1b1a1" positionType="Float" x="561" y="239" width="46" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="79556768-44b5-4889-91eb-9b556cc1b1a1" positionType="Float" x="379" y="239" width="46" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalTransferencia}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="31c7fab1-ae97-4b45-8e8f-2e26474088b5" positionType="Float" x="607" y="239" width="55" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="31c7fab1-ae97-4b45-8e8f-2e26474088b5" positionType="Float" x="425" y="239" width="55" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalOtros}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="c7173b1f-e18b-4f14-8998-f80c5a68d7a5" positionType="Float" x="662" y="239" width="58" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="c7173b1f-e18b-4f14-8998-f80c5a68d7a5" positionType="Float" x="480" y="239" width="58" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{total}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="e92b31a1-1636-4a0c-88cd-629cc552b17e" positionType="Float" x="72" y="269" width="63" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="e92b31a1-1636-4a0c-88cd-629cc552b17e" positionType="Float" x="67" y="269" width="63" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalVentaIVA}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="189a2a04-1fb8-4210-8c16-02ea2b0a7a90" positionType="Float" x="137" y="269" width="65" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="189a2a04-1fb8-4210-8c16-02ea2b0a7a90" positionType="Float" x="132" y="269" width="65" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalEfectivoIVA}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="71b9c9d5-c555-4224-b477-ed46dc84cddb" positionType="Float" x="203" y="269" width="57" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="71b9c9d5-c555-4224-b477-ed46dc84cddb" positionType="Float" x="198" y="269" width="57" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalTarjetaIVA}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="7253523f-4571-4238-b1d2-68f0da1d9106" positionType="Float" x="260" y="269" width="91" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement textAlignment="Right">
-					<font fontName="DejaVu Sans" size="8" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{totalTarjetaUSDIVA}]]></textFieldExpression>
-			</textField>
-			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="5619820a-e832-4dea-8f52-c2e2a9bb5747" positionType="Float" x="356" y="269" width="97" height="12" isRemoveLineWhenBlank="true"/>
-				<textElement textAlignment="Right">
-					<font fontName="DejaVu Sans" size="8" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{totalUSDEfectivoIVA}]]></textFieldExpression>
-			</textField>
-			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="cc718af3-ef41-4e3f-9f54-e37d0e51b300" positionType="Float" x="561" y="269" width="46" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="cc718af3-ef41-4e3f-9f54-e37d0e51b300" positionType="Float" x="379" y="269" width="46" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalTransferenciaIVA}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="1236b714-1b6a-472c-bdff-a30ede4d9732" positionType="Float" x="607" y="269" width="55" height="12" isRemoveLineWhenBlank="true"/>
+				<reportElement uuid="1236b714-1b6a-472c-bdff-a30ede4d9732" positionType="Float" x="425" y="269" width="55" height="12" isRemoveLineWhenBlank="true"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalOtrosIVA}]]></textFieldExpression>
 			</textField>
 			<textField pattern="$#,##0.00" isBlankWhenNull="true">
-				<reportElement uuid="08680f0b-ff29-44fc-93b3-114165199700" positionType="Float" x="662" y="269" width="58" height="12"/>
+				<reportElement uuid="08680f0b-ff29-44fc-93b3-114165199700" positionType="Float" x="480" y="269" width="58" height="12"/>
 				<textElement textAlignment="Right">
 					<font fontName="DejaVu Sans" size="8" isBold="true"/>
 				</textElement>

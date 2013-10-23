@@ -28,6 +28,9 @@ public class DetalleIngresoPorDia {
 
     BigDecimal porcentaje = new BigDecimal(100);
 
+    private static final String TAG_DEVOLUCION = String.valueOf('d');
+    private static final String TAG_TRANSFERENCIA = String.valueOf('t');
+
     public DetalleIngresoPorDia(String factura) {
         this.factura = factura;
         montoPago = BigDecimal.valueOf(0);
@@ -150,24 +153,29 @@ public class DetalleIngresoPorDia {
     public void AcumulaDevolucionesCierre( Devolucion devolucion, BigDecimal ventaTotal, Date fecha, String totalDolares) {
         NumberFormat formatter = new DecimalFormat("$#,##0.00");
         this.fecha = fecha;
-        if (devolucion.getIdFormaPago().equalsIgnoreCase("EF")) {
-            pagoEf = pagoEf.add(devolucion.getMonto());
-        } else if (devolucion.getPago().getIdFPago().equalsIgnoreCase("EFD")) {
-            pagoEfUs = pagoEfUs.add(devolucion.getMonto());
+        if (devolucion.getIdFormaPago().equalsIgnoreCase("EF") && devolucion.getTipo().trim().equalsIgnoreCase(TAG_DEVOLUCION)) {
+            pagoEf = pagoEf.subtract(devolucion.getMonto());
+        } else if (devolucion.getPago().getIdFPago().equalsIgnoreCase("EFD") && devolucion.getTipo().trim().equalsIgnoreCase(TAG_DEVOLUCION)) {
+            pagoEfUs = pagoEfUs.subtract(devolucion.getMonto());
             pagoTDConDolares = String.format("%s", formatter.format(pagoEfUs.doubleValue()));
-        } else if (devolucion.getPago().getIdFPago().equalsIgnoreCase("TC") || devolucion.getPago().getIdFormaPago().equalsIgnoreCase("TD")) {
-            pagoTN = pagoTN.add(devolucion.getMonto());
-        } else if (devolucion.getPago().getIdFPago().equalsIgnoreCase("TCD") || devolucion.getPago().getIdFormaPago().equalsIgnoreCase("TDD")) {
-            pagoTD = pagoTD.add(devolucion.getMonto());
-        } else if (devolucion.getPago().getIdFPago().equalsIgnoreCase("TR")) {
-            pagoTR = pagoTR.add(devolucion.getMonto());
+        } else if (devolucion.getPago().getIdFPago().equalsIgnoreCase("TC") || devolucion.getPago().getIdFormaPago().equalsIgnoreCase("TD")
+                && devolucion.getTipo().trim().equalsIgnoreCase(TAG_DEVOLUCION)) {
+            pagoTN = pagoTN.subtract(devolucion.getMonto());
+        } else if (devolucion.getPago().getIdFPago().equalsIgnoreCase("TCD") || devolucion.getPago().getIdFormaPago().equalsIgnoreCase("TDD")
+                && devolucion.getTipo().trim().equalsIgnoreCase(TAG_DEVOLUCION)) {
+            pagoTD = pagoTD.subtract(devolucion.getMonto());
+        } else if (devolucion.getPago().getIdFPago().equalsIgnoreCase("TR")
+                && devolucion.getTipo().trim().equalsIgnoreCase(TAG_DEVOLUCION)) {
+            pagoTR = pagoTR.subtract(devolucion.getMonto());
+        } else if (devolucion.getTipo().trim().equalsIgnoreCase(TAG_TRANSFERENCIA)) {
+            pagoTR = pagoTR.subtract(devolucion.getMonto());
         } else if (!devolucion.getPago().getIdFPago().equalsIgnoreCase("EF") && !devolucion.getPago().getIdFPago().equalsIgnoreCase("EFD")
                 && !devolucion.getPago().getIdFPago().equalsIgnoreCase("TC") && !devolucion.getPago().getIdFPago().equalsIgnoreCase("TD")
                 && !devolucion.getPago().getIdFPago().equalsIgnoreCase("TCD") && !devolucion.getPago().getIdFPago().equalsIgnoreCase("TDD")
-                && !devolucion.getPago().getIdFPago().equalsIgnoreCase("TR")) {
-            pagoOtros = pagoOtros.add(devolucion.getMonto());
+                && !devolucion.getPago().getIdFPago().equalsIgnoreCase("TR") && devolucion.getTipo().trim().equalsIgnoreCase(TAG_DEVOLUCION)) {
+            pagoOtros = pagoOtros.subtract(devolucion.getMonto());
         }
-        montoTotal = montoTotal.add(devolucion.getMonto());
+        montoTotal = montoTotal.subtract(devolucion.getMonto());
         if (devolucion.getPago().getTerminal() != null) {
             terminal = devolucion.getPago().getTerminal().getDescripcion();
         }
@@ -176,7 +184,7 @@ public class DetalleIngresoPorDia {
             pagoTDConDolares = "$0.00";
         }
         this.totalDolares = totalDolares;
-        montoPago = ventaTotal;
+        montoPago = ventaTotal.negate();
 
     }
 
