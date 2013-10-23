@@ -287,8 +287,8 @@ class Registry {
     return asString( TipoParametro.RUTA_POR_ENVIAR )
   }
 
-  static String getHomePath( ) {
-      return asString( TipoParametro.RUTA_HOME )
+  static String getCommandBakpOrder( ) {
+      return asString( TipoParametro.COMANDO_BKP_NOTA )
   }
 
   static String getArchivePathDropbox( ) {
