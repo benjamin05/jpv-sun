@@ -178,6 +178,12 @@ class RefundDialog extends JDialog {
       } else {
           printCancellationNotToday( orderCom, creditRefunds )
       }
+        try{
+            Order newOrder = OrderController.findOrderByIdOrder( orderId )
+            OrderController.runScriptBckpOrder( newOrder )
+        } catch ( Exception e ){
+            println e
+        }
     }
     source.enabled = true
   }

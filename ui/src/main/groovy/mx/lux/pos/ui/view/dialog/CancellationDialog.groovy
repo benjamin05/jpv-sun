@@ -119,6 +119,11 @@ class CancellationDialog extends JDialog {
           CancellationController.updateJb( order.id )
           CancellationController.generatedAcuses( order.id )
           CancellationController.printCancellationPlan( order.id )
+          try{
+              OrderController.runScriptBckpOrder( order )
+          } catch ( Exception e ){
+              println e
+          }
           return true
       } else {
           sb.optionPane( message: "Ocurrio un error al cancelar", optionType: JOptionPane.DEFAULT_OPTION )

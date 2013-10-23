@@ -281,11 +281,11 @@ public class IngresoPorFactura {
         articulos = articulos.replaceFirst( ", ", "" );
         fechaPago = venta.getFechaHoraFactura();
         idFactura = venta.getFactura();
+        montoSinDesc = montoSinDesc.add( venta.getVentaTotal() );
         for(Pago pago : venta.getPagos()){
           if(pago.getIdFPago().trim().startsWith("C")){
             montoDescuento = montoDescuento.add( pago.getMonto() );
           }
-          montoSinDesc = montoSinDesc.add( pago.getMonto() );
         }
         montoConDesc = montoSinDesc.subtract(montoDescuento);
         paciente = venta.getCliente().getNombreCompleto();
@@ -300,11 +300,11 @@ public class IngresoPorFactura {
         articulos = articulos.replaceFirst( ", ", "" );
         fechaPago = venta.getFechaHoraFactura();
         idFactura = venta.getFactura();
+        montoSinDesc = montoSinDesc.subtract( venta.getVentaTotal() );
         for(Pago pago : venta.getPagos()){
             if(pago.getIdFPago().trim().startsWith("C")){
                 montoDescuento = montoDescuento.subtract( pago.getMonto() );
             }
-            montoSinDesc = montoSinDesc.subtract( pago.getMonto() );
         }
         montoConDesc = montoSinDesc.subtract(montoDescuento);
         paciente = venta.getCliente().getNombreCompleto();

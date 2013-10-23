@@ -46,6 +46,7 @@ enum TipoParametro {
   PORCENTAJE_ANTICIPO( 'porcentaje_anticipo', '100.0' ),
   RUTA_CIERRE( 'ruta_cierre', 'C:/Documents and Settings/mensajero/cierre' ),
   RUTA_COMPROBANTES( 'ruta_comprobantes', 'C:/Documents and Settings/mensajero/facturas' ),
+  RUTA_HOME( 'ruta_home', '/usr/local/soi' ),
   RUTA_INVENTARIO( 'ruta_inv_tr', 'C:/Documents and Settings/mensajero/inventario' ),
   RUTA_REMISION( 'ruta_remision', 'C:/Documents and Settings/mensajero/remision' ),
   RUTA_LISTA_PRECIOS( 'ruta_lista_precios', 'C:/Documents and Settings/mensajero/lp' ),

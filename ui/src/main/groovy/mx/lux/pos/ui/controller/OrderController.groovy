@@ -1404,5 +1404,14 @@ class OrderController {
   }
 
 
+  static void runScriptBckpOrder( Order order ){
+    log.debug( "creaJbAnticipoInventariables( )" )
+    if( order != null && order.id != null ){
+      notaVentaService.correScriptRespaldoNotas( order.id )
+    }
+  }
+
+
+
 
 }

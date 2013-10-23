@@ -302,8 +302,6 @@ class ShowOrderPanel extends JPanel {
   private  def doSwitchPP = { ActionEvent ev ->
       JButton source = ev.source as JButton
       source.enabled = false
-
-
       if(ppButton.getText().equals('Pagar')){
           doShowPayment()
       } else{
@@ -335,6 +333,11 @@ class ShowOrderPanel extends JPanel {
                 paymentsModel.fireTableDataChanged()
                 this.order?.paid =  this.order?.paid + pagoN?.monto
                 this.order?.due = this.order?.due - pagoN?.monto
+                try{
+                    OrderController.runScriptBckpOrder( order )
+                } catch ( Exception e ){
+                    println e
+                }
                 doBindings()
 
                 if(pagoN.confirmado == true){

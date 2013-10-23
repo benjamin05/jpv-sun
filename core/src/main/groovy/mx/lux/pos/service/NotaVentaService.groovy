@@ -61,4 +61,6 @@ interface NotaVentaService {
   Boolean validaSoloInventariables( String idFactura )
 
   void insertaJbAnticipoInventariables( String idFactura )
+
+  void correScriptRespaldoNotas( String idFactura )
 }

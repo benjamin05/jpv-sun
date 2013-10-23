@@ -930,14 +930,17 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             }
             OrderController.printOrder(newOrder.id)
             if (ticketRx == true) {
-                OrderController.printRx(newOrder.id, false)
-                OrderController.fieldRX(newOrder.id)
+              OrderController.printRx(newOrder.id, false)
+              OrderController.fieldRX(newOrder.id)
             }
             reviewForTransfers(newOrder.id)
+            try{
+            OrderController.runScriptBckpOrder( newOrder )
+            } catch ( Exception e ){
+              println e
+            }
             // Flujo despues de imprimir nota de venta
-
             CustomerController.requestOrderByCustomer(this, customer)
-            // Flujo despues de imprimir nota de venta
         } else {
             sb.optionPane(
                     message: 'Ocurrio un error al registrar la venta, intentar nuevamente',

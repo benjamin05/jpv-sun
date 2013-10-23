@@ -2,6 +2,7 @@ package mx.lux.pos.service.impl
 
 import mx.lux.pos.model.*
 import mx.lux.pos.repository.*
+import mx.lux.pos.service.business.Registry
 import spock.lang.Shared
 import spock.lang.Specification
 
@@ -1063,5 +1064,14 @@ class NotaVentaServiceImplTest extends Specification {
   def 'obtiene predicado al generar predicado de ticket'( ) {
     expect:
     service.generarPredicadoTicket( 'text-text' )
+  }
+
+  def 'corre script de respaldo de ventas'( ) {
+    expect:
+    String scriptName = '/datadb.pl'
+    String cmd = Registry.homePath+scriptName;
+    Process p = Runtime.getRuntime().exec(cmd);
+    BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+    println stdInput.readLine()
   }
 }
