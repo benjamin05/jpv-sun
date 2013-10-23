@@ -2053,7 +2053,7 @@ public class ReportBusiness {
           cotizacion.setFechaMod( cot.getFechaMod() );
           cotizacion.setIdEmpleado(cot.getIdEmpleado());
           cotizacion.setIdCotizacion( cot.getIdCotiza().toString() );
-          cotizacion.setCliente( cliente.getNombreCompleto() );
+          cotizacion.setCliente( cliente != null ? cliente.getNombreCompleto() : "" );
           if( !cot.getTel().trim().equalsIgnoreCase("") ){
             cotizacion.setContacto( cot.getTel() );
           } else{
