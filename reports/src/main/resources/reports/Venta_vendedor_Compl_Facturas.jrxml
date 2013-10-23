@@ -33,14 +33,14 @@
 				<text><![CDATA[Monto Total:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="96175b3f-8973-4d0e-8e0d-ef1916eb7c1c" x="137" y="36" width="44" height="14"/>
+				<reportElement uuid="96175b3f-8973-4d0e-8e0d-ef1916eb7c1c" x="124" y="36" width="57" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Factura]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4c13f481-a241-4541-a73d-c08a1a0de523" x="69" y="36" width="68" height="14"/>
+				<reportElement uuid="4c13f481-a241-4541-a73d-c08a1a0de523" x="50" y="36" width="68" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
@@ -120,12 +120,12 @@
 	<detail>
 		<band height="13" splitType="Stretch">
 			<textField>
-				<reportElement uuid="5ae6df73-b8ca-4a36-8205-ecf2460524b6" x="137" y="0" width="44" height="13"/>
+				<reportElement uuid="5ae6df73-b8ca-4a36-8205-ecf2460524b6" x="124" y="0" width="57" height="13"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{idFactura}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement uuid="80db7fce-dd1b-4964-b16c-0b32fc97468e" x="69" y="0" width="68" height="13"/>
+				<reportElement uuid="80db7fce-dd1b-4964-b16c-0b32fc97468e" x="50" y="0" width="68" height="13"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{fechaPago}]]></textFieldExpression>
 			</textField>
