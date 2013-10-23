@@ -198,7 +198,8 @@ public class ReportBusiness {
             report.setExecutable( true );
             report.setReadable( true );
             report.setWritable( true );
-            String cmd = "chmod 777 "+report.getAbsolutePath();
+            String tmpPath = System.getProperty( "java.io.tmpdir" );
+            String cmd = "chmod 777 -R "+tmpPath;
             Process p = Runtime.getRuntime().exec(cmd);
             JasperReport jasperReport = JasperCompileManager.compileReport( template.getInputStream() );
             JasperPrint jasperPrint = JasperFillManager.fillReport( jasperReport, parametros, new JREmptyDataSource() );
