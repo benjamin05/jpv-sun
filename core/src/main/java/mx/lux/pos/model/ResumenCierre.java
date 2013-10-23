@@ -37,7 +37,7 @@ public class ResumenCierre {
         terminal = new Terminal();
     }
 
-    public void acumulaIngresosPorDia(NotaVenta notaVenta) {
+    public void acumulaIngresosPorDia(NotaVenta notaVenta, String diaConsulta) {
         NumberFormat formatter = new DecimalFormat("$#,##0.00");
         NumberFormat format = new DecimalFormat("#,##0.00");
         DetalleIngresoPorDia detalle = FindOrCreate(lstPagos, notaVenta.getFactura());
@@ -54,7 +54,8 @@ public class ResumenCierre {
                     totalDolaresYPesos = String.format("%s (%s)", formatter.format(totalDolaresEnPesos), format.format(totalDolares));
                 }
             }
-            detalle.AcumulaPagosCierre(new ArrayList<Pago>(notaVenta.getPagos()), notaVenta.getVentaTotal(), notaVenta.getFechaHoraFactura(), totalDolaresYPesos);
+            detalle.AcumulaPagosCierre(new ArrayList<Pago>(notaVenta.getPagos()), notaVenta.getVentaTotal(), notaVenta.getFechaHoraFactura(), totalDolaresYPesos,
+                    diaConsulta);
         }
         Collections.sort(lstPagos, new Comparator<DetalleIngresoPorDia>() {
             @Override

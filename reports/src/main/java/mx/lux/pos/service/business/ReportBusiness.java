@@ -1880,6 +1880,7 @@ public class ReportBusiness {
     public List<ResumenCierre> obtenerVentasCierreDiario( Date fechaInicio, Date fechaFin ){
         List<ResumenCierre> lstIngresos = new ArrayList<ResumenCierre>();
         QNotaVenta nota = QNotaVenta.notaVenta;
+        String saleDate = new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaInicio );
         List<NotaVenta> lstNotasVentas = ( List<NotaVenta> ) notaVentaRepository.findAll( nota.fechaHoraFactura.between(fechaInicio, fechaFin).
                 and( nota.factura.isNotEmpty() ).and(nota.factura.isNotNull()), nota.fechaHoraFactura.asc() );
         for( NotaVenta notaVenta : lstNotasVentas ){
@@ -1890,7 +1891,6 @@ public class ReportBusiness {
                 if(lstModificaciones.size() > 0){
                   for(Modificacion mod : lstModificaciones){
                     String modDate = new SimpleDateFormat( "dd/MM/yyyy" ).format( mod.getFecha() );
-                    String saleDate = new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaInicio );
                     if( modDate.trim().equalsIgnoreCase(saleDate.trim()) ){
                       canMismoDia = true;
                     }
@@ -1899,7 +1899,7 @@ public class ReportBusiness {
               }
               if( !canMismoDia ){
                 ResumenCierre ingreso = FindOrCreateCierreDiario(lstIngresos, notaVenta.getFechaHoraFactura());
-                ingreso.acumulaIngresosPorDia(notaVenta);
+                ingreso.acumulaIngresosPorDia(notaVenta, saleDate);
               }
             }
         }

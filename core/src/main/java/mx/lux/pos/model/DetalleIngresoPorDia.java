@@ -5,6 +5,7 @@ import org.apache.commons.lang.StringUtils;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -81,10 +82,13 @@ public class DetalleIngresoPorDia {
     }
 
 
-    public void AcumulaPagosCierre( List<Pago> lstPagos, BigDecimal ventaTotal, Date fecha, String totalDolares) {
+    public void AcumulaPagosCierre( List<Pago> lstPagos, BigDecimal ventaTotal, Date fecha, String totalDolares, String diaConsulta) {
         NumberFormat formatter = new DecimalFormat("$#,##0.00");
         this.fecha = fecha;
+        Boolean notPayment = false;
         for (Pago pago : lstPagos) {
+          String paymDate = new SimpleDateFormat( "dd/MM/yyyy" ).format( pago.getFecha() );
+          if( diaConsulta.trim().equalsIgnoreCase(paymDate) ){
             if (pago.getIdFPago().equalsIgnoreCase("EF")) {
                 pagoEf = pagoEf.add(pago.getMonto());
             } else if (pago.getIdFPago().equalsIgnoreCase("EFD")) {
@@ -110,10 +114,12 @@ public class DetalleIngresoPorDia {
             if (StringUtils.trimToEmpty(pagoTDConDolares).length() <= 0) {
                 pagoTDConDolares = "$0.00";
             }
+        } else {
+            notPayment = true;
+          }
         }
         this.totalDolares = totalDolares;
         montoPago = ventaTotal;
-
     }
 
 
