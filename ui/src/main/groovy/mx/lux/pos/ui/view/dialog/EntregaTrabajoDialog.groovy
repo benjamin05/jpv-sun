@@ -5,6 +5,7 @@ import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.model.Branch
 import mx.lux.pos.ui.model.Session
 import mx.lux.pos.ui.model.SessionItem
+import mx.lux.pos.ui.model.Order
 import net.miginfocom.swing.MigLayout
 
 import javax.swing.*

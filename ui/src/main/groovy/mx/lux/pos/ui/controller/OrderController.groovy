@@ -908,6 +908,11 @@ class OrderController {
 
             if (fechaC == true) {
                 OrderController.insertaEntrega(order, entregaInstante)
+                try{
+                runScriptBckpOrder( order )
+                } catch( Exception e){
+                  println e
+                }
             } else {
                 JOptionPane.showMessageDialog(null, "No se puede entregar trabajo hoy mismo")
             }
