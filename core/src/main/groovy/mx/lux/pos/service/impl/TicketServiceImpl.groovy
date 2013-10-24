@@ -37,6 +37,7 @@ class TicketServiceImpl implements TicketService {
   private static final String TIME_FORMAT = 'HH:mm:ss'
   private static final String DATE_TIME_FORMAT = 'dd-MM-yyyy HH:mm:ss'
   private static final String TAG_CANCELADO = 'C'
+  private static final String TAG_FACTURA_CANCELADA = 'T'
   private static final String TAG_DEVUELTO = 'D'
   private static final Integer LONGITUD_MAXIMA = 70
   private static final String TAG_EFD = 'EFD'
@@ -677,7 +678,7 @@ class TicketServiceImpl implements TicketService {
             List<NotaVenta> lstNotas = new ArrayList<>()
             for(Modificacion mod : lstModificaciones){
                 NotaVenta nota = notaVentaRepository.findOne( mod.idFactura )
-                if( nota != null && nota.sFactura.trim().equalsIgnoreCase(TAG_CANCELADO)){
+                if( nota != null && nota.sFactura.trim().equalsIgnoreCase(TAG_FACTURA_CANCELADA)){
                     lstNotas.add( nota )
                 }
             }
@@ -703,7 +704,7 @@ class TicketServiceImpl implements TicketService {
               total = total + resumenDiario.importe
             }
           }
-          total = total.add(montoDev)
+          //total = total.add(montoDev)
           def subtotales = [ ]
           for ( ResumenDiario rd : cierre.detTerminales ) {
             String tipo = StringUtils.trimToEmpty(rd.tipo).toUpperCase()
