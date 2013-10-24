@@ -38,6 +38,7 @@ class ShowOrderPanel extends JPanel {
   private JButton cancelButton
   private JButton returnButton
   private JButton printReturnButton
+  private JButton printButton
   private JTextArea comments
   private DefaultTableModel itemsModel
   private DefaultTableModel paymentsModel
@@ -182,8 +183,9 @@ class ShowOrderPanel extends JPanel {
         cancelButton = button( 'Cancelar', actionPerformed: doCancel, constraints: 'hidemode 3' )
         returnButton = button( 'Devoluci\u00f3n', actionPerformed: doRefund, constraints: 'hidemode 3' )
         printReturnButton = button( 'Imprimir Cancelaci\u00f3n', actionPerformed: doPrintRefund, constraints: 'hidemode 3' )
-
-          ppButton = button( 'Pagar', actionPerformed: doSwitchPP  )
+        ppButton = button( 'Pagar', actionPerformed: doSwitchPP  )
+        println "boton imprimir visible: ${ppButton.getText().equals('Pagar')}"
+        printButton = button( 'Imprimir', actionPerformed: {doPrint()}, constraints: 'hidemode 3' )
 
       }
     }
@@ -232,6 +234,7 @@ class ShowOrderPanel extends JPanel {
       }
       bean( returnButton, visible: bind {( 'T'.equalsIgnoreCase( order.status ) ) && ( sumaPagos.compareTo( montoCentavos ) > 0 ) } )
       bean( printReturnButton, visible: bind {( 'T'.equalsIgnoreCase( order.status ) ) && ( sumaPagos.compareTo( montoCentavos ) <= 0 )} )
+      bean( printButton, visible: bind {( 'T'.equalsIgnoreCase( order.status )  && ppButton.getText().equals('Pagar') )} )
     }
     dealsModel.fireTableDataChanged()
     itemsModel.fireTableDataChanged()
@@ -296,7 +299,7 @@ class ShowOrderPanel extends JPanel {
     CancellationController.resetValuesofCancellation( order.id )
     CancellationController.printOrderCancellation( order.id )
     printCancellationNotToday( order )
-    source.enabled = true
+    OrderController.printPaidOrder( order.id )
   }
 
   private  def doSwitchPP = { ActionEvent ev ->

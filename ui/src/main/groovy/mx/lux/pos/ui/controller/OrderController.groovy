@@ -1417,6 +1417,21 @@ class OrderController {
   }
 
 
+  static void printPaidOrder(String orderId) {
+      if (StringUtils.isNotBlank(orderId)) {
+        NotaVenta nota = notaVentaService.obtenerNotaVenta( orderId )
+        if( nota != null ){
+          for(Pago pago : nota.pagos){
+            if( !StringUtils.trimToEmpty(pago.idRecibo).isEmpty() ){
+              ticketService.imprimePago(orderId, pago.id)
+            }
+          }
+        }
+      } else {
+          log.warn("no se imprime pago, parametros invalidos")
+      }
+  }
+
 
 
 }
