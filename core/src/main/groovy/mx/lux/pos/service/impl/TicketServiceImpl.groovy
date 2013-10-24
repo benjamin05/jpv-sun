@@ -41,6 +41,7 @@ class TicketServiceImpl implements TicketService {
   private static final String TAG_DEVUELTO = 'D'
   private static final Integer LONGITUD_MAXIMA = 70
   private static final String TAG_EFD = 'EFD'
+  private static final String TAG_EFECTIVO = 'EF'
   private static final String TAG_TARJETA_DEBITO = 'TD'
   private static final String TAG_TARJETA_CREDITO = 'TC'
   private static final String TAG_TRANSFER = 'TR'
@@ -672,7 +673,7 @@ class TicketServiceImpl implements TicketService {
         for ( CierreTerminales cierre : resumenTerminales ) {
           BigDecimal total = 0
           BigDecimal totalDolares = BigDecimal.ZERO
-            Date fechaStart = DateUtils.truncate( fechaCierre, Calendar.DAY_OF_MONTH )
+            /*Date fechaStart = DateUtils.truncate( fechaCierre, Calendar.DAY_OF_MONTH )
             Date fechaEnd = new Date( DateUtils.ceiling( fechaCierre, Calendar.DAY_OF_MONTH ).getTime() - 1 )
             List<Modificacion> lstModificaciones = modificacionRepository.findByFechaBetween(fechaStart,fechaEnd)
             List<NotaVenta> lstNotas = new ArrayList<>()
@@ -694,9 +695,11 @@ class TicketServiceImpl implements TicketService {
             for(Pago pago : lstPagos){
                 List<Devolucion> lstDevoluciones = devolucionRepository.findByIdPago( pago.id )
                 for(Devolucion dev : lstDevoluciones){
-                    montoDev = montoDev.add( dev.monto )
+                    if( dev.tipo.trim().equalsIgnoreCase('d') && dev.idFormaPago.trim().equalsIgnoreCase(TAG_EFECTIVO)){
+                      montoDev = montoDev.add( dev.monto )
+                    }
                 }
-            }
+            }*/
           cierre.detTerminales.each { resumenDiario ->
             if ( resumenDiario.plan?.equals( 'C' ) || resumenDiario.plan?.equals( 'D' ) ) {
               total = total - resumenDiario.importe
