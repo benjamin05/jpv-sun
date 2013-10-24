@@ -646,25 +646,21 @@ class OrderController {
     }
 
     static Double requestUsdRate() {
-        log.info("Request USD rate")
-
+        /*log.info("Request USD rate")
         Double rate = 1.0
         MonedaDetalle fxrate = fxService.findActiveRate(TAG_USD)
-
         if (fxrate != null) {
             rate = fxrate.tipoCambio.doubleValue()
-
-        }
-        return rate
+        }*/
+        return 0.0//rate
     }
 
     static Boolean requestUsdDisplayed() {
-        if (displayUsd == null) {
+        /*if (displayUsd == null) {
             log.info("Request USD rate")
-
             displayUsd = fxService.requestUsdDisplayed()
-        }
-        return displayUsd
+        }*/
+        return false//displayUsd
     }
 
     static SalesWithNoInventory requestConfigSalesWithNoInventory() {
@@ -867,16 +863,12 @@ class OrderController {
 
             List<FormaContacto> result = ContactController.findByIdCliente(notaVenta?.idCliente.toInteger())
             if (result.size() == 0) {
-
                 ContactDialog contacto = new ContactDialog(notaVenta)
                 contacto.activate()
-
             } else {
                 ContactClientDialog contactoCliente = new ContactClientDialog(notaVenta)
                 contactoCliente.activate()
-
                 if (contactoCliente.formaContactoSeleted != null) {
-
                     FormaContacto formaContacto = contactoCliente.formaContactoSeleted
                     formaContacto?.rx = notaVenta?.factura
                     formaContacto?.fecha_mod = new Date()
@@ -885,16 +877,10 @@ class OrderController {
                     formaContacto?.observaciones =  contactoCliente.formaContactoSeleted?.observaciones != '' ? contactoCliente.formaContactoSeleted?.observaciones : ' '
                     formaContacto?.id_tipo_contacto = contactoCliente.formaContactoSeleted?.tipoContacto?.id_tipo_contacto
                     ContactController.saveFormaContacto(formaContacto)
-
-
                 }
             }
-
-
         }
         //*Contacto
-
-
         if ((order?.total - order?.paid) == 0 && entregaBo == true) {
             Boolean fechaC = true
             if (entregaInstante == false) {
@@ -905,7 +891,6 @@ class OrderController {
                     fechaC = false
                 }
             }
-
             if (fechaC == true) {
                 OrderController.insertaEntrega(order, entregaInstante)
                 try{

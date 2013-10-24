@@ -101,11 +101,7 @@ class ContactController {
             formaContacto?.tipoContacto = tipoContactoRepository.findOne(formaContacto?.id_tipo_contacto)
             contactos.add(formaContacto)
         }
-
        Cliente cliente = clienteService.obtenerCliente(idCliente)
-
-
-
        if( cliente?.email != null ){
            if (!cliente?.email.trim().equals('') ){
            FormaContacto formaContacto = new FormaContacto()
@@ -138,12 +134,7 @@ class ContactController {
            contactos.add(formaContacto)
            }
        }
-
-
-
-
-
-        return contactos
+       return contactos
     }
 
     static FormaContacto saveFormaContacto(FormaContacto formaContacto) {

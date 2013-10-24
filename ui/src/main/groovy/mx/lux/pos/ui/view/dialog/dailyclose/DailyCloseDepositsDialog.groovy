@@ -114,7 +114,7 @@ class DailyCloseDepositsDialog extends JDialog {
 
       panel( border: loweredEtchedBorder(), layout: new MigLayout( 'wrap', '[fill]' ) ) {
         button( text: 'Resumen diario', enabled: true, actionPerformed: printDailyDigest )
-        button( text: 'Cierres de Term.', enabled: dailyClose.isOpen(), actionPerformed: closeTerminalsAction )
+        button( text: 'Cierres de Term.', enabled: true, actionPerformed: closeTerminalsAction )
         button( text: 'Corregir Term.', enabled: dailyClose.isOpen(), actionPerformed: fixTerminalsAction )
         button( text: 'Nuevo Deposito', enabled: dailyClose.isOpen(),
             actionPerformed: {

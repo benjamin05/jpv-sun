@@ -1334,7 +1334,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
         BigDecimal montoDevolucion = ( devolucion?.monto ) ?: 0
         devoluciones += montoDevolucion
         if ( 'd'.equalsIgnoreCase( devolucion?.tipo ) ) {
-          if ( 'EFM'.equalsIgnoreCase( devolucion?.idFormaPago ) ) {
+          if ( TAG_TIPO_PAGO_EFECTIVO.equalsIgnoreCase( devolucion?.idFormaPago ) ) {
             efectivoDevoluciones += montoDevolucion
           } else if ( 'EFD'.equalsIgnoreCase( devolucion?.idFormaPago ) ) {
             dolaresDevoluciones += montoDevolucion
@@ -1345,7 +1345,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
       Set<PagoExterno> externos = pagoExternoRepository.findByFechaBetween( fecha, fechaFin ) ?: [ ]
       externos.each { PagoExterno externo ->
         BigDecimal montoPago = ( externo?.monto ) ?: 0
-        if ( 'EFM'.equalsIgnoreCase( externo?.idFPago ) ) {
+        if ( TAG_TIPO_PAGO_EFECTIVO.equalsIgnoreCase( externo?.idFPago ) ) {
           efectivoExternos += montoPago
           // Code commented for Sunglass
           // } else if ( 'ES'.equalsIgnoreCase( externo?.idFPago ) ) {

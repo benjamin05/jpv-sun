@@ -234,20 +234,18 @@ class ShowOrderPanel extends JPanel {
       }
       bean( returnButton, visible: bind {( 'T'.equalsIgnoreCase( order.status ) ) && ( sumaPagos.compareTo( montoCentavos ) > 0 ) } )
       bean( printReturnButton, visible: bind {( 'T'.equalsIgnoreCase( order.status ) ) && ( sumaPagos.compareTo( montoCentavos ) <= 0 )} )
-      bean( printButton, visible: bind {( 'T'.equalsIgnoreCase( order.status )  && ppButton.getText().equals('Pagar') )} )
     }
     dealsModel.fireTableDataChanged()
     itemsModel.fireTableDataChanged()
     paymentsModel.fireTableDataChanged()
-      if((order?.total - order?.paid) == 0){
-          ppButton?.setText('Imprimir')
-
-      } else{
-          ppButton?.setText('Pagar')
-      }
-
-
-
+    if((order?.total - order?.paid) == 0){
+        ppButton?.setText('Imprimir')
+    } else{
+        ppButton?.setText('Pagar')
+    }
+    sb.build {
+      bean( printButton, visible: bind {( ppButton.getText().equals('Pagar') )} )
+    }
   }
 
   private def dateConverter = { Date val ->
@@ -299,7 +297,6 @@ class ShowOrderPanel extends JPanel {
     CancellationController.resetValuesofCancellation( order.id )
     CancellationController.printOrderCancellation( order.id )
     printCancellationNotToday( order )
-    OrderController.printPaidOrder( order.id )
   }
 
   private  def doSwitchPP = { ActionEvent ev ->
@@ -316,6 +313,7 @@ class ShowOrderPanel extends JPanel {
 
   private doPrint(){
     OrderController.printOrder( order.id, false )
+    OrderController.printPaidOrder( order.id )
   }
 
     private  doShowPayment(){

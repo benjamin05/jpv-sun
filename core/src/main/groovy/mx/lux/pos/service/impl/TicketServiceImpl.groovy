@@ -40,6 +40,8 @@ class TicketServiceImpl implements TicketService {
   private static final String TAG_DEVUELTO = 'D'
   private static final Integer LONGITUD_MAXIMA = 70
   private static final String TAG_EFD = 'EFD'
+  private static final String TAG_TARJETA_DEBITO = 'TD'
+  private static final String TAG_TARJETA_CREDITO = 'TC'
   private static final String TAG_TRANSFER = 'TR'
   private static final String TAG_DEPOSITO_MN = 'EFECTIVO'
   private static final String TAG_DEPOSITO_US = 'DOLARES'
@@ -669,6 +671,31 @@ class TicketServiceImpl implements TicketService {
         for ( CierreTerminales cierre : resumenTerminales ) {
           BigDecimal total = 0
           BigDecimal totalDolares = BigDecimal.ZERO
+            Date fechaStart = DateUtils.truncate( fechaCierre, Calendar.DAY_OF_MONTH )
+            Date fechaEnd = new Date( DateUtils.ceiling( fechaCierre, Calendar.DAY_OF_MONTH ).getTime() - 1 )
+            List<Modificacion> lstModificaciones = modificacionRepository.findByFechaBetween(fechaStart,fechaEnd)
+            List<NotaVenta> lstNotas = new ArrayList<>()
+            for(Modificacion mod : lstModificaciones){
+                NotaVenta nota = notaVentaRepository.findOne( mod.idFactura )
+                if( nota != null && nota.sFactura.trim().equalsIgnoreCase(TAG_CANCELADO)){
+                    lstNotas.add( nota )
+                }
+            }
+            List<Pago> lstPagos = new ArrayList<>()
+            for(NotaVenta nv : lstNotas){
+                for(Pago pay : nv.pagos){
+                    if( pay.idFPago.equalsIgnoreCase(TAG_TARJETA_DEBITO) || pay.idFPago.equalsIgnoreCase(TAG_TARJETA_CREDITO) ){
+                        lstPagos.add( pay )
+                    }
+                }
+            }
+            BigDecimal montoDev = BigDecimal.ZERO
+            for(Pago pago : lstPagos){
+                List<Devolucion> lstDevoluciones = devolucionRepository.findByIdPago( pago.id )
+                for(Devolucion dev : lstDevoluciones){
+                    montoDev = montoDev.add( dev.monto )
+                }
+            }
           cierre.detTerminales.each { resumenDiario ->
             if ( resumenDiario.plan?.equals( 'C' ) || resumenDiario.plan?.equals( 'D' ) ) {
               total = total - resumenDiario.importe
@@ -676,6 +703,7 @@ class TicketServiceImpl implements TicketService {
               total = total + resumenDiario.importe
             }
           }
+          total = total.add(montoDev)
           def subtotales = [ ]
           for ( ResumenDiario rd : cierre.detTerminales ) {
             String tipo = StringUtils.trimToEmpty(rd.tipo).toUpperCase()
@@ -693,6 +721,7 @@ class TicketServiceImpl implements TicketService {
               plan = DEBIT_TAG
             }
             String monto = String.format( '%,.2f', rd.importe )
+            CurrencyFormatter formatter = new CurrencyFormatter()
             def sub = [
                 term: cierre.idTerminal,
                 plan: plan,

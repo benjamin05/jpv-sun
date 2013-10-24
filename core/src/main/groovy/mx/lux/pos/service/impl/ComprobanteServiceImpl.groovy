@@ -430,12 +430,11 @@ class ComprobanteServiceImpl implements ComprobanteService {
               detalleComprobanteRepository.save( detalles )
               if ( ultimo?.id ) {
                 comprobanteRepository.save( ultimo )
-                Reimpresion reimpresion = new Reimpresion(
-                    nota: 'Fa',
-                    idNota: venta.id,
-                    idEmpleado: comprobante.idEmpleado,
-                    factura: comprobante.idFiscal
-                )
+                Reimpresion reimpresion = new Reimpresion( )
+                reimpresion.nota = 'Fa'
+                reimpresion.idNota = venta.id
+                reimpresion.idEmpleado = comprobante.idEmpleado
+                reimpresion.factura = comprobante.idFiscal
                 reimpresionRepository.save( reimpresion )
               }
               log.debug( "comprobante registrado con idFiscal: ${comprobante?.idFiscal}" )
