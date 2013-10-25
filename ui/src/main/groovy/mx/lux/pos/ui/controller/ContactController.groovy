@@ -114,7 +114,7 @@ class ContactController {
            if( !cliente?.telefonoCasa.trim().equals('') ){
            FormaContacto formaContacto = new FormaContacto()
            formaContacto?.contacto = cliente?.telefonoTrabajo
-           formaContacto?.tipoContacto = tipoContactoRepository.findOne(2)
+           formaContacto?.tipoContacto = tipoContactoRepository.findOne(4)
            contactos.add(formaContacto)
            }
        }
@@ -122,7 +122,7 @@ class ContactController {
            if( !cliente?.telefonoTrabajo.trim().equals('') ){
            FormaContacto formaContacto = new FormaContacto()
            formaContacto?.contacto = cliente?.telefonoCasa
-           formaContacto?.tipoContacto = tipoContactoRepository.findOne(4)
+           formaContacto?.tipoContacto = tipoContactoRepository.findOne(2)
            contactos.add(formaContacto)
        }
        }

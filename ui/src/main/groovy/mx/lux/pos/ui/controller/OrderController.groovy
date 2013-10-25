@@ -859,8 +859,6 @@ class OrderController {
         println(entregaBo == true)
         //*Contacto
         if (surte == true || temp == true || entregaBo == false) {
-
-
             List<FormaContacto> result = ContactController.findByIdCliente(notaVenta?.idCliente.toInteger())
             if (result.size() == 0) {
                 ContactDialog contacto = new ContactDialog(notaVenta)

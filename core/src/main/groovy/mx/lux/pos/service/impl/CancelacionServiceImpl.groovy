@@ -74,6 +74,7 @@ class CancelacionServiceImpl implements CancelacionService {
     private static final TAG_DETALLES_CANCELACION = 'CAN_APART'
     private static final TAG_GENERICO_ARMAZON = 'A'
     private static final TAG_SURTE_PINO = 'P'
+    private static final TAG_EFECTIVO = 'EF'
 
     @Override
     List<CausaCancelacion> listarCausasCancelacion() {
@@ -180,7 +181,7 @@ class CancelacionServiceImpl implements CancelacionService {
                         Pago pago = pagoRepository.findOne(pagoId)
                         log.debug("obtiene pago: ${pago?.id}")
                         if (pago?.id) {
-                            String formaPago = 'EFM'
+                            String formaPago = TAG_EFECTIVO
                             if ('ORIGINAL'.equalsIgnoreCase(valor)) {
                                 formaPago = 'TR'.equalsIgnoreCase(pago.idFPago) ? pago.clave : pago.idFPago
                             }
