@@ -6,6 +6,8 @@ import groovy.transform.ToString
 import mx.lux.pos.model.Pago
 import org.apache.commons.lang3.math.NumberUtils
 
+import java.text.NumberFormat
+
 @Bindable
 @ToString
 @EqualsAndHashCode
@@ -37,11 +39,13 @@ class Payment {
   }
 
   void setAmount( BigDecimal pAmount ) {
-    this.amount = NumberUtils.createBigDecimal( String.format( "%.2f", pAmount ) )
+    this.amount = NumberFormat.getInstance().parse(String.format( "%.2f", pAmount ))
+    //this.amount = NumberUtils.createBigDecimal( String.format( "%.2f", pAmount ) )
   }
 
   void setAmount( Double pAmount ) {
-    this.amount = NumberUtils.createBigDecimal( String.format( "%.2f", pAmount ) )
+    //this.amount = NumberUtils.createBigDecimal( String.format( "%.2f", pAmount ) )
+      this.amount = NumberFormat.getInstance().parse(String.format( "%.2f", pAmount ))
   }
 
   static toPaymment( Pago pago ) {

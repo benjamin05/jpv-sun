@@ -7,6 +7,8 @@ import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.ui.controller.OrderController
 import org.apache.commons.lang3.math.NumberUtils
 
+import java.text.NumberFormat
+
 @Bindable
 @ToString
 @EqualsAndHashCode
@@ -64,8 +66,10 @@ class Order {
   }
 
   protected void round( ) {
-    this.total = NumberUtils.createBigDecimal( String.format( "%.2f", this.total ) )
-    this.paid = NumberUtils.createBigDecimal( String.format( "%.2f", this.paid ) )
+    this.total = NumberFormat.getInstance().parse(String.format( "%.2f", this.total ))
+    this.paid = NumberFormat.getInstance().parse(String.format( "%.2f", this.paid ))
+    //this.total = NumberUtils.createBigDecimal( String.format( "%.2f", this.total ) )
+    //this.paid = NumberUtils.createBigDecimal( String.format( "%.2f", this.paid ) )
   }
 
   static Order toOrder( NotaVenta notaVenta ) {

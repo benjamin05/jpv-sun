@@ -4,7 +4,7 @@ import mx.lux.pos.model.NotaVenta
 import mx.lux.pos.service.business.Registry
 import mx.lux.pos.util.CustomDateUtils
 import mx.lux.pos.util.StringList
-import org.apache.commons.lang3.math.NumberUtils
+import java.text.NumberFormat
 
 import java.text.ParseException
 
@@ -81,15 +81,15 @@ class ZOadapter {
       order.tipoNotaVenta = "F"
       order.tipoCli = "N"
       order.fExpideFactura = true
-      order.ventaTotal = NumberUtils.createBigDecimal( String.format( "%.2f", this.totalAmount ) )
-      order.ventaNeta = NumberUtils.createBigDecimal( String.format( "%.2f", this.totalAmount ) )
-      order.sumaPagos = NumberUtils.createBigDecimal( String.format( "%.2f", this.totalAmount ) )
+      order.ventaTotal = NumberFormat.getInstance().parse( String.format( "%.2f", this.totalAmount ) )
+      order.ventaNeta = NumberFormat.getInstance().parse( String.format( "%.2f", this.totalAmount ) )
+      order.sumaPagos = NumberFormat.getInstance().parse( String.format( "%.2f", this.totalAmount ) )
       order.fechaHoraFactura = this.fechaFactura
       order.fechaPrometida = this.fechaFactura
       order.fechaEntrega = this.fechaFactura
       order.fArmazonCli = false
       order.por100Descuento = 0
-      order.montoDescuento = NumberUtils.createBigDecimal( String.format( "%.2f", this.discount ) )
+      order.montoDescuento = NumberFormat.getInstance().parse( String.format( "%.2f", this.discount ) )
       order.tipoDescuento = "N"
       order.fResumenNotasMo = false
       order.sFactura = "N"

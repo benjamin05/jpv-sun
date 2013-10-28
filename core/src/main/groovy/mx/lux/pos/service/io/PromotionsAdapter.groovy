@@ -6,6 +6,7 @@ import mx.lux.pos.util.CustomDateUtils
 import mx.lux.pos.util.StringList
 import org.apache.commons.lang3.math.NumberUtils
 
+import java.text.NumberFormat
 import java.text.ParseException
 
 class PromotionsAdapter {
@@ -101,16 +102,20 @@ class PromotionsAdapter {
             p.marca = this.marca
             p.articulo = this.articulo
             p.tipoPrecio = this.tipoPrecio
-            p.precioDescontado = NumberUtils.createBigDecimal(String.format("%.2f", this.precioDescontado) )
-            p.descuento = NumberUtils.createBigDecimal(String.format("%.2f", this.descuento) )
+            //p.precioDescontado = NumberUtils.createBigDecimal(String.format("%.2f", this.precioDescontado) )
+            p.precioDescontado = NumberFormat.getInstance().parse(String.format("%.2f", this.precioDescontado))
+            //p.descuento = NumberUtils.createBigDecimal(String.format("%.2f", this.descuento) )
+            p.descuento = NumberFormat.getInstance().parse(String.format("%.2f", this.descuento))
             p.idGenericoC = this.genericoc
             p.tipoC = this.tipoc
             p.subtipoC = this.subtipoc
             p.marcaC = this.marcac
             p.articuloC = this.articuloc
             p.tipoPrecioC = this.tipoPrecioc
-            p.precioDescontadoC = NumberUtils.createBigDecimal(String.format("%.2f", this.precioDescontadoc) )
-            p.descuentoC = NumberUtils.createBigDecimal(String.format("%.2f", this.descuentoc) )
+            //p.precioDescontadoC = NumberUtils.createBigDecimal(String.format("%.2f", this.precioDescontadoc) )
+            p.precioDescontadoC = NumberFormat.getInstance().parse(String.format("%.2f", this.precioDescontadoc))
+            //p.descuentoC = NumberUtils.createBigDecimal(String.format("%.2f", this.descuentoc) )
+            p.descuentoC =NumberFormat.getInstance().parse(String.format("%.2f", this.descuentoc) )
         }
     }
 

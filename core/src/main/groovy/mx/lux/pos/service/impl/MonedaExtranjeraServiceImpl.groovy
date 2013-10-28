@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 import java.text.DateFormat
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 
 @Service
@@ -86,7 +87,8 @@ class MonedaExtranjeraServiceImpl implements MonedaExtranjeraService {
         fxrate = new MonedaDetalle()
         fxrate.fechaActiva = DateUtils.truncate( pEffectiveFrom, Calendar.DATE )
         fxrate.idMoneda = StringUtils.trimToEmpty(pIdMoneda).toUpperCase()
-        fxrate.tipoCambio = NumberUtils.createBigDecimal( String.format( "%.5f", pRate ))
+        //fxrate.tipoCambio = NumberUtils.createBigDecimal( String.format( "%.5f", pRate ))
+        fxrate.tipoCambio = NumberFormat.getInstance().parse(String.format( "%.5f", pRate ))
         this.write( fxrate )
     }
 
