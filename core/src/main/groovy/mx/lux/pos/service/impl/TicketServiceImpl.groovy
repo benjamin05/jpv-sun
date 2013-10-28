@@ -671,8 +671,6 @@ class TicketServiceImpl implements TicketService {
           terminales.AcumulaTerminales( resumen )
         }
         for ( CierreTerminales cierre : resumenTerminales ) {
-          BigDecimal total = 0
-          BigDecimal totalDolares = BigDecimal.ZERO
             /*Date fechaStart = DateUtils.truncate( fechaCierre, Calendar.DAY_OF_MONTH )
             Date fechaEnd = new Date( DateUtils.ceiling( fechaCierre, Calendar.DAY_OF_MONTH ).getTime() - 1 )
             List<Modificacion> lstModificaciones = modificacionRepository.findByFechaBetween(fechaStart,fechaEnd)
@@ -687,7 +685,9 @@ class TicketServiceImpl implements TicketService {
             for(NotaVenta nv : lstNotas){
                 for(Pago pay : nv.pagos){
                     if( pay.idFPago.equalsIgnoreCase(TAG_TARJETA_DEBITO) || pay.idFPago.equalsIgnoreCase(TAG_TARJETA_CREDITO) ){
+                      if( cierre.idTerminal.trim().equalsIgnoreCase( pay.terminal.descripcion.trim() ) ){
                         lstPagos.add( pay )
+                      }
                     }
                 }
             }
@@ -700,14 +700,16 @@ class TicketServiceImpl implements TicketService {
                     }
                 }
             }*/
+          BigDecimal total = 0
+          BigDecimal totalDolares = BigDecimal.ZERO
           cierre.detTerminales.each { resumenDiario ->
             if ( resumenDiario.plan?.equals( 'C' ) || resumenDiario.plan?.equals( 'D' ) ) {
               total = total - resumenDiario.importe
             } else {
               total = total + resumenDiario.importe
             }
+            //total = total.add(montoDev)
           }
-          //total = total.add(montoDev)
           def subtotales = [ ]
           for ( ResumenDiario rd : cierre.detTerminales ) {
             String tipo = StringUtils.trimToEmpty(rd.tipo).toUpperCase()

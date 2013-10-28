@@ -35,6 +35,8 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
   private static final String FMT_FILE_PATTERN = '*%s.*'
   private static final Double VALOR_CERO = 0.005
   private static final String TAG_TIPO_PAGO_EFECTIVO = 'EF'
+  private static final String TAG_TIPO_PAGO_DEBITO = 'TC'
+  private static final String TAG_TIPO_PAGO_CREDITO = 'TD'
 
   @Resource
   private ClienteRepository clienteRepository
@@ -1130,7 +1132,8 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
   private void procesarVouchersResumenesDeDevoluciones( Set<Devolucion> devoluciones, Set<VoucherTmp> vouchers, Set<ResumenDiario> resumenes ) {
     log.info( "procesando vouchers y resumenes a partir de devoluciones: ${devoluciones*.idMod}" )
     devoluciones?.retainAll { Devolucion tmp ->
-      StringUtils.isNotBlank( tmp?.pago?.idTerminal )
+      StringUtils.isNotBlank( tmp?.pago?.idTerminal ) &&
+              (tmp?.idFormaPago.trim().equalsIgnoreCase(TAG_TIPO_PAGO_CREDITO) || tmp?.idFormaPago.trim().equalsIgnoreCase(TAG_TIPO_PAGO_DEBITO))
     }
     log.debug( "devoluciones filtradas: ${devoluciones*.idMod}" )
     devoluciones?.each { Devolucion devolucion ->
