@@ -1515,13 +1515,14 @@ class TicketServiceImpl implements TicketService {
       Integer idCliente = comprobante.idCliente?.isInteger() ? comprobante.idCliente.toInteger() : 0
       Cliente cliente = clienteRepository.findOne( idCliente )
       AddressAdapter companyAddress = Registry.companyAddress
+      Contribuyente contribuyente = Registry.company
       Map<String, Object> items = [
           nombre_ticket: 'ticket-referencia-fiscal',
           comprobante: comprobante,
           email: StringUtils.trimToEmpty( comprobante.email ),
           cliente: cliente,
           empresa: companyAddress.shortName,
-          email_contacto: 'clienteconfianza@lux.mx',
+          email_contacto: contribuyente.email.trim(),
           telefono_contacto: '01 800 9000 LUX(589)'
       ]
       if ( Registry.isSunglass() ) {
