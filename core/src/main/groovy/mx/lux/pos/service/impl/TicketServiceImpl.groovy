@@ -283,14 +283,10 @@ class TicketServiceImpl implements TicketService {
                 Reimpresion reimpresion  =  new Reimpresion('Rx',notaVenta?.id, new Date(),notaVenta?.empleado?.id,notaVenta?.factura )
                 reimpresionRepository.saveAndFlush(reimpresion)
                  primerTicket = reimpresionRepository.noReimpresiones(notaVenta?.factura).toInteger()
-
-
           if(primerTicket.toInteger() >= 1){
-
                 numero = 'COPIA ' + (primerTicket.toInteger()).toString()
 
           }
-
           }else{
               numero = ''
           }
@@ -302,13 +298,9 @@ class TicketServiceImpl implements TicketService {
         def idTicket = [
                 sucursal: notaVenta?.sucursal?.id.toString(),
                 factura: notaVenta?.factura,
-                id : notaVenta?.sucursal?.id.toString() + notaVenta?.factura + pTicket,
+                id : notaVenta?.sucursal?.id.toString() + notaVenta?.factura + pTicket+'RX',
                 noCopia: numero
         ]
-
-
-
-
           Date fechaA = new Date()
           SimpleDateFormat fecha = new SimpleDateFormat("dd/MMMM/yyyy")
           String fechaImpresion = fecha.format(fechaA)
@@ -400,8 +392,6 @@ class TicketServiceImpl implements TicketService {
                     case 't': usoLente = 'BIFOCAL INTERMEDIO'
                         break
                     }
-
-
 
           def detalleLente = [
                   ODEsfer:rx?.odEsfR,
