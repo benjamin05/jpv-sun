@@ -198,6 +198,12 @@ public class ReportBusiness {
             report.setExecutable( true );
             report.setReadable( true );
             report.setWritable( true );
+
+            /*String[] reportName = report.getAbsolutePath().split("/");
+            String[] name = reportName[1].split(".");
+            String reporte = name[0]+Math.random()+name[1];
+            File rep = new File( System.getProperty( "java.io.tmpdir" ), reporte );*/
+
             String tmpPath = System.getProperty( "java.io.tmpdir" );
             String cmd = "chmod 777 -R "+tmpPath;
             Process p = Runtime.getRuntime().exec(cmd);
