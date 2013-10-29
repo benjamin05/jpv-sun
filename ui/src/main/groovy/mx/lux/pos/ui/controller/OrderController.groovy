@@ -844,8 +844,6 @@ class OrderController {
                 if (detalle?.surte.equals('P')) {
                     surte = true
                 }
-
-
             }
         }
 
