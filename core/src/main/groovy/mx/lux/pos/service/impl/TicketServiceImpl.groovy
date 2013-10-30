@@ -1548,7 +1548,7 @@ class TicketServiceImpl implements TicketService {
           cliente: cliente,
           empresa: companyAddress.shortName,
           email_contacto: contribuyente.email.trim(),
-          telefono_contacto: '01 800 9000 LUX(589)'
+          telefono_contacto: ''
       ]
       if ( Registry.isSunglass() ) {
         imprimeTicket( 'template/ticket-referencia-fiscal-si.vm', items )
