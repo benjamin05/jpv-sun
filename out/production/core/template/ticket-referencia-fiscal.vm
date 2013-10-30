@@ -26,6 +26,6 @@ ${LF}
 #ALINEAR_CENTRO()#SET_STYLE(${FUENTE_A} 0 0 0 0)Para cualquier duda, comunicarse a:${LF}
 #ALINEAR_CENTRO()#SET_STYLE(${FUENTE_A} 0 0 0 0)Atencion a Clientes${LF}
 #ALINEAR_CENTRO()#SET_STYLE(${FUENTE_B} 0 0 0 0)#altnull(${email_contacto})${CR}
-#ALINEAR_CENTRO()#SET_STYLE(${FUENTE_B} 0 0 0 0)#altnull(${telefono_contacto})${CR}
+##ALINEAR_CENTRO()#SET_STYLE(${FUENTE_B} 0 0 0 0)#altnull(${telefono_contacto})${CR}
 #AVANZAR_LINEAS(5)
 #CORTE()

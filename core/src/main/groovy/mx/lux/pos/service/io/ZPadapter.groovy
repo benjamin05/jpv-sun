@@ -4,6 +4,7 @@ import mx.lux.pos.model.Pago
 import mx.lux.pos.util.StringList
 import org.apache.commons.lang3.math.NumberUtils
 
+import java.text.NumberFormat
 import java.text.ParseException
 
 class ZPadapter {
@@ -66,7 +67,7 @@ class ZPadapter {
       payment.idFormaPago = this.tipo
       payment.tipoPago = "A"
       payment.referenciaPago = ""
-      payment.monto = NumberUtils.createBigDecimal( String.format( "%.2f", this.monto ) )
+      payment.monto = NumberFormat.getInstance().parse(String.format("%.2f", this.monto))
       payment.fecha = pFecha
       payment.idEmpleado = pEmpleado
       payment.idSync = "1"

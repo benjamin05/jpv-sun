@@ -14,7 +14,7 @@ enum TipoParametro {
   COMANDO_ZIP( 'comando_zip', 'tar -cvf' ),
   COMPANIA_NOMBRE_CORTO( 'compania_nombre_corto', 'OPTICAS LUX' ),
   COMPANIA_REGION( 'compania_region', '01' ),
-  COMPANIA_RFC( 'compania_rfc', 'POP 591001 E92' ),
+  COMPANIA_RFC( 'compania_rfc', 'DIO-830602-8M5' ),
   DESCRIPCION_CORTA( 'descripcion_corta', 'si' ),
   DESPLIEGA_USD( 'despliega_dolares', 'no' ),
   DIA_PRO('DIA_PRO','7'),
