@@ -18,16 +18,18 @@ class InvTrDataset extends Dataset<TransInv> {
   void requestTransactions( ) {
     List<TransInv> rawList = new ArrayList<TransInv>()
     InventarioService service = ServiceManager.inventoryService
-    if ( filter.isDateRangeActive( ) ) {
+    if ( filter.isDateRangeActive( ) && !filter.isReferenceActive() ) {
       rawList = service.listarTransaccionesPorRangoFecha( filter.dateFrom, filter.dateTo )
     } else if ( filter.isSiteToActive( ) ) {
       rawList = service.listarTransaccionesPorSucursalDestino( filter.siteTo )
-    } else if ( filter.isTrTypeActive( )( ) ) {
+    } else if ( filter.isTrTypeActive( ) ) {
       rawList = service.listarTransaccionesPorTipo( filter.trType )
     } else if ( filter.isSkuActive( ) ) {
       rawList = service.listarTransaccionesPorSku( filter.sku )
     } else if ( filter.isPartCodeActive( ) ) {
       rawList = service.listarTransaccionesPorArticulo( filter.partCode )
+    } else if ( filter.isReferenceActive() ) {
+      rawList = service.listarTransaccionesPorReferencia( filter.reference.trim() )
     }
     setItems( rawList )
   }

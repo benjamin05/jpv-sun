@@ -42,6 +42,11 @@ public class TrabajoTrack implements Serializable{
 	 @JoinColumn( name = "rx", insertable = false, updatable = false )
 	 private Trabajo trabajo;
 
+    @ManyToOne
+    @NotFound( action = NotFoundAction.IGNORE )
+    @JoinColumn( name = "emp", insertable = false, updatable = false )
+    private Empleado empleado;
+
 	 
 	public String getId() {
 		return id;
@@ -106,5 +111,12 @@ public class TrabajoTrack implements Serializable{
 	public void setTrabajo(Trabajo trabajo) {
 		this.trabajo = trabajo;
 	}
-	 
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
 }

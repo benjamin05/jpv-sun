@@ -445,14 +445,9 @@ class ReportController {
     Date reportForDateStart = twoDateDialog.getSelectedDateStart()
     Date reportForDateEnd = twoDateDialog.getSelectedDateEnd()
     if ( reportForDateStart != null && reportForDateEnd != null && twoDateDialog.button ) {
-      /*if ( resumen ) {
-        log.debug( "Imprime el reporte de Ventas por Optometrista Resumido" )
-        reportService.obtenerReporteVentasporOptometristaResumido( reportForDateStart, reportForDateEnd )
-      } else {*/
         log.debug( "Imprime el reporte de Ventas por Optometrista" )
         reportService.obtenerReporteVentasporOptometrista( reportForDateStart, reportForDateEnd )
         twoDateDialog = null
-      //}
     } else {
       log.debug( "Cancelar_continuar" )
     }

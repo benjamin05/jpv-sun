@@ -175,7 +175,8 @@ public class VentasPorDia {
 
     public void acumulaVentasPorDiaMasVision( NotaVenta nota ){
       for(DetalleNotaVenta det : nota.getDetalles()){
-        articulos = articulos + "," + det.getArticulo().getArticulo();
+        String color = (det.getArticulo().getCodigoColor() != null && det.getArticulo().getCodigoColor().trim().length() > 0) ? "["+det.getArticulo().getCodigoColor().trim()+"]" : "";
+        articulos = articulos + "," + det.getArticulo().getArticulo().trim()+color;
       }
       fecha = nota.getFechaHoraFactura();
       montoTotal = nota.getVentaTotal();
@@ -196,7 +197,8 @@ public class VentasPorDia {
     public void acumulaCancelacionesPorDiaMasVision( Modificacion modificacion ){
         if(articulos.trim().length() <= 0){
           for(DetalleNotaVenta det : modificacion.getNotaVenta().getDetalles()){
-            articulos = articulos + "," + det.getArticulo().getArticulo();
+            String color = (det.getArticulo().getCodigoColor() != null && det.getArticulo().getCodigoColor().trim().length() > 0) ? "["+det.getArticulo().getCodigoColor().trim()+"]" : "";
+            articulos = articulos + "," + det.getArticulo().getArticulo().trim()+color;
           }
         }
         fecha = modificacion.getNotaVenta().getFechaHoraFactura();

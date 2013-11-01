@@ -21,13 +21,10 @@ class EntregaTrabajoDialog extends JDialog {
     private static JTextField sucursal = new JTextField()
 
     EntregaTrabajoDialog(Component parent) {
-
         sb = new SwingBuilder()
         component = parent
         branch = Session.get(SessionItem.BRANCH) as Branch
         buildUI()
-
-
     }
 
 
@@ -70,7 +67,6 @@ class EntregaTrabajoDialog extends JDialog {
             ).createDialog(this, 'No se puede registrar la venta')
                     .show()
         }
-
         doCancel()
     }
 

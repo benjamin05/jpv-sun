@@ -12,6 +12,7 @@ public class PropiedadesporEstado {
 	private Integer contactos;
 	private BigDecimal saldo;
 	private String material;
+    private String empleadoEntrego;
 	
 	public PropiedadesporEstado( String pId ){
 		id = pId;
@@ -19,18 +20,38 @@ public class PropiedadesporEstado {
 		saldo = BigDecimal.ZERO;
 	}
 
-	public void AcumulaPropiedades( Trabajo trabajo ){
+	public void AcumulaPropiedades( Trabajo trabajo, NotaVenta notaVenta ){
+        material = "";
 		fecha = trabajo.getFechaVenta();
 		tipo = trabajo.getJbTipo();
 		contactos = trabajo.getNumLlamada();
 		saldo = trabajo.getSaldo();
-		material = trabajo.getMaterial();
+        if( notaVenta != null ){
+          for(DetalleNotaVenta det : notaVenta.getDetalles()){
+              String color = (det.getArticulo().getCodigoColor() != null && det.getArticulo().getCodigoColor().trim().length() > 0) ? "["+det.getArticulo().getCodigoColor().trim()+"]" : "";
+              material = material+","+det.getArticulo().getArticulo()+color;
+          }
+          material = material.replaceFirst( ",","" );
+        } else {
+          material = trabajo.getMaterial();
+        }
+
 	}
 	
-	public void AcumulaTrabajos( TrabajoTrack trabajo ){
+	public void AcumulaTrabajos( TrabajoTrack trabajo, NotaVenta notaVenta ){
+        empleadoEntrego = trabajo.getEmp()+"  "+trabajo.getEmpleado().getNombreCompleto();
+        material = "";
 		fecha = trabajo.getFecha();
 		factura = trabajo.getId();
-		material = trabajo.getTrabajo().getMaterial();
+        if( notaVenta != null ){
+            for(DetalleNotaVenta det : notaVenta.getDetalles()){
+                String color = (det.getArticulo().getCodigoColor() != null && det.getArticulo().getCodigoColor().trim().length() > 0) ? "["+det.getArticulo().getCodigoColor().trim()+"]" : "";
+                material = material+","+det.getArticulo().getArticulo()+color;
+            }
+            material = material.replaceFirst(",","");
+        } else {
+          material = trabajo.getTrabajo().getMaterial();
+        }
 	}
 	
 	public String getId() {
@@ -88,5 +109,12 @@ public class PropiedadesporEstado {
 	public void setFactura(String factura) {
 		this.factura = factura;
 	}
-	
+
+    public String getEmpleadoEntrego() {
+        return empleadoEntrego;
+    }
+
+    public void setEmpleadoEntrego(String empleadoEntrego) {
+        this.empleadoEntrego = empleadoEntrego;
+    }
 }

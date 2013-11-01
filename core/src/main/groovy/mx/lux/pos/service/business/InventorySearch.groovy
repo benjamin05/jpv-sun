@@ -157,4 +157,13 @@ class InventorySearch {
   static TipoTransInv findTrType( String pTipoTransInv ) {
     return trTypeCatalog.findOne( pTipoTransInv )
   }
+
+
+  static List<TransInv> listarTransaccionesPorReferencia( String pReferencia ) {
+
+      QTransInv trans = QTransInv.transInv
+      List<TransInv> lstTransacciones = trInvMaster.findAll( trans.referencia.eq(pReferencia.trim()) )
+      loadDetails( lstTransacciones )
+      return lstTransacciones
+  }
 }

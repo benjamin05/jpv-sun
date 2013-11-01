@@ -5,17 +5,29 @@
 	<property name="ireport.y" value="0"/>
 	<field name="articulo.articulo" class="java.lang.String"/>
 	<field name="articulo.codigoColor" class="java.lang.String"/>
+	<variable name="variable1" class="java.lang.String">
+		<variableExpression><![CDATA["["+$F{articulo.codigoColor}+"]"]]></variableExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<detail>
 		<band height="12" splitType="Stretch">
 			<textField>
-				<reportElement uuid="f759e36d-e1e0-432c-abfc-beeec15c5edc" x="0" y="0" width="80" height="12"/>
+				<reportElement uuid="f759e36d-e1e0-432c-abfc-beeec15c5edc" x="0" y="0" width="59" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{articulo.articulo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d6ca9668-cc69-4a3f-ab6b-ea2387a55573" x="59" y="0" width="74" height="12">
+					<printWhenExpression><![CDATA[!$F{articulo.codigoColor}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{variable1}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

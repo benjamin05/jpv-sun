@@ -25,6 +25,7 @@ class InvTrSelectorDialog extends JDialog {
   private static final String TXT_TO_DATE_LABEL = "a"
   private static final String TXT_TR_TYPE_LABEL = "Tipo"
   private static final String TXT_SITE_TO_LABEL = "Almacén"
+  private static final String TXT_REFERENCE_TO_LABEL = "Referencia"
   private static final String TXT_PART_NUMBER_LABEL = "Sku"
   private static final String TXT_PART_CODE_LABEL = "Artículo"
   private static final String TXT_TR_EFF_DATE_LABEL = "Fecha"
@@ -43,6 +44,7 @@ class InvTrSelectorDialog extends JDialog {
   private JTextField txtDateFrom
   private JTextField txtDateTo
   private JTextField txtType
+  private JTextField txtReference
   private JTextField txtSiteTo
   private JTextField txtSku
   private JTextField txtPart
@@ -94,11 +96,14 @@ class InvTrSelectorDialog extends JDialog {
         txtDateFrom = textField ( text: "23/07/12" )
         label( TXT_TO_DATE_LABEL )
         txtDateTo = textField ( text: "23/07/12" )
-      
-        label( TXT_TR_TYPE_LABEL )
+
+        label( TXT_TR_TYPE_LABEL, )
         txtType = textField (  )
-        label( TXT_SITE_TO_LABEL )
-        txtSiteTo = textField (  )
+        label( visible: false, constraints: 'hidemode 3' )
+        txtSiteTo = textField ( visible: false, constraints: 'hidemode 3' )
+
+        label( TXT_REFERENCE_TO_LABEL )
+        txtReference = textField( )
 
         label( TXT_PART_NUMBER_LABEL )
         txtSku = textField (  )
@@ -149,8 +154,8 @@ class InvTrSelectorDialog extends JDialog {
     Date from = dv.parse( txtDateFrom.getText( ).trim( ) )
     Date to = dv.parse( txtDateTo.getText( ).trim() )
     filter.setDateRange( from, to )
-    
     filter.setTrType( txtType.getText() )
+    filter.setReference( txtReference.getText() )
     filter.setPartCode( txtPart.getText() )
     filter.setSiteTo( txtSiteTo.getText() )
     filter.setSku( txtSku.getText() )
@@ -162,6 +167,7 @@ class InvTrSelectorDialog extends JDialog {
     txtDateFrom.setText( filter.dateFrom != null ? adapter.getText( filter.dateFrom ) : "" )
     txtDateTo.setText( filter.dateTo != null ? adapter.getText( filter.dateTo ) : "" )
     txtType.setText( StringUtils.trimToEmpty( filter.trType ) )
+    txtReference.setText( StringUtils.trimToEmpty( filter.reference ) )
     txtSiteTo.setText( filter.siteTo == null ? "" : filter.siteTo.toString( ) )
     txtSku.setText( filter.sku == null ? "" : filter.sku.toString( ) )
     txtPart.setText( StringUtils.trimToEmpty( filter.partCode ) )

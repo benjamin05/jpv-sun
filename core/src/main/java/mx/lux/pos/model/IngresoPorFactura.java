@@ -104,7 +104,8 @@ public class IngresoPorFactura {
     public void AcumulaVentaPorVendedor( NotaVenta nota ) {
         fechaPago = nota.getFechaHoraFactura();
         for(DetalleNotaVenta det : nota.getDetalles()){
-          descripcion = descripcion+","+det.getArticulo().getArticulo();
+          String color = (det.getArticulo().getCodigoColor() != null && det.getArticulo().getCodigoColor().trim().length() > 0) ? "["+det.getArticulo().getCodigoColor().trim()+"]" : "";
+          descripcion = descripcion+","+det.getArticulo().getArticulo()+color;
         }
         total = total.add(nota.getVentaTotal());
         descripcion = descripcion.replaceFirst(",","");
@@ -124,7 +125,8 @@ public class IngresoPorFactura {
     public void AcumulaCancelacionesPorVendedor( Modificacion modificacion ) {
         fechaPago = modificacion.getFecha();
         for(DetalleNotaVenta det : modificacion.getNotaVenta().getDetalles()){
-            descripcion = descripcion+","+det.getArticulo().getArticulo();
+            String color = (det.getArticulo().getCodigoColor() != null && det.getArticulo().getCodigoColor().trim().length() > 0) ? "["+det.getArticulo().getCodigoColor().trim()+"]" : "";
+            descripcion = descripcion+","+det.getArticulo().getArticulo()+color;
         }
         descripcion = descripcion.replaceFirst(",","");
         total = total.subtract(modificacion.getNotaVenta().getVentaTotal());
@@ -210,8 +212,9 @@ public class IngresoPorFactura {
     }
 
     public void AcumulaMarca(  Articulo articulo,  Precio precio ) {
+        String color = (articulo.getCodigoColor() != null && articulo.getCodigoColor().trim().length() > 0) ? "["+articulo.getCodigoColor().trim()+"]" : "";
         idArticulo = articulo.getId();
-        marca = articulo.getArticulo();
+        marca = articulo.getArticulo()+color;
         this.color = articulo.getCodigoColor();
         descripcion = articulo.getDescripcion();
         acumulaPago = precio.getPrecio();
@@ -275,8 +278,8 @@ public class IngresoPorFactura {
 
     public void AcumulaVentasOpto(  NotaVenta venta ) {
         for(DetalleNotaVenta det : venta.getDetalles()){
-          //lstArticulos.add( det );
-          articulos =  articulos + ", " + det.getArticulo().getArticulo().trim();
+          String color = (det.getArticulo().getCodigoColor() != null && det.getArticulo().getCodigoColor().trim().length() > 0) ? "["+det.getArticulo().getCodigoColor().trim()+"]" : "";
+          articulos =  articulos + ", " + det.getArticulo().getArticulo().trim()+color;
         }
         articulos = articulos.replaceFirst( ", ", "" );
         fechaPago = venta.getFechaHoraFactura();
@@ -294,8 +297,8 @@ public class IngresoPorFactura {
 
     public void AcumulaVentasCanOpto(  NotaVenta venta ) {
         for(DetalleNotaVenta det : venta.getDetalles()){
-            //lstArticulos.add( det );
-            articulos =  articulos + ", " + det.getArticulo().getArticulo().trim();
+            String color = (det.getArticulo().getCodigoColor() != null && det.getArticulo().getCodigoColor().trim().length() > 0) ? "["+det.getArticulo().getCodigoColor().trim()+"]" : "";
+            articulos =  articulos + ", " + det.getArticulo().getArticulo().trim()+color;
         }
         articulos = articulos.replaceFirst( ", ", "" );
         fechaPago = venta.getFechaHoraFactura();

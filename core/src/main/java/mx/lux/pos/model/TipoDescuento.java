@@ -52,7 +52,7 @@ public class TipoDescuento {
         importe = pagos.getMonto();
         claveP = pagos.geteTipoPago().getF1().equalsIgnoreCase(DOLARES_RECIBIDOS) ? "" : pagos.getClave();
         refClave = pagos.getReferenciaClave();
-        idBancoEmi = pagos.getIdBancoEmisor();
+        idBancoEmi = banco.getDescripcion();
         if (pagos.getTerminal() != null) {
             idTerm = pagos.getTerminal().getDescripcion();
         }

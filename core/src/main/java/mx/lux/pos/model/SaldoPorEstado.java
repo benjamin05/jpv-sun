@@ -19,17 +19,17 @@ public class SaldoPorEstado {
 		totalTrabajos = 0;
 	}
 	
-	public void AcumulaSaldos( Trabajo trabajo ){
+	public void AcumulaSaldos( Trabajo trabajo, NotaVenta notaVenta ){
 		String id = trabajo.getId();
 		totalTrabajos = totalTrabajos+1;
 		PropiedadesporEstado propiedad = FindOrCreate(lstPropiedades, id);
-		propiedad.AcumulaPropiedades(trabajo);
+		propiedad.AcumulaPropiedades(trabajo, notaVenta);
 	}
 	
-	public void AcumulaTrabajos( TrabajoTrack trabajo, Integer total){
+	public void AcumulaTrabajos( TrabajoTrack trabajo, Integer total, NotaVenta notaVenta ){
 		String id = trabajo.getId();
 		PropiedadesporEstado propiedad = FindOrCreate(lstPropiedades, id);
-		propiedad.AcumulaTrabajos( trabajo );
+		propiedad.AcumulaTrabajos( trabajo, notaVenta );
 		totalTrabajos = total;
 		
 	}

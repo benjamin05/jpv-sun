@@ -12,12 +12,12 @@ class InvTrFilter extends Filter<TransInv> {
 
   InvTrAdapter adapter = new InvTrAdapter()
   Date dateFrom, dateTo
-  String trType, partCode
+  String trType, partCode, reference
   Integer sku, siteTo
 
   // Public Methods
   Boolean isDateRangeActive() {
-    return ( ( dateFrom != null ) && ( dateTo != null ) )
+    return ( ( dateFrom != null ) && ( dateTo != null ) ) && reference == null
   }
   
   Boolean isPartCodeActive() {
@@ -36,6 +36,10 @@ class InvTrFilter extends Filter<TransInv> {
     return ( trType != null )
   }
 
+  Boolean isReferenceActive() {
+      return ( reference != null )
+  }
+
   void reset() {
     dateFrom = null
     dateTo = null
@@ -43,6 +47,7 @@ class InvTrFilter extends Filter<TransInv> {
     partCode = null
     sku = null
     siteTo = null
+    reference = null
   }
   
   void resetDateRange( ) {
@@ -86,12 +91,17 @@ class InvTrFilter extends Filter<TransInv> {
   void setTrType( String pTrType ) {
     trType = StringUtils.trimToNull( pTrType.trim( ).toUpperCase( ) )
   }
-  
+
+  void setReference( String pReference ) {
+      reference = StringUtils.trimToNull( pReference.trim( ).toUpperCase( ) )
+  }
+
   String toString() {
     String str = "[Filter] "
     if ( isDateRangeActive( ) )
       str += String.format( "DateRange:<%s - %s>", adapter.getText( dateFrom ), adapter.getText( dateTo ) )
     if ( isTrTypeActive( ) ) str += String.format(  "TrType:<%s>", trType )
+    if ( isReferenceActive( ) ) str += String.format(  "TrReference:<%s>", reference )
     if ( isSiteToActive( ) ) str += String.format(  "SiteTo:<%d>", siteTo )
     if ( isSkuActive( ) ) str += String.format(  "TrType:<%d>", sku )
     if ( isPartCodeActive( ) ) str += String.format(  "TrType:<%s*>", partCode )
@@ -107,6 +117,9 @@ class InvTrFilter extends Filter<TransInv> {
     }
     if ( selected && this.isTrTypeActive( ) ) {
       selected = ( pInvTr.idTipoTrans.equalsIgnoreCase( trType ) )
+    }
+    if ( selected && this.isReferenceActive( ) ) {
+        selected = ( pInvTr.referencia.equalsIgnoreCase( reference ) )
     }
     if ( selected && this.isSiteToActive( ) ) {
       selected = ( siteTo.equals( pInvTr.sucursalDestino ) )

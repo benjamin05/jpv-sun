@@ -67,6 +67,8 @@ interface InventarioService {
 
   List<TransInv> listarTransaccionesPorArticulo( String pPartCodeSeed )
 
+  List<TransInv> listarTransaccionesPorReferencia( String pReference )
+
   List<TransInv> listarTransaccionesPorTipoAndReferencia( String pTrType, String pReference )
 
   InvAdjustSheet leerArchivoAjuste( String pFilename )

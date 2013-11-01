@@ -219,6 +219,10 @@ class InventarioServiceImpl implements InventarioService {
     return InventorySearch.listarTransaccionesPorArticulo( pPartCodeSeed )
   }
 
+    List<TransInv> listarTransaccionesPorReferencia( String pReference ) {
+    return InventorySearch.listarTransaccionesPorReferencia( pReference )
+  }
+
   List<TransInv> listarTransaccionesPorTipoAndReferencia( String pTrType, String pReference ) {
     return InventorySearch.listarTransaccionesPorTipoAndReferencia( pTrType, pReference )
   }
