@@ -39,10 +39,14 @@ public class PropiedadesporEstado {
 	}
 	
 	public void AcumulaTrabajos( TrabajoTrack trabajo, NotaVenta notaVenta ){
-        if( trabajo.getEmpleado() != null ){
-          empleadoEntrego = trabajo.getEmp()+"  "+trabajo.getEmpleado().getNombreCompleto();
+        if(notaVenta != null){
+          empleadoEntrego = notaVenta.getEmpEntrego().trim()+" "+notaVenta.getEmpleadoEntrego().getNombreCompleto().trim();
         } else {
-          empleadoEntrego = trabajo.getEmp();
+          if( trabajo.getEmpleado() != null ){
+            empleadoEntrego = trabajo.getEmp().trim()+" "+trabajo.getEmpleado().getNombreCompleto().trim();
+          } else {
+            empleadoEntrego = trabajo.getEmp().trim();
+          }
         }
         material = "";
 		fecha = trabajo.getFecha();
