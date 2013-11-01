@@ -22,6 +22,8 @@ public class QTrabajoTrack extends EntityPathBase<TrabajoTrack> {
 
     public final StringPath emp = createString("emp");
 
+    public final QEmpleado empleado;
+
     public final StringPath estado = createString("estado");
 
     public final DateTimePath<java.util.Date> fecha = createDateTime("fecha", java.util.Date.class);
@@ -50,6 +52,7 @@ public class QTrabajoTrack extends EntityPathBase<TrabajoTrack> {
 
     public QTrabajoTrack(Class<? extends TrabajoTrack> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.empleado = inits.isInitialized("empleado") ? new QEmpleado(forProperty("empleado"), inits.get("empleado")) : null;
         this.trabajo = inits.isInitialized("trabajo") ? new QTrabajo(forProperty("trabajo"), inits.get("trabajo")) : null;
     }
 

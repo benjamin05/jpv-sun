@@ -8,6 +8,8 @@
 	<field name="trabajo.empleado.nombreCompleto" class="java.lang.String"/>
 	<field name="trabajo.material" class="java.lang.String"/>
 	<field name="trabajo.empAtendio" class="java.lang.String"/>
+	<field name="empleado.nombreCompleto" class="java.lang.String"/>
+	<field name="emp" class="java.lang.String"/>
 	<variable name="fecha_1" class="java.lang.Integer" calculation="Count">
 		<variableExpression><![CDATA[$F{fecha}]]></variableExpression>
 	</variable>
@@ -38,11 +40,18 @@
 				<text><![CDATA[Empleado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="fca41126-c396-42c6-a309-85a7e4172e15" x="321" y="0" width="48" height="14"/>
+				<reportElement uuid="fca41126-c396-42c6-a309-85a7e4172e15" x="321" y="0" width="119" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Material]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="991c9365-42cf-4d99-9b40-02fc69fdf637" x="440" y="0" width="203" height="14"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empleado Entrego]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -83,6 +92,20 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{trabajo.empleado.nombreCompleto}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement uuid="abf8f7aa-aefb-4735-8751-0a436fb4860e" x="467" y="0" width="176" height="14"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empleado.nombreCompleto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e1bfbc2c-f08e-4e8a-a38d-69e20d322412" x="440" y="0" width="27" height="14"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{emp}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<summary>
@@ -102,7 +125,7 @@
 				<text><![CDATA[Total:]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="876f8a7d-691e-43f4-b8ca-9a3479dd9ee0" x="0" y="1" width="440" height="1"/>
+				<reportElement uuid="876f8a7d-691e-43f4-b8ca-9a3479dd9ee0" x="0" y="1" width="643" height="1"/>
 				<graphicElement>
 					<pen lineStyle="Dashed"/>
 				</graphicElement>

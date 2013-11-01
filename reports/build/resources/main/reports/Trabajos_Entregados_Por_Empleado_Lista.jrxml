@@ -6,6 +6,7 @@
 	<field name="fecha" class="java.util.Date"/>
 	<field name="factura" class="java.lang.String"/>
 	<field name="material" class="java.lang.String"/>
+	<field name="empleadoEntrego" class="java.lang.String"/>
 	<variable name="fecha_1" class="java.lang.Integer" calculation="Count">
 		<variableExpression><![CDATA[$F{fecha}]]></variableExpression>
 	</variable>
@@ -29,11 +30,18 @@
 				<text><![CDATA[Factura]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="aca4aa1d-04db-4614-a4a6-3f99d2556dea" x="107" y="0" width="76" height="14"/>
+				<reportElement uuid="aca4aa1d-04db-4614-a4a6-3f99d2556dea" x="107" y="0" width="185" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Material]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a54d1c14-f209-4e06-b265-1519828c27be" x="292" y="0" width="196" height="14"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Empleado Entrego]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -54,11 +62,18 @@
 				<textFieldExpression><![CDATA[$F{factura}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="4e9c2443-6488-4572-918b-6ca50bb676b1" x="107" y="0" width="411" height="14"/>
+				<reportElement uuid="4e9c2443-6488-4572-918b-6ca50bb676b1" x="107" y="0" width="185" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{material}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="98b415e4-3198-4c2e-9eed-42f63e1212c2" x="292" y="0" width="196" height="14"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{empleadoEntrego}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -79,7 +94,7 @@
 				<text><![CDATA[Subtotal:]]></text>
 			</staticText>
 			<line>
-				<reportElement uuid="7e6aa5a1-aab8-4e72-9739-d1d0c699d21a" x="0" y="0" width="183" height="1"/>
+				<reportElement uuid="7e6aa5a1-aab8-4e72-9739-d1d0c699d21a" x="0" y="0" width="488" height="1"/>
 				<graphicElement>
 					<pen lineStyle="Dashed"/>
 				</graphicElement>
