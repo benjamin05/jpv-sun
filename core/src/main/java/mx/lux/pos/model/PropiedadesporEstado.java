@@ -39,7 +39,11 @@ public class PropiedadesporEstado {
 	}
 	
 	public void AcumulaTrabajos( TrabajoTrack trabajo, NotaVenta notaVenta ){
-        empleadoEntrego = trabajo.getEmp()+"  "+trabajo.getEmpleado().getNombreCompleto();
+        if( trabajo.getEmpleado() != null ){
+          empleadoEntrego = trabajo.getEmp()+"  "+trabajo.getEmpleado().getNombreCompleto();
+        } else {
+          empleadoEntrego = trabajo.getEmp();
+        }
         material = "";
 		fecha = trabajo.getFecha();
 		factura = trabajo.getId();
