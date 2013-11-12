@@ -10,6 +10,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import javax.annotation.Resource
+import java.text.NumberFormat
 
 class PromotionCommit {
 
@@ -19,11 +20,11 @@ class PromotionCommit {
   private static Logger log = LoggerFactory.getLogger( PromotionCommit.class )
 
   static final BigDecimal asAmount( Double pDoubleValue ) {
-    return new BigDecimal( String.format( "%.2f", pDoubleValue ) )
+    return NumberFormat.getInstance().parse( String.format( "%.2f", pDoubleValue ) )
   }
 
   static final BigDecimal asPercent( Double pDoubleValue ) {
-    return new BigDecimal( String.format( "%.1f", pDoubleValue ) )
+    return NumberFormat.getInstance().parse( String.format( "%.1f", pDoubleValue ) )
   }
 
   static final void deleteDiscounts( String pOrderNbr ) {

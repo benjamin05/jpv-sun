@@ -3,7 +3,7 @@ package mx.lux.pos.service.io
 import mx.lux.pos.model.DetalleNotaVenta
 import mx.lux.pos.service.business.Registry
 import mx.lux.pos.util.StringList
-import org.apache.commons.lang3.math.NumberUtils
+import java.text.NumberFormat
 
 import java.text.ParseException
 
@@ -75,11 +75,11 @@ class ZDadapter {
       line.idArticulo = this.sku
       line.idTipoDetalle = "N"
       line.cantidadFac = this.cantidad as Double
-      line.precioUnitLista = NumberUtils.createBigDecimal( String.format( "%.2f", this.precioLista ) )
-      line.precioUnitFinal = NumberUtils.createBigDecimal( String.format( "%.2f", this.precioVenta ) )
-      line.precioCalcLista = NumberUtils.createBigDecimal( String.format( "%.2f", this.precioLista ) )
+      line.precioUnitLista = NumberFormat.getInstance().parse( String.format( "%.2f", this.precioLista ) )
+      line.precioUnitFinal = NumberFormat.getInstance().parse( String.format( "%.2f", this.precioVenta ) )
+      line.precioCalcLista = NumberFormat.getInstance().parse( String.format( "%.2f", this.precioLista ) )
       line.precioCalcOferta = BigDecimal.ZERO
-      line.precioFactura = NumberUtils.createBigDecimal( String.format( "%.2f", this.precioVenta ) )
+      line.precioFactura = NumberFormat.getInstance().parse( String.format( "%.2f", this.precioVenta ) )
       line.precioConv = BigDecimal.ZERO
       line.idSync = "1"
       line.idMod = ""

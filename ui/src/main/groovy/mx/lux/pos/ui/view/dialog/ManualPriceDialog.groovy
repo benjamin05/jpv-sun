@@ -16,6 +16,7 @@ import java.awt.*
 import java.awt.event.FocusAdapter
 import java.awt.event.FocusEvent
 import java.awt.event.FocusListener
+import java.text.NumberFormat
 
 class ManualPriceDialog extends JDialog {
 
@@ -166,7 +167,7 @@ class ManualPriceDialog extends JDialog {
   // UI Response
   void onButtonOk() {
     this.remarks = StringUtils.trimToEmpty( this.txtRemarks.text )
-    this.item.price = NumberUtils.createBigDecimal( String.format("%.2f", this.txtPrice.value ) )
+    this.item.price = NumberFormat.getInstance().parse(String.format("%.2f", this.txtPrice.value))
     this.itemAccepted = true
     this.setVisible( false )
   }
