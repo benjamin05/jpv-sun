@@ -103,6 +103,9 @@ class TicketServiceImpl implements TicketService {
   private MonedaDetalleRepository monedaDetalleRepository
 
   @Resource
+  private ExamenRepository examenRepository
+
+  @Resource
   private PagoRepository pagoRepository
 
 
@@ -1051,6 +1054,10 @@ class TicketServiceImpl implements TicketService {
         ventasEmpleado.add( ventaEmpleadoTmp )
       }
 
+      QExamen ex = QExamen.examen
+      List<Examen> lstExamenes = examenRepository.findAll( ex.idAtendio.eq('9999').and(ex.observacionesEx.eq('SE')).
+              and(ex.fechaAlta.between(fechaStart,fechaEnd)) )
+
       def datos = [ nombre_ticket: 'ticket-resumen-diario',
           fecha_cierre: MyDateUtils.format( fechaCierre, 'yyyy-MM-dd' ),
           hora_cierre: cierreDiario.horaCierre != null ? String.format('%s %s', MyDateUtils.format( cierreDiario.fechaCierre, 'dd-MM-yyyy' ), MyDateUtils.format( cierreDiario.horaCierre, 'HH:mm:ss' ) ): '',
@@ -1102,7 +1109,10 @@ class TicketServiceImpl implements TicketService {
           notas_credito: notasCredito.size() > 0 ? notasCredito : null,
           ventas_empleado: ventasEmpleado.size() > 0 ? ventasEmpleado : null,
           observaciones: StringUtils.isNotBlank( cierreDiario.observaciones ) ? StringUtils.replace( cierreDiario.observaciones, '~', '\n' ) : '',
-          entregadosExternos: entregadosExternosTmp.isEmpty() ? null : new ArrayList<EntregadoExterno>( entregadosExternosTmp.values() ), ]
+          entregadosExternos: entregadosExternosTmp.isEmpty() ? null : new ArrayList<EntregadoExterno>( entregadosExternosTmp.values() ),
+          total_clientes_sinExamen: lstExamenes.size(),
+          clientes_sinExamen: lstExamenes]
+
       imprimeTicket( 'template/ticket-resumen-diario.vm', datos )
     } else {
       log.error( "Se ha producido un error al imprimir el Resumen Diario. No hay datos sobre el día ${ MyDateUtils.format( fechaCierre, 'dd/MM/yyyy' ) }" )

@@ -191,7 +191,6 @@ class DailyCloseDepositsDialog extends JDialog {
   private def doCloseDay = { ActionEvent ev ->
     JButton source = ev.source as JButton
     source.enabled = false
-    //lblClosingDay.visible = true
     Boolean succesClose = false
     WaitDialog dialog = new WaitDialog( "Cierre", "Cerrando dia. Espere un momento." )
     sb.doOutside {

@@ -86,6 +86,13 @@ ${COLUMNA_1}Sku${COLUMNA_4}Cantidad
 #NEGRITA()#DO()Total Comprobantes: ${totalComprobantes}
 #NEGRITA()#DO()Inicial: #SIN_NEGRITA()#DO()${comprobantesInicial}${COLUMNA_4}#NEGRITA()#DO()Final: #SIN_NEGRITA()#DO()${comprobantesFinal}${LF}
 
+#NEGRITA()#DO()Clientes Sin Examen: #SIN_NEGRITA()#DO()${total_clientes_sinExamen}
+#if("$total_clientes_sinExamen"!="0")
+#foreach( $examen in $clientes_sinExamen )
+${examen.cliente.nombre} ${examen.cliente.apellidoPaterno} ${examen.cliente.apellidoMaterno}
+#end
+#end
+
 #if("$!pagosExternos"!="")
 #NEGRITA()#DOBLE_ALTURA()#DOBLE_ANCHURA()#FUENTE_B()#DO()PAGOS EXTERNOS${LF}
 #RESET_TEXTO()#FUENTE_B()#NEGRITA()#DO()FACTURA${COLUMNA_2}SUCURSAL${COLUMNA_7}MONTO

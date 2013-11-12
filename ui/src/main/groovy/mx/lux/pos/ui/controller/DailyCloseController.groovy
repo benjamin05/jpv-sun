@@ -157,6 +157,7 @@ class DailyCloseController {
           }
           payments = new ArrayList<Pago>()
       }
+      cierreDiarioService.deleteProcessClients()
       cierreDiarioService.cargarDatosCierreDiario( closeDate )
       cierreDiarioService.cerrarCierreDiario( closeDate, observations )
       User user = Session.get( SessionItem.USER ) as User
