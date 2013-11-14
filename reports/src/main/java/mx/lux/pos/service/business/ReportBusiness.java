@@ -1412,8 +1412,8 @@ public class ReportBusiness {
         Integer totalFacturas = lstVenta.size();
         for ( NotaVenta ventas : lstVenta ) {
             montoTotal = montoTotal.add( ventas.getVentaNeta() );
-            String idEmpleado = ventas.getIdEmpleado();
-            if( ventas.getRx() != null && ventas.getIdEmpleado().trim().equalsIgnoreCase(ventas.getRx().getIdOptometrista().trim())){
+            if( ventas.getRx() != null ){
+              String idEmpleado = ventas.getRx().getIdOptometrista();
               IngresoPorVendedor ingresos = FindorCreate( lstVentas, idEmpleado );
               ingresos.AcumulaOptometrista( ventas, montoTotal, totalFacturas, ivaTasa );
             }
