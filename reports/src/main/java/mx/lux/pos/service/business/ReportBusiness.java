@@ -1420,8 +1420,8 @@ public class ReportBusiness {
         }
 
         for ( Modificacion mod : lstCancelaciones ) {
-            String idEmpleado = mod.getNotaVenta().getIdEmpleado();
-            if( mod.getNotaVenta().getRx() != null && mod.getNotaVenta().getIdEmpleado().trim().equalsIgnoreCase(mod.getNotaVenta().getRx().getIdOptometrista().trim())){
+            String idEmpleado = mod.getNotaVenta().getRx().getIdOptometrista();
+            if( mod.getNotaVenta().getRx() != null ){
                 IngresoPorVendedor ingresos = FindorCreate( lstVentasCan, idEmpleado );
                 ingresos.AcumulaCanOptometrista( mod.getNotaVenta(), totalFacturas, ivaTasa );
             }
