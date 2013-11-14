@@ -378,7 +378,8 @@ class NotaVentaServiceImpl implements NotaVentaService {
       String idNotaVenta = notaVenta.id
       if ( notaVentaRepository.exists( idNotaVenta ) ) {
         Date fecha = new Date()
-        notaVenta.factura = notaVentaRepository.getFacturaSequence()
+        String factura = String.format( "%06d", notaVentaRepository.getFacturaSequence() )
+        notaVenta.factura = factura
         notaVenta.tipoNotaVenta = 'F'
         notaVenta.tipoDescuento = 'N'
         notaVenta.tipoEntrega = 'S'
