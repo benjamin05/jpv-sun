@@ -1402,7 +1402,7 @@ public class ReportBusiness {
         Integer totalFacturas = lstVenta.size();
         for ( NotaVenta ventas : lstVenta ) {
             montoTotal = montoTotal.add( ventas.getVentaNeta() );
-            if( ventas.getRx() != null ){
+            if( ventas.getRx() != null && !ventas.getIdEmpleado().trim().equalsIgnoreCase(ventas.getRx().getIdOptometrista().trim()) ){
               String idEmpleado = ventas.getRx().getIdOptometrista();
               IngresoPorVendedor ingresos = FindorCreate( lstVentas, idEmpleado );
               ingresos.AcumulaOptometrista( ventas, montoTotal, totalFacturas, ivaTasa );
@@ -1411,7 +1411,7 @@ public class ReportBusiness {
 
         for ( Modificacion mod : lstCancelaciones ) {
             String idEmpleado = mod.getNotaVenta().getRx().getIdOptometrista();
-            if( mod.getNotaVenta().getRx() != null ){
+            if( mod.getNotaVenta().getRx() != null && !mod.getNotaVenta().getIdEmpleado().trim().equalsIgnoreCase(mod.getNotaVenta().getRx().getIdOptometrista().trim()) ){
                 IngresoPorVendedor ingresos = FindorCreate( lstVentasCan, idEmpleado );
                 ingresos.AcumulaCanOptometrista( mod.getNotaVenta(), totalFacturas, ivaTasa );
             }
