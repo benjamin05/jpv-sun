@@ -199,11 +199,6 @@ public class ReportBusiness {
             report.setReadable( true );
             report.setWritable( true );
 
-            /*String[] reportName = report.getAbsolutePath().split("/");
-            String[] name = reportName[1].split(".");
-            String reporte = name[0]+Math.random()+name[1];
-            File rep = new File( System.getProperty( "java.io.tmpdir" ), reporte );*/
-
             String tmpPath = System.getProperty( "java.io.tmpdir" );
             String cmd = "chmod 777 -R "+tmpPath;
             Process p = Runtime.getRuntime().exec(cmd);
@@ -215,11 +210,6 @@ public class ReportBusiness {
 
             Runtime garbage = Runtime.getRuntime();
             garbage.gc();
-            /*memoriaDespues = rt.freeMemory();
-            memoriaConsumida = memoriaAntes - memoriaDespues;
-            System.out.println( String.format("Memoria Antes: %s", memoriaAntes) );
-            System.out.println( String.format("Memoria Despues: %s", memoriaDespues) );
-            System.out.println( String.format("Memoria Consumida: %s", memoriaConsumida) );*/
 
             return report.getPath();
         } catch ( JRException e ) {
@@ -1412,7 +1402,7 @@ public class ReportBusiness {
         Integer totalFacturas = lstVenta.size();
         for ( NotaVenta ventas : lstVenta ) {
             montoTotal = montoTotal.add( ventas.getVentaNeta() );
-            if( ventas.getRx() != null ){
+            if( ventas.getRx() != null && !ventas.getIdEmpleado().trim().equalsIgnoreCase(ventas.getRx().getIdOptometrista().trim()) ){
               String idEmpleado = ventas.getRx().getIdOptometrista();
               IngresoPorVendedor ingresos = FindorCreate( lstVentas, idEmpleado );
               ingresos.AcumulaOptometrista( ventas, montoTotal, totalFacturas, ivaTasa );
@@ -1420,8 +1410,8 @@ public class ReportBusiness {
         }
 
         for ( Modificacion mod : lstCancelaciones ) {
-            String idEmpleado = mod.getNotaVenta().getIdEmpleado();
-            if( mod.getNotaVenta().getRx() != null && mod.getNotaVenta().getIdEmpleado().trim().equalsIgnoreCase(mod.getNotaVenta().getRx().getIdOptometrista().trim())){
+            String idEmpleado = mod.getNotaVenta().getRx().getIdOptometrista();
+            if( mod.getNotaVenta().getRx() != null && !mod.getNotaVenta().getIdEmpleado().trim().equalsIgnoreCase(mod.getNotaVenta().getRx().getIdOptometrista().trim()) ){
                 IngresoPorVendedor ingresos = FindorCreate( lstVentasCan, idEmpleado );
                 ingresos.AcumulaCanOptometrista( mod.getNotaVenta(), totalFacturas, ivaTasa );
             }

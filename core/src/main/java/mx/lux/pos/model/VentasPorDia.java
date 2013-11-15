@@ -181,7 +181,7 @@ public class VentasPorDia {
       fecha = nota.getFechaHoraFactura();
       montoTotal = nota.getVentaTotal();
       for(Pago pago : nota.getPagos()){
-          if(pago.geteTipoPago().getDescripcion().contains(TAG_CUPON)){
+          if(pago.geteTipoPago().getDescripcion().contains(TAG_CUPON) || pago.getIdFPago().trim().startsWith("C")){
             montoDescuento = montoDescuento.add(pago.getMonto());
           }
           tipoPago = tipoPago + "," + pago.getIdFPago();
