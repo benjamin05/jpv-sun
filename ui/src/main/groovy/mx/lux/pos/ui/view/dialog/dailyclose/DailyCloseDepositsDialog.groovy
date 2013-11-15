@@ -205,7 +205,6 @@ class DailyCloseDepositsDialog extends JDialog {
       }
     }
     dialog.show()
-    source.enabled = true
   }
 
   private def generateFiles = { ActionEvent ev ->
