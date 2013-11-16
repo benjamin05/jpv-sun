@@ -35,4 +35,6 @@ interface CancelacionService {
   void eliminaJbLlamada( String idFactura )
 
   void generaAcuses( String idFactura )
+
+  void actualizaGrupo( String idFactura, String trans )
 }

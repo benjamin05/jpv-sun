@@ -268,6 +268,7 @@ class CancellationController {
     cancelacionService.actualizaJb( orderId )
     cancelacionService.insertaJbTrack( orderId )
     cancelacionService.eliminaJbLlamada( orderId )
+    cancelacionService.actualizaGrupo( orderId, 'C' )
   }
 
   static void generatedAcuses( orderId ){

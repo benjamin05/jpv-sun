@@ -580,8 +580,11 @@ class OrderController {
               idFactura = idFactura.replaceFirst("^0*", "")
               trabajo = jbRepository.findOne( idFactura)
             }
-            trabajo.setEstado('TE')
-            trabajo = jbRepository.saveAndFlush(trabajo)
+
+            if( !trabajo.estado.equalsIgnoreCase('TE') ){
+              trabajo.setEstado('TE')
+              trabajo = jbRepository.saveAndFlush(trabajo)
+            }
 
             JbTrack jbTrack = new JbTrack()
             jbTrack?.rx = order?.bill
@@ -592,14 +595,9 @@ class OrderController {
             jbTrack?.id_viaje = null
             jbTrack?.obs = user?.username
 
-
             jbTrackService.saveJbTrack(jbTrack)
-
             jbLlamadaRepository.deleteByJbLlamada(order?.bill)
-
-            if (trabajo?.id_grupo != null) {
-                //Hoja de Proceso y Casos de Uso Pagar Saldo y Entregar - p_pagar_saldos, al entregar la venta. iv)
-            }
+            cancelacionService.actualizaGrupo( notaVenta.id, 'E' )
         }
     }
 
@@ -852,9 +850,9 @@ class OrderController {
         if (tmpServicios?.id_serv != null) {
             temp = true
         }
-        println(surte == true)
+        /*println(surte == true)
         println(temp == true)
-        println(entregaBo == true)
+        println(entregaBo == true)*/
         //*Contacto
         if(entregaInstante){
             if (surte == true || temp == true || entregaBo == false) {

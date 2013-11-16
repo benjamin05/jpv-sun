@@ -579,5 +579,37 @@ class CancelacionServiceImpl implements CancelacionService {
 
   }
 
-
+  @Override
+  @Transactional
+  void actualizaGrupo( String idFactura, String trans ){
+      NotaVenta nota = notaVentaRepository.findOne( idFactura )
+      Jb trabajo = jbRepository.findOne(nota.factura)
+      if( trabajo?.id_grupo?.length() > 0 ){
+          QJb jbq = QJb.jb
+          List<Jb> grupo = jbRepository.findAll( jbq.id_grupo.eq(trabajo.id_grupo) )
+          if(grupo.size() > 1){
+              Integer noEntCant = 0
+              for(Jb jbTmp : grupo){
+                  if(!jbTmp.estado.trim().equalsIgnoreCase('TE') && !jbTmp.estado.trim().equalsIgnoreCase('CN')){
+                      noEntCant = noEntCant+1
+                  }
+              }
+              if(noEntCant == 0){
+                  Jb jbGrupo = jbRepository.findOne( trabajo?.id_grupo )
+                  if(jbGrupo != null){
+                      jbGrupo.estado = trans.equalsIgnoreCase('E') ? 'TE' : 'CN'
+                      jbRepository.saveAndFlush( jbGrupo )
+                  }
+                  for(Jb jbTmp : grupo){
+                      jbTmp.id_grupo = ''
+                      jbRepository.saveAndFlush( jbTmp )
+                  }
+                  JbLlamada llamada = jbLlamadaRepository.findOne( trabajo?.id_grupo )
+                  if(llamada != null){
+                      jbLlamadaRepository.delete(llamada.rx)
+                  }
+              }
+          }
+       }
+  }
 }
