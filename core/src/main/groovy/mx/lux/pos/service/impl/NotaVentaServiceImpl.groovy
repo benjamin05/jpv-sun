@@ -413,7 +413,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
       log.debug( "ticket con centro de costos: ${centroCostos} y factura: ${factura}" )
       if ( factura.length() > 0 && centroCostos.length() > 0 ) {
         QNotaVenta qNotaVenta = QNotaVenta.notaVenta
-        BooleanBuilder builder = new BooleanBuilder( qNotaVenta.factura.eq( factura ) )
+        BooleanBuilder builder = new BooleanBuilder( qNotaVenta.factura.eq( String.format("%06d", Integer.parseInt(factura)) ) )
         builder.and( qNotaVenta.sucursal.centroCostos.eq( centroCostos ) )
         return builder
       } else {
