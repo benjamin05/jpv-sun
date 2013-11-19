@@ -1545,11 +1545,6 @@ public class ReportBusiness {
 
         if( articulo != null ){
         for( TransInv movimiento : lstTransInvDate ){
-            if( movimiento.getIdTipoTrans().equalsIgnoreCase("ENTRADA")){
-              if(movimiento.getFolio() == 36 || movimiento.getFolio() == 108){
-                System.out.println( articulo.getId() );
-              }
-            }
             TransInvDetalle transInvSku = ( TransInvDetalle ) transInvDetalleRepository.findOne( transInvDet.idTipoTrans.eq(movimiento.getIdTipoTrans()).
                         and( transInvDet.folio.eq( movimiento.getFolio() )).and( transInvDet.sku.eq(articulo.getId() != null ? articulo.getId() : 0) ) );
             if( transInvSku != null ){
