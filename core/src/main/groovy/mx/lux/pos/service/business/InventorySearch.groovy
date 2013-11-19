@@ -1,6 +1,7 @@
 package mx.lux.pos.service.business
 
 import mx.lux.pos.model.*
+import mx.lux.pos.repository.NotaVentaRepository
 import mx.lux.pos.repository.TipoTransInvRepository
 import mx.lux.pos.repository.TransInvDetalleRepository
 import mx.lux.pos.repository.TransInvRepository
@@ -18,14 +19,18 @@ class InventorySearch {
   private static TransInvDetalleRepository trInvDetail
   private static TipoTransInvRepository trTypeCatalog
   private static ArticuloService partMaster
+  private static NotaVentaRepository notaVentaRepository
+
+  private static final String TAG_STARTS_FACT = 'A0'
 
   @Autowired InventorySearch( TransInvRepository pTrMstr, TransInvDetalleRepository pTrDet, ArticuloService pParts,
-                              TipoTransInvRepository pTypeCatalog
+                              TipoTransInvRepository pTypeCatalog, NotaVentaRepository pNotaVentaRepository
   ) {
     trInvMaster = pTrMstr
     trInvDetail = pTrDet
     partMaster = pParts
     trTypeCatalog = pTypeCatalog
+    notaVentaRepository = pNotaVentaRepository
   }
 
   static List<Integer> buildSkuList( List<Articulo> pPartList ) {
@@ -160,9 +165,22 @@ class InventorySearch {
 
 
   static List<TransInv> listarTransaccionesPorReferencia( String pReferencia ) {
-
+      List<NotaVenta> nota = new ArrayList<>()
+      if(pReferencia.isNumber()){
+        String factura = pReferencia
+        if(factura.length() < 6){
+          factura = String.format( "%06d", Integer.parseInt(pReferencia) )
+        }
+        nota = notaVentaRepository.findByFactura( factura.trim() )
+      }
       QTransInv trans = QTransInv.transInv
       List<TransInv> lstTransacciones = trInvMaster.findAll( trans.referencia.eq(pReferencia.trim()) )
+      if(nota.size() > 0){
+        List<TransInv> lstTransaccionesTmp = trInvMaster.findAll( trans.referencia.eq(nota.first().id) )
+        if( lstTransaccionesTmp.size() > 0){
+          lstTransacciones.addAll( lstTransaccionesTmp )
+        }
+      }
       loadDetails( lstTransacciones )
       return lstTransacciones
   }
