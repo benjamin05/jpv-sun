@@ -600,10 +600,10 @@ class CancelacionServiceImpl implements CancelacionService {
                       jbGrupo.estado = trans.equalsIgnoreCase('E') ? 'TE' : 'CN'
                       jbRepository.saveAndFlush( jbGrupo )
                   }
-                  for(Jb jbTmp : grupo){
+                  /*for(Jb jbTmp : grupo){
                       jbTmp.id_grupo = ''
                       jbRepository.saveAndFlush( jbTmp )
-                  }
+                  }*/
                   JbLlamada llamada = jbLlamadaRepository.findOne( trabajo?.id_grupo )
                   if(llamada != null){
                       jbLlamadaRepository.delete(llamada.rx)
