@@ -1414,5 +1414,9 @@ class OrderController {
   }
 
 
+  static Boolean requiereAuth( Order order ){
+    return Registry.requiereAutho()
+  }
+
 
 }

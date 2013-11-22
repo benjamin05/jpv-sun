@@ -64,6 +64,7 @@ class MainWindow extends JFrame implements KeyListener {
     private JMenuItem incomePerBranchReportMenuItem
     private JMenuItem sellerRevenueReportMenuItem
     private JMenuItem undeliveredJobsReportMenuItem
+    private JMenuItem undeliveredJobsAuditReportMenuItem
     private JMenuItem salesReportMenuItem
     private JMenuItem salesByLineReportMenuItem
     private JMenuItem salesByBrandReportMenuItem
@@ -275,6 +276,7 @@ class MainWindow extends JFrame implements KeyListener {
                                 //incomePerBranchReportMenuItem.visible = userLoggedIn
                                 //sellerRevenueReportMenuItem.visible = userLoggedIn
                                 undeliveredJobsReportMenuItem.visible = userLoggedIn
+                                undeliveredJobsAuditReportMenuItem.visible = userLoggedIn
                                 salesReportMenuItem.visible = userLoggedIn
                                 //salesByLineReportMenuItem.visible = userLoggedIn
                                 salesBySellerReportMenuItem.visible = userLoggedIn
@@ -464,6 +466,14 @@ class MainWindow extends JFrame implements KeyListener {
                                     Runtime garbage = Runtime.getRuntime();
                                     garbage.gc();
                                     ReportController.fireReport( ReportController.Report.UndeliveredJobs )
+                                }
+                        )
+                        undeliveredJobsAuditReportMenuItem = menuItem( text: "Trabajos sin Entregar Auditoria",
+                                visible: false,
+                                actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
+                                    ReportController.fireReport( ReportController.Report.UndeliveredJobsAudit )
                                 }
                         )
                         /*salesTodayMenuItem = menuItem( text: "Ventas del D\u00eda",

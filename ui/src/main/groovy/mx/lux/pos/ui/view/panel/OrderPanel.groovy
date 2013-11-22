@@ -455,6 +455,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                   } else {
                       article = inputTmp[0] + ',' + inputTmp[1].substring(0,3)
                   }
+                } else {
+                  article = input.trim()
                 }
                 List<Item> results = ItemController.findItemsByQuery(article)
                 if (results?.any()) {
@@ -843,6 +845,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                           .show()
               }
             } else if (order?.paid < (order?.total * pAnticipo)) {
+                Boolean requierAuth = OrderController.requiereAuth( order )
+                if( requierAuth ){
                   AuthorizationDialog authDialog = new AuthorizationDialog(this, "Anticipo menor al permitido, esta operacion requiere autorizaci\u00f3n")
                   authDialog.show()
                   if (authDialog.authorized) {
@@ -856,8 +860,16 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                               .show()
                   }
                 } else {
-                    validOrder = isValidOrder()
+                    validOrder = false
+                    sb.optionPane(
+                            message: 'El monto del anticipo tiene que ser minimo de: $' + (order?.total * pAnticipo),
+                            messageType: JOptionPane.ERROR_MESSAGE
+                    ).createDialog(this, 'No se puede registrar la venta')
+                            .show()
                 }
+              } else {
+                validOrder = isValidOrder()
+              }
         }
         if (validOrder) {
             Boolean onlyInventariable = OrderController.validOnlyInventariable( order )

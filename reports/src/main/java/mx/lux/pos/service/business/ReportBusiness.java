@@ -106,6 +106,8 @@ public class ReportBusiness {
     private static final Integer TAG_PUESTO_OFTALMOLOGO = 3;
     private static final String TAG_CANCELADO = "T";
     private static final String TAG_TIPO_CANCELADO = "can";
+    private static final String TAG_ESTADO_ENTREGADO = "TE";
+    private static final String TAG_ESTADO_CANCELADO = "CN";
 
     
     public List<IngresoPorDia> obtenerIngresoporDia( Date fechaInicio, Date fechaFin ) {
@@ -2125,6 +2127,43 @@ public class ReportBusiness {
       return lstTrabajos;
   }
 
+
+   public List<TrabajosSinEntregar> obtenerTrabajosSinEntregarAuditoria( ){
+     log.debug( "obtenerTrabajosSinEntregarAuditoria( )" );
+     List<TrabajosSinEntregar> lstTrabajos = new ArrayList<TrabajosSinEntregar>();
+     QNotaVenta nota = QNotaVenta.notaVenta;
+     List<NotaVenta> lstNotas = (List<NotaVenta>) notaVentaRepository.findAll( nota.factura.isNotEmpty().and(nota.factura.isNotNull()).
+             and(nota.sFactura.ne(TAG_CANCELADO)).and(nota.fechaEntrega.isNull()).
+             and(nota.receta.isNull()), nota.factura.asc() );
+     QJb jb = QJb.jb;
+     List<Jb> lstJbs = (List<Jb>) jbRepository.findAll( jb.estado.ne(TAG_ESTADO_ENTREGADO).and(jb.estado.ne(TAG_ESTADO_CANCELADO)) );
+
+     for(NotaVenta notaVenta : lstNotas){
+       TrabajosSinEntregar trabajo = new TrabajosSinEntregar();
+       BigDecimal saldo = notaVenta.getVentaNeta().subtract(notaVenta.getSumaPagos());
+       trabajo.setFecha( notaVenta.getFechaHoraFactura() );
+       trabajo.setFactura( notaVenta.getFactura() );
+       trabajo.setIdFactura( notaVenta.getId() );
+       trabajo.setMonto( notaVenta.getVentaNeta() );
+       trabajo.setSaldo( saldo );
+       lstTrabajos.add( trabajo );
+     }
+
+     for(Jb jbTmp : lstJbs){
+       if( jbTmp.getNotaVenta() != null ){
+         TrabajosSinEntregar trabajo = new TrabajosSinEntregar();
+         BigDecimal saldo = jbTmp.getNotaVenta().getVentaNeta().subtract(jbTmp.getNotaVenta().getSumaPagos());
+         trabajo.setFecha( jbTmp.getNotaVenta().getFechaHoraFactura() );
+         trabajo.setFactura( jbTmp.getNotaVenta().getFactura() );
+         trabajo.setIdFactura( jbTmp.getNotaVenta().getId() );
+         trabajo.setMonto( jbTmp.getNotaVenta().getVentaNeta() );
+         trabajo.setSaldo( saldo );
+         lstTrabajos.add( trabajo );
+       }
+     }
+
+     return lstTrabajos;
+   }
 
 
 }

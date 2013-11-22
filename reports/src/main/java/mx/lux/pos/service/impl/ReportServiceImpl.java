@@ -48,6 +48,8 @@ public class ReportServiceImpl implements ReportService {
     private static String VENTAS_POR_VENDEDOR_RESUMIDO = "reports/Venta_Por_Vendedor_Resumido.jrxml";
     
     private static String TRABAJOS_SIN_ENTREGAR = "reports/Trabajos_Sin_Entregar.jrxml";
+
+    private static String TRABAJOS_SIN_ENTREGAR_AUDITORIA = "reports/Trabajos_Sin_Entregar_Auditoria.jrxml";
     
     private static String CANCELACIONES_RESUMIDO = "reports/Cancelaciones.jrxml";
     
@@ -1588,4 +1590,48 @@ public class ReportServiceImpl implements ReportService {
 
       return null;
     }
+
+
+    public String obtenerReporteTrabajosSinEntregarAuditoria() {
+        log.info( "obtenerReporteTrabajosSinEntregarAuditoria()" );
+
+        Random random = new Random();
+        File report = new File( System.getProperty( "java.io.tmpdir" ), String.format("Trabajos-Sin-Entregar-Auditoria%s.html", random.nextInt()) );
+        org.springframework.core.io.Resource template = new ClassPathResource( TRABAJOS_SIN_ENTREGAR_AUDITORIA );
+        log.info( "Ruta:{}", report.getAbsolutePath() );
+
+        Sucursal sucursal = sucursalService.obtenSucursalActual();
+        List<TrabajosSinEntregar> lstTrabajosSinEntregar = reportBusiness.obtenerTrabajosSinEntregarAuditoria( );
+
+        Integer totalFacturas = 0;
+        BigDecimal totalVenta = BigDecimal.ZERO;
+        BigDecimal totalSaldo = BigDecimal.ZERO;
+
+        Collections.sort( lstTrabajosSinEntregar, new Comparator<TrabajosSinEntregar>() {
+            @Override
+            public int compare(TrabajosSinEntregar o1, TrabajosSinEntregar o2) {
+                return o1.getFactura().compareTo(o2.getFactura());
+            }
+        });
+        for(TrabajosSinEntregar trabajo : lstTrabajosSinEntregar){
+          totalFacturas = totalFacturas+1;
+          totalVenta = totalVenta.add(trabajo.getMonto());
+          totalSaldo = totalSaldo.add(trabajo.getSaldo());
+        }
+
+        Map<String, Object> parametros = new HashMap<String, Object>();
+        parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
+        parametros.put( "sucursal", sucursal.getNombre() );
+        parametros.put( "lstTrabajosSinEntregar", lstTrabajosSinEntregar );
+        parametros.put( "totalFacturas", totalFacturas );
+        parametros.put( "totalVenta", totalVenta );
+        parametros.put( "totalSaldo", totalSaldo );
+        String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
+        log.info( "reporte:{}", reporte );
+
+        return null;
+    }
+
+
+
 }

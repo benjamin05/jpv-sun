@@ -3,6 +3,7 @@ package mx.lux.pos.model
 enum TipoParametro {
   ACUSE_LOG_DETALLE( 'acuse_log_detalle', 'no' ),
   ACUSE_RETRASO( 'acuse_seg_ciclo', '180' ),
+  ANTICIPO_MENOR_REQUIERE_AUTORIZACIN( 'anticipo_menor_requiere_autorizacion', 'si' ),
   ARCHIVO_MENSAJE( 'archivo_mensaje', 'mensajes.txt' ),
   ARCHIVO_EMPLEADOS( 'archivo_empleados', 'emp.{FECHA}.txt' ),
   ARCHIVO_PRODUCTOS( 'archivo_productos', 'Prod*_{REGION}.txt' ),

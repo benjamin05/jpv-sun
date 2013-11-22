@@ -22,6 +22,9 @@ public interface ReportService {
     
     String obtenerReporteTrabajosSinEntregar();
 
+
+    String obtenerReporteTrabajosSinEntregarAuditoria();
+
     
     String obtenerReporteCancelacionesResumido( Date fechaInicio, Date fechaFin );
 

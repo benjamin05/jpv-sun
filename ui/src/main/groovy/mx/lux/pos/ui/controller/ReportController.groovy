@@ -37,7 +37,7 @@ class ReportController {
     WorkSubmitted, TaxBills, Discounts, PromotionsinSales,
     Payments, Quote, Exams, OptometristSales,
     Promotions, Kardex, SalesToday, PaymentsbyPeriod,
-    Coupon
+    Coupon, UndeliveredJobsAudit
   }
 
   @Autowired
@@ -142,6 +142,11 @@ class ReportController {
   static void fireUndeliveredJobsReport( ) {
     log.debug( "Imprime el reporte de Trabajos sin Entregar" )
     reportService.obtenerReporteTrabajosSinEntregar()
+  }
+
+  static void fireUndeliveredJobsAuditReport( ) {
+    log.debug( "Imprime el reporte de Trabajos sin Entregar" )
+    reportService.obtenerReporteTrabajosSinEntregarAuditoria()
   }
 
   static void fireCancellationsReport( ) {
@@ -532,6 +537,7 @@ class ReportController {
       case Report.Sales: fireSalesReport(); break;
       case Report.SalesbySeller: fireSalesbySellerReport(); break;
       case Report.UndeliveredJobs: fireUndeliveredJobsReport(); break;
+      case Report.UndeliveredJobsAudit: fireUndeliveredJobsAuditReport(); break;
       case Report.Cancellations: fireCancellationsReport(); break;
       case Report.SalesbyLine: fireSalesbyLineReport(); break;
       case Report.SalesbyBrand: fireSalesbyBrandReport(); break;

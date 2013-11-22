@@ -421,6 +421,10 @@ class Registry {
     return isTrue( TipoParametro.ACUSE_LOG_DETALLE )
   }
 
+  static Boolean requiereAutho() {
+    return isTrue( TipoParametro.ANTICIPO_MENOR_REQUIERE_AUTORIZACIN )
+  }
+
   static Double getAdvancePct() {
     return asDouble( TipoParametro.PORCENTAJE_ANTICIPO ) / 100.0
   }

@@ -338,6 +338,20 @@ class InvTrController {
     }
     if ( ( partList.size() == 0 ) && ( seed.length() > 6 ) ) {
       partList = ItemController.findPartsByQuery( seed.substring( 0, 6 ), false )
+      if( partList.size() == 0 ){
+          if( seed.contains(/$/) ){
+              String[] inputTmp = seed.split(/\$/)
+              if( seed.trim().contains(/$$/) ) {
+                  seed = inputTmp[0]
+              } else {
+                  seed = inputTmp[0] + ',' + inputTmp[1].substring(0,3)
+              }
+            partList = ItemController.findPartsByQuery( seed.substring( 0, 6 ), false )
+          } else {
+              seed = part[0]
+              partList = ItemController.findPartsByQuery( seed.substring( 0, 6 ), false )
+          }
+      }
     }
     if ( partList?.any() ) {
       if ( partList.size() == 1 )  {
