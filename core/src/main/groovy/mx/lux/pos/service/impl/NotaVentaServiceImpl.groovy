@@ -377,6 +377,18 @@ class NotaVentaServiceImpl implements NotaVentaService {
     if ( StringUtils.isNotBlank( notaVenta?.id ) ) {
       String idNotaVenta = notaVenta.id
       if ( notaVentaRepository.exists( idNotaVenta ) ) {
+        Boolean subtypeS = false
+        for(DetalleNotaVenta det : notaVenta.detalles){
+          if(det.articulo.subtipo.startsWith('S')){
+            subtypeS = true
+          }
+        }
+        if( subtypeS ){
+          String dioptra = notaVenta.codigo_lente
+          String dioptraTmp = dioptra.substring( 0, dioptra.length()-1 )
+          dioptra = dioptraTmp+'T'
+          notaVenta.codigo_lente = dioptra
+        }
         Date fecha = new Date()
         notaVenta.factura = notaVentaRepository.getFacturaSequence()
         notaVenta.tipoNotaVenta = 'F'

@@ -2140,13 +2140,19 @@ public class ReportBusiness {
 
      for(NotaVenta notaVenta : lstNotas){
        TrabajosSinEntregar trabajo = new TrabajosSinEntregar();
+       Boolean add = false;
        BigDecimal saldo = notaVenta.getVentaNeta().subtract(notaVenta.getSumaPagos());
        trabajo.setFecha( notaVenta.getFechaHoraFactura() );
        trabajo.setFactura( notaVenta.getFactura() );
        trabajo.setIdFactura( notaVenta.getId() );
        trabajo.setMonto( notaVenta.getVentaNeta() );
        trabajo.setSaldo( saldo );
-       lstTrabajos.add( trabajo );
+       if(jbRepository.findOne( notaVenta.getFactura() ) == null ){
+           add = true;
+       }
+       if( add ){
+         lstTrabajos.add( trabajo );
+       }
      }
 
      for(Jb jbTmp : lstJbs){
