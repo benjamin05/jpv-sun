@@ -292,27 +292,23 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
 
         if (order?.id != null) {
-           /*
->>>>>>> origin/MasVision
-            if (order?.dioptra != null) {
-                dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
-            }
-            */
-            //  println('antDioptra: ' +  OrderController.codigoDioptra(antDioptra))
-            //  println('Dioptra: ' +  OrderController.codigoDioptra(dioptra))
-            change.text = OrderController.requestEmployee(order?.id)
+          change.text = OrderController.requestEmployee(order?.id)
         } else {
 
             change.text = ''
         }
         currentOperationType = (OperationType) operationType.getSelectedItem()
-        this.printButton.setVisible(!this.isPaymentListEmpty())
-        this.continueButton.setVisible(this.isPaymentListEmpty())
+        this.printButton.setVisible(!this.isPaymentListEmpty() ||
+                this.promotionDriver.model?.orderDiscount?.discountPercent == 1.0)
+        //this.continueButton.setVisible( this.isPaymentListEmpty() )
+        this.continueButton.setVisible( !this.printButton.visible )
     }
 
     private void updateOrder(String pOrderId) {
+        String comments = order.comments
         Order tmp = OrderController.getOrder(pOrderId)
         if (tmp?.id) {
+            tmp?.comments = comments
             order = tmp
             doBindings()
         }
@@ -1171,45 +1167,20 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     rec = OrderController.findRx(order, customer)
                     Order armOrder = OrderController.getOrder(order?.id)
 
-
                     if (rec.id == null) {   //Receta Nueva
                         Branch branch = Session.get(SessionItem.BRANCH) as Branch
-
                         EditRxDialog editRx = new EditRxDialog(this, new Rx(), customer?.id, branch?.id, 'Nueva Receta', tipoArt)
                         editRx.show()
-
                         try {
                             OrderController.saveRxOrder(order?.id, rec.id)
-                            /*
-                             if (armOrder?.udf2.equals('')) {
-                                 ArmRxDialog armazon = new ArmRxDialog(this, order?.id, armazonString)
-                                 armazon.show()
-                             }
-                              */
                             flujoContinuar()
                         } catch (ex) {
                             flujoContinuar()
                         }
 
-
-                    } else {    //Receta ya Capturada
-                        /*
-                           Rx rx = Rx.toRx(rec)
-                           Branch branch = Session.get( SessionItem.BRANCH ) as Branch
-                           EditRxDialog editRx = new EditRxDialog( this, rx, customer?.id, branch?.id, 'Nueva Receta',tipoArt )
-                           editRx.show()
-
-
-                        if (armOrder?.udf2.equals('')) {
-                            ArmRxDialog armazon = new ArmRxDialog(this, order?.id, armazonString)
-                            armazon.show()
-                        }
-                          */
-                        flujoContinuar()
-
+                    } else {
+                      flujoContinuar()
                     }
-
-
                 }
 
             } else {

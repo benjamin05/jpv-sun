@@ -962,8 +962,8 @@ class OrderController {
             JbTrack nuevojbTrack = new JbTrack()
 
             if (jb?.rx == null) {
-
-                nuevoJb?.rx = notaVenta?.factura
+                String factura = notaVenta.factura.replaceFirst("^0*", "")
+                nuevoJb?.rx = factura
                 nuevoJb?.estado = 'PE'
                 nuevoJb?.id_cliente = notaVenta?.idCliente
                 nuevoJb?.emp_atendio = notaVenta?.empleado?.id

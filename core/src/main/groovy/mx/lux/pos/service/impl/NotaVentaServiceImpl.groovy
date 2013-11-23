@@ -735,7 +735,8 @@ class NotaVentaServiceImpl implements NotaVentaService {
     NotaVenta nota = notaVentaRepository.findOne( idFactura )
     if( nota != null ){
       Jb jb = new Jb()
-      jb.rx = nota.factura
+      String factura = nota.factura.replaceFirst("^0*", "")
+      jb.rx = factura
       jb.estado = 'RTN'
       jb.id_cliente = nota.idCliente.toString().trim()
       jb.emp_atendio = nota.idEmpleado
