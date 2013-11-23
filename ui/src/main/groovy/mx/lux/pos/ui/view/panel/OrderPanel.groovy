@@ -904,8 +904,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         // if(newOrder?.due > 0){
         //   cSaldo = true
         // }
-        OrderController.creaJb(newOrder?.ticket.trim(), cSaldo)
         OrderController.validaEntrega(newOrder?.bill.trim(),newOrder?.branch?.id.toString(), true)
+        OrderController.creaJb(newOrder?.ticket.trim(), cSaldo)
         OrderController.validaSurtePorGenerico( order )
         if( advanceOnlyInventariable ){
           OrderController.creaJbAnticipoInventariables( newOrder?.id )

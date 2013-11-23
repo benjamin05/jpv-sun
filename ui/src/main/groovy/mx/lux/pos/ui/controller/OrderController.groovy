@@ -933,7 +933,8 @@ class OrderController {
                 genericoD = true
             }
 
-            if (articulo?.idGenerico.trim().equals('B') || articulo?.idGenerico.trim().equals('C') || articulo?.idGenerico.trim().equals('H')) {
+            if( notaVenta.fechaEntrega == null ){
+            //if (articulo?.idGenerico.trim().equals('B') || articulo?.idGenerico.trim().equals('C') || articulo?.idGenerico.trim().equals('H')) {
                 creaJB = true
                 if (articulo?.idGenerico.trim().equals('C') || articulo?.idGenerico.trim().equals('H')) {
                     tipoJb = 'LC'

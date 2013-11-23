@@ -142,6 +142,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
         notaVenta.tipoNotaVenta = TAG_TIPO_NOTA_VENTA
         try {
           notaVenta = notaVentaRepository.save( notaVenta )
+          notaVentaRepository.flush()
           log.info( "notaVenta registrada id: ${notaVenta?.id}" )
 
         } catch ( ex ) {
