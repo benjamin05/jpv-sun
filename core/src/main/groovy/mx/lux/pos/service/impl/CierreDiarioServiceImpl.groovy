@@ -199,9 +199,9 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
 
       String dateClose = df.format(fechaCierre)
       String today = df.format( new Date() )
-      if( dateClose.compareTo( today ) == 0 ){
-        generarFicheroInv( )
-      }
+      //if( dateClose.compareTo( today ) == 0 ){
+        generarFicheroInv( fechaCierre )
+      //}
       InventorySearch.generateInFile( fechaCierre, fechaCierre )
       archivarCierre( fechaCierre )
     } catch ( Exception e ) {
@@ -821,12 +821,12 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     generarFichero( ubicacion, nombreFichero, 'fichero-ZZ', datos )
   }
 
-  private void generarFicheroInv( ){
+  private void generarFicheroInv( Date fechaCierre ){
     log.debug( "generarArchivoInventario( )" )
 
     Parametro ubicacion = Registry.find( TipoParametro.RUTA_CIERRE )
     Parametro sucursal = Registry.find( TipoParametro.ID_SUCURSAL )
-    String nombreFichero = "${ String.format("%02d", NumberFormat.getInstance().parse(sucursal.valor)) }.${ CustomDateUtils.format( new Date(), 'dd-MM-yyyy' ) }.${ CustomDateUtils.format( new Date(), 'HHmm' ) }.inv"
+    String nombreFichero = "${ String.format("%02d", NumberFormat.getInstance().parse(sucursal.valor)) }.${ CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ) }.${ CustomDateUtils.format( new Date(), 'HHmm' ) }.inv"
     log.info( "Generando archivo ${ nombreFichero }" )
     QArticulo articulo = QArticulo.articulo1
     List<Articulo> lstArticulos = articuloRepository.findAll( articulo.cantExistencia.ne( 0 ).and(articulo.cantExistencia.isNotNull()), articulo.id.asc() )
