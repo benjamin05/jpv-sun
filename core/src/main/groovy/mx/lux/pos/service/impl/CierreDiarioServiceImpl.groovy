@@ -302,7 +302,10 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     List<NotaVenta> notasVenta = obtenerListaporFechaCierre( fechaCierre )
     log.debug( "Se han encontrado ${notasVenta.size()} Notas Venta" )
     List<DetalleNotaVenta> detallesTmp = new ArrayList<DetalleNotaVenta>()
-    notasVenta.each { notaVenta -> detallesTmp.addAll( notaVenta.detalles ) }
+    //notasVenta.each { notaVenta -> detallesTmp.addAll( notaVenta.detalles ) }
+    for(NotaVenta nota : notasVenta){
+      detallesTmp.addAll( nota.detalles )
+    }
     log.debug( "Se han encontrado ${detallesTmp.size()} Detalles Notas Venta" )
     Collections.sort(detallesTmp, new Comparator<DetalleNotaVenta>() {
         @Override
