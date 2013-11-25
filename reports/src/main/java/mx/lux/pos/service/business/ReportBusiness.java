@@ -107,6 +107,7 @@ public class ReportBusiness {
     private static final Integer TAG_PUESTO_OFTALMOLOGO = 3;
     private static final String TAG_CANCELADO = "T";
     private static final String TAG_TIPO_CANCELADO = "can";
+    private static final String TAG_ORDEN_SERVICIO = "OS";
     private static final String TAG_ESTADO_ENTREGADO = "TE";
     private static final String TAG_ESTADO_CANCELADO = "CN";
     private static final String TAG_ESTADO_GARANTIA = "GAR";
@@ -2149,11 +2150,10 @@ public class ReportBusiness {
      List<TrabajosSinEntregar> lstTrabajos = new ArrayList<TrabajosSinEntregar>();
      QNotaVenta nota = QNotaVenta.notaVenta;
      List<NotaVenta> lstNotas = (List<NotaVenta>) notaVentaRepository.findAll( nota.factura.isNotEmpty().and(nota.factura.isNotNull()).
-             and(nota.sFactura.ne(TAG_CANCELADO)).and(nota.fechaEntrega.isNull()).
-             and(nota.receta.isNull()), nota.factura.asc() );
+             and(nota.sFactura.ne(TAG_CANCELADO)).and(nota.fechaEntrega.isNull()), nota.factura.asc() );
      QJb jb = QJb.jb;
-     List<Jb> lstJbs = (List<Jb>) jbRepository.findAll( jb.estado.ne(TAG_ESTADO_ENTREGADO).or(jb.estado.ne(TAG_ESTADO_CANCELADO)).
-             or(jb.estado.ne(TAG_ESTADO_GARANTIA)) );
+     List<Jb> lstJbs = (List<Jb>) jbRepository.findAll( jb.jb_tipo.eq(TAG_ORDEN_SERVICIO).and(jb.estado.ne(TAG_ESTADO_ENTREGADO).or(jb.estado.ne(TAG_ESTADO_CANCELADO)).
+             or(jb.estado.ne(TAG_ESTADO_GARANTIA))) );
 
      for(NotaVenta notaVenta : lstNotas){
        TrabajosSinEntregar trabajo = new TrabajosSinEntregar();
@@ -2164,12 +2164,7 @@ public class ReportBusiness {
        trabajo.setIdFactura( notaVenta.getId() );
        trabajo.setMonto( notaVenta.getVentaNeta() );
        trabajo.setSaldo( saldo );
-       if(jbRepository.findOne( notaVenta.getFactura() ) == null ){
-           add = true;
-       }
-       if( add ){
-         lstTrabajos.add( trabajo );
-       }
+       lstTrabajos.add( trabajo );
      }
 
      for(Jb jbTmp : lstJbs){
