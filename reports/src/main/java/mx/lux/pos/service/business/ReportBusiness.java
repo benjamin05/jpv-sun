@@ -109,6 +109,7 @@ public class ReportBusiness {
     private static final String TAG_TIPO_CANCELADO = "can";
     private static final String TAG_ESTADO_ENTREGADO = "TE";
     private static final String TAG_ESTADO_CANCELADO = "CN";
+    private static final String TAG_ESTADO_GARANTIA = "GAR";
 
     
     public List<IngresoPorDia> obtenerIngresoporDia( Date fechaInicio, Date fechaFin ) {
@@ -2151,7 +2152,8 @@ public class ReportBusiness {
              and(nota.sFactura.ne(TAG_CANCELADO)).and(nota.fechaEntrega.isNull()).
              and(nota.receta.isNull()), nota.factura.asc() );
      QJb jb = QJb.jb;
-     List<Jb> lstJbs = (List<Jb>) jbRepository.findAll( jb.estado.ne(TAG_ESTADO_ENTREGADO).and(jb.estado.ne(TAG_ESTADO_CANCELADO)) );
+     List<Jb> lstJbs = (List<Jb>) jbRepository.findAll( jb.estado.ne(TAG_ESTADO_ENTREGADO).or(jb.estado.ne(TAG_ESTADO_CANCELADO)).
+             or(jb.estado.ne(TAG_ESTADO_GARANTIA)) );
 
      for(NotaVenta notaVenta : lstNotas){
        TrabajosSinEntregar trabajo = new TrabajosSinEntregar();
