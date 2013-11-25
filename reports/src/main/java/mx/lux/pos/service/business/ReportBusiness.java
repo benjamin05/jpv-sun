@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -1505,11 +1506,25 @@ public class ReportBusiness {
 
     
     public List<KardexPorArticulo> obtenerKardex(  String article, Date fechaInicio, Date fechaFin ){
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         QTransInv transInv = QTransInv.transInv;
         QTransInvDetalle transInvDet = QTransInvDetalle.transInvDetalle;
         List<TransInvDetalle> lstMovimientos = new ArrayList<TransInvDetalle>();
-        List<TransInv> lstTransInvDate = ( List<TransInv> ) transInvRepository.findAll( transInv.fecha.between( fechaInicio, new Date() ), transInv.fechaMod.desc() );
+        List<TransInv> lstTransInvDate = new ArrayList<TransInv>();
+        Date fechaInicial = new Date();
+        try{
+          fechaInicial = df.parse("2012-12-01");
+        } catch (ParseException e ){
+          System.out.println( e );
+        }
+
+        List<TransInv> lstTransTotal = ( List<TransInv> ) transInvRepository.findAll( transInv.fecha.between( fechaInicial, new Date() ), transInv.fechaMod.desc() );
         List<KardexPorArticulo> lstKardezSku = new ArrayList<KardexPorArticulo>();
+        for(TransInv trans : lstTransTotal){
+          //if( trans.getFecha().compareTo(fechaInicio) > 0 && trans.getFecha().compareTo(fechaFin) < 0){
+            lstTransInvDate.add( trans );
+          //}
+        }
         Articulo articulo = new Articulo();
         QArticulo art = QArticulo.articulo1;
         String [] articuloColor = article.split(",");
@@ -1529,17 +1544,18 @@ public class ReportBusiness {
         if( articulos.size() == 1){
             articulo = articulos.get(0);
         }
+
         if( articulo != null ){
-            for( TransInv movimiento : lstTransInvDate ){
-                TransInvDetalle transInvSku = ( TransInvDetalle ) transInvDetalleRepository.findOne( transInvDet.idTipoTrans.eq(movimiento.getIdTipoTrans()).
+        for( TransInv movimiento : lstTransInvDate ){
+            TransInvDetalle transInvSku = ( TransInvDetalle ) transInvDetalleRepository.findOne( transInvDet.idTipoTrans.eq(movimiento.getIdTipoTrans()).
                         and( transInvDet.folio.eq( movimiento.getFolio() )).and( transInvDet.sku.eq(articulo.getId() != null ? articulo.getId() : 0) ) );
-                if( transInvSku != null ){
-                    lstMovimientos.add( transInvSku );
-                }
+            if( transInvSku != null ){
+                lstMovimientos.add( transInvSku );
             }
         }
+        }
 
-        Integer exisActual = articulo.getCantExistencia() != null ? articulo.getCantExistencia() : 0;
+        Integer exisActual = articulo.getCantExistencia();
         Integer saldoInicio = 0;
         Integer saldoFin = 0;
         for( TransInvDetalle movimiento : lstMovimientos ){
@@ -1584,7 +1600,6 @@ public class ReportBusiness {
     }
 
 
-    
     public List<VentasPorDia> obtenerVentasDelDiaActual( Date fechaInicio, Date fechaFin, Boolean artPrecioMayorcero ){
 
         QNotaVenta nv = QNotaVenta.notaVenta;

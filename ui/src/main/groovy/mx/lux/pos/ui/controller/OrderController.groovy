@@ -580,8 +580,7 @@ class OrderController {
               idFactura = idFactura.replaceFirst("^0*", "")
               trabajo = jbRepository.findOne( idFactura)
             }
-
-            if( !trabajo.estado.equalsIgnoreCase('TE') ){
+            if( trabajo != null && !trabajo.estado.equalsIgnoreCase('TE')){
               trabajo.setEstado('TE')
               trabajo = jbRepository.saveAndFlush(trabajo)
             }
@@ -633,6 +632,10 @@ class OrderController {
 
     static Order findOrderByTicket(String ticket) {
         log.info("buscando orden por ticket: ${ticket}")
+        String[] ticketTmp = ticket.split('-')
+        if( ticketTmp.length > 1 ){
+          ticket = ticketTmp[0]+"-"+String.format("%06d",Integer.parseInt(ticketTmp[1]))
+        }
         NotaVenta result = notaVentaService.obtenerNotaVentaPorTicket(ticket)
         return Order.toOrder(result)
     }
@@ -815,6 +818,13 @@ class OrderController {
         String ticket = idSucursal + '-' + idFactura
         Boolean registro = true
         NotaVenta notaVenta = notaVentaService.obtenerNotaVentaPorTicket(ticket)
+        if(notaVenta == null){
+          if(idFactura.length()< 6){
+            idFactura = String.format( "%06d", Integer.parseInt(idFactura) )
+            ticket = idSucursal + '-' + idFactura
+            notaVenta = notaVentaService.obtenerNotaVentaPorTicket(ticket)
+          }
+        }
         if(notaVenta != null){
         Order order = Order.toOrder(notaVenta)
         List<DetalleNotaVenta> detalleVenta = detalleNotaVentaService.listarDetallesNotaVentaPorIdFactura(notaVenta?.id)

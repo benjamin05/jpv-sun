@@ -1342,8 +1342,11 @@ public class ReportServiceImpl implements ReportService {
         }
 
         if ( lstKardex.size() > 0 ) {
-            exisInicial = lstKardex.get( 0 ).getSaldoInicio();
-            exisActual = lstKardex.get( lstKardex.size() - 1 ).getSaldoFinal();
+          exisInicial = lstKardex.get( 0 ).getSaldoInicio();
+          exisActual = articulo.getCantExistencia();
+        } else {
+          exisInicial = articulo.getCantExistencia();
+          exisActual = articulo.getCantExistencia();
         }
 
         if( articulo.getArticulo() != null ){
@@ -1358,10 +1361,10 @@ public class ReportServiceImpl implements ReportService {
         parametros.put( "fechaInicio", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaInicio ) );
         parametros.put( "fechaFin", new SimpleDateFormat( "dd/MM/yyyy" ).format( fechaFin ) );
         parametros.put( "sucursal", sucursal.getNombre() );
-        parametros.put( "articuloSku", articulo.getId() != null ? articulo.getId() : 0 );
+        parametros.put( "articuloSku", articulo.getId() );
         parametros.put( "articuloArticulo", articulo.getArticulo() != null ? articulo.getArticulo() : "" );
         parametros.put( "articuloColor", articulo.getCodigoColor() != null ? articulo.getCodigoColor() : "" );
-        parametros.put( "articuloDescripcion", articulo.getDescripcion() != null ? articulo.getDescripcion() : "" );
+        parametros.put( "articuloDescripcion", articulo.getDescripcion() );
         parametros.put( "articuloPrecio", precio );
         parametros.put( "lstKardex", lstKardex );
         parametros.put( "existenciaInicial", exisInicial );

@@ -15,6 +15,8 @@ class InvTrFilter extends Filter<TransInv> {
   String trType, partCode, reference
   Integer sku, siteTo
 
+  String TAG_FACTURA = 'A0'
+
   // Public Methods
   Boolean isDateRangeActive() {
     return ( ( dateFrom != null ) && ( dateTo != null ) ) && reference == null
@@ -119,7 +121,9 @@ class InvTrFilter extends Filter<TransInv> {
       selected = ( pInvTr.idTipoTrans.equalsIgnoreCase( trType ) )
     }
     if ( selected && this.isReferenceActive( ) ) {
+      if( !pInvTr.referencia.startsWith(TAG_FACTURA) ){
         selected = ( pInvTr.referencia.equalsIgnoreCase( reference ) )
+      }
     }
     if ( selected && this.isSiteToActive( ) ) {
       selected = ( siteTo.equals( pInvTr.sucursalDestino ) )
