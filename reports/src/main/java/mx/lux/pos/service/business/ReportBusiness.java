@@ -2152,8 +2152,8 @@ public class ReportBusiness {
      List<NotaVenta> lstNotas = (List<NotaVenta>) notaVentaRepository.findAll( nota.factura.isNotEmpty().and(nota.factura.isNotNull()).
              and(nota.sFactura.ne(TAG_CANCELADO)).and(nota.fechaEntrega.isNull()), nota.factura.asc() );
      QJb jb = QJb.jb;
-     List<Jb> lstJbs = (List<Jb>) jbRepository.findAll( jb.jb_tipo.eq(TAG_ORDEN_SERVICIO).and(jb.estado.ne(TAG_ESTADO_ENTREGADO).or(jb.estado.ne(TAG_ESTADO_CANCELADO)).
-             or(jb.estado.ne(TAG_ESTADO_GARANTIA))) );
+     List<Jb> lstJbs = (List<Jb>) jbRepository.findAll( jb.jb_tipo.eq(TAG_ORDEN_SERVICIO).and(jb.estado.ne(TAG_ESTADO_ENTREGADO)).and(jb.estado.ne(TAG_ESTADO_CANCELADO)).
+             and(jb.estado.ne(TAG_ESTADO_GARANTIA)) );
 
      for(NotaVenta notaVenta : lstNotas){
        TrabajosSinEntregar trabajo = new TrabajosSinEntregar();

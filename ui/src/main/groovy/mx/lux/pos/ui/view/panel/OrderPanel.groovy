@@ -89,6 +89,8 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private Boolean activeDialogProccesCustomer = true
     private Boolean advanceOnlyInventariable
 
+    private String sComments = ''
+
 
 
     OrderPanel() {
@@ -305,10 +307,15 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     private void updateOrder(String pOrderId) {
-        String comments = order.comments
+        String comments = ''
+        if( order.comments != null && order.comments != '' ){
+          comments = order.comments
+        }
         Order tmp = OrderController.getOrder(pOrderId)
         if (tmp?.id) {
-            tmp?.comments = comments
+            if( comments.length() > 0 ){
+              tmp?.comments = comments
+            }
             order = tmp
             doBindings()
         }
