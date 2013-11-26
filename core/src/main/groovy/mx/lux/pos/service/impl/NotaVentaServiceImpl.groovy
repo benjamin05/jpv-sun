@@ -768,9 +768,13 @@ class NotaVentaServiceImpl implements NotaVentaService {
     log.debug( "correScriptRespaldoNotas( )" )
     NotaVenta nota = notaVentaRepository.findOne( idFactura )
     if( nota != null ){
+      try{
       String cmd = String.format( "%s %s", Registry.commandBakpOrder, nota.id);
       Process p = Runtime.getRuntime().exec(cmd);
       println "comando a ejecutar <${cmd}>"
+      } catch (Exception e){
+        println e
+      }
     }
   }
 

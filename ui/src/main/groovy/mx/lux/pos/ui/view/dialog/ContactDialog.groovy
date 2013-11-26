@@ -83,13 +83,12 @@ class ContactDialog extends JDialog {
 
     private void doSave(){
 
-        Jb jb = ContactController.findJbxRX( nVenta?.factura)
-
-        FormaContacto fc = ContactController.findFCbyRx(jb?.rx)
+        //Jb jb = ContactController.findJbxRX( nVenta?.factura)
+        FormaContacto fc = ContactController.findFCbyRx(nVenta?.factura)
 
         if( fc?.rx == null){
             FormaContacto  formaContacto = new FormaContacto()
-             formaContacto.rx = jb?.rx
+             formaContacto.rx = nVenta?.factura
              formaContacto.id_cliente = nVenta?.idCliente
              formaContacto.fecha_mod = new Date()
              formaContacto.id_sucursal = nVenta?.idSucursal
@@ -109,17 +108,9 @@ class ContactDialog extends JDialog {
                 formaContacto?.contacto = infoTipo?.text
             }
 
-
-
-
-
             formaContacto?.observaciones =  txtObservaciones?.text
-
             formaContacto = ContactController.saveFormaContacto(formaContacto)
-
-
         }
-
         doCancel()
     }
 

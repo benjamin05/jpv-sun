@@ -503,7 +503,12 @@ class OrderController {
                 if (notaVenta.idCliente != null) {
                     notaVenta.idCliente = order.customer.id
                 }
-                notaVenta.observacionesNv = order.comments
+                String dejo = ''
+                TmpServicios servicio = tmpServiciosRepository.findbyIdFactura(notaVenta.id)
+                if( servicio != null ){
+                  dejo = servicio.dejo
+                }
+                notaVenta.observacionesNv = order.comments+" "+dejo
                 //notaVenta.empEntrego = user?.username
                 //notaVenta.udf2 = order.country.toUpperCase()
                 notaVenta = notaVentaService.cerrarNotaVenta(notaVenta)
@@ -1402,7 +1407,7 @@ class OrderController {
 
 
   static void runScriptBckpOrder( Order order ){
-    log.debug( "creaJbAnticipoInventariables( )" )
+    log.debug( "runScriptBckpOrder( )" )
     if( order != null && order.id != null ){
       notaVentaService.correScriptRespaldoNotas( order.id )
     }

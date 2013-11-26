@@ -949,12 +949,14 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
               OrderController.fieldRX(newOrder.id)
             }
             reviewForTransfers(newOrder.id)
-            try{
-            OrderController.runScriptBckpOrder( newOrder )
-            } catch ( Exception e ){
-              println e
+            sb.doOutside {
+              try{
+                OrderController.runScriptBckpOrder( newOrder )
+              } catch ( Exception e ){
+                println e
+              }
             }
-            // Flujo despues de imprimir nota de venta
+            // Flujo despues de imprimir nota de venta}
             CustomerController.requestOrderByCustomer(this, customer)
         } else {
             sb.optionPane(
