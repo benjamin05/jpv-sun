@@ -586,7 +586,8 @@ class OrderController {
             }
 
             JbTrack jbTrack = new JbTrack()
-            jbTrack?.rx = order?.bill
+            String bill = order?.bill.replaceFirst("^0*", "")
+            jbTrack?.rx = bill
             jbTrack?.estado = 'TE'
             jbTrack?.emp = user?.username
             jbTrack?.fecha = new Date()
@@ -989,8 +990,7 @@ class OrderController {
 
 
 
-
-                nuevojbTrack?.rx = notaVenta?.factura
+                nuevojbTrack?.rx = factura
                 nuevojbTrack?.estado = 'PE'
                 nuevojbTrack?.emp = notaVenta?.empleado?.id
                 nuevojbTrack?.obs = articulos
@@ -1003,7 +1003,7 @@ class OrderController {
                     nuevoJb?.id_viaje = '8'
 
                     JbTrack nuevoJbTrack2 = new JbTrack()
-                    nuevoJbTrack2?.rx = notaVenta?.factura
+                    nuevoJbTrack2?.rx = factura
                     nuevoJbTrack2?.estado = 'EP'
                     nuevoJbTrack2?.obs = '8'
                     nuevoJbTrack2?.id_viaje = '8'

@@ -492,7 +492,8 @@ class CancelacionServiceImpl implements CancelacionService {
       }
 
       JbTrack jbTrack = new JbTrack()
-      jbTrack.rx = nota.factura.trim()
+      String factura = nota.factura.replaceFirst("^0*", "")
+      jbTrack.rx = factura.trim()
       jbTrack.estado = TAG_JB_CANCELADA
       jbTrack.emp = lstModificaciones.size() > 0 ? lstModificaciones.first().idEmpleado : ''
       jbTrack.obs = lstModificaciones.first().causa.trim()

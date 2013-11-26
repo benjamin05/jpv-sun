@@ -2168,16 +2168,22 @@ public class ReportBusiness {
      }
 
      for(Jb jbTmp : lstJbs){
+       TrabajosSinEntregar trabajo = new TrabajosSinEntregar();
        if( jbTmp.getNotaVenta() != null ){
-         TrabajosSinEntregar trabajo = new TrabajosSinEntregar();
          BigDecimal saldo = jbTmp.getNotaVenta().getVentaNeta().subtract(jbTmp.getNotaVenta().getSumaPagos());
          trabajo.setFecha( jbTmp.getNotaVenta().getFechaHoraFactura() );
          trabajo.setFactura( jbTmp.getNotaVenta().getFactura() );
          trabajo.setIdFactura( jbTmp.getNotaVenta().getId() );
          trabajo.setMonto( jbTmp.getNotaVenta().getVentaNeta() );
          trabajo.setSaldo( saldo );
-         lstTrabajos.add( trabajo );
+       } else {
+         trabajo.setFecha( jbTmp.getFecha_venta() );
+         trabajo.setFactura( "SERVICIO" );
+         trabajo.setIdFactura( jbTmp.getRx() );
+         trabajo.setMonto( BigDecimal.ZERO );
+         trabajo.setSaldo( BigDecimal.ZERO );
        }
+       lstTrabajos.add( trabajo );
      }
 
      return lstTrabajos;
