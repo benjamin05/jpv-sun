@@ -267,7 +267,7 @@ class OrderController {
             NotaVenta nota = notaVentaService.obtenerNotaVenta(orderId)
             DetalleNotaVenta detalle = null
             if (item.isManualPriceItem()) {
-                String rmks = nota.observacionesNv
+                String rmks = nota.observacionesNv+nota.observacionesNv.trim().length() <= 0 ? order.comments : ''
                 ManualPriceDialog dlg = ManualPriceDialog.instance
                 dlg.item = item
                 dlg.remarks = rmks
@@ -311,6 +311,7 @@ class OrderController {
             if (nota != null ) {
                 notaVentaService.registraImpuestoPorFactura( nota )
             }
+            nota.observacionesNv = nota.observacionesNv.trim().length() <= 0 ? order.comments : ''
             return Order.toOrder(nota)
         } else {
             log.warn("no se agrega articulo, parametros invalidos")
@@ -634,10 +635,11 @@ class OrderController {
     static Order findOrderByTicket(String ticket) {
         log.info("buscando orden por ticket: ${ticket}")
         String[] ticketTmp = ticket.split('-')
-        if( ticketTmp.length > 1 ){
-          ticket = ticketTmp[0]+"-"+String.format("%06d",Integer.parseInt(ticketTmp[1]))
-        }
         NotaVenta result = notaVentaService.obtenerNotaVentaPorTicket(ticket)
+        if( result == null ){
+            ticket = ticketTmp[0]+"-"+String.format("%06d",Integer.parseInt(ticketTmp[1]))
+            result = notaVentaService.obtenerNotaVentaPorTicket(ticket)
+        }
         return Order.toOrder(result)
     }
 

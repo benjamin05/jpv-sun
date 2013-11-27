@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 import javax.annotation.Resource
+import java.text.NumberFormat
 
 @Slf4j
 @Service( 'notaVentaService' )
@@ -426,7 +427,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
       log.debug( "ticket con centro de costos: ${centroCostos} y factura: ${factura}" )
       if ( factura.length() > 0 && centroCostos.length() > 0 ) {
         QNotaVenta qNotaVenta = QNotaVenta.notaVenta
-        BooleanBuilder builder = new BooleanBuilder( qNotaVenta.factura.eq( String.format("%06d", Integer.parseInt(factura)) ) )
+        BooleanBuilder builder = new BooleanBuilder( qNotaVenta.factura.eq( factura ) )
         builder.and( qNotaVenta.sucursal.centroCostos.eq( centroCostos ) )
         return builder
       } else {
@@ -453,6 +454,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
       String folio = parametros.folio
       String ticket = parametros.ticket
       String employee = parametros.employee
+      String factura = ''
       QNotaVenta qNotaVenta = QNotaVenta.notaVenta
       BooleanBuilder builder = new BooleanBuilder()
       if(ticket.trim() != ''){
@@ -460,6 +462,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
         if(ticketValid.length > 1){
           dateFrom = null
           dateTo = null
+          factura = ticketValid[1]
         }
       }
       if ( dateFrom && dateTo ) {
@@ -485,6 +488,13 @@ class NotaVentaServiceImpl implements NotaVentaService {
       if ( builder.args?.any() ) {
         builder.and( qNotaVenta.factura.isNotEmpty() )
         List<NotaVenta> results = notaVentaRepository.findAll( builder, qNotaVenta.fechaHoraFactura.desc() ) as List<NotaVenta>
+        if( results.size() <= 0 && factura.length() > 0){
+          try{
+            results = notaVentaRepository.findByFactura( String.format("%06d", NumberFormat.getInstance().parse(factura.trim())) )
+          } catch (Exception e){
+            println e
+          }
+        }
         return results?.any() ? results : [ ]
       }
     } else {
