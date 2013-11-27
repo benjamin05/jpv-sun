@@ -128,7 +128,7 @@ class InvoicePanel extends JPanel {
         txtCorreo = textField()
         label( '@' )
         cbCorreo = comboBox( items: dominios, editable: true )
-        cbDesglose = checkBox( text: 'Desglosar Lente' )
+        cbDesglose = checkBox( text: 'Desglosar Lente', selected: true )
         label( constraints: 'span 3' )
       }
 
@@ -239,7 +239,7 @@ class InvoicePanel extends JPanel {
     clearTaxpayerFields()
     order = new Order()
     invoice = new Invoice( state: estadoDefault )
-    cbDesglose.selected = false
+    cbDesglose.selected = true
     doBindings()
   }
 
@@ -258,6 +258,7 @@ class InvoicePanel extends JPanel {
           cbExtranjero.selected = true
           txtDelMun.text = orderTmp.customer?.address?.city
           txtPais.text = orderTmp.customer?.address?.country
+          cbDesglose.selected = true
         }
         Invoice invoceTmp = InvoiceController.findInvoiceByTicket( txtTicket.text )
         fillInvoiceFields( invoceTmp )
