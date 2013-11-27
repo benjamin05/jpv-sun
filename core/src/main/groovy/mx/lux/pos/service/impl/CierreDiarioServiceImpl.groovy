@@ -829,7 +829,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
 
     Parametro ubicacion = Registry.find( TipoParametro.RUTA_CIERRE )
     Parametro sucursal = Registry.find( TipoParametro.ID_SUCURSAL )
-    String nombreFichero = "${ String.format("%02d", NumberFormat.getInstance().parse(sucursal.valor)) }.${ CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ) }.${ CustomDateUtils.format( new Date(), 'HHmm' ) }.inv"
+    String nombreFichero = "${ String.format("%02d", NumberFormat.getInstance().parse(sucursal.valor)) }.${ CustomDateUtils.format( new Date(), 'dd-MM-yyyy' ) }.${ CustomDateUtils.format( new Date(), 'HHmm' ) }.inv"
     log.info( "Generando archivo ${ nombreFichero }" )
     QArticulo articulo = QArticulo.articulo1
     List<Articulo> lstArticulos = articuloRepository.findAll( articulo.cantExistencia.ne( 0 ).and(articulo.cantExistencia.isNotNull()), articulo.id.asc() )
@@ -1470,7 +1470,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     if ( pDeleteAfter ) {
       long nFiles = 0
       new File( Registry.dailyClosePath ).eachFile( ) { File f ->
-        if ( f.getName().contains( strDateTmp ) ) {
+        if ( f.getName().contains( strDateTmp ) || f.getName().contains('.inv')) {
           f.delete()
           nFiles ++
         }

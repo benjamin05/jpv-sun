@@ -41,6 +41,7 @@ class InvoicePanel extends JPanel {
   private JTextField txtCP
   private JTextField txtCorreo
   private JCheckBox cbExtranjero
+  private JCheckBox cbDesglose
   private JComboBox cbEstado
   private JComboBox cbCorreo
   private JButton searchButton
@@ -127,6 +128,8 @@ class InvoicePanel extends JPanel {
         txtCorreo = textField()
         label( '@' )
         cbCorreo = comboBox( items: dominios, editable: true )
+        cbDesglose = checkBox( text: 'Desglosar Lente' )
+        label( constraints: 'span 3' )
       }
 
       panel( layout: new MigLayout( 'right', '[fill,100!]' ) ) {
@@ -236,6 +239,7 @@ class InvoicePanel extends JPanel {
     clearTaxpayerFields()
     order = new Order()
     invoice = new Invoice( state: estadoDefault )
+    cbDesglose.selected = false
     doBindings()
   }
 
@@ -415,7 +419,7 @@ class InvoicePanel extends JPanel {
     JButton source = ev.source as JButton
     source.enabled = false
     if ( isValidInput() ) {
-      Invoice invoiceTmp = InvoiceController.requestInvoice( invoice )
+      Invoice invoiceTmp = InvoiceController.requestInvoice( invoice, cbDesglose.selected )
       if ( invoiceTmp?.id ) {
         fillInvoiceFields( invoiceTmp )
         sb.optionPane(

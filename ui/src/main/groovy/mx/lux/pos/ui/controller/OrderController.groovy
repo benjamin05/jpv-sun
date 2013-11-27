@@ -503,12 +503,7 @@ class OrderController {
                 if (notaVenta.idCliente != null) {
                     notaVenta.idCliente = order.customer.id
                 }
-                String dejo = ''
-                TmpServicios servicio = tmpServiciosRepository.findbyIdFactura(notaVenta.id)
-                if( servicio != null ){
-                  dejo = servicio.dejo
-                }
-                notaVenta.observacionesNv = order.comments+" "+dejo
+                notaVenta.observacionesNv = order.comments
                 //notaVenta.empEntrego = user?.username
                 //notaVenta.udf2 = order.country.toUpperCase()
                 notaVenta = notaVentaService.cerrarNotaVenta(notaVenta)
@@ -1105,6 +1100,7 @@ class OrderController {
         surteSwitch?.surte = surte
         Precio precio = precioRepository.findbyArt(item?.name.trim())
 
+        if( item.subtype.startsWith('S') || item.typ.equalsIgnoreCase('O') ){
         if (item?.type?.trim().equals('A') && precio?.surte?.trim().equals('P')) {
             AcusesTipo acusesTipo = acusesTipoRepository.findOne('AUT')
             String url = acusesTipo?.pagina + '?id_suc=' + branch?.id.toString().trim() + '&id_col=' + item?.color?.trim() + '&id_art=' + item?.name.toString().trim()
@@ -1140,8 +1136,7 @@ class OrderController {
                 notifyAlert('Almacen Central no Responde', 'Contacte a Soporte Tecnico')
                 agregaArticulo = false
             }
-
-
+        }
         }
 
         surteSwitch.setAgregaArticulo(agregaArticulo)
@@ -1321,7 +1316,7 @@ class OrderController {
         servicios?.servicio = serv
         tmpServiciosRepository.saveAndFlush(servicios)
         NotaVenta notaVenta = notaVentaService.obtenerNotaVenta(order?.id)
-        notaVenta?.observacionesNv = condiciones
+        notaVenta?.observacionesNv = dejo
         notaVentaService.saveOrder(notaVenta)
     }
 
@@ -1431,7 +1426,20 @@ class OrderController {
 
 
   static Boolean requiereAuth( Order order ){
-    return Registry.requiereAutho()
+    Boolean autorizacion = false
+    Parametro p = parametroRepository.findOne( TipoParametro.ANTICIPO_MENOR_REQUIERE_AUTORIZACIN.value )
+    if( p != null ){
+      final String[] TRUE_VALUES = [ "si", "s", "yes", "y", "true", "t", "on" ]
+      String value = StringUtils.trimToEmpty( p.valor ).toLowerCase()
+      if ( value.length() > 0 ) {
+          for ( String trueValue : TRUE_VALUES ) {
+              autorizacion = autorizacion || trueValue.equals( value )
+              if ( autorizacion )
+                  break
+          }
+      }
+    }
+    return autorizacion
   }
 
 

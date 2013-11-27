@@ -249,7 +249,7 @@ class ComprobanteServiceImpl implements ComprobanteService {
 
   @Override
   @Transactional
-  Comprobante registrarComprobante( Comprobante comprobante ) {
+  Comprobante registrarComprobante( Comprobante comprobante, Boolean desglosado ) {
     log.info( "registrando comprobante fiscal, ticket: ${comprobante?.ticket}, idFactura: ${comprobante?.idFactura}" )
     if ( esTicketValido( comprobante?.ticket ) && StringUtils.isNotBlank( comprobante?.idFactura ) ) {
       NotaVenta venta = notaVentaRepository.findOne( comprobante.idFactura )
@@ -346,25 +346,27 @@ class ComprobanteServiceImpl implements ComprobanteService {
                     Double quantity = cantidad
                     BigDecimal priceUnit = precioUnitario
                     BigDecimal amount = importe
-                    println genericoAyB
-                    if(genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
-                        idArticulo = 'ANTEOJO'
-                        article = ''
-                        idGenerico = 'ANTEOJO'
-                        descripcion = 'ANTEOJO GRADUADO'
-                        quantity = cantidad
-                        priceUnit = total
-                        amount = total
-                    } else if(!genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_A)){
-                        descripcion = 'ARMAZON'
-                    } else if(!genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
-                        descripcion = 'LENTE GRADUADO'
-                    } else if(articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_C) || articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_H)){
-                        descripcion = 'LENTES DE CONTACTO'
-                    } else if(articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_E)){
-                        descripcion = 'ACCESORIOS VARIOS'
+                    if( desglosado ){
+                      descripcion = articulo.descripcion
+                    } else {
+                        if(genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
+                            idArticulo = 'ANTEOJO'
+                            article = ''
+                            idGenerico = 'ANTEOJO'
+                            descripcion = 'ANTEOJO GRADUADO'
+                            quantity = cantidad
+                            priceUnit = total
+                            amount = total
+                        } else if(!genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_A)){
+                            descripcion = 'ARMAZON'
+                        } else if(!genericoAyB && articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_B)){
+                            descripcion = 'LENTE GRADUADO'
+                        } else if(articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_C) || articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_H)){
+                            descripcion = 'LENTES DE CONTACTO'
+                        } else if(articulo.idGenerico.trim().equalsIgnoreCase(TAG_GENERICO_E)){
+                            descripcion = 'ACCESORIOS VARIOS'
+                        }
                     }
-
                     DetalleComprobante detalle = new DetalleComprobante(
                             idArticulo: idArticulo,
                             articulo: article,
@@ -375,6 +377,7 @@ class ComprobanteServiceImpl implements ComprobanteService {
                             precioUnitario: priceUnit.setScale(2, RoundingMode.CEILING),
                             importe: amount.setScale(2, RoundingMode.CEILING)
                     )
+                    if( !desglosado ){
                     if( genericoAyB && descripcion.trim().contains('ANTEOJO GRADUADO') ){
                       if( !ABinsertado ){
                         log.debug( "genera detalle comprobante: ${detalle.dump()}" )
@@ -386,6 +389,9 @@ class ComprobanteServiceImpl implements ComprobanteService {
                     }
                     if(descripcion.trim().contains('ANTEOJO GRADUADO')){
                       ABinsertado = true
+                    }
+                    } else {
+                      detalles.add( detalle )
                     }
                 }
           }

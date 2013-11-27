@@ -84,9 +84,7 @@ class CapturaSuyoDialog extends JDialog {
      }
 
     private void doSave(){
-
       OrderController.saveSuyo(order,user, dejo?.text, instrucciones?.text,condiciones?.text,servicio?.selectedItem?.toString() )
-
      doCancel()
     }
 

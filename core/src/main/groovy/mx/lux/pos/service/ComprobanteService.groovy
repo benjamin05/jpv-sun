@@ -8,7 +8,7 @@ interface ComprobanteService {
 
   List<Comprobante> listarComprobantesPorTicket( String ticket )
 
-  Comprobante registrarComprobante( Comprobante comprobante )
+  Comprobante registrarComprobante( Comprobante comprobante, Boolean desglosado )
 
   List<File> descargarArchivosComprobante( String idFiscal )
 

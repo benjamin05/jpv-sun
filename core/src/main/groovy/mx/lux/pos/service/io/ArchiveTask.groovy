@@ -46,11 +46,14 @@ class ArchiveTask {
       if( sSistemaOperativo.trim().startsWith( SO_WINDOWS ) ){
         sb.append( String.format( '"%s" ', this.getArchiveFile() ) );
         sb.append( String.format( '"%s" ', this.baseDir + File.separator + this.filePattern ) )
+        sb.append( String.format( '"%s" ', this.baseDir+File.separator+"*.inv" ) )
       } else {
         sb.append( String.format( '%s ', this.getArchiveFile() ) );
         sb.append( String.format( '%s ', this.baseDir + File.separator + this.filePattern ) )
+        sb.append( String.format( '%s ', this.baseDir+File.separator+"*.inv" ) )
         sbDrop.append( String.format( '%s ', this.getArchiveFileDropbox() ) );
         sbDrop.append( String.format( '%s ', this.baseDir + File.separator + this.filePattern ) )
+        sbDrop.append( String.format( '%s ', this.baseDir+File.separator+"*.inv" ) )
       }
       StringBuffer sb2 = new StringBuffer()
       for ( char c : sb.toString().toCharArray() ) {
@@ -90,9 +93,9 @@ class ArchiveTask {
         sb1.append( "\n" )
         sb1.append('cd $CIERRE_HOME')
         sb1.append( "\n" )
-        sb1.append('tar -cvf '+this.getArchiveFile()+' '+this.filePattern)
+        sb1.append('tar -cvf '+this.getArchiveFile()+' '+this.filePattern+' '+"*.inv")
         sb1.append( "\n" )
-        sb1.append('tar -cvf '+this.getArchiveFileDropbox()+' '+this.filePattern)
+        sb1.append('tar -cvf '+this.getArchiveFileDropbox()+' '+this.filePattern+' '+"*.inv")
         strOut.println sb1.toString()
         strOut.close()
 

@@ -68,7 +68,7 @@ class InvoiceController {
     return contribuyenteService.esRfcValido( rfc )
   }
 
-  static Invoice requestInvoice( Invoice invoice ) {
+  static Invoice requestInvoice( Invoice invoice, Boolean desglosado ) {
     log.info( "solicitando invoice para el ticket: ${invoice?.ticket}" )
     if ( StringUtils.isNotBlank( invoice?.ticket ) && StringUtils.isNotBlank( invoice?.orderId ) ) {
       User user = Session.get( SessionItem.USER ) as User
@@ -94,7 +94,8 @@ class InvoiceController {
           oiCilR = oiCilR.replace('-','')
           String oiAdcR = notaVenta.rx.oiAdcR.replace('+','')
           oiAdcR = oiAdcR.replace('-','')
-          receta = "RX: OD- ${odEsfR.trim()} ${odCilR.trim()} ${odAdcR.trim()} OI- ${oiEsfR.trim()} ${oiCilR.trim()} ${oiAdcR.trim()}"
+          NotaVenta nota = notaVentaService.obtenerNotaVenta( invoice.orderId )
+          receta = "RX: OD- ${odEsfR.trim()} ${odCilR.trim()} ${odAdcR.trim()} OI- ${oiEsfR.trim()} ${oiCilR.trim()} ${oiAdcR.trim()} PACIENTE: ${nota != null ? nota.cliente.nombreCompleto :''}"
         }
       }
       Comprobante comprobante = new Comprobante(
@@ -115,7 +116,7 @@ class InvoiceController {
           paciente: invoice.patient ?: '0',
           observaciones: receta
       )
-      comprobante = comprobanteService.registrarComprobante( comprobante )
+      comprobante = comprobanteService.registrarComprobante( comprobante, desglosado )
       if ( comprobante?.id ) {
         Integer idCliente = comprobante.idCliente.isInteger() ? comprobante.idCliente.toInteger() : null
         Contribuyente contribuyente = new Contribuyente(

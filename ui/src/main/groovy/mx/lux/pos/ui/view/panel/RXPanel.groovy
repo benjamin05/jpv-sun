@@ -3,6 +3,7 @@ package mx.lux.pos.ui.view.panel
 import groovy.model.DefaultTableModel
 import groovy.swing.SwingBuilder
 import mx.lux.pos.model.Receta
+import mx.lux.pos.ui.model.Order
 import mx.lux.pos.ui.controller.CustomerController
 import mx.lux.pos.ui.controller.OrderController
 import mx.lux.pos.ui.model.Branch
@@ -267,9 +268,17 @@ class RXPanel extends JPanel {
                     menuItem( text: 'Reimprimir',
                             actionPerformed: {
                                println( 'RxID: ' + selection.id)
-                                 String idNotaVenta = OrderController.notaVentaxRx(selection.id).id
-                                OrderController.printRx(idNotaVenta, true)
-                                OrderController.fieldRX(idNotaVenta)
+                                Order orderTmp = OrderController.notaVentaxRx(selection.id)
+                                if( orderTmp != null ){
+                                  OrderController.printRx(orderTmp.id, true)
+                                  OrderController.fieldRX(orderTmp.id)
+                                } else {
+                                    sb.optionPane(
+                                            message: 'No existe venta para esta receta',
+                                            messageType: JOptionPane.ERROR_MESSAGE
+                                    ).createDialog(this, 'Venta no encontrada')
+                                            .show()
+                                }
                             }
                     )
                 }.show( ev.component, ev.x, ev.y )
