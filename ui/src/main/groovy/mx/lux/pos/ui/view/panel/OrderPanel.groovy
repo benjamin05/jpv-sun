@@ -709,11 +709,18 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private def doPrint = { ActionEvent ev ->
         int artCount = 0
         dioptra = new Dioptra()
+        Boolean hasDioptra = false
         for(OrderItem it : order.items){
             Item result = ItemController.findItemsById(it.item.id)
             if( result != null ){
-                controlItem( result, true )
+              controlItem( result, true )
+              if( result.indexDiotra != null && result.indexDiotra.trim().length() > 0 ){
+                hasDioptra = true
+              }
             }
+        }
+        if( !hasDioptra ){
+          order.dioptra = null
         }
         dioptra = OrderController.generaDioptra(OrderController.preDioptra(order?.dioptra))
         String dio = OrderController.codigoDioptra(dioptra)
@@ -901,10 +908,14 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
     private void saveOrder() {
         User user = Session.get(SessionItem.USER) as User
-        CambiaVendedorDialog cambiaVendedor = new CambiaVendedorDialog(this,user?.username)
-        cambiaVendedor.show()
+        String vendedor = user.username
+        if( OrderController.showValidEmployee() ){
+          CambiaVendedorDialog cambiaVendedor = new CambiaVendedorDialog(this,user?.username)
+          cambiaVendedor.show()
+          vendedor = cambiaVendedor?.vendedor
+        }
 
-        Order newOrder = OrderController.placeOrder(order, cambiaVendedor?.vendedor)
+        Order newOrder = OrderController.placeOrder(order, vendedor)
         //CustomerController.saveOrderCountries(order.country)
         this.promotionDriver.requestPromotionSave(newOrder?.id)
         Boolean cSaldo = false

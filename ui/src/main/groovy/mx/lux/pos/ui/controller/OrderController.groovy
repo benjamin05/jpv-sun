@@ -1444,5 +1444,23 @@ class OrderController {
     return autorizacion
   }
 
+    static Boolean showValidEmployee( ){
+      Boolean autorizacion = false
+      Parametro p = parametroRepository.findOne( TipoParametro.VALIDA_EMPLEADO.value )
+      if( p != null ){
+          final String[] TRUE_VALUES = [ "si", "s", "yes", "y", "true", "t", "on" ]
+          String value = StringUtils.trimToEmpty( p.valor ).toLowerCase()
+          if ( value.length() > 0 ) {
+              for ( String trueValue : TRUE_VALUES ) {
+                  autorizacion = autorizacion || trueValue.equals( value )
+                  if ( autorizacion )
+                      break
+              }
+          }
+      }
+      return autorizacion
+    }
+
+
 
 }

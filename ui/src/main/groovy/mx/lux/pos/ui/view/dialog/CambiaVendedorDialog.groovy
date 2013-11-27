@@ -20,13 +20,10 @@ class CambiaVendedorDialog extends JDialog {
     }
 
     CambiaVendedorDialog(Component parent, String idVendedor) {
-
-        sb = new SwingBuilder()
-        component = parent
-        vendedor = idVendedor
-        buildUI()
-
-
+      sb = new SwingBuilder()
+      component = parent
+      vendedor = idVendedor
+      buildUI()
     }
 
 

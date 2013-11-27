@@ -70,6 +70,7 @@ enum TipoParametro {
   URL_CARGA_LISTA_PRECIOS( 'url_carga_lista_precios', '' ),
   URL_RECIBE_LISTA_PRECIOS( 'url_recibe_lista_precios', '' ),
   VALIDA_SP( 'valida_sp', '' ),
+  VALIDA_EMPLEADO( 'valida_empleado', '' ),
   VENTA_NEGATIVA_AUTORIZACION( 'venta_negativo_aut', 'S' ),
   ALMACENES('almacenes','00000'),
   ARCHIVO_CONSULTA_WEB('archivo_consulta_web',''),
