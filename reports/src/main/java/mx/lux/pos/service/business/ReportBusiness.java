@@ -7,6 +7,8 @@ import mx.lux.pos.repository.*;
 import mx.lux.pos.service.impl.ReportServiceImpl;
 import net.sf.jasperreports.engine.*;
 import org.apache.commons.lang.StringUtils;
+import net.sf.jasperreports.engine.export.JRTextExporter;
+import net.sf.jasperreports.engine.export.JRTextExporterParameter;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -209,8 +211,26 @@ public class ReportBusiness {
             Process p = Runtime.getRuntime().exec(cmd);
             JasperReport jasperReport = JasperCompileManager.compileReport( template.getInputStream() );
             JasperPrint jasperPrint = JasperFillManager.fillReport( jasperReport, parametros, new JREmptyDataSource() );
-            JasperExportManager.exportReportToHtmlFile( jasperPrint, report.getPath() );
-            Desktop.getDesktop().open( report );
+            //JasperExportManager.exportReportToHtmlFile( jasperPrint, report.getPath() );
+            //JasperExportManager.exportReportToPdfFile( jasperPrint, report.getPath() );
+
+            try{
+            JRTextExporter exporter = new JRTextExporter();
+            exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+            exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, report.getAbsolutePath() );
+            exporter.setParameter(JRTextExporterParameter.CHARACTER_WIDTH, new Float(5));
+            exporter.setParameter(JRTextExporterParameter.CHARACTER_HEIGHT, new Float(10));
+            exporter.setParameter(JRTextExporterParameter.PAGE_WIDTH, new Float(300));
+            exporter.setParameter(JRTextExporterParameter.PAGE_HEIGHT, new Float(500));
+            exporter.setParameter(JRTextExporterParameter.BETWEEN_PAGES_TEXT, "");
+            exporter.exportReport();
+            Runtime.getRuntime().exec("firefox "+report.getAbsolutePath());
+            } catch (JRException jRException) {
+                System.err.println(jRException);
+            }
+
+            //Desktop.getDesktop().open( report );
+
             log.info( "Mostrar Reporte" );
 
             Runtime garbage = Runtime.getRuntime();
@@ -2188,6 +2208,43 @@ public class ReportBusiness {
 
      return lstTrabajos;
    }
+
+
+
+    public List<DescuentosPorTipo> obtenerExamenesporOptometrista( Date fechaInicio, Date fechaFin ) {
+        List<DescuentosPorTipo> lstExamenes = new ArrayList<DescuentosPorTipo>();
+        QReceta rx = QReceta.receta;
+        List<Receta> lstRecetas = (List<Receta>)recetaRepository.findAll( rx.fechaReceta.between(fechaInicio,fechaFin),
+                rx.idOptometrista.asc() );
+        Integer total = lstRecetas.size();
+        for ( Receta receta : lstRecetas ) {
+            Examen examen = examenRepository.findOne( receta.getExamen() );
+            if( examen != null ){
+                String idEmpleado = examen.getIdAtendio();
+                QCotizacion cot = QCotizacion.cotizacion;
+                Cotizacion cotizacion = cotizacionRepository.findOne( cot.idReceta.eq(receta.getId()).and(cot.idFactura.isNull().or(cot.idFactura.isEmpty())) );
+                DescuentosPorTipo desc = EncontraroCrear( lstExamenes, idEmpleado );
+                if( idEmpleado.equalsIgnoreCase("9999") && examen.getObservacionesEx().equalsIgnoreCase("SE") ){
+                  desc.AcumulaExamenTotal();
+                  desc.AcumulaExamenNoVentas();
+                } else {
+                  if( receta.getNotaVenta() != null && receta.getNotaVenta().getFactura().trim().length() > 0 ){
+                      desc.AcumulaExamenTotal();
+                      desc.AcumulaExamenVenta();
+                  } else if( cotizacion != null ){
+                      desc.AcumulaExamenTotal();
+                      desc.AcumulaExamenCotizacion();
+                  } else if( receta.getUdf6() != null && receta.getUdf6().trim().length() > 0 ){
+                      desc.AcumulaExamenTotal();
+                      desc.AcumulaExamenNoVentas();
+                  }
+                }
+            }
+        }
+
+        return lstExamenes;
+    }
+
 
 
 }

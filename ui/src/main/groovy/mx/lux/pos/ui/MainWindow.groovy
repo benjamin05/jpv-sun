@@ -95,6 +95,7 @@ class MainWindow extends JFrame implements KeyListener {
     private JMenuItem workSubmittedMenuItem
     private JMenuItem optometristSalesMenuItem
     private JMenuItem examsMenuItem
+    private JMenuItem examsByOptoMenuItem
     private JMenuItem couponMenuItem
     private PromotionService promotionService
 
@@ -299,6 +300,7 @@ class MainWindow extends JFrame implements KeyListener {
                                 discountsMenuItem.visible = userLoggedIn
                                 optometristSalesMenuItem.visible = userLoggedIn
                                 examsMenuItem.visible = userLoggedIn
+                                examsByOptoMenuItem.visible = userLoggedIn
                                 couponMenuItem.visible = userLoggedIn
                             }
                     ) {
@@ -380,6 +382,14 @@ class MainWindow extends JFrame implements KeyListener {
                                     Runtime garbage = Runtime.getRuntime();
                                     garbage.gc();
                                     ReportController.fireReport( ReportController.Report.Exams )
+                                }
+                        )
+                        examsByOptoMenuItem = menuItem( text: "Examenes por Optometrista",
+                                visible: false,
+                                actionPerformed: {
+                                    Runtime garbage = Runtime.getRuntime();
+                                    garbage.gc();
+                                    ReportController.fireReport( ReportController.Report.ExamsByOpto )
                                 }
                         )
                         stockbyBrandColorMenuItem = menuItem( text: "Existencias por Art\u00edculo",

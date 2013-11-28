@@ -37,7 +37,7 @@ class ReportController {
     WorkSubmitted, TaxBills, Discounts, PromotionsinSales,
     Payments, Quote, Exams, OptometristSales,
     Promotions, Kardex, SalesToday, PaymentsbyPeriod,
-    Coupon, UndeliveredJobsAudit
+    Coupon, UndeliveredJobsAudit, ExamsByOpto
   }
 
   @Autowired
@@ -441,6 +441,25 @@ class ReportController {
     }
   }
 
+
+    static void fireExamsByOptoReport( ) {
+        if ( twoDateDialog == null ) {
+            twoDateDialog = new TwoDatesSelectionDialog()
+        }
+        twoDateDialog.setTitle( "Reporte de Examenes por Optometrista" )
+        twoDateDialog.activate()
+        Date reportForDateStart = twoDateDialog.getSelectedDateStart()
+        Date reportForDateEnd = twoDateDialog.getSelectedDateEnd()
+        if ( reportForDateStart != null && reportForDateEnd != null && twoDateDialog.button ) {
+            reportService.obtenerReporteExamenesPorOptoCompleto( reportForDateStart, reportForDateEnd )
+            twoDateDialog = null
+            log.debug( "Imprime el reporte de Examenes Completo" )
+        } else {
+            log.debug( "Cancelar_continuar" )
+        }
+    }
+
+
   static void fireOptometristSalesReport( ) {
     if ( twoDateDialog == null ) {
         twoDateDialog = new TwoDatesSelectionDialog()
@@ -558,6 +577,7 @@ class ReportController {
       case Report.SalesToday: todaySales(); break;
       case Report.PaymentsbyPeriod: paymentsByPeriod(); break;
       case Report.Coupon: coupons(); break;
+      case Report.ExamsByOpto: fireExamsByOptoReport(); break;
     }
   }
 }

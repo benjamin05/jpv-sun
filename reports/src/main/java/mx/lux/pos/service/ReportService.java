@@ -112,4 +112,7 @@ public interface ReportService {
 
     
     public String obtenerReporteDeCupones( Date dateStart, Date dateEnd );
+
+
+    String obtenerReporteExamenesPorOptoCompleto( Date fechaInicio, Date fechaFin );
 }

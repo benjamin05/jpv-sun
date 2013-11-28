@@ -23,6 +23,7 @@ public class DescuentosPorTipo {
     private BigDecimal importeDolares;
     private Integer rxConVenta;
     private Integer rxSinVenta;
+    private Integer rxCotizacion;
 
     public DescuentosPorTipo(String tipoDesc) {
         tipo = tipoDesc;
@@ -33,6 +34,7 @@ public class DescuentosPorTipo {
         importeDolares = BigDecimal.ZERO;
         rxConVenta = 0;
         rxSinVenta = 0;
+        rxCotizacion = 0;
     }
 
     public void AcumulaDescuentos( Descuento descuento, Integer contador) {
@@ -67,6 +69,28 @@ public class DescuentosPorTipo {
         Date fecha = DateUtils.truncate(receta.getFechaReceta(), Calendar.DAY_OF_MONTH);
         TipoDescuento descu = FindOrCreateDate(descuentos, receta.getIdCliente(), fecha );
         descu.AcumulaExamenes(examen, receta);
+    }
+
+    public void AcumulaOptometristas( Examen examen, Integer contador,  Receta receta) {
+        Date fecha = DateUtils.truncate(receta.getFechaReceta(), Calendar.DAY_OF_MONTH);
+        TipoDescuento descu = FindOrCreateDate(descuentos, receta.getIdCliente(), fecha );
+        descu.AcumulaExamenes(examen, receta);
+    }
+
+    public void AcumulaExamenTotal( ) {
+        total = total+1;
+    }
+
+    public void AcumulaExamenVenta( ) {
+      rxConVenta = rxConVenta+1;
+    }
+
+    public void AcumulaExamenCotizacion( ) {
+        rxCotizacion = rxCotizacion+1;
+    }
+
+    public void AcumulaExamenNoVentas( ) {
+        rxSinVenta = rxSinVenta+1;
     }
 
     public String getTipo() {
@@ -181,5 +205,13 @@ public class DescuentosPorTipo {
 
     public void setRxSinVenta(Integer rxSinVenta) {
         this.rxSinVenta = rxSinVenta;
+    }
+
+    public Integer getRxCotizacion() {
+        return rxCotizacion;
+    }
+
+    public void setRxCotizacion(Integer rxCotizacion) {
+        this.rxCotizacion = rxCotizacion;
     }
 }
