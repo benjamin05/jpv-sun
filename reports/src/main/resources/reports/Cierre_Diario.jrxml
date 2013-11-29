@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Cierre_Diario" language="groovy" pageWidth="595" pageHeight="842" columnWidth="575" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="8e8dd722-c4f6-4cbe-bcc2-458e5d219dc7">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Cierre_Diario" language="groovy" pageWidth="850" pageHeight="2834" columnWidth="830" leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" uuid="8e8dd722-c4f6-4cbe-bcc2-458e5d219dc7">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="191"/>
 	<property name="ireport.y" value="269"/>

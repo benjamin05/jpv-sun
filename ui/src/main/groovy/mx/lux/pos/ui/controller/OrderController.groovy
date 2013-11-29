@@ -1256,7 +1256,7 @@ class OrderController {
   static  String callWS(String url) {
       ExecutorService executor = Executors.newFixedThreadPool(1)
         String respuesta = new String()
-        int timeoutSecs = 15
+        int timeoutSecs = 5
         final Future<?> future = executor.submit(new Runnable() {
             public void run() {
                 try {

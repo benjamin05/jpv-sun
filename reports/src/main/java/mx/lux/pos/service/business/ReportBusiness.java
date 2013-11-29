@@ -218,8 +218,8 @@ public class ReportBusiness {
             JRTextExporter exporter = new JRTextExporter();
             exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
             exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, report.getAbsolutePath() );
-            exporter.setParameter(JRTextExporterParameter.CHARACTER_WIDTH, new Float(5));
-            exporter.setParameter(JRTextExporterParameter.CHARACTER_HEIGHT, new Float(10));
+            exporter.setParameter(JRTextExporterParameter.CHARACTER_WIDTH, new Float(4));
+            exporter.setParameter(JRTextExporterParameter.CHARACTER_HEIGHT, new Float(9));
             exporter.setParameter(JRTextExporterParameter.PAGE_WIDTH, new Float(300));
             exporter.setParameter(JRTextExporterParameter.PAGE_HEIGHT, new Float(500));
             exporter.setParameter(JRTextExporterParameter.BETWEEN_PAGES_TEXT, "");
