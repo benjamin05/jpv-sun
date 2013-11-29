@@ -117,6 +117,9 @@ public class Articulo implements Serializable {
     @Transient
     private String descConColor;
 
+    @Transient
+    private String surte;
+
     @PrePersist
     private void onPrePersist() {
         fechaMod = new Date();
@@ -386,5 +389,13 @@ public class Articulo implements Serializable {
 
     public void setDescConColor(String descConColor) {
         this.descConColor = descConColor;
+    }
+
+    public String getSurte() {
+        return surte;
+    }
+
+    public void setSurte(String surte) {
+        this.surte = surte;
     }
 }

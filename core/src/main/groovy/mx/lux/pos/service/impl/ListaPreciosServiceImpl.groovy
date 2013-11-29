@@ -266,6 +266,7 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
           log.debug( "actualizando precio articulo: ${tmpPrecio.articulo}, lista: ${tmpPrecio.lista}" )
           tmpPrecio.precio = tmpArticulo.precio
           tmpPrecio.fecha = new Date()
+          tmpPrecio.surte = tmpArticulo.surte
           precioRepository.save( tmpPrecio )
         } else {
           log.debug( "registrando nuevo precio articulo: ${tmpArticulo.articulo}, lista: ${tipoPrecio}" )
@@ -274,6 +275,7 @@ class ListaPreciosServiceImpl implements ListaPreciosService {
           precio.lista = tipoPrecio
           precio.precio = tmpArticulo.precio
           precio.fecha = new Date()
+          tmpPrecio.surte = tmpArticulo.surte
           precioRepository.save( precio )
         }
       }

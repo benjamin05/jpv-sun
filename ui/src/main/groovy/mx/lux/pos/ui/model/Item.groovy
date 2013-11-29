@@ -33,6 +33,7 @@ class Item {
   String subtype
   Integer stock
   String indexDiotra
+  String surte
 
   static String manualPriceTypeList
 

@@ -84,7 +84,7 @@ class PriceListController {
          line = line.replace( "||", "| |")
          def elements = line?.split( /\|/ )
             log.debug( "Tamaño de la cadena:: ${elements.size()}" )
-          if ( elements?.size() >= 13 ) {
+          if ( elements?.size() >= 14 ) {
               log.debug( "leyendo linea ${it}" )
             def pli = new Item(
                 operation: elements[ 0 ] ?: null,
@@ -99,7 +99,8 @@ class PriceListController {
                 genericSubType: elements[ 9 ] ?: null,
                 brand: elements[ 10 ] ?: null,
                 typ: elements[ 11 ] ?: null,
-                subtype: elements[ 12 ] ?: null
+                subtype: elements[ 12 ] ?: null,
+                surte: elements[ 13 ] ?: null
             )
             priceList?.items?.add( pli )
           }
@@ -215,7 +216,8 @@ class PriceListController {
           ubicacion: it?.location,
           marca: it?.brand,
           tipo: it?.typ,
-          subtipo: it?.subtype
+          subtipo: it?.subtype,
+          surte: it?.surte
       )
     }
   }
