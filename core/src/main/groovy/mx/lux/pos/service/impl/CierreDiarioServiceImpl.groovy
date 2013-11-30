@@ -63,6 +63,9 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
   private OrdenPromDetRepository ordenPromDetRepository
 
   @Resource
+  private CotizacionRepository cotizacionRepository
+
+  @Resource
   private PagoRepository pagoRepository
 
   @Resource
@@ -194,6 +197,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
       generarFicheroZV( fechaCierre, sucursal, ubicacion.valor )
       generarFicheroZT( fechaCierre, sucursal, ubicacion.valor )
       //generarFicheroCLI( fechaCierre, sucursal, ubicacion.valor )
+      generarFicheroCO( fechaCierre, sucursal, ubicacion.valor )
       generarFicheroff( fechaCierre, sucursal, ubicacion.valor )
       generarFicheroZZ( fechaCierre, sucursal, ubicacion.valor )
 
@@ -822,6 +826,21 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
         numero_registros: promociones.size(),
         promociones: promociones ]
     generarFichero( ubicacion, nombreFichero, 'fichero-ZZ', datos )
+  }
+
+  // Fichero Promociones CO
+  private void generarFicheroCO( Date fechaCierre, Sucursal sucursal, String ubicacion ) {
+    String nombreFichero = "3.${ sucursal.id }.${ CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ) }.CO"
+    log.info( "Generando fichero CO ${ nombreFichero }" )
+    Date fechaInicio = DateUtils.truncate( fechaCierre, Calendar.DATE )
+    Date fechaFin = DateUtils.addDays( fechaInicio, 1 )
+    QCotizacion cot = QCotizacion.cotizacion
+    List<Cotizacion> cotizaciones = cotizacionRepository.findAll( cot.fechaMod.between(fechaInicio,fechaFin) )
+    def datos = [ sucursal: sucursal,
+        fecha_ahora: CustomDateUtils.format( new Date(), 'dd/MM/yyyy' ),
+        fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd/MM/yyyy' ),
+        cotizaciones: cotizaciones ]
+    generarFichero( ubicacion, nombreFichero, 'fichero-CO', datos )
   }
 
   private void generarFicheroInv( Date fechaCierre ){

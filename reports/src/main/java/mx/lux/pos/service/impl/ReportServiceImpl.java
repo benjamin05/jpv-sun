@@ -1658,7 +1658,7 @@ public class ReportServiceImpl implements ReportService {
         Integer totalNoVenta = 0;
         for(DescuentosPorTipo empleado : lstExamenes){
           if(empleado.getIdEmpleado().trim().equalsIgnoreCase("9999")){
-            empleado.setNombreEmpleado( "SIN VENTA" );
+            empleado.setNombreEmpleado( "PROCESO" );
           }
           total = total+empleado.getTotal();
           totalVenta = totalVenta+empleado.getRxConVenta();
@@ -1682,4 +1682,6 @@ public class ReportServiceImpl implements ReportService {
 
         return null;
     }
+
+
 }
