@@ -2220,11 +2220,11 @@ public class ReportBusiness {
         for ( Receta receta : lstRecetas ) {
             Examen examen = examenRepository.findOne( receta.getExamen() );
             if( examen != null ){
-                String idEmpleado = examen.getIdAtendio();
+                String idEmpleado = receta.getIdOptometrista();
                 QCotizacion cot = QCotizacion.cotizacion;
                 Cotizacion cotizacion = cotizacionRepository.findOne( cot.idReceta.eq(receta.getId()).and(cot.idFactura.isNull().or(cot.idFactura.isEmpty())) );
                 DescuentosPorTipo desc = EncontraroCrear( lstExamenes, idEmpleado );
-                if( idEmpleado.equalsIgnoreCase("9999") && examen.getObservacionesEx().equalsIgnoreCase("SE") ){
+                if( examen.getIdAtendio().equalsIgnoreCase("9999") && examen.getObservacionesEx().equalsIgnoreCase("SE") ){
                   desc.AcumulaExamenTotal();
                   desc.AcumulaExamenNoVentas();
                 } else {
@@ -2234,7 +2234,7 @@ public class ReportBusiness {
                   } else if( cotizacion != null ){
                       desc.AcumulaExamenTotal();
                       desc.AcumulaExamenCotizacion();
-                  } else if( receta.getUdf6() != null && receta.getUdf6().trim().length() > 0 ){
+                  } else {
                       desc.AcumulaExamenTotal();
                       desc.AcumulaExamenNoVentas();
                   }
