@@ -5,7 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<field name="idEmpleado" class="java.lang.String"/>
 	<field name="nombreEmpleado" class="java.lang.String"/>
-	<field name="total" class="java.lang.String"/>
+	<field name="total" class="java.lang.Integer"/>
 	<field name="rxConVenta" class="java.lang.String"/>
 	<field name="rxCotizacion" class="java.lang.String"/>
 	<field name="rxSinVenta" class="java.lang.String"/>
@@ -54,42 +54,54 @@
 	<detail>
 		<band height="12" splitType="Stretch">
 			<textField>
-				<reportElement uuid="89aaec70-110a-4160-8628-7d7fdc271169" x="54" y="0" width="160" height="12"/>
+				<reportElement uuid="89aaec70-110a-4160-8628-7d7fdc271169" x="54" y="0" width="160" height="12" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{total} != 0]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombreEmpleado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="18f79505-03e2-4332-8946-8943081fff05" x="0" y="0" width="54" height="12"/>
+				<reportElement uuid="18f79505-03e2-4332-8946-8943081fff05" x="0" y="0" width="54" height="12" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{total} != 0]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{idEmpleado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="3f54232e-2607-418b-99a6-92e0e39c3485" x="214" y="0" width="66" height="12"/>
+				<reportElement uuid="3f54232e-2607-418b-99a6-92e0e39c3485" x="214" y="0" width="66" height="12" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{total} != 0]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="475ddccc-638d-4168-80ec-e27d22df1f05" x="280" y="0" width="74" height="12"/>
+				<reportElement uuid="475ddccc-638d-4168-80ec-e27d22df1f05" x="280" y="0" width="74" height="12" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{total} != 0]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{rxConVenta}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="2325ca2e-2490-452f-b0fc-582d0b6367bb" x="354" y="0" width="77" height="12"/>
+				<reportElement uuid="2325ca2e-2490-452f-b0fc-582d0b6367bb" x="354" y="0" width="77" height="12" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{total} != 0]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{rxCotizacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="75cec253-a82c-461b-aea0-63b015e94865" x="431" y="0" width="70" height="12"/>
+				<reportElement uuid="75cec253-a82c-461b-aea0-63b015e94865" x="431" y="0" width="70" height="12" isRemoveLineWhenBlank="true">
+					<printWhenExpression><![CDATA[$F{total} != 0]]></printWhenExpression>
+				</reportElement>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>

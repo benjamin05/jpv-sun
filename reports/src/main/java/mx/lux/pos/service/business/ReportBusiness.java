@@ -2216,6 +2216,9 @@ public class ReportBusiness {
         QReceta rx = QReceta.receta;
         List<Receta> lstRecetas = (List<Receta>)recetaRepository.findAll( rx.fechaReceta.between(fechaInicio,fechaFin),
                 rx.idOptometrista.asc() );
+        QExamen exam = QExamen.examen;
+        List<Examen> lstExams = (List<Examen>)examenRepository.findAll( exam.idAtendio.eq("9999").and(exam.observacionesEx.eq("SE")).
+                and(exam.fechaAlta.between(fechaInicio,fechaFin)));
         Integer total = lstRecetas.size();
         for ( Receta receta : lstRecetas ) {
             Examen examen = examenRepository.findOne( receta.getExamen() );
@@ -2225,21 +2228,29 @@ public class ReportBusiness {
                 Cotizacion cotizacion = cotizacionRepository.findOne( cot.idReceta.eq(receta.getId()).and(cot.idFactura.isNull().or(cot.idFactura.isEmpty())) );
                 DescuentosPorTipo desc = EncontraroCrear( lstExamenes, idEmpleado );
                 if( examen.getIdAtendio().equalsIgnoreCase("9999") && examen.getObservacionesEx().equalsIgnoreCase("SE") ){
-                  desc.AcumulaExamenTotal();
-                  desc.AcumulaExamenNoVentas();
+                  /*desc.AcumulaExamenTotal();
+                  desc.AcumulaExamenNoVentas();*/
                 } else {
-                  if( receta.getNotaVenta() != null && receta.getNotaVenta().getFactura().trim().length() > 0 ){
+                  if( receta.getNotaVenta() != null && receta.getNotaVenta().getFactura().trim().length() > 0 &&
+                          !examen.getIdAtendio().equalsIgnoreCase("9999") ){
                       desc.AcumulaExamenTotal();
                       desc.AcumulaExamenVenta();
-                  } else if( cotizacion != null ){
+                  } else if( cotizacion != null && !examen.getIdAtendio().equalsIgnoreCase("9999") ){
                       desc.AcumulaExamenTotal();
                       desc.AcumulaExamenCotizacion();
-                  } else {
+                  } else if( !examen.getIdAtendio().equalsIgnoreCase("9999") ){
                       desc.AcumulaExamenTotal();
                       desc.AcumulaExamenNoVentas();
                   }
                 }
             }
+        }
+
+        for(Examen ex : lstExams){
+          String idEmpleado = ex.getIdAtendio();
+          DescuentosPorTipo desc = EncontraroCrear( lstExamenes, idEmpleado );
+          desc.AcumulaExamenTotal();
+          desc.AcumulaExamenNoVentas();
         }
 
         return lstExamenes;

@@ -729,7 +729,18 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
   private void generarFicheroZV( Date fechaCierre, Sucursal sucursal, String ubicacion ) {
     String nombreFichero = "3.${ sucursal.id }.${ CustomDateUtils.format( fechaCierre, 'dd-MM-yyyy' ) }.ZV"
     log.info( "Generando fichero ZV ${ nombreFichero }" )
-    List<Devolucion> devoluciones = devolucionRepository.findBy_Fecha( fechaCierre )
+    List<DevTmp> devoluciones = new ArrayList<>()
+    List<Devolucion> lstDevoluciones = devolucionRepository.findBy_Fecha( fechaCierre )
+    Collections.sort( lstDevoluciones, new Comparator<Devolucion>() {
+        @Override
+        int compare(Devolucion o1, Devolucion o2) {
+            return o1.idPago.compareTo(o2.idPago)
+        }
+    })
+    for(Devolucion dev : lstDevoluciones){
+      DevTmp devolucion = findorCreate( devoluciones, dev.idPago )
+      devolucion.AcumulaDevoluciones( dev )
+    }
     def datos = [ sucursal: sucursal,
         fecha_ahora: CustomDateUtils.format( new Date(), 'dd-MM-yyyy' ),
         fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd/MM/yyyy' ),
@@ -1529,6 +1540,23 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     }
     clienteProcesoRepository.flush()
   }
+
+
+
+    private DevTmp findorCreate( List<DevTmp> lstDevoluciones, Integer idPago ) {
+        DevTmp found = null
+        for ( DevTmp res : lstDevoluciones ) {
+            if ( res.idPago.equals( idPago ) ) {
+                found = res
+                break
+            }
+        }
+        if ( found == null ) {
+            found = new DevTmp( idPago )
+            lstDevoluciones.add( found )
+        }
+        return found
+    }
 
 
 }

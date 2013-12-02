@@ -82,9 +82,9 @@
 		</band>
 	</title>
 	<detail>
-		<band height="125" splitType="Stretch">
+		<band height="187" splitType="Stretch">
 			<subreport>
-				<reportElement uuid="7da30aab-3fe2-4e6d-a0fe-cc94a50523fd" x="10" y="65" width="554" height="60"/>
+				<reportElement uuid="7da30aab-3fe2-4e6d-a0fe-cc94a50523fd" x="10" y="65" width="554" height="122"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{lstExamenes})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["reports/Examenes_Por_Optometrista_Det.jasper"]]></subreportExpression>
 			</subreport>

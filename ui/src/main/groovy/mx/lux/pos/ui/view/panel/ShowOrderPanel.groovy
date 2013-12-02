@@ -233,12 +233,12 @@ class ShowOrderPanel extends JPanel {
       }
       }
       bean( returnButton, visible: bind {( 'T'.equalsIgnoreCase( order.status ) ) && ( sumaPagos.compareTo( montoCentavos ) > 0 ) } )
-      bean( printReturnButton, visible: bind {( 'T'.equalsIgnoreCase( order.status ) ) && ( sumaPagos.compareTo( montoCentavos ) <= 0 )} )
+      bean( printReturnButton, visible: bind {( 'T'.equalsIgnoreCase( order.status ) ) } )//&& ( sumaPagos.compareTo( montoCentavos ) <= 0 )} )
     }
     dealsModel.fireTableDataChanged()
     itemsModel.fireTableDataChanged()
     paymentsModel.fireTableDataChanged()
-    if((order?.total - order?.paid) == 0){
+    if((order?.total - order?.paid) == 0 || 'T'.equalsIgnoreCase( order.status )){
         ppButton?.setText('Imprimir')
     } else{
         ppButton?.setText('Pagar')
@@ -297,6 +297,7 @@ class ShowOrderPanel extends JPanel {
     CancellationController.resetValuesofCancellation( order.id )
     CancellationController.printOrderCancellation( order.id )
     printCancellationNotToday( order )
+    source.enabled = true
   }
 
   private  def doSwitchPP = { ActionEvent ev ->
