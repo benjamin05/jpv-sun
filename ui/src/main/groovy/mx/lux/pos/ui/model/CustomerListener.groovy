@@ -1,5 +1,7 @@
 package mx.lux.pos.ui.model
 
+import mx.lux.pos.model.IPromotionAvailable
+
 interface CustomerListener {
 
   void reset( )
@@ -13,4 +15,6 @@ interface CustomerListener {
   void disableUI()
 
   void enableUI()
+
+  void setPromotion( Order pOrder )
 }

@@ -27,12 +27,14 @@ class PromotionCommit {
     return NumberFormat.getInstance().parse( String.format( "%.1f", pDoubleValue ) )
   }
 
-  static final void deleteDiscounts( String pOrderNbr ) {
+  static final void deleteDiscounts( String pOrderNbr, Boolean saveOrder ) {
     List<Descuento> discountList = RepositoryFactory.discounts.findByIdFactura( pOrderNbr )
     if ( discountList.size() > 0 ) {
-      RepositoryFactory.discounts.deleteInBatch( discountList )
+      for(Descuento desc : discountList){
+        RepositoryFactory.discounts.delete( desc.id )
+        RepositoryFactory.discounts.flush()
+      }
     }
-    RepositoryFactory.discounts.flush()
   }
 
   static final void deletePromotions( String pOrderNbr ) {
@@ -49,8 +51,8 @@ class PromotionCommit {
     RepositoryFactory.orderPromotionDetail.flush()
   }
 
-  static final void writeDiscounts( PromotionModel pModel ) {
-    deleteDiscounts( pModel.order.orderNbr )
+  static final void writeDiscounts( PromotionModel pModel, Boolean saveOrder ) {
+    deleteDiscounts( pModel.order.orderNbr, saveOrder )
     if ( pModel.hasOrderDiscountApplied() ) {
       String empId = PromotionQuery.findEmpId( pModel.order.orderNbr )
       Descuento descuento = new Descuento()

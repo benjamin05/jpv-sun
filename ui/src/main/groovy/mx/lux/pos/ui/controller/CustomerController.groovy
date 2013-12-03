@@ -321,8 +321,10 @@ class CustomerController {
         dialog.activate()
         if ( dialog.orderSelected != null ) {
             Order o = Order.toOrder( dialog.orderSelected.order )
-
             Customer c = Customer.toCustomer( dialog.orderSelected.customer )
+            /*if(Order){
+
+            }*/
 
             pListener.reset()
             pListener.disableUI()
@@ -330,6 +332,7 @@ class CustomerController {
             pListener.setCustomer( c )
             pListener.setOrder( o )
             pListener.enableUI()
+            pListener.setPromotion( o )
         } else {
             pListener.operationTypeSelected = OperationType.DEFAULT
         }

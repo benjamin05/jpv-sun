@@ -65,6 +65,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private JTextArea comments
     private JTextField itemSearch
     private List<IPromotionAvailable> promotionList
+    private List<IPromotionAvailable> promotionListTmp
     private List<OperationType> lstCustomers = OperationType.values()
     private Collection<OperationType> customerTypes = new ArrayList<OperationType>()
     private DefaultTableModel itemsModel
@@ -106,6 +107,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         }
         customer = CustomerController.findDefaultCustomer()
         promotionList = new ArrayList<PromotionAvailable>()
+        promotionListTmp = new ArrayList<PromotionAvailable>()
         this.promotionDriver.init(this)
         ticketRx = false
         buildUI()
@@ -115,7 +117,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         OperationType
     }
 
-    private PromotionDriver getPromotionDriver() {
+    PromotionDriver getPromotionDriver() {
         return PromotionDriver.instance
     }
 
@@ -917,7 +919,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
 
         Order newOrder = OrderController.placeOrder(order, vendedor)
         //CustomerController.saveOrderCountries(order.country)
-        this.promotionDriver.requestPromotionSave(newOrder?.id)
+        this.promotionDriver.requestPromotionSave(newOrder?.id, true)
         Boolean cSaldo = false
         // if(newOrder?.due > 0){
         //   cSaldo = true
@@ -1030,6 +1032,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     void refreshData() {
+        if( promotionListTmp.size() > 0 ){
+          promotionList.addAll( promotionListTmp )
+        }
         this.promotionDriver.enableItemsTableEvents(false)
         this.getPromotionModel().fireTableDataChanged()
         updateOrder(order?.id)
@@ -1136,6 +1141,15 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         this.updateOrder(pOrder.id)
     }
 
+    void setPromotion( Order pOrder ){
+        this.promotionDriver.updatePromotionClient( pOrder )
+        /*promotionList = new ArrayList<PromotionAvailable>()
+        if( promo != null ){
+          promotionListTmp.add( promo )
+        }
+        refreshData()*/
+    }
+
     void setOperationTypeSelected(OperationType pOperation) {
         operationType.setSelectedItem(pOperation)
     }
@@ -1217,8 +1231,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private void flujoContinuar() {
         if (isPaymentListEmpty()) {
             sb.doLater {
-                OrderController.saveOrder(order)
+                Order newOrder = OrderController.saveOrder(order)
                 CustomerController.updateCustomerInSite(this.customer.id)
+                this.promotionDriver.requestPromotionSave(newOrder?.id, false)
                 this.reset()
             }
         } else {
@@ -1271,5 +1286,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
       currentOperationType = null
       dioptra = null
       antDioptra = null
+      promotionListTmp = null
     }
 }

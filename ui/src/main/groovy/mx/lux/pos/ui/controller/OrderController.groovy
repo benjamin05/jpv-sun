@@ -56,6 +56,7 @@ class OrderController {
     private static AcuseRepository acuseRepository
     private static JbServiciosRepository jbServiciosRepository
     private static JbNotasRepository jbNotasRepository
+    private static DescuentoRepository descuentoRepository
 
     private static final String TAG_USD = "USD"
 
@@ -83,7 +84,8 @@ class OrderController {
             AcusesTipoRepository acusesTipoRepository,
             AcuseRepository acuseRepository,
             JbServiciosRepository jbServiciosRepository,
-            JbNotasRepository jbNotasRepository
+            JbNotasRepository jbNotasRepository,
+            DescuentoRepository descuentoRepository
 
     ) {
         this.notaVentaService = notaVentaService
@@ -109,6 +111,7 @@ class OrderController {
         this.acuseRepository = acuseRepository
         this.jbServiciosRepository = jbServiciosRepository
         this.jbNotasRepository = jbNotasRepository
+        this.descuentoRepository = descuentoRepository
     }
 
     static Order getOrder(String orderId) {
@@ -1462,5 +1465,11 @@ class OrderController {
     }
 
 
-
+    static Descuento findDiscount( Order order ) {
+      List<Descuento> desc = descuentoRepository.findByIdFactura( order.id )
+      if( desc.size() > 0 ){
+        return  desc.first()
+      }
+      return  null
+    }
 }

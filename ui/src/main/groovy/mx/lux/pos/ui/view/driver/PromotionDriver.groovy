@@ -1,9 +1,14 @@
 package mx.lux.pos.ui.view.driver
 
+import mx.lux.pos.model.DescuentoClave
 import mx.lux.pos.model.IPromotionAvailable
 import mx.lux.pos.model.PromotionAvailable
 import mx.lux.pos.model.PromotionDiscount
 import mx.lux.pos.model.PromotionModel
+import mx.lux.pos.ui.controller.OrderController
+import mx.lux.pos.ui.model.Order
+import mx.lux.pos.model.Descuento
+import mx.lux.pos.ui.model.IPromotion
 import mx.lux.pos.service.PromotionService
 import mx.lux.pos.service.business.PromotionCommit
 import mx.lux.pos.ui.model.ICorporateKeyVerifier
@@ -173,16 +178,11 @@ class PromotionDriver implements TableModelListener, ICorporateKeyVerifier {
       couponDiscount.setVerifier( this )
       couponDiscount.activate()
       if ( couponDiscount.getDiscountSelected() ) {
-
           Double discount = couponDiscount.getDiscountAmt() / view.order.total
-
           Boolean apl = false
-
           apl = model.setupOrderCouponDiscount(couponDiscount?.descuentoClave,discount )
-
           PromotionCommit.writeOrder( model )
           if ( apl  ) {
-
               this.updatePromotionList()
               view.refreshData()
           } else {
@@ -194,12 +194,10 @@ class PromotionDriver implements TableModelListener, ICorporateKeyVerifier {
 
   }
 
-  void requestPromotionSave(String idNotaVenta ) {
+  void requestPromotionSave(String idNotaVenta, Boolean saveOrder) {
     log.debug( "Request promotion persist" )
-
-      service.saveTipoDescuento(idNotaVenta,this.model?.orderDiscount?.discountType?.idType)
-
-    service.requestPersist( this.model )
+    service.saveTipoDescuento(idNotaVenta,this.model?.orderDiscount?.discountType?.idType)
+    service.requestPersist( this.model, saveOrder )
   }
 
   Boolean requestVerify( String pCorporateKey, Double pDiscountPct ) {
@@ -226,4 +224,30 @@ class PromotionDriver implements TableModelListener, ICorporateKeyVerifier {
       } )
     }
   }
+
+
+  void updatePromotionClient( Order order ){
+      Descuento desc = OrderController.findDiscount( order )
+      if( desc != null && desc.id != null ){
+          Double discount = desc.getNotaVenta().getMontoDescuento() / (desc.getNotaVenta().getVentaTotal()+desc.getNotaVenta().getMontoDescuento())
+          Boolean apl = false
+          apl = model.setupOrderCouponDiscount(desc?.descuentosClave,discount )
+          PromotionCommit.writeOrder( model )
+          if ( service.requestOrderDiscount( this.model, "", discount ) ) {
+              log.debug( this.model.orderDiscount.toString() )
+              this.updatePromotionList()
+              view.refreshData()
+          } else if ( service.requestOrderDiscount( this.model, desc?.clave, discount ) ) {
+              log.debug( this.model.orderDiscount.toString() )
+              this.updatePromotionList()
+              view.refreshData()
+          } else if ( apl  ) {
+              this.updatePromotionList()
+              view.refreshData()
+          }
+      }
+
+  }
+
+
 }
