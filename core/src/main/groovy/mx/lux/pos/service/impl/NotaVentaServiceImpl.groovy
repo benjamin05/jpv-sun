@@ -137,8 +137,14 @@ class NotaVentaServiceImpl implements NotaVentaService {
         log.debug( "ventaNeta: ${notaVenta.ventaNeta} -> ${total}" )
         log.debug( "ventaTotal: ${notaVenta.ventaTotal} -> ${total}" )
         log.debug( "sumaPagos: ${notaVenta.sumaPagos} -> ${pagado}" )
-        notaVenta.ventaNeta = total
-        notaVenta.ventaTotal = total
+        if( notaVenta.montoDescuento.compareTo(BigDecimal.ZERO) > 0 &&
+                (notaVenta.ventaNeta.compareTo(total) > 0 || notaVenta.ventaNeta.compareTo(total) < 0)){
+           log.debug( "redondeo monto total" )
+        } else {
+          notaVenta.ventaNeta = total
+          notaVenta.ventaTotal = total
+        }
+
         notaVenta.sumaPagos = pagado
         notaVenta.tipoNotaVenta = TAG_TIPO_NOTA_VENTA
         try {

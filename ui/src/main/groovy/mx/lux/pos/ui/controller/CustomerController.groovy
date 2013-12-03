@@ -309,6 +309,7 @@ class CustomerController {
             pListener.operationTypeSelected = OperationType.PAYING
             pListener.setCustomer( customer )
             pListener.setOrder( order )
+            pListener.setPromotion( order )
             pListener.enableUI()
         }
     }

@@ -156,29 +156,17 @@ class OrderController {
     }
 
     static Receta findRx(Order order, Customer customer) {
-
         NotaVenta rxNotaVenta = notaVentaService.obtenerNotaVenta(order?.id)
-
         List<Rx> recetas = CustomerController.findAllPrescriptions(customer?.id)
-
         Receta receta = new Receta()
-
         Iterator iterator = recetas.iterator();
         while (iterator.hasNext()) {
-
             Rx rx = iterator.next()
-
-
             if (rxNotaVenta.receta == rx?.id) {
                 rxNotaVenta.receta
                 receta = recetaService.findbyId(rxNotaVenta.receta)
-
-
             }
-
-
         }
-
         return receta
     }
 
@@ -218,6 +206,7 @@ class OrderController {
     }
 
     static Dioptra addDioptra(Order order, String dioptra) {
+        log.debug( "addDioptra( )" )
         NotaVenta nota = notaVentaService.obtenerNotaVenta(order.id)
         nota.setCodigo_lente(dioptra)
         nota = notaVentaService.registrarNotaVenta(nota)

@@ -809,7 +809,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
             println('Dioptra :' + dioptra?.tipo)
             dioptra = OrderController.validaDioptra(dioptra, nuevoDioptra)
             println('Dioptra Generado :' + dioptra)
-            antDioptra = OrderController.addDioptra(order, OrderController.codigoDioptra(dioptra))
+                antDioptra = OrderController.addDioptra(order, OrderController.codigoDioptra(dioptra))
             order?.dioptra = OrderController.codigoDioptra(antDioptra)
         } else {
             order?.dioptra = OrderController.codigoDioptra(antDioptra)
@@ -1248,8 +1248,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         if (itemsModel.size() > 0) {
             if (paymentsModel.size() == 0) {
                 Customer c = this.customer
-                OrderController.saveOrder(order)
+                Order newOrder = OrderController.saveOrder(order)
                 CustomerController.updateCustomerInSite(c.id)
+                this.promotionDriver.requestPromotionSave(newOrder?.id, false)
                 this.reset()
                 this.disableUI()
                 this.operationTypeSelected = OperationType.PENDING
