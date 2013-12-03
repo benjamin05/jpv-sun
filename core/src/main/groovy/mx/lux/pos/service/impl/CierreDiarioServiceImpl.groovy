@@ -119,6 +119,9 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
   @Resource
   private VelocityEngine velocityEngine
 
+  @Resource
+  private DetalleNotaVentaRepository detalleNotaVentaRepository
+
   @Override
   List<CierreDiario> buscarConEstadoAbierto( ) {
     log.info( "obteniendo lista de cierreDiario con estado abierto" )
@@ -308,7 +311,10 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     List<DetalleNotaVenta> detallesTmp = new ArrayList<DetalleNotaVenta>()
     //notasVenta.each { notaVenta -> detallesTmp.addAll( notaVenta.detalles ) }
     for(NotaVenta nota : notasVenta){
-      detallesTmp.addAll( nota.detalles )
+      List<DetalleNotaVenta> lstDetalles = detalleNotaVentaRepository.findByIdFactura( nota.id )
+      if( lstDetalles.size() > 0 ){
+        detallesTmp.addAll( lstDetalles )
+      }
     }
     log.debug( "Se han encontrado ${detallesTmp.size()} Detalles Notas Venta" )
     Collections.sort(detallesTmp, new Comparator<DetalleNotaVenta>() {
@@ -880,7 +886,6 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
       VelocityEngineUtils.mergeTemplate( velocityEngine, "template/fichero-inv.vm", "ASCII", datos, writer )
       log.debug( 'Writer close' )
       writer.close()
-
     }catch(Exception e){
       log.error( "Error al generar archivo de inventario", e )
       generado = false
