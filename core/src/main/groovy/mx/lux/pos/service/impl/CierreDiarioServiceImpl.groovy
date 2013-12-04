@@ -200,7 +200,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
       generarFicheroZV( fechaCierre, sucursal, ubicacion.valor )
       generarFicheroZT( fechaCierre, sucursal, ubicacion.valor )
       //generarFicheroCLI( fechaCierre, sucursal, ubicacion.valor )
-      generarFicheroCO( fechaCierre, sucursal, ubicacion.valor )
+      //generarFicheroCO( fechaCierre, sucursal, ubicacion.valor )
       generarFicheroff( fechaCierre, sucursal, ubicacion.valor )
       generarFicheroZZ( fechaCierre, sucursal, ubicacion.valor )
 
