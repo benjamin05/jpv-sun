@@ -862,7 +862,6 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
 
   private void generarFicheroInv( Date fechaCierre ){
     log.debug( "generarArchivoInventario( )" )
-
     Parametro ubicacion = Registry.find( TipoParametro.RUTA_CIERRE )
     Parametro sucursal = Registry.find( TipoParametro.ID_SUCURSAL )
     String nombreFichero = "${ String.format("%02d", NumberFormat.getInstance().parse(sucursal.valor)) }.${ CustomDateUtils.format( new Date(), 'dd-MM-yyyy' ) }.${ CustomDateUtils.format( new Date(), 'HHmm' ) }.inv"
