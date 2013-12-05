@@ -1639,7 +1639,7 @@ public class ReportServiceImpl implements ReportService {
 
 
     public String obtenerReporteExamenesPorOptoCompleto( Date fechaInicio, Date fechaFin ) {
-        log.info( "obtenerReporteExamenesPorOptoCompleto()" );
+        log.info( "obtenerReporteExamenesPorOptoCompleto( )" );
 
         Random random = new Random();
         File report = new File( System.getProperty( "java.io.tmpdir" ), String.format("Examenes-Por-Optometrista%s.txt", random.nextInt()) );
