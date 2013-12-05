@@ -2234,11 +2234,8 @@ public class ReportBusiness {
                   /*desc.AcumulaExamenTotal();
                   desc.AcumulaExamenNoVentas();*/
                 } else {
-                  System.out.println(fecha);
-                  System.out.println(idCliente);
                   if( receta.getNotaVenta() != null && receta.getNotaVenta().getFactura().trim().length() > 0 &&
                           !examen.getIdAtendio().equalsIgnoreCase("9999") ){
-                      System.out.println(receta.getIdCliente().equals(idCliente));
                       if( df.format(receta.getNotaVenta().getFechaHoraFactura()).equals(fecha) && receta.getIdCliente().equals(idCliente) ){
 
                       } else {
