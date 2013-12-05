@@ -214,4 +214,5 @@ public class DescuentosPorTipo {
     public void setRxCotizacion(Integer rxCotizacion) {
         this.rxCotizacion = rxCotizacion;
     }
+
 }
