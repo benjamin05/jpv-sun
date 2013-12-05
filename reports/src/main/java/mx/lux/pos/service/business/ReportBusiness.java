@@ -2215,8 +2215,9 @@ public class ReportBusiness {
         List<DescuentosPorTipo> lstExamenes = new ArrayList<DescuentosPorTipo>();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         QReceta rx = QReceta.receta;
+        List<Receta> lstRx = (List<Receta>)recetaRepository.findAll( rx.fechaReceta.between(fechaInicio,fechaFin) );
         List<Receta> lstRecetas = (List<Receta>)recetaRepository.findAll( rx.fechaReceta.between(fechaInicio,fechaFin),
-                rx.idOptometrista.asc(),rx.notaVenta.idCliente.asc() );
+                rx.idOptometrista.asc(),rx.idCliente.asc() );
         QExamen exam = QExamen.examen;
         List<Examen> lstExams = (List<Examen>)examenRepository.findAll( exam.idAtendio.eq("9999").and(exam.observacionesEx.eq("SE")).
                 and(exam.fechaAlta.between(fechaInicio,fechaFin)));
