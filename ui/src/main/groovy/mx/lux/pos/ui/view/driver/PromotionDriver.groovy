@@ -246,7 +246,6 @@ class PromotionDriver implements TableModelListener, ICorporateKeyVerifier {
               view.refreshData()
           }
       }
-
   }
 
 

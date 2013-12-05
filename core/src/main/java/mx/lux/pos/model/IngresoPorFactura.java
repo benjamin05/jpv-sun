@@ -198,9 +198,9 @@ public class IngresoPorFactura {
         lstDetalles = modificacion.getNotaVenta().getDetalles();
         for(Devolucion dev : modificacion.getDevolucion()){
             if(StringUtils.trimToEmpty(dev.getTipo()).equalsIgnoreCase(TAG_DEVUELTO) && !tipo.contains("Devolucion") ){
-                tipo = tipo + ", Devolucion";
+                tipo = tipo + ", Dev.";
             } else if(StringUtils.trimToEmpty(dev.getTipo()).equalsIgnoreCase(TAG_TRANSFERIDO) && !tipo.contains("Transferencia")){
-                tipo = tipo + ", Transferencia";
+                tipo = tipo + ", Trans.";
             }
 
             if(StringUtils.trimToEmpty(dev.getTransf()) != "" && dev.getNotaVenta() != null){

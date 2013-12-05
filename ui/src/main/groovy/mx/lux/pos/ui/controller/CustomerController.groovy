@@ -309,7 +309,7 @@ class CustomerController {
             pListener.operationTypeSelected = OperationType.PAYING
             pListener.setCustomer( customer )
             pListener.setOrder( order )
-            pListener.setPromotion( order )
+            //pListener.setPromotion( order )
             pListener.enableUI()
         }
     }
@@ -333,7 +333,7 @@ class CustomerController {
             pListener.setCustomer( c )
             pListener.setOrder( o )
             pListener.enableUI()
-            pListener.setPromotion( o )
+            //pListener.setPromotion( o )
         } else {
             pListener.operationTypeSelected = OperationType.DEFAULT
         }

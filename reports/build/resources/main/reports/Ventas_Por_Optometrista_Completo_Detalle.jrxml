@@ -34,7 +34,7 @@
 				<textFieldExpression><![CDATA[$F{idEmpleado}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="80d90e01-aadf-4401-986f-83065130e592" x="67" y="18" width="545" height="26"/>
+				<reportElement uuid="80d90e01-aadf-4401-986f-83065130e592" x="17" y="18" width="595" height="26"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{pagos})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["reports/Ventas_Por_Optometrista_Completo_Lista.jasper"]]></subreportExpression>
 			</subreport>

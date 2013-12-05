@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Ventas_MasVision" language="groovy" pageWidth="850" pageHeight="2834" columnWidth="810" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a467e297-5029-4639-9692-9f206622592b">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Ventas_MasVision" language="groovy" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a467e297-5029-4639-9692-9f206622592b">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -97,49 +97,49 @@
 	<detail>
 		<band height="77" splitType="Stretch">
 			<textField pattern="$#,##0.00">
-				<reportElement uuid="eb41aeac-0948-4556-82d6-2cadbfeadcc2" x="99" y="17" width="84" height="20"/>
+				<reportElement uuid="eb41aeac-0948-4556-82d6-2cadbfeadcc2" x="99" y="12" width="84" height="20"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalVentas}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="68780e2b-d915-4910-b29e-a112552dbbad" x="9" y="17" width="90" height="20"/>
+				<reportElement uuid="68780e2b-d915-4910-b29e-a112552dbbad" x="9" y="12" width="90" height="20"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Ventas:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="97c3e3e1-ca00-4ebb-b0b4-c317568bb309" x="183" y="17" width="87" height="20"/>
+				<reportElement uuid="97c3e3e1-ca00-4ebb-b0b4-c317568bb309" x="183" y="12" width="87" height="20"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Cupones:]]></text>
 			</staticText>
 			<textField pattern="$#,##0.00">
-				<reportElement uuid="e2ee3c1d-9daf-48c3-aefc-110b644d5001" x="270" y="17" width="77" height="20"/>
+				<reportElement uuid="e2ee3c1d-9daf-48c3-aefc-110b644d5001" x="270" y="12" width="77" height="20"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalCupones}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="0794207a-32f6-46c5-99ef-738d26114083" x="347" y="17" width="105" height="20"/>
+				<reportElement uuid="0794207a-32f6-46c5-99ef-738d26114083" x="347" y="12" width="105" height="20"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total Venta Neta:]]></text>
 			</staticText>
 			<textField pattern="$#,##0.00">
-				<reportElement uuid="dfee9fe6-3688-4650-a0fc-e2e070aa2ebe" x="452" y="17" width="100" height="20"/>
+				<reportElement uuid="dfee9fe6-3688-4650-a0fc-e2e070aa2ebe" x="452" y="12" width="100" height="20"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalVentaNeta}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="e2dbcd91-28ad-433f-8d9a-634abc6484b4" x="45" y="37" width="474" height="40"/>
+				<reportElement uuid="e2dbcd91-28ad-433f-8d9a-634abc6484b4" x="2" y="37" width="570" height="40"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($P{lstVentas})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["reports/Ventas_MasVision_Det.jasper"]]></subreportExpression>
 			</subreport>

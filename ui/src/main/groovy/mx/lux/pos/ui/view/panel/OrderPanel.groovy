@@ -1142,12 +1142,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     }
 
     void setPromotion( Order pOrder ){
-        this.promotionDriver.updatePromotionClient( pOrder )
-        /*promotionList = new ArrayList<PromotionAvailable>()
-        if( promo != null ){
-          promotionListTmp.add( promo )
-        }
-        refreshData()*/
+      this.promotionDriver.updatePromotionClient( pOrder )
     }
 
     void setOperationTypeSelected(OperationType pOperation) {
