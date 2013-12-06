@@ -20,6 +20,8 @@ public class QCotizacion extends EntityPathBase<Cotizacion> {
 
     public final ListPath<CotizaDet, QCotizaDet> cotizaDet = this.<CotizaDet, QCotizaDet>createList("cotizaDet", CotizaDet.class, QCotizaDet.class);
 
+    public final DateTimePath<java.util.Date> fechaCotizacion = createDateTime("fechaCotizacion", java.util.Date.class);
+
     public final DateTimePath<java.util.Date> fechaMod = createDateTime("fechaMod", java.util.Date.class);
 
     public final DateTimePath<java.util.Date> fechaVenta = createDateTime("fechaVenta", java.util.Date.class);

@@ -1116,10 +1116,12 @@ public class ReportServiceImpl implements ReportService {
         Integer totalCotizaciones = 0;
         Integer totalCotizacionesConVenta = 0;
         for( Cotizaciones cotiza : lstCotizaciones ){
-          if(StringUtils.trimToEmpty(cotiza.getFactura()).length() > 0){
-            totalCotizacionesConVenta = totalCotizacionesConVenta+1;
+          for(CotizacionesDet cotizacionesDet : cotiza.getLstDetalles()){
+            if(StringUtils.trimToEmpty(cotizacionesDet.getFactura()).length() > 0){
+                totalCotizacionesConVenta = totalCotizacionesConVenta+1;
+            }
           }
-          totalCotizaciones = totalCotizaciones+1;
+          totalCotizaciones = totalCotizaciones+cotiza.getLstDetalles().size();
         }
 
         Map<String, Object> parametros = new HashMap<String, Object>();

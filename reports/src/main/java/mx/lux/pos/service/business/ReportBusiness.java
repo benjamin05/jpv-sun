@@ -2083,14 +2083,22 @@ public class ReportBusiness {
     public List<Cotizaciones> obtenerCotizaciones( Date fechaInicio, Date fechaFin ) {
         List<Cotizaciones> lstCotizaciones = new ArrayList<Cotizaciones>();
         QCotizacion cotiza = QCotizacion.cotizacion;
-        List<Cotizacion> cotizaciones = (List<Cotizacion>) cotizacionRepository.findAll( cotiza.fechaMod.between(fechaInicio,fechaFin) );
+        List<Cotizacion> cotizaciones = (List<Cotizacion>) cotizacionRepository.findAll( cotiza.fechaCotizacion.between(fechaInicio,fechaFin) );
 
         for(Cotizacion cot : cotizaciones){
           List<Articulo> lstArticulos = new ArrayList<Articulo>();
-          BigDecimal montoArticulos = BigDecimal.ZERO;
+          for(CotizaDet cotizaDet : cot.getCotizaDet() ){
+            QArticulo art1 = QArticulo.articulo1;
+            List<Articulo> art = (List<Articulo>)articuloRepository.findAll( art1.articulo.eq(cotizaDet.getArticulo()) );
+            if( art.size() > 0 ){
+              lstArticulos.add(art.get(0));
+            }
+          }
           Cliente cliente = clienteRepository.findOne( cot.getIdCliente() );
           NotaVenta nota = notaVentaRepository.findOne( cot.getIdFactura() != null ? cot.getIdFactura() : "" );
-          Cotizaciones cotizacion = new Cotizaciones();
+          Cotizaciones coti = FindorCreateCot( lstCotizaciones, cot.getIdEmpleado() );
+          coti.AcumulaCotizacionesDet( cot, lstArticulos );
+          /*Cotizaciones cotizacion = new Cotizaciones();
           cotizacion.setFechaMod( cot.getFechaMod() );
           cotizacion.setIdEmpleado(cot.getIdEmpleado());
           cotizacion.setIdCotizacion( cot.getIdCotiza().toString() );
@@ -2123,7 +2131,7 @@ public class ReportBusiness {
           }
           cotizacion.setFechaVenta( cot.getFechaVenta() );
 
-          lstCotizaciones.add( cotizacion );
+          lstCotizaciones.add( cotizacion );*/
         }
 
         return lstCotizaciones;
@@ -2266,5 +2274,22 @@ public class ReportBusiness {
     }
 
 
-
+    public Cotizaciones FindorCreateCot(  List<Cotizaciones> lstIngresos, String idEmpleado ) {
+        Cotizaciones found = null;
+        for ( Cotizaciones ingresos : lstIngresos ) {
+            if ( ingresos.getIdEmpleado().equals( idEmpleado ) ) {
+                found = ingresos;
+                break;
+            }
+        }
+        if ( found == null ) {
+            found = new Cotizaciones( idEmpleado );
+            Empleado empleado = empleadoRepository.findOne( idEmpleado );
+            if ( empleado != null ) {
+                found.setNombre( empleado.nombreCompleto() );
+            }
+            lstIngresos.add( found );
+        }
+        return found;
+    }
 }

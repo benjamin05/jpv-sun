@@ -137,9 +137,9 @@ class NotaVentaServiceImpl implements NotaVentaService {
         log.debug( "ventaNeta: ${notaVenta.ventaNeta} -> ${total}" )
         log.debug( "ventaTotal: ${notaVenta.ventaTotal} -> ${total}" )
         log.debug( "sumaPagos: ${notaVenta.sumaPagos} -> ${pagado}" )
-        BigDecimal diferencia = notaVenta.ventaNeta.subtract(total)
-        if( notaVenta.montoDescuento.compareTo(BigDecimal.ZERO) > 0 &&
-                ((notaVenta.ventaNeta.subtract(total) < new BigDecimal(0.02)) && (notaVenta.ventaNeta.subtract(total) > new BigDecimal(-0.02))) ){
+        BigDecimal diferencia = notaVenta?.ventaNeta?.subtract(total)
+        if( notaVenta?.montoDescuento?.compareTo(BigDecimal.ZERO) > 0 &&
+                ((notaVenta?.ventaNeta?.subtract(total) < new BigDecimal(0.02)) && (notaVenta?.ventaNeta?.subtract(total) > new BigDecimal(-0.02))) ){
           log.debug( "redondeo monto total" )
           DetalleNotaVenta det =  detalles.first()
           BigDecimal monto = det.precioUnitFinal.add(diferencia)

@@ -121,6 +121,7 @@ class CotizacionServiceImpl implements CotizacionService {
       quote.idCliente = pCustomerId
       quote.idEmpleado = pIdEmpleado
       quote.idReceta = order.receta
+      quote.fechaCotizacion = new Date()
       if ( cust != null ) {
         quote.nombre = cust.nombreCompleto
         if ( StringUtils.trimToNull( cust.telefonoCasa ) != null ) {

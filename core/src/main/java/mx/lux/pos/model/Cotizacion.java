@@ -63,6 +63,10 @@ public class Cotizacion implements Serializable, Comparable<Cotizacion> {
     @Column( name = "udf1" )
     private String udf1;
 
+    @Temporal( TemporalType.TIMESTAMP )
+    @Column( name = "fecha_cotizacion" )
+    private Date fechaCotizacion;
+
     @OneToMany( fetch = FetchType.EAGER )
     @NotFound( action = NotFoundAction.IGNORE )
     @JoinColumn( name = "id_cotiza", referencedColumnName = "id_cotiza", insertable = false, updatable = false )
@@ -216,4 +220,11 @@ public class Cotizacion implements Serializable, Comparable<Cotizacion> {
                 this.getIdEmpleado(), df.format( this.getFechaMod() ) );
     }
 
+    public Date getFechaCotizacion() {
+        return fechaCotizacion;
+    }
+
+    public void setFechaCotizacion(Date fechaCotizacion) {
+        this.fechaCotizacion = fechaCotizacion;
+    }
 }

@@ -14,14 +14,23 @@ public class Cotizaciones {
     private String cliente;
     private String contacto;
     private String factura;
+    private String nombre;
     private List<Articulo> lstArticulos;
+    private List<CotizacionesDet> lstDetalles;
     private BigDecimal importeTotal;
 
-    public Cotizaciones( ) {
+    public Cotizaciones( String idEmpleado ) {
+        this.idEmpleado = idEmpleado;
         fechaMod = new Date();
         fechaVenta = new Date();
         lstArticulos = new ArrayList<Articulo>();
         importeTotal = BigDecimal.ZERO;
+        lstDetalles = new ArrayList<CotizacionesDet>();
+    }
+
+    public void AcumulaCotizacionesDet( Cotizacion cotizacion, List<Articulo> lstArticulos ){
+      CotizacionesDet cotiza = FindOrCreate( lstDetalles, cotizacion.getIdCotiza() );
+      cotiza.AcumulaDetalles( cotizacion, lstArticulos );
     }
 
 
@@ -95,5 +104,38 @@ public class Cotizaciones {
 
     public void setIdCotizacion(String idCotizacion) {
         this.idCotizacion = idCotizacion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+
+    protected CotizacionesDet FindOrCreate( List<CotizacionesDet> lstCotizacionesDet, Integer idCotiza ) {
+        CotizacionesDet found = null;
+
+        for ( CotizacionesDet cotiza : lstCotizacionesDet ) {
+            if ( cotiza.getIdCotizacion().equals( idCotiza ) ) {
+                found = cotiza;
+                break;
+            }
+        }
+        if ( found == null ) {
+            found = new CotizacionesDet( idCotiza );
+            lstCotizacionesDet.add( found );
+        }
+        return found;
+    }
+
+    public List<CotizacionesDet> getLstDetalles() {
+        return lstDetalles;
+    }
+
+    public void setLstDetalles(List<CotizacionesDet> lstDetalles) {
+        this.lstDetalles = lstDetalles;
     }
 }
