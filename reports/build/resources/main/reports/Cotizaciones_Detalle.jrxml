@@ -22,28 +22,28 @@
 	<detail>
 		<band height="65" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="bb4ac23e-25ca-4f66-9dff-0a7341149159" x="0" y="0" width="60" height="14"/>
+				<reportElement uuid="bb4ac23e-25ca-4f66-9dff-0a7341149159" x="2" y="8" width="79" height="21"/>
 				<textElement>
-					<font fontName="DejaVu Sans" isBold="true"/>
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Empleado]]></text>
+				<text><![CDATA[Empleado:]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="e84f8ef5-fd5f-4299-bad5-4688dd979a72" x="62" y="0" width="53" height="14"/>
+				<reportElement uuid="e84f8ef5-fd5f-4299-bad5-4688dd979a72" x="81" y="8" width="109" height="21"/>
 				<textElement>
-					<font fontName="DejaVu Sans" isBold="true"/>
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{idEmpleado}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement uuid="aede4586-1cd6-4e10-83f3-e500a927edd7" x="115" y="0" width="183" height="14"/>
+				<reportElement uuid="aede4586-1cd6-4e10-83f3-e500a927edd7" x="190" y="8" width="344" height="21"/>
 				<textElement>
-					<font fontName="DejaVu Sans" isBold="true"/>
+					<font fontName="DejaVu Sans" size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement uuid="1bf831f6-292d-4d12-9b94-b035b2777faf" x="14" y="14" width="598" height="26"/>
+				<reportElement uuid="1bf831f6-292d-4d12-9b94-b035b2777faf" x="14" y="29" width="598" height="26"/>
 				<subreportParameter name="SUBREPORT_DIR"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{lstDetalles})]]></dataSourceExpression>
 				<subreportExpression><![CDATA["reports/Cotizaciones_Detalle_Articulos.jasper"]]></subreportExpression>
