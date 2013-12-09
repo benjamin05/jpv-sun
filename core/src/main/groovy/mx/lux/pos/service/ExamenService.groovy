@@ -6,4 +6,8 @@ interface ExamenService {
 
 
     Examen guardarExamen( Examen examen )
+
+    Examen actualizarExamen( Examen examen )
+
+    Examen obtenerExamenPorIdCliente( Integer idCliente )
 }

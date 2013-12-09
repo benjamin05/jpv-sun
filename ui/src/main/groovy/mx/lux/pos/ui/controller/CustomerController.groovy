@@ -377,7 +377,6 @@ class CustomerController {
         log.debug( "salvando Receta" )
         Receta rec = new Receta()
         if ( receta?.id != null ) {
-
             rec.setId( receta.id )
             rec.setExamen( receta.exam )
             rec.setFechaReceta( receta.rxDate )
@@ -420,17 +419,22 @@ class CustomerController {
             rec.setObservacionesR( receta.observacionesR )
             rec = recetaService.guardarReceta( rec )
         } else {
-
-            Examen examen = new Examen()
-            examen.setIdCliente( receta.idClient )
-            examen.setIdAtendio( receta.idOpt )
-            examen.setIdSync( '1' )
-            examen.setFechaMod( new Date() )
-            examen.setId_mod( '0' );
-            examen.setIdSucursal( receta.idStore )
-            examen.setFechaAlta( new Date() )
-            examen = examenService.guardarExamen( examen )
-
+            Examen examen = examenService.obtenerExamenPorIdCliente( receta.idClient )
+            if( examen != null ){
+              examen.setIdAtendio( receta.idOpt )
+              examen.setObservacionesEx( "" )
+              examenService.actualizarExamen( examen )
+            } else {
+              examen = new Examen()
+              examen.setIdCliente( receta.idClient )
+              examen.setIdAtendio( receta.idOpt )
+              examen.setIdSync( '1' )
+              examen.setFechaMod( new Date() )
+              examen.setId_mod( '0' );
+              examen.setIdSucursal( receta.idStore )
+              examen.setFechaAlta( new Date() )
+              examen = examenService.guardarExamen( examen )
+            }
 
             //rec.setId( receta.id )
             rec.setExamen( examen.id )
