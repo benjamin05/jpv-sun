@@ -1113,8 +1113,9 @@ public class ReportServiceImpl implements ReportService {
 
         QCotizacion cotizacion = QCotizacion.cotizacion;
         List<Cotizaciones> lstCotizaciones = ( List<Cotizaciones> ) reportBusiness.obtenerCotizaciones(fechaInicio, fechaFin);
-        Integer totalCotizaciones = 0;
-        Integer totalCotizacionesConVenta = 0;
+        Double totalCotizaciones = 0.00;
+        Double totalCotizacionesConVenta = 0.00;
+        BigDecimal porcentajeTotal = BigDecimal.ZERO;
         for( Cotizaciones cotiza : lstCotizaciones ){
           for(CotizacionesDet cotizacionesDet : cotiza.getLstDetalles()){
             if(StringUtils.trimToEmpty(cotizacionesDet.getFactura()).length() > 0){
@@ -1123,6 +1124,7 @@ public class ReportServiceImpl implements ReportService {
           }
           totalCotizaciones = totalCotizaciones+cotiza.getLstDetalles().size();
         }
+        porcentajeTotal = new BigDecimal(totalCotizacionesConVenta/totalCotizaciones);
 
         Map<String, Object> parametros = new HashMap<String, Object>();
         parametros.put( "fechaActual", new SimpleDateFormat( "hh:mm" ).format( new Date() ) );
@@ -1132,6 +1134,7 @@ public class ReportServiceImpl implements ReportService {
         parametros.put( "lstCotizaciones", lstCotizaciones );
         parametros.put( "totalCotizaciones", totalCotizaciones );
         parametros.put( "totalCotizacionesConVenta", totalCotizacionesConVenta );
+        parametros.put( "porcentajeTotal", porcentajeTotal );
 
         String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
         log.info( "reporte:{}", reporte );

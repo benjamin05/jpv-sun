@@ -15,8 +15,9 @@
 		<defaultValueExpression><![CDATA["/home/opticalux/proyectos/jpv/reports/src/main/resources/reports/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="lstCotizaciones" class="java.util.List"/>
-	<parameter name="totalCotizaciones" class="java.lang.String"/>
-	<parameter name="totalCotizacionesConVenta" class="java.lang.String"/>
+	<parameter name="totalCotizaciones" class="java.lang.Integer"/>
+	<parameter name="totalCotizacionesConVenta" class="java.lang.Integer"/>
+	<parameter name="porcentajeTotal" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -102,33 +103,47 @@
 				<subreportExpression><![CDATA["reports/Cotizaciones_Detalle.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
-				<reportElement uuid="e2f4d66c-5014-4c59-88c3-4b76116ec286" x="166" y="23" width="107" height="20"/>
+				<reportElement uuid="e2f4d66c-5014-4c59-88c3-4b76116ec286" x="52" y="10" width="59" height="20"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalCotizaciones}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="007e7585-b036-45c0-8d6f-58d5699618c8" x="40" y="23" width="126" height="20"/>
+				<reportElement uuid="007e7585-b036-45c0-8d6f-58d5699618c8" x="12" y="10" width="40" height="20"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total de Cotizaciones:]]></text>
+				<text><![CDATA[Total:]]></text>
 			</staticText>
 			<textField>
-				<reportElement uuid="7b04a230-4d0c-4754-aef7-2c28f8251d60" x="461" y="23" width="100" height="20"/>
+				<reportElement uuid="7b04a230-4d0c-4754-aef7-2c28f8251d60" x="210" y="10" width="58" height="20"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{totalCotizacionesConVenta}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="67568b76-6f82-41fe-a1d2-71ba8a9fb6c5" x="273" y="23" width="186" height="20"/>
+				<reportElement uuid="67568b76-6f82-41fe-a1d2-71ba8a9fb6c5" x="111" y="10" width="99" height="20"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total de Cotizaciones con Venta:]]></text>
+				<text><![CDATA[Total con Venta:]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="0e920718-a687-4ecc-8a4a-12bb906e85b1" x="268" y="10" width="156" height="20"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Porcentaje de Conversion:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00 %">
+				<reportElement uuid="4da56130-6fc6-4b36-a960-7b79683bb161" x="422" y="10" width="58" height="20"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{porcentajeTotal}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

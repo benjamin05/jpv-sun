@@ -16,8 +16,9 @@
 	<field name="importeTotal" class="java.math.BigDecimal"/>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="lstDetalles" class="java.util.List"/>
-	<field name="cantCotizaciones" class="java.lang.String"/>
+	<field name="cantCotizaciones" class="java.lang.Integer"/>
 	<field name="porcentajeVentas" class="java.math.BigDecimal"/>
+	<field name="cantVentas" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -51,33 +52,47 @@
 				<subreportExpression><![CDATA["reports/Cotizaciones_Detalle_Articulos.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
-				<reportElement uuid="220af3cd-78ad-4009-900a-e0e01d0a61bf" x="127" y="29" width="63" height="12"/>
+				<reportElement uuid="220af3cd-78ad-4009-900a-e0e01d0a61bf" x="56" y="29" width="63" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{cantCotizaciones}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="9a60d7af-5593-4a89-acd9-84cece8904e0" x="14" y="29" width="113" height="12"/>
+				<reportElement uuid="9a60d7af-5593-4a89-acd9-84cece8904e0" x="14" y="29" width="42" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total Cotizaciones:]]></text>
+				<text><![CDATA[Total:]]></text>
 			</staticText>
 			<textField pattern="##0.00 %">
-				<reportElement uuid="b678b716-1d75-41eb-ac4a-cbe595efcb7a" x="324" y="29" width="100" height="12"/>
+				<reportElement uuid="b678b716-1d75-41eb-ac4a-cbe595efcb7a" x="434" y="29" width="100" height="12"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{porcentajeVentas}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="17148423-327d-44d4-abc4-9522447759ac" x="190" y="29" width="134" height="12"/>
+				<reportElement uuid="17148423-327d-44d4-abc4-9522447759ac" x="300" y="29" width="134" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Porcentaje de Ventas:]]></text>
 			</staticText>
+			<staticText>
+				<reportElement uuid="9c9850f8-3047-4dae-9cc0-5728cdede4d4" x="119" y="29" width="100" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total con Venta:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9b8ece35-4c6f-46d6-9612-b07c686a4bef" x="219" y="29" width="81" height="12"/>
+				<textElement>
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cantVentas}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>

@@ -165,4 +165,12 @@ public class Cotizaciones {
     public void setPorcentajeVentas(BigDecimal porcentajeVentas) {
         this.porcentajeVentas = porcentajeVentas;
     }
+
+    public Double getCantVentas() {
+        return cantVentas;
+    }
+
+    public void setCantVentas(Double cantVentas) {
+        this.cantVentas = cantVentas;
+    }
 }
