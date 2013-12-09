@@ -42,11 +42,11 @@ enum PromotionDiscountType {
     return parsed
   }
 
-    static  PromotionDiscountType PromotionDiscount( String pIdType, String pDescription,String pText ) {
+    static  PromotionDiscountType PromotionDiscount( String pIdType, String pDescription,String pText, DescuentoClave descuentoClave ) {
         PromotionDiscountType discountType   = CouponDiscount
         discountType.idType = StringUtils.trimToEmpty( pIdType ).toUpperCase( )
         discountType.description = StringUtils.trimToEmpty( pDescription ).toUpperCase( )
-        discountType.text = StringUtils.trimToEmpty( pText == null ? "Descuento Tienda" : pText )
+        discountType.text = StringUtils.trimToEmpty( pText == null ? "Descuento Sobre Venta" : pText )
         return  discountType
 
     }

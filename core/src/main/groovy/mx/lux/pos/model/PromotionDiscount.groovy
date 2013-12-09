@@ -26,10 +26,14 @@ class PromotionDiscount implements IPromotionAvailable {
   }
 
     static PromotionDiscount getCouponDiscountInstance(DescuentoClave descuentoClave ) {
+        String descTmp = "Descuento Tienda"
+        if( descuentoClave != null && descuentoClave.descripcion_descuento.equalsIgnoreCase("NA")){
+            descTmp = descuentoClave.porcenaje_descuento+"% "+"descuento sobre venta"
+        }
          String idType   =  'P'
-         String description  = descuentoClave?.clave_descuento.toString()
-         String text   =   descuentoClave?.descripcion_descuento
-        return new PromotionDiscount(  PromotionDiscountType.PromotionDiscount(  idType,  description, text ))
+         String description  = descuentoClave != null ? descuentoClave?.clave_descuento : ""
+         String text   = descTmp
+        return new PromotionDiscount(  PromotionDiscountType.PromotionDiscount(  idType,  description, text, descuentoClave ))
     }
 
 
