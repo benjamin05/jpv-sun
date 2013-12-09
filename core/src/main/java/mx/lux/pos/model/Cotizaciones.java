@@ -18,6 +18,9 @@ public class Cotizaciones {
     private List<Articulo> lstArticulos;
     private List<CotizacionesDet> lstDetalles;
     private BigDecimal importeTotal;
+    private Double cantCotizaciones;
+    private Double cantVentas;
+    private BigDecimal porcentajeVentas;
 
     public Cotizaciones( String idEmpleado ) {
         this.idEmpleado = idEmpleado;
@@ -26,9 +29,17 @@ public class Cotizaciones {
         lstArticulos = new ArrayList<Articulo>();
         importeTotal = BigDecimal.ZERO;
         lstDetalles = new ArrayList<CotizacionesDet>();
+        cantCotizaciones = 0.00;
+        cantVentas = 0.00;
+        porcentajeVentas = BigDecimal.ZERO;
     }
 
     public void AcumulaCotizacionesDet( Cotizacion cotizacion, List<Articulo> lstArticulos ){
+      cantCotizaciones = cantCotizaciones+1;
+      if(cotizacion.getIdFactura() != null && cotizacion.getIdFactura().trim().length() > 0){
+        cantVentas = cantVentas+1;
+      }
+      porcentajeVentas = new BigDecimal(cantVentas/cantCotizaciones);
       CotizacionesDet cotiza = FindOrCreate( lstDetalles, cotizacion.getIdCotiza() );
       cotiza.AcumulaDetalles( cotizacion, lstArticulos );
     }
@@ -137,5 +148,21 @@ public class Cotizaciones {
 
     public void setLstDetalles(List<CotizacionesDet> lstDetalles) {
         this.lstDetalles = lstDetalles;
+    }
+
+    public Double getCantCotizaciones() {
+        return cantCotizaciones;
+    }
+
+    public void setCantCotizaciones(Double cantCotizaciones) {
+        this.cantCotizaciones = cantCotizaciones;
+    }
+
+    public BigDecimal getPorcentajeVentas() {
+        return porcentajeVentas;
+    }
+
+    public void setPorcentajeVentas(BigDecimal porcentajeVentas) {
+        this.porcentajeVentas = porcentajeVentas;
     }
 }
