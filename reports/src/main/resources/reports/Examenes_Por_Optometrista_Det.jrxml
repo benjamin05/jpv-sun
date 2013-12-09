@@ -9,6 +9,7 @@
 	<field name="rxConVenta" class="java.lang.String"/>
 	<field name="rxCotizacion" class="java.lang.String"/>
 	<field name="rxSinVenta" class="java.lang.String"/>
+	<field name="rxPorcentaje" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -22,32 +23,39 @@
 				<text><![CDATA[Empleado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="682699eb-3576-483d-bdac-395ffc34a596" x="214" y="0" width="66" height="12"/>
+				<reportElement uuid="682699eb-3576-483d-bdac-395ffc34a596" x="214" y="0" width="47" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="290539d3-5c33-4e1b-82b6-40a75613e4f4" x="280" y="0" width="74" height="12"/>
+				<reportElement uuid="290539d3-5c33-4e1b-82b6-40a75613e4f4" x="261" y="0" width="53" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Venta]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="4573c645-bc71-424c-b93c-5faf777c1e04" x="354" y="0" width="77" height="12"/>
+				<reportElement uuid="4573c645-bc71-424c-b93c-5faf777c1e04" x="314" y="0" width="65" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cotizacion]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="178e2f6c-7c5d-4236-bcb0-0751c573890d" x="431" y="0" width="70" height="12"/>
+				<reportElement uuid="178e2f6c-7c5d-4236-bcb0-0751c573890d" x="379" y="0" width="70" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
 				<text><![CDATA[No Venta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8058bde3-0f43-4790-b639-245c113b4bb0" x="449" y="0" width="132" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Porcentaje Conversion]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -72,7 +80,7 @@
 				<textFieldExpression><![CDATA[$F{idEmpleado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="3f54232e-2607-418b-99a6-92e0e39c3485" x="214" y="0" width="66" height="12" isRemoveLineWhenBlank="true">
+				<reportElement uuid="3f54232e-2607-418b-99a6-92e0e39c3485" x="214" y="0" width="47" height="12" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$F{total} != 0]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -81,7 +89,7 @@
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="475ddccc-638d-4168-80ec-e27d22df1f05" x="280" y="0" width="74" height="12" isRemoveLineWhenBlank="true">
+				<reportElement uuid="475ddccc-638d-4168-80ec-e27d22df1f05" x="261" y="0" width="53" height="12" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$F{total} != 0]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -90,7 +98,7 @@
 				<textFieldExpression><![CDATA[$F{rxConVenta}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="2325ca2e-2490-452f-b0fc-582d0b6367bb" x="354" y="0" width="77" height="12" isRemoveLineWhenBlank="true">
+				<reportElement uuid="2325ca2e-2490-452f-b0fc-582d0b6367bb" x="314" y="0" width="65" height="12" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$F{total} != 0]]></printWhenExpression>
 				</reportElement>
 				<textElement>
@@ -99,13 +107,20 @@
 				<textFieldExpression><![CDATA[$F{rxCotizacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement uuid="75cec253-a82c-461b-aea0-63b015e94865" x="431" y="0" width="70" height="12" isRemoveLineWhenBlank="true">
+				<reportElement uuid="75cec253-a82c-461b-aea0-63b015e94865" x="379" y="0" width="70" height="12" isRemoveLineWhenBlank="true">
 					<printWhenExpression><![CDATA[$F{total} != 0]]></printWhenExpression>
 				</reportElement>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{rxSinVenta}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00 %">
+				<reportElement uuid="9681718b-cfad-46b2-95f4-a468fde42821" x="449" y="0" width="132" height="12"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rxPorcentaje}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

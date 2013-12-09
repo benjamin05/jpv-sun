@@ -1661,6 +1661,7 @@ public class ReportServiceImpl implements ReportService {
         Integer totalVenta = 0;
         Integer totalCotiza = 0;
         Integer totalNoVenta = 0;
+        BigDecimal porcentajeVentas = BigDecimal.ZERO;
         for(DescuentosPorTipo empleado : lstExamenes){
           if(empleado.getIdEmpleado().trim().equalsIgnoreCase("9999")){
             empleado.setNombreEmpleado( "PROCESO" );
@@ -1669,6 +1670,7 @@ public class ReportServiceImpl implements ReportService {
           totalVenta = totalVenta+empleado.getRxConVenta();
           totalCotiza = totalCotiza+empleado.getRxCotizacion();
           totalNoVenta = totalNoVenta+empleado.getRxSinVenta();
+          porcentajeVentas = new BigDecimal(new Double(totalVenta)/new Double(total));
         }
 
         Map<String, Object> parametros = new HashMap<String, Object>();
@@ -1681,6 +1683,7 @@ public class ReportServiceImpl implements ReportService {
         parametros.put( "totalVenta", totalVenta );
         parametros.put( "totalCotiza", totalCotiza );
         parametros.put( "totalNoVenta", totalNoVenta );
+        parametros.put( "porcentajeVentas", porcentajeVentas );
 
         String reporte = reportBusiness.CompilayGeneraReporte( template, parametros, report );
         log.info( "reporte:{}", reporte );

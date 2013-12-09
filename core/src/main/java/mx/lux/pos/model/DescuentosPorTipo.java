@@ -24,6 +24,7 @@ public class DescuentosPorTipo {
     private Integer rxConVenta;
     private Integer rxSinVenta;
     private Integer rxCotizacion;
+    private BigDecimal rxPorcentaje;
 
     public DescuentosPorTipo(String tipoDesc) {
         tipo = tipoDesc;
@@ -35,6 +36,7 @@ public class DescuentosPorTipo {
         rxConVenta = 0;
         rxSinVenta = 0;
         rxCotizacion = 0;
+        rxPorcentaje = BigDecimal.ZERO;
     }
 
     public void AcumulaDescuentos( Descuento descuento, Integer contador) {
@@ -91,6 +93,10 @@ public class DescuentosPorTipo {
 
     public void AcumulaExamenNoVentas( ) {
         rxSinVenta = rxSinVenta+1;
+    }
+
+    public void CalculaPorcentaje( ){
+        rxPorcentaje = new BigDecimal(new Double(rxConVenta)/new Double(total == 0 ? 1 : total));
     }
 
     public String getTipo() {
@@ -215,4 +221,11 @@ public class DescuentosPorTipo {
         this.rxCotizacion = rxCotizacion;
     }
 
+    public BigDecimal getRxPorcentaje() {
+        return rxPorcentaje;
+    }
+
+    public void setRxPorcentaje(BigDecimal rxPorcentaje) {
+        this.rxPorcentaje = rxPorcentaje;
+    }
 }

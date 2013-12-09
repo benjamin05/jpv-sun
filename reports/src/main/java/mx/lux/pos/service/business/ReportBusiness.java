@@ -2094,10 +2094,44 @@ public class ReportBusiness {
               lstArticulos.add(art.get(0));
             }
           }
-          /*Cliente cliente = clienteRepository.findOne( cot.getIdCliente() );
-          NotaVenta nota = notaVentaRepository.findOne( cot.getIdFactura() != null ? cot.getIdFactura() : "" );*/
+          Cliente cliente = clienteRepository.findOne( cot.getIdCliente() );
+          NotaVenta nota = notaVentaRepository.findOne( cot.getIdFactura() != null ? cot.getIdFactura() : "" );
           Cotizaciones coti = FindorCreateCot( lstCotizaciones, cot.getIdEmpleado() );
           coti.AcumulaCotizacionesDet( cot, lstArticulos );
+          /*Cotizaciones cotizacion = new Cotizaciones();
+          cotizacion.setFechaMod( cot.getFechaMod() );
+          cotizacion.setIdEmpleado(cot.getIdEmpleado());
+          cotizacion.setIdCotizacion( cot.getIdCotiza().toString() );
+          cotizacion.setCliente( cliente != null ? cliente.getNombreCompleto() : "" );
+          if( !cot.getTel().trim().equalsIgnoreCase("") ){
+            cotizacion.setContacto( cot.getTel() );
+          } else{
+            if(cliente != null && !cliente.getTelefonoCasa().trim().equalsIgnoreCase("")){
+                cotizacion.setContacto( cliente.getTelefonoCasa().trim() );
+            } else if(cliente != null && !cliente.getTelefonoAdicional().trim().equalsIgnoreCase("")){
+                cotizacion.setContacto( cliente.getTelefonoAdicional().trim() );
+            } else if(cliente != null && !cliente.getEmail().trim().equalsIgnoreCase("")){
+                cotizacion.setContacto( cliente.getEmail().trim() );
+            }
+          }
+          for(CotizaDet cotizaDet: cot.getCotizaDet()){
+            Articulo articulo = articuloRepository.findOne( cotizaDet.getSku() );
+            if(articulo != null){
+              lstArticulos.add( articulo );
+              List<Precio> precios = precioRepository.findByArticulo( articulo.getArticulo() );
+              if(precios.size() > 0){
+                montoArticulos = montoArticulos.add( precios.get(0).getPrecio() );
+              }
+            }
+          }
+          cotizacion.setLstArticulos( lstArticulos );
+          cotizacion.setImporteTotal( montoArticulos );
+          if( nota != null ){
+            cotizacion.setFactura( nota.getFactura() );
+          }
+          cotizacion.setFechaVenta( cot.getFechaVenta() );
+
+          lstCotizaciones.add( cotizacion );*/
         }
 
         return lstCotizaciones;
@@ -2218,13 +2252,16 @@ public class ReportBusiness {
                       }
                       fecha = df.format(receta.getNotaVenta().getFechaHoraFactura());
                       idCliente = receta.getIdCliente();
-                  } else if( cotizacion != null || cotizacion.getIdFactura().trim().length() <= 0 && !examen.getIdAtendio().equalsIgnoreCase("9999") ){
-                      desc.AcumulaExamenTotal();
-                      desc.AcumulaExamenCotizacion();
+                  } else if( cotizacion != null ){
+                      if((cotizacion.getIdFactura() == null || cotizacion.getIdFactura().trim().length() <= 0) && !examen.getIdAtendio().equalsIgnoreCase("9999")){
+                          desc.AcumulaExamenTotal();
+                          desc.AcumulaExamenCotizacion();
+                      }
                   } else if( !examen.getIdAtendio().equalsIgnoreCase("9999") ){
                       desc.AcumulaExamenTotal();
                       desc.AcumulaExamenNoVentas();
                   }
+                  desc.CalculaPorcentaje();
                 }
             }
         }
