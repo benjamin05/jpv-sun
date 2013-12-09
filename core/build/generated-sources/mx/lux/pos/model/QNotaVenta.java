@@ -26,6 +26,8 @@ public class QNotaVenta extends EntityPathBase<NotaVenta> {
 
     public final StringPath codigo_lente = createString("codigo_lente");
 
+    public final QDescuento desc;
+
     public final BooleanPath descuento = createBoolean("descuento");
 
     public final SetPath<DetalleNotaVenta, QDetalleNotaVenta> detalles = this.<DetalleNotaVenta, QDetalleNotaVenta>createSet("detalles", DetalleNotaVenta.class, QDetalleNotaVenta.class);
@@ -145,6 +147,7 @@ public class QNotaVenta extends EntityPathBase<NotaVenta> {
     public QNotaVenta(Class<? extends NotaVenta> type, PathMetadata<?> metadata, PathInits inits) {
         super(type, metadata, inits);
         this.cliente = inits.isInitialized("cliente") ? new QCliente(forProperty("cliente"), inits.get("cliente")) : null;
+        this.desc = inits.isInitialized("desc") ? new QDescuento(forProperty("desc"), inits.get("desc")) : null;
         this.empleado = inits.isInitialized("empleado") ? new QEmpleado(forProperty("empleado"), inits.get("empleado")) : null;
         this.empleadoEntrego = inits.isInitialized("empleadoEntrego") ? new QEmpleado(forProperty("empleadoEntrego"), inits.get("empleadoEntrego")) : null;
         this.examen = inits.isInitialized("examen") ? new QExamen(forProperty("examen"), inits.get("examen")) : null;

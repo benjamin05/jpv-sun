@@ -66,18 +66,18 @@
 				<text><![CDATA[Total:]]></text>
 			</staticText>
 			<textField pattern="##0.00 %">
-				<reportElement uuid="b678b716-1d75-41eb-ac4a-cbe595efcb7a" x="434" y="29" width="100" height="12"/>
+				<reportElement uuid="b678b716-1d75-41eb-ac4a-cbe595efcb7a" x="462" y="29" width="72" height="12"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{porcentajeVentas}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="17148423-327d-44d4-abc4-9522447759ac" x="300" y="29" width="134" height="12"/>
+				<reportElement uuid="17148423-327d-44d4-abc4-9522447759ac" x="300" y="29" width="162" height="12"/>
 				<textElement>
 					<font fontName="DejaVu Sans" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Porcentaje de Ventas:]]></text>
+				<text><![CDATA[Porcentaje de Conversion:]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="9c9850f8-3047-4dae-9cc0-5728cdede4d4" x="119" y="29" width="100" height="12"/>

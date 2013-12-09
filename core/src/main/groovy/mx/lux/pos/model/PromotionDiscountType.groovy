@@ -46,7 +46,7 @@ enum PromotionDiscountType {
         PromotionDiscountType discountType   = CouponDiscount
         discountType.idType = StringUtils.trimToEmpty( pIdType ).toUpperCase( )
         discountType.description = StringUtils.trimToEmpty( pDescription ).toUpperCase( )
-        discountType.text = StringUtils.trimToEmpty( pText )
+        discountType.text = StringUtils.trimToEmpty( pText == null ? "Descuento Tienda" : pText )
         return  discountType
 
     }
