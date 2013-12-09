@@ -26,9 +26,11 @@ class OrderDiscount implements IPromotion {
 
   String getDescripcion( ) {
     String desc = "N/A"
-    if ( notaVenta != null && notaVenta.getDesc().clave.trim().length() > 0 ) {
-      if( notaVenta.desc != null ){
-        desc = notaVenta.desc.clave
+    if ( notaVenta != null ) {
+      if( notaVenta.desc != null &&
+              (notaVenta?.desc?.descuentosClave != null &&
+                      !notaVenta?.desc?.descuentosClave?.descripcion_descuento.trim().equalsIgnoreCase("NA")) ){
+        desc = notaVenta.desc.descuentosClave.descripcion_descuento
       } else {
         desc = String.format( DESCRIPCION, notaVenta.por100Descuento.toString() )
       }
