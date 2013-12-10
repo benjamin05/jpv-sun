@@ -399,7 +399,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
             subtypeS = true
           }
         }
-        if( subtypeS ){
+        if( subtypeS && notaVenta.codigo_lente != null && notaVenta.codigo_lente.trim().length() > 0 ){
           String dioptra = notaVenta.codigo_lente
           String dioptraTmp = dioptra.substring( 0, dioptra.length()-1 )
           dioptra = dioptraTmp+'T'
