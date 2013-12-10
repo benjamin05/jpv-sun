@@ -3,6 +3,7 @@ package mx.lux.pos.service.impl
 import groovy.util.logging.Slf4j
 import mx.lux.pos.model.*
 import mx.lux.pos.repository.*
+import mx.lux.pos.service.*
 import mx.lux.pos.repository.impl.RepositoryFactory
 import mx.lux.pos.service.CotizacionService
 import mx.lux.pos.service.business.Registry
@@ -37,6 +38,12 @@ class CotizacionServiceImpl implements CotizacionService {
 
   @Resource
   private PrecioRepository precioRepository
+
+  @Resource
+  private RecetaRepository recetaRepository
+
+  @Resource
+  private ExamenService examenService
 
 
 
@@ -122,6 +129,14 @@ class CotizacionServiceImpl implements CotizacionService {
       quote.idEmpleado = pIdEmpleado
       quote.idReceta = order.receta
       quote.fechaCotizacion = new Date()
+      if( order.receta != null ){
+        QReceta rx = QReceta.receta
+        Receta receta = recetaRepository.findOne(rx.id.eq(order.receta))
+        if(receta != null){
+          Examen examen = examenService.obtenerExamenPorIdCliente( order.idCliente )
+          examen.setTipoOft( "CO" )
+        }
+      }
       if ( cust != null ) {
         quote.nombre = cust.nombreCompleto
         if ( StringUtils.trimToNull( cust.telefonoCasa ) != null ) {

@@ -412,7 +412,7 @@ class NoSaleDialog extends JDialog {
         receta.setIdStore(idSucursal)
         receta.setIdClient(idCliente)
 
-        CustomerController.saveRx(receta)
+        CustomerController.saveRx(receta, "NV")
         if( razon ){
           CustomerController.deletedClienteProceso( idCliente )
         }

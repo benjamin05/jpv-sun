@@ -373,7 +373,7 @@ class CustomerController {
 
 
 
-    public static Receta saveRx( Rx receta ) {
+    public static Receta saveRx( Rx receta, String tipo ) {
         log.debug( "salvando Receta" )
         Receta rec = new Receta()
         if ( receta?.id != null ) {
@@ -421,9 +421,7 @@ class CustomerController {
         } else {
             Examen examen = examenService.obtenerExamenPorIdCliente( receta.idClient )
             if( examen != null ){
-              examen.setIdAtendio( receta.idOpt )
-              examen.setObservacionesEx( "" )
-              examenService.actualizarExamen( examen )
+
             } else {
               examen = new Examen()
               examen.setIdCliente( receta.idClient )
@@ -433,10 +431,9 @@ class CustomerController {
               examen.setId_mod( '0' );
               examen.setIdSucursal( receta.idStore )
               examen.setFechaAlta( new Date() )
+              examen.setTipoOft( tipo )
               examen = examenService.guardarExamen( examen )
             }
-
-            //rec.setId( receta.id )
             rec.setExamen( examen.id )
             rec.setFechaReceta( new Date() )
             rec.setTipoOpt( '' )

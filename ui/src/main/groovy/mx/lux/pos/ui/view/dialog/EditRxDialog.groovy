@@ -655,7 +655,7 @@ class EditRxDialog extends JDialog {
             receta.setIdStore(idSucursal)
             receta.setIdClient(idCliente)
         }
-        rec = CustomerController.saveRx(receta)
+        rec = CustomerController.saveRx(receta, "OP")
         doCancel()
 
     }

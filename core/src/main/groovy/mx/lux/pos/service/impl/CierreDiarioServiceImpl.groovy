@@ -1531,25 +1531,16 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     for(ClienteProceso cliente : lstClientes){
       Examen examen = null
       QExamen ex = QExamen.examen
-      List<Examen> lstExamenes = examenRepository.findAll( ex.idCliente.eq(cliente.idCliente), ex.fechaAlta.asc() )
-      if( lstExamenes.size() > 0 ){
-        examen = lstExamenes.last()
-      }
-      if( examen != null ){
-        examen.setIdAtendio( '9999' )
-        examen.setObservacionesEx( "SE" )
-      } else {
         examen = new Examen()
         examen.idCliente = cliente.idCliente
         examen.idAtendio = '9999'
-        examen.observacionesEx = 'SE'
+        examen.tipoOft = 'SE'
         examen.idSync = '1'
         examen.fechaMod = new Date()
         examen.id_mod = '0'
         examen.idSucursal = Registry.currentSite
         examen.fechaAlta = new Date()
         examen.horaAlta = new Date()
-      }
       examenRepository.saveAndFlush( examen )
       clienteProcesoRepository.delete( cliente.idCliente )
     }

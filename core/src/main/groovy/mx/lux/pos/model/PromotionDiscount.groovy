@@ -29,6 +29,8 @@ class PromotionDiscount implements IPromotionAvailable {
         String descTmp = "Descuento Tienda"
         if( descuentoClave != null && descuentoClave.descripcion_descuento.equalsIgnoreCase("NA")){
             descTmp = descuentoClave.porcenaje_descuento+"% "+"descuento sobre venta"
+        } else if( descuentoClave != null ){
+            descTmp = descuentoClave.descripcion_descuento
         }
          String idType   =  'P'
          String description  = descuentoClave != null ? descuentoClave?.clave_descuento : ""
