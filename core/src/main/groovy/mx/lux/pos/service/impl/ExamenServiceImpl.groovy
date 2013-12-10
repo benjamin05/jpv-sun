@@ -42,7 +42,11 @@ class ExamenServiceImpl implements ExamenService {
       QExamen ex = QExamen.examen
       List<Examen> lstExamenes = examenRepository.findAll( ex.idCliente.eq(idCliente), ex.fechaAlta.asc() )
       if( lstExamenes.size() > 0 ){
-        examen = lstExamenes.last()
+        for(Examen exam : lstExamenes){
+          if(!exam.tipoOft.equalsIgnoreCase("SE")){
+            examen = lstExamenes.last()
+          }
+        }
       }
     return examen
   }

@@ -1670,7 +1670,7 @@ public class ReportServiceImpl implements ReportService {
           totalVenta = totalVenta+empleado.getRxConVenta();
           totalCotiza = totalCotiza+empleado.getRxCotizacion();
           totalNoVenta = totalNoVenta+empleado.getRxSinVenta();
-          porcentajeVentas = new BigDecimal(new Double(totalVenta)/new Double(total));
+          porcentajeVentas = new BigDecimal(new Double(totalVenta)/new Double(total == 0 ? 1 : total));
         }
 
         Map<String, Object> parametros = new HashMap<String, Object>();

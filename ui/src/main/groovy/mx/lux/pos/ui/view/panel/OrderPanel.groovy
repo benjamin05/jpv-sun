@@ -918,6 +918,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         }
 
         Order newOrder = OrderController.placeOrder(order, vendedor)
+        if( newOrder.rx != null ){
+          OrderController.updateExam( newOrder )
+        }
         //CustomerController.saveOrderCountries(order.country)
         this.promotionDriver.requestPromotionSave(newOrder?.id, true)
         Boolean cSaldo = false

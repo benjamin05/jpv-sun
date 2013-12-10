@@ -43,6 +43,7 @@ class OrderController {
     private static PromotionService promotionService
     private static CancelacionService cancelacionService
     private static RecetaService recetaService
+    private static ExamenService examenService
     private static ArticuloService articuloService
     private static JbRepository jbRepository
     private static JbTrackService jbTrackService
@@ -72,6 +73,7 @@ class OrderController {
             PromotionService promotionService,
             CancelacionService cancelacionService,
             RecetaService recetaService,
+            ExamenService examenService,
             ArticuloService articuloService,
             JbRepository jbRepository,
             JbTrackService jbTrackService,
@@ -112,6 +114,7 @@ class OrderController {
         this.jbServiciosRepository = jbServiciosRepository
         this.jbNotasRepository = jbNotasRepository
         this.descuentoRepository = descuentoRepository
+        this.examenService = examenService
     }
 
     static Order getOrder(String orderId) {
@@ -1461,4 +1464,15 @@ class OrderController {
       }
       return  null
     }
+
+
+    static void updateExam( Order order ){
+      Examen examen = examenService.obtenerExamenPorIdCliente( order.customer.id )
+      if( examen != null ){
+        examen.factura = order.bill
+        examenService.guardarExamen( examen )
+      }
+    }
+
+
 }

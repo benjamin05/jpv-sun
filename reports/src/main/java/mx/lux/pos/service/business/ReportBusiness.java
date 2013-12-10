@@ -2223,37 +2223,37 @@ public class ReportBusiness {
         List<DescuentosPorTipo> lstExamenes = new ArrayList<DescuentosPorTipo>();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         QReceta rx = QReceta.receta;
-        List<Receta> lstRecetas = (List<Receta>)recetaRepository.findAll( rx.fechaReceta.between(fechaInicio,fechaFin),
-                rx.idOptometrista.asc(),rx.idCliente.asc() );
         QExamen exam = QExamen.examen;
+        List<Examen> lstExamenesValid = (List<Examen>)examenRepository.findAll( exam.fechaAlta.between(fechaInicio,fechaFin),
+                exam.idAtendio.asc(),exam.idCliente.asc() );
+
         List<Examen> lstExams = (List<Examen>)examenRepository.findAll( exam.idAtendio.eq("9999").and(exam.observacionesEx.eq("SE")).
                 and(exam.fechaAlta.between(fechaInicio,fechaFin)));
-        Integer total = lstRecetas.size();
+        Integer total = lstExamenesValid.size();
         String fecha = "";
         Integer idCliente = 0;
-        for ( Receta receta : lstRecetas ) {
-            Examen examen = examenRepository.findOne( receta.getExamen() );
+        for ( Examen examenValido : lstExamenesValid ) {
+            Examen examen = examenValido;
             if( examen != null ){
-                String idEmpleado = receta.getIdOptometrista().trim();
-                QCotizacion cot = QCotizacion.cotizacion;
-                Cotizacion cotizacion = cotizacionRepository.findOne( cot.idReceta.eq(receta.getId()).and(cot.idFactura.isNull().or(cot.idFactura.isEmpty())) );
+                String idEmpleado = examen.getIdAtendio().trim();
+                /*QCotizacion cot = QCotizacion.cotizacion;
+                Cotizacion cotizacion = cotizacionRepository.findOne( cot.idReceta.eq(receta.getId()).and(cot.idFactura.isNull().or(cot.idFactura.isEmpty())) );*/
                 DescuentosPorTipo desc = EncontraroCrear( lstExamenes, idEmpleado );
                 if( examen.getIdAtendio().equalsIgnoreCase("9999") && examen.getObservacionesEx().equalsIgnoreCase("SE") ){
                   /*desc.AcumulaExamenTotal();
                   desc.AcumulaExamenNoVentas();*/
                 } else {
-                  if( receta.getNotaVenta() != null && receta.getNotaVenta().getFactura().trim().length() > 0 &&
-                          !examen.getIdAtendio().equalsIgnoreCase("9999") ){
-                      if( df.format(receta.getNotaVenta().getFechaHoraFactura()).equals(fecha) && receta.getIdCliente().equals(idCliente) ){
+                  if( examenValido.getFactura().trim().length() > 0 ){
+                      if( df.format(examenValido.getFechaAlta()).equals(fecha) && examenValido.getIdCliente().equals(idCliente) ){
 
                       } else {
                         desc.AcumulaExamenTotal();
                         desc.AcumulaExamenVenta();
                       }
-                      fecha = df.format(receta.getNotaVenta().getFechaHoraFactura());
-                      idCliente = receta.getIdCliente();
-                  } else if( cotizacion != null ){
-                      if((cotizacion.getIdFactura() == null || cotizacion.getIdFactura().trim().length() <= 0) && !examen.getIdAtendio().equalsIgnoreCase("9999")){
+                      fecha = df.format(examenValido.getFechaAlta());
+                      idCliente = examenValido.getIdCliente();
+                  } else if( examenValido.getTipoOft().equalsIgnoreCase("CO") ){
+                      if(!examen.getIdAtendio().equalsIgnoreCase("9999")){
                           desc.AcumulaExamenTotal();
                           desc.AcumulaExamenCotizacion();
                       }
