@@ -2243,7 +2243,7 @@ public class ReportBusiness {
                   /*desc.AcumulaExamenTotal();
                   desc.AcumulaExamenNoVentas();*/
                 } else {
-                  if( examenValido.getFactura().trim().length() > 0 ){
+                  if( examenValido.getFactura().trim().length() > 0 && !examenValido.getIdAtendio().equalsIgnoreCase("9999") ){
                       if( df.format(examenValido.getFechaAlta()).equals(fecha) && examenValido.getIdCliente().equals(idCliente) ){
 
                       } else {
