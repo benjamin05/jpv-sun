@@ -148,14 +148,14 @@
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Artículo]]></text>
+				<text><![CDATA[Articulo]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="c6ee7e6c-52a0-4ff6-a075-8ca56591e6cc" x="245" y="6" width="214" height="14"/>
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Descripción]]></text>
+				<text><![CDATA[Descripcion]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="ff3aaf75-0d51-4eee-b3fb-b8cdc30b4d89" x="459" y="6" width="100" height="14"/>

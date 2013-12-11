@@ -2227,7 +2227,7 @@ public class ReportBusiness {
         List<Examen> lstExamenesValid = (List<Examen>)examenRepository.findAll( exam.fechaAlta.between(fechaInicio,fechaFin),
                 exam.idAtendio.asc(),exam.idCliente.asc() );
 
-        List<Examen> lstExams = (List<Examen>)examenRepository.findAll( exam.idAtendio.eq("9999").and(exam.observacionesEx.eq("SE")).
+        List<Examen> lstExams = (List<Examen>)examenRepository.findAll( exam.idAtendio.eq("9999").and(exam.tipoOft.eq("SE")).
                 and(exam.fechaAlta.between(fechaInicio,fechaFin)));
         Integer total = lstExamenesValid.size();
         String fecha = "";

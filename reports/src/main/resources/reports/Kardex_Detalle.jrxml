@@ -64,7 +64,7 @@
 				<textElement>
 					<font fontName="DejaVu Sans" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Transacción]]></text>
+				<text><![CDATA[Transaccion]]></text>
 			</staticText>
 			<staticText>
 				<reportElement uuid="cea991fb-7c2d-47b0-812e-9dd4f3b40013" x="170" y="0" width="167" height="14"/>
