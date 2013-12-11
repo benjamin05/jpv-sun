@@ -44,7 +44,7 @@ class ExamenServiceImpl implements ExamenService {
       if( lstExamenes.size() > 0 ){
         for(Examen exam : lstExamenes){
           if(!exam.tipoOft.equalsIgnoreCase("SE")){
-            examen = lstExamenes.last()
+            examen = exam
           }
         }
       }
