@@ -2236,8 +2236,6 @@ public class ReportBusiness {
             Examen examen = examenValido;
             if( examen != null ){
                 String idEmpleado = examen.getIdAtendio().trim();
-                /*QCotizacion cot = QCotizacion.cotizacion;
-                Cotizacion cotizacion = cotizacionRepository.findOne( cot.idReceta.eq(receta.getId()).and(cot.idFactura.isNull().or(cot.idFactura.isEmpty())) );*/
                 DescuentosPorTipo desc = EncontraroCrear( lstExamenes, idEmpleado );
                 if( examen.getIdAtendio().equalsIgnoreCase("9999") && examen.getObservacionesEx().equalsIgnoreCase("SE") ){
                   /*desc.AcumulaExamenTotal();
