@@ -2255,7 +2255,7 @@ public class ReportBusiness {
                           desc.AcumulaExamenTotal();
                           desc.AcumulaExamenCotizacion();
                       }
-                  } else if( !examen.getIdAtendio().equalsIgnoreCase("9999") ){
+                  } else if( !examen.getIdAtendio().equalsIgnoreCase("9999") && examenValido.getTipoOft().equalsIgnoreCase("NV") ){
                       desc.AcumulaExamenTotal();
                       desc.AcumulaExamenNoVentas();
                   }
