@@ -25,7 +25,7 @@ public class CotizacionesDet {
       factura = "";
     }
 
-    public void AcumulaDetalles( Cotizacion cotizacion, List<Articulo> lstArticulos ){
+    public void AcumulaDetalles( Cotizacion cotizacion, List<Articulo> lstArticulos, NotaVenta nota ){
       this.articulos = "";
       BigDecimal montoArticulos = BigDecimal.ZERO;
       fecha = cotizacion.getFechaMod();
@@ -37,7 +37,7 @@ public class CotizacionesDet {
       }
       articulos = articulos.replaceFirst( ",","" );
       importeTotal = montoArticulos;
-      factura = cotizacion.getIdFactura();
+      factura = nota != null ? nota.getFactura() : "";
     }
 
 

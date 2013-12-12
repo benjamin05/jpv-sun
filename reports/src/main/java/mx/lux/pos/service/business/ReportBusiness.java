@@ -2095,43 +2095,12 @@ public class ReportBusiness {
             }
           }
           Cliente cliente = clienteRepository.findOne( cot.getIdCliente() );
-          NotaVenta nota = notaVentaRepository.findOne( cot.getIdFactura() != null ? cot.getIdFactura() : "" );
+          NotaVenta nota = null;
+          if( cot.getIdFactura() != null && cot.getIdFactura().trim().length() > 0 ){
+            nota = notaVentaRepository.findOne( cot.getIdFactura() );
+          }
           Cotizaciones coti = FindorCreateCot( lstCotizaciones, cot.getIdEmpleado() );
-          coti.AcumulaCotizacionesDet( cot, lstArticulos );
-          /*Cotizaciones cotizacion = new Cotizaciones();
-          cotizacion.setFechaMod( cot.getFechaMod() );
-          cotizacion.setIdEmpleado(cot.getIdEmpleado());
-          cotizacion.setIdCotizacion( cot.getIdCotiza().toString() );
-          cotizacion.setCliente( cliente != null ? cliente.getNombreCompleto() : "" );
-          if( !cot.getTel().trim().equalsIgnoreCase("") ){
-            cotizacion.setContacto( cot.getTel() );
-          } else{
-            if(cliente != null && !cliente.getTelefonoCasa().trim().equalsIgnoreCase("")){
-                cotizacion.setContacto( cliente.getTelefonoCasa().trim() );
-            } else if(cliente != null && !cliente.getTelefonoAdicional().trim().equalsIgnoreCase("")){
-                cotizacion.setContacto( cliente.getTelefonoAdicional().trim() );
-            } else if(cliente != null && !cliente.getEmail().trim().equalsIgnoreCase("")){
-                cotizacion.setContacto( cliente.getEmail().trim() );
-            }
-          }
-          for(CotizaDet cotizaDet: cot.getCotizaDet()){
-            Articulo articulo = articuloRepository.findOne( cotizaDet.getSku() );
-            if(articulo != null){
-              lstArticulos.add( articulo );
-              List<Precio> precios = precioRepository.findByArticulo( articulo.getArticulo() );
-              if(precios.size() > 0){
-                montoArticulos = montoArticulos.add( precios.get(0).getPrecio() );
-              }
-            }
-          }
-          cotizacion.setLstArticulos( lstArticulos );
-          cotizacion.setImporteTotal( montoArticulos );
-          if( nota != null ){
-            cotizacion.setFactura( nota.getFactura() );
-          }
-          cotizacion.setFechaVenta( cot.getFechaVenta() );
-
-          lstCotizaciones.add( cotizacion );*/
+          coti.AcumulaCotizacionesDet( cot, lstArticulos, nota );
         }
 
         return lstCotizaciones;
