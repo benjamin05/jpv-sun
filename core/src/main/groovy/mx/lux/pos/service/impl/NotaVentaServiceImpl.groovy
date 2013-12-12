@@ -795,7 +795,7 @@ class NotaVentaServiceImpl implements NotaVentaService {
       try{
       String cmd = String.format( "%s %s", Registry.commandBakpOrder, nota.id);
       Process p = Runtime.getRuntime().exec(cmd);
-      println "comando a ejecutar <${cmd}>"
+      log.debug( "comando a ejecutar <${cmd}>" )
       } catch (Exception e){
         println e
       }
