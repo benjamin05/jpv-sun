@@ -1468,7 +1468,7 @@ class OrderController {
 
     static void updateExam( Order order ){
       Examen examen = examenService.obtenerExamenPorIdCliente( order.customer.id )
-      if( examen != null ){
+      if( examen != null && (examen.factura = null || examen.factura.trim().length() <= 0) ){
         examen.factura = order.bill
         examenService.guardarExamen( examen )
       }
