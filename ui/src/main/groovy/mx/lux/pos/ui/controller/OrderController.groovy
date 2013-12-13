@@ -45,6 +45,7 @@ class OrderController {
     private static RecetaService recetaService
     private static ExamenService examenService
     private static ArticuloService articuloService
+    private static CotizacionService cotizacionService
     private static JbRepository jbRepository
     private static JbTrackService jbTrackService
     private static JbLlamadaRepository jbLlamadaRepository
@@ -58,8 +59,8 @@ class OrderController {
     private static JbServiciosRepository jbServiciosRepository
     private static JbNotasRepository jbNotasRepository
     private static DescuentoRepository descuentoRepository
-
     private static final String TAG_USD = "USD"
+    private static Integer numberQuote = 0
 
     @Autowired
     public OrderController(
@@ -87,7 +88,8 @@ class OrderController {
             AcuseRepository acuseRepository,
             JbServiciosRepository jbServiciosRepository,
             JbNotasRepository jbNotasRepository,
-            DescuentoRepository descuentoRepository
+            DescuentoRepository descuentoRepository,
+            CotizacionService cotizacionService
 
     ) {
         this.notaVentaService = notaVentaService
@@ -115,6 +117,7 @@ class OrderController {
         this.jbNotasRepository = jbNotasRepository
         this.descuentoRepository = descuentoRepository
         this.examenService = examenService
+        this.cotizacionService = cotizacionService
     }
 
     static Order getOrder(String orderId) {
@@ -697,6 +700,7 @@ class OrderController {
                 OrderPanel.TXT_QUOTE_TITLE, JOptionPane.QUESTION_MESSAGE)
         if (StringUtils.trimToNull(confirm) != null) {
             Integer quoteNbr = NumberUtils.createInteger(StringUtils.trimToEmpty(confirm))
+            numberQuote = quoteNbr
             if (quoteNbr != null) {
                 Map<String, Object> result = ServiceManager.quote.toOrder(quoteNbr)
                 if (result != null) {
@@ -709,6 +713,10 @@ class OrderController {
             }
         }
         return orderNbr
+    }
+
+    static Integer getNumberQuote(){
+        return numberQuote
     }
 
     static String requestEmployee(String pOrderId) {
@@ -1472,6 +1480,11 @@ class OrderController {
         examen.factura = order.bill
         examenService.guardarExamen( examen )
       }
+    }
+
+
+    static void updateQuote( Order order, Integer numQuote ){
+       cotizacionService.updateQuote( order.id, numQuote )
     }
 
 

@@ -50,6 +50,7 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private static final String TXT_CAMBIAR_VENDEDOR = 'Cerrar Sesion'
     private static final String TAG_GENERICO_B = 'B'
     private static final String TAG_REUSO = 'R'
+    private static final String TAG_COTIZACION = 'Cotización'
 
     private Logger logger = LoggerFactory.getLogger(this.getClass())
     private SwingBuilder sb
@@ -89,10 +90,9 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private String armazonString = null
     private Boolean activeDialogProccesCustomer = true
     private Boolean advanceOnlyInventariable
-
     private String sComments = ''
 
-
+    public Integer numQuote = 0
 
     OrderPanel() {
         sb = new SwingBuilder()
@@ -394,14 +394,15 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
                     }
                     break
                 case OperationType.QUOTE:
-                    String orderNbr = OrderController.requestOrderFromQuote(this)
+                    String number = OrderController.requestOrderFromQuote(this)
+                    numQuote = OrderController.getNumberQuote()
                     sb.doLater {
-                        if (StringUtils.trimToNull(orderNbr) != null) {
-                            Customer tmp = OrderController.getCustomerFromOrder(orderNbr)
+                        if (StringUtils.trimToNull(number.toString()) != null) {
+                            Customer tmp = OrderController.getCustomerFromOrder(number)
                             if (tmp != null) {
                                 customer = tmp
                             }
-                            updateOrder(orderNbr)
+                            updateOrder(number.toString())
                         } else {
                             operationType.setSelectedItem(currentOperationType)
                         }
@@ -921,6 +922,11 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
         if( newOrder.rx != null ){
           OrderController.updateExam( newOrder )
         }
+
+        if(numQuote > 0){
+          OrderController.updateQuote( newOrder, numQuote )
+          numQuote = 0
+        }
         //CustomerController.saveOrderCountries(order.country)
         this.promotionDriver.requestPromotionSave(newOrder?.id, true)
         Boolean cSaldo = false
@@ -1269,8 +1275,6 @@ implements IPromotionDrivenPanel, FocusListener, CustomerListener {
     private Boolean isPaymentListEmpty() {
         return (order.payments.size() == 0)
     }
-
-
 
     public void cleanAll( ){
       sb = null

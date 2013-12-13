@@ -37,7 +37,9 @@ public class Cotizaciones {
     public void AcumulaCotizacionesDet( Cotizacion cotizacion, List<Articulo> lstArticulos, NotaVenta nota ){
       cantCotizaciones = cantCotizaciones+1;
       if(cotizacion.getIdFactura() != null && cotizacion.getIdFactura().trim().length() > 0){
-        cantVentas = cantVentas+1;
+        if( nota != null && nota.getFactura() != null && nota.getFactura().trim().length() > 0 ){
+          cantVentas = cantVentas+1;
+        }
       }
       porcentajeVentas = new BigDecimal(cantVentas/cantCotizaciones);
       CotizacionesDet cotiza = FindOrCreate( lstDetalles, cotizacion.getIdCotiza() );

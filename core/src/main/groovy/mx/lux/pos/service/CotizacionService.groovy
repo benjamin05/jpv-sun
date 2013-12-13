@@ -17,4 +17,6 @@ interface CotizacionService {
 
   Boolean isQuoteOpen( Integer pQuoteNbr )
 
+  void updateQuote( String idFactura, Integer numQuote )
+
 }

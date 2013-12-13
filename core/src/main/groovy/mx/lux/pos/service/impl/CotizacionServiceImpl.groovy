@@ -19,13 +19,16 @@ import javax.annotation.Resource
 class CotizacionServiceImpl implements CotizacionService {
 
   static final String TXT_QUOTE_SOLD = 'La cotización:%06d ya fue vendida.'
-  static final String TXT_UNABLE_TO_FIND_QUOTE = 'La cotización:%06d no está registrada.'
+  static final String TXT_UNABLE_TO_FIND_QUOTE = 'La cotización:%d no está registrada.'
 
   @Resource
   private CotizacionRepository cotizacionRepository
 
   @Resource
   private CotizaDetRepository cotizaDetRepository
+
+  @Resource
+  private NotaVentaRepository notaVentaRepository
 
   @Resource
   private ConvenioRepository convenioRepository
@@ -196,6 +199,7 @@ class CotizacionServiceImpl implements CotizacionService {
     Map<String, Object> status = new TreeMap<String, Object>()
     Cotizacion quote = RepositoryFactory.quotes.findOne( pQuoteId )
     if ( quote != null ) {
+      if(StringUtils.trimToEmpty(quote.idFactura) == '' ){
       if ( this.isQuoteOpen( quote.idCotiza ) ) {
         NotaVenta order = ServiceFactory.salesOrders.abrirNotaVenta(quote.idCliente.toString(), quote.idSucursal.toString())
         order.idCliente = quote.idCliente
@@ -218,15 +222,18 @@ class CotizacionServiceImpl implements CotizacionService {
           )
           ServiceFactory.salesOrders.registrarDetalleNotaVentaEnNotaVenta( order.id, orderLine )
         }
-        quote.idFactura = order.id
-        quote.fechaVenta = new Date()
+        quote.idFactura = StringUtils.trimToEmpty( order.factura )
+        quote.fechaVenta = StringUtils.trimToEmpty( order.factura ).trim().length() > 0 ? new Date() : null
         status.put( 'orderNbr', order.id )
       } else {
         String msg = String.format( TXT_QUOTE_SOLD, quote.idCotiza, quote.idFactura, quote.fechaVenta )
         status.put( 'statusMessage', msg )
       }
+      } else {
+        status.put( 'statusMessage', String.format(TXT_QUOTE_SOLD, pQuoteId) )
+      }
     } else {
-      status.put( 'statusMessage', TXT_UNABLE_TO_FIND_QUOTE )
+      status.put( 'statusMessage', String.format(TXT_UNABLE_TO_FIND_QUOTE, pQuoteId) )
     }
     return status
   }
@@ -248,5 +255,19 @@ class CotizacionServiceImpl implements CotizacionService {
     }
     return open
   }
+
+
+  void updateQuote( String idFactura, Integer numQuote ){
+    Cotizacion cotizacion = cotizacionRepository.findOne( numQuote )
+    NotaVenta nota = notaVentaRepository.findOne( idFactura )
+    if(nota != null && StringUtils.trimToEmpty(nota.factura).length() > 0){
+      cotizacion.idFactura = nota.factura.trim()
+      cotizacion.fechaVenta = new Date()
+      cotizacionRepository.save( cotizacion )
+      cotizacionRepository.flush()
+    }
+  }
+
+
 
 }
