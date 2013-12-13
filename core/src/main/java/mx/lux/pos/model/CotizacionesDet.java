@@ -1,5 +1,7 @@
 package mx.lux.pos.model;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,7 +39,7 @@ public class CotizacionesDet {
       }
       articulos = articulos.replaceFirst( ",","" );
       importeTotal = montoArticulos;
-      factura = nota != null ? nota.getFactura() : "";
+      factura = StringUtils.trimToEmpty( cotizacion.getIdFactura() );
     }
 
 

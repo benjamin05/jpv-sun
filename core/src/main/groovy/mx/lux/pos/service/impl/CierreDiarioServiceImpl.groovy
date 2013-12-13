@@ -852,7 +852,7 @@ class CierreDiarioServiceImpl implements CierreDiarioService {
     Date fechaInicio = DateUtils.truncate( fechaCierre, Calendar.DATE )
     Date fechaFin = DateUtils.addDays( fechaInicio, 1 )
     QCotizacion cot = QCotizacion.cotizacion
-    List<Cotizacion> cotizaciones = cotizacionRepository.findAll( cot.fechaMod.between(fechaInicio,fechaFin) )
+    List<Cotizacion> cotizaciones = cotizacionRepository.findAll( cot.fechaCotizacion.between(fechaInicio,fechaFin) )
     def datos = [ sucursal: sucursal,
         fecha_ahora: CustomDateUtils.format( new Date(), 'dd/MM/yyyy' ),
         fecha_cierre: CustomDateUtils.format( fechaCierre, 'dd/MM/yyyy' ),

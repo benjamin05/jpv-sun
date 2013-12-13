@@ -1,5 +1,7 @@
 package mx.lux.pos.model;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,7 +39,7 @@ public class Cotizaciones {
     public void AcumulaCotizacionesDet( Cotizacion cotizacion, List<Articulo> lstArticulos, NotaVenta nota ){
       cantCotizaciones = cantCotizaciones+1;
       if(cotizacion.getIdFactura() != null && cotizacion.getIdFactura().trim().length() > 0){
-        if( nota != null && nota.getFactura() != null && nota.getFactura().trim().length() > 0 ){
+        if(StringUtils.trimToEmpty( cotizacion.getIdFactura()) != ""){
           cantVentas = cantVentas+1;
         }
       }
