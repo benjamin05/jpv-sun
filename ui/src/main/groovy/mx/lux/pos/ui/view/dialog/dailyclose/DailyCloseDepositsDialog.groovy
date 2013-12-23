@@ -122,7 +122,7 @@ class DailyCloseDepositsDialog extends JDialog {
               fetchDeposits()
             }
         )
-        button( text: 'Archivos Maestro', visible: false, actionPerformed: generateFiles, constraints: 'hidemode 3' )
+        button( text: 'Archivos Maestro', actionPerformed: generateFiles, constraints: 'hidemode 3' )
       }
 
       scrollPane( border: titledBorder( title: 'Observaciones' ) ) {
@@ -210,7 +210,6 @@ class DailyCloseDepositsDialog extends JDialog {
   private def generateFiles = { ActionEvent ev ->
     JButton source = ev.source as JButton
     source.enabled = false
-    //DailyCloseController.regenerarArchivosZ( closeDate )
     if ( DailyCloseController.closeDailyClose( closeDate, observations.text ) ) {
       sb.optionPane().showMessageDialog( null, 'Se ha cerrado correctamente', 'Ok', JOptionPane.INFORMATION_MESSAGE )
     } else {
