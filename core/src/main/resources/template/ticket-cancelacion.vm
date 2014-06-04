@@ -12,7 +12,8 @@ ${COLUMNAS}
 #SET_STYLE(${FUENTE_A} 0 ${DOBLE_ALTURA} ${DOBLE_ANCHURA} 0)CANCELACION${COL_HEAD}#altnull(${modificacion.id})
 #LINEA_SEPARACION()
 #SET_STYLE(${FUENTE_B} 0 0 0 0)
-SUCURSAL: #altnull(${sucursal.nombre}) [#altnull(${sucursal.id})]${COL_HEAD}#altnull(${fecha})${CR}
+SUCURSAL: #altnull()${COL_HEAD} #altnull(${fecha})${CR}
+#ALINEAR_IZQUIERDA() #altnull(${sucursal.nombre}) [#altnull(${sucursal.id})]${COL_HEAD}
 FECHA DE LA NOTA: #altnull(${fecha_venta})${COL_HEAD}SOI #altnull(${nota_venta.id})${CR}
 ELABORO: #altnull(${empleado.nombreCompleto})${COL_HEAD}#SET_STYLE(${FUENTE_B} ${NEGRITA} 0 0 0)Factura #altnull(${nota_venta.factura})
 #LINEA_SEPARACION()
